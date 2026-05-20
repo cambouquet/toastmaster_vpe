@@ -11,6 +11,12 @@ export const DebugPanel = ({ logs, state, onClose }) => (
       </button>
     </div>
     <div className="debug-content">
+      <div className="debug-key">
+        <span className="key-item info">● INF</span>
+        <span className="key-item warn">▲ WRN</span>
+        <span className="key-item error">✖ ERR</span>
+        <span className="key-item debug">○ DBG</span>
+      </div>
       <div className="status-grid">
         <div className="status-cell">
           <label>NODE_ENV</label>
@@ -25,6 +31,7 @@ export const DebugPanel = ({ logs, state, onClose }) => (
         <label>SYSTEM_LOG_STREAM</label>
         {logs.map((l, i) => (
           <div key={i} className={`log-entry ${l.type}`}>
+            <span className="indicator">•</span>
             <span className="time">{l.time.split(' ')[0]}</span>
             <span className="msg">{l.msg}</span>
           </div>

@@ -16,9 +16,12 @@ export const useCollaboration = (aiService) => {
 
   const uiAction = async (type, val) => {
     try {
+      console.log(`UI_EVENT_TRIGGER: ${type}`, val);
+      console.debug(`CTX: ${JSON.stringify(val).slice(0, 50)}`);
       const res = await aiService.handleUiAction(type, val, state);
       setSubtitle(res.subtitle);
       if (res.newState) {
+        console.log(`STATE_SYNC_INITIATED`, res.newState);
         setState(prev => {
           const next = { ...prev, ...res.newState };
           if (res.newState?.roles) next.roles = { ...prev.roles, ...res.newState.roles };

@@ -77,6 +77,18 @@ body {
 
   .debug-content {
     padding: 16px;
+
+    .debug-key {
+      display: flex; gap: 12px; margin-bottom: 16px;
+      .key-item {
+        font-size: 0.5rem; font-weight: 700; letter-spacing: 0.05em;
+        opacity: 0.7; padding: 2px 6px; border-radius: 2px;
+        &.info { color: $accent-cyan; border: 1px solid rgba(0, 186, 196, 0.2); }
+        &.warn { color: #ffcc00; border: 1px solid rgba(255, 204, 0, 0.2); }
+        &.error { color: #ff4d4d; border: 1px solid rgba(255, 77, 77, 0.2); }
+      }
+    }
+
     .status-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;
       .status-cell {
@@ -93,11 +105,15 @@ body {
 
     .log-entry {
       font-size: 0.65rem; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.03);
-      display: flex; gap: 10px;
+      display: flex; gap: 8px; align-items: flex-start;
+      .indicator { opacity: 0.8; }
       .time { color: $accent-cyan; opacity: 0.5; white-space: nowrap; }
-      .msg { color: rgba(224, 250, 255, 0.9); }
-      &.error .msg { color: #ff4d4d; }
-      &.warn .msg { color: #ffcc00; }
+      .msg { color: rgba(224, 250, 255, 0.9); flex: 1; }
+      
+      &.info .indicator { color: $accent-cyan; }
+      &.error .indicator, &.error .msg { color: #ff4d4d; }
+      &.warn .indicator, &.warn .msg { color: #ffcc00; }
+      &.debug .indicator, &.debug .msg { color: #888; opacity: 0.6; }
       &.user .msg { color: #fff; border-right: 1px solid rgba(255,255,255,0.1); }
       &.ai .msg { color: $accent-cyan; }
     }

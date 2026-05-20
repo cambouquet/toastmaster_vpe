@@ -13,11 +13,16 @@ export const useSystemLogs = () => {
   }, []);
 
   useEffect(() => {
-    const originals = { log: console.log, error: console.error, warn: console.warn, info: console.info };
+    const originals = { 
+      log: console.log, error: console.error, 
+      warn: console.warn, info: console.info, 
+      debug: console.debug 
+    };
     console.log = (...args) => { originals.log(...args); addLog(args[0], 'info'); };
     console.info = (...args) => { originals.info(...args); addLog(args[0], 'info'); };
     console.error = (...args) => { originals.error(...args); addLog(args[0], 'error'); };
     console.warn = (...args) => { originals.warn(...args); addLog(args[0], 'warn'); };
+    console.debug = (...args) => { originals.debug(...args); addLog(args[0], 'debug'); };
     return () => Object.assign(console, originals);
   }, [addLog]);
 
