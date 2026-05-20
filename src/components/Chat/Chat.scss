@@ -9,14 +9,4 @@
   @include sharp-panel;
   padding: 1px;
   position: relative;
-
-  header {
-    padding: 1.5rem 3rem;
-    border-bottom: 1px solid $border-cyan;
-    font-size: 0.7rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.6em;
-    color: $accent-cyan;
-  }
 }

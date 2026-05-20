@@ -1,11 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
 @import './styles/variables';
 
 body {
   margin: 0;
   background-color: #050508;
   color: #fff;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Sora', -apple-system, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.015em;
   height: 100vh;
   overflow: hidden;
   background-image: 

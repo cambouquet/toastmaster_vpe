@@ -9,21 +9,29 @@ interface Props {
 
 export const MeetingWorkspace: React.FC<Props> = ({ state, onAction }) => {
   return (
-    <div className="workspace-grid">
+    <div className="workspace-grid" style={{ paddingTop: '4rem' }}>
       <div className="card theme" onClick={() => onAction('theme', 'Prompting Theme...')}>
-        <label>MEETING_THEME</label>
-        <div className="val">{state.theme || 'NONE_SET'}</div>
+        <label>Current Theme</label>
+        <div className="val">{state.theme || 'Undefined'}</div>
       </div>
       <div className="card roles">
-        <label>ACTIVE_ROLES</label>
-        <ul>
-          <li>TM: {state.roles.toastmaster || 'OPEN'}</li>
-          <li>TIMER: {state.roles.timer || 'OPEN'}</li>
-        </ul>
+        <label>Key Roles</label>
+        <div className="role-entry">
+          <span className="role-label">Toastmaster</span>
+          <span className={`role-val ${!state.roles.toastmaster ? 'open' : ''}`}>
+            {state.roles.toastmaster || 'Open'}
+          </span>
+        </div>
+        <div className="role-entry">
+          <span className="role-label">Timer</span>
+          <span className={`role-val ${!state.roles.timer ? 'open' : ''}`}>
+            {state.roles.timer || 'Open'}
+          </span>
+        </div>
       </div>
       <div className="card date">
-        <label>CHRONOS</label>
-        <div className="val">{state.date || 'UNSCHEDULED'}</div>
+        <label>Meeting Date</label>
+        <div className="val">{state.date || 'TBD'}</div>
       </div>
     </div>
   );

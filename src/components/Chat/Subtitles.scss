@@ -11,16 +11,17 @@
   z-index: 100;
 
   .caption-text {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     color: #fff;
     display: inline-block;
-    padding: 0.5rem 2rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.2rem;
+    padding: 0.6rem 2rem;
+    font-family: inherit;
+    font-size: 1rem;
     font-weight: 300;
-    letter-spacing: 0.05em;
-    clip-path: polygon(5px 0, 100% 0, 100% 100%, 0 100%, 0 5px);
-    border-left: 3px solid $accent-cyan;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    user-select: text;
+    pointer-events: auto;
+    border-radius: 2px;
   }
 }

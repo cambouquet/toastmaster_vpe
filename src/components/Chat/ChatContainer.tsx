@@ -12,9 +12,8 @@ export const ChatContainer: React.FC = () => {
 
   return (
     <div className="chat-container">
-      <header><span>Toastmaster</span></header>
       <MeetingWorkspace state={state} onAction={uiAction} />
-      <Subtitles text={subtitle} />
+      {subtitle && subtitle !== 'Standby.' && <Subtitles text={subtitle} />}
       <div className="bottom-input-wrap">
         <ChatInput onSend={interact} />
       </div>
