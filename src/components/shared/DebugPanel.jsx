@@ -5,7 +5,7 @@ export const DebugPanel = ({ logs, state, onClose, onClear, onHealth }) => (
     <div className="glitch-scanline" />
     <div className="debug-header">
       <div className="header-orb" />
-      <span className="title">CORE_KERNEL_V2.0.77</span>
+      <span className="title">CORE KERNEL V2.0.77</span>
       <div className="header-actions">
         <button className="clear-btn" onClick={onHealth}>HEALTH</button>
         <button className="clear-btn" onClick={onClear}>CLEAR</button>
@@ -22,12 +22,12 @@ export const DebugPanel = ({ logs, state, onClose, onClear, onHealth }) => (
       </div>
       <div className="status-grid">
         <div className="status-cell">
-          <label>NODE_ENV</label>
+          <label>NODE ENV</label>
           <div className="val">SECURE</div>
         </div>
       </div>
       <div className="section scroll-hidden">
-        <label>SYSTEM_LOG_STREAM</label>
+        <label>SYSTEM LOG STREAM</label>
         {logs.map((l, i) => (
           <div key={i} className={`log-entry ${l.type}`}>
             <span className="indicator">•</span>

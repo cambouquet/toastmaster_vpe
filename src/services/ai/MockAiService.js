@@ -1,4 +1,5 @@
 import { handleMembers } from "./intentHandlers";
+import { TestRunnerService } from "../system/TestRunnerService";
 
 export class MockAiService {
   async processInput(text, state) {
@@ -36,6 +37,12 @@ export class MockAiService {
     if (action.startsWith("roles.")) {
       const role = action.split(".")[1];
       return { subtitle: `${role} updated.`, newState: { roles: { [role]: val } } };
+    }
+    if (action === "RUN_TESTS") {
+      TestRunnerService.runTests().then(res => {
+        window.dispatchEvent(new CustomEvent('TEST_RESULT', { detail: res }));
+      });
+      return { subtitle: "SYSTEM_DIAGNOSTICS_RUNNING...", newState: { testStatus: 'RUNNING' } };
     }
     return { subtitle: "Done.", newState: { [action]: val } };
   }

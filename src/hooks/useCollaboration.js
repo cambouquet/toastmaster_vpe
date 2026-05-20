@@ -1,11 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSystemLogs } from './useSystemLogs';
 import { INITIAL_STATE } from '../data/initialState';
 
 export const useCollaboration = (aiService) => {
-  const [state, setState] = useState(INITIAL_STATE);
+  const [state, setState] = useState({ ...INITIAL_STATE, testStatus: 'STANDBY' });
   const [subtitle, setSubtitle] = useState('Standby.');
   const { logs, addLog, clearLogs } = useSystemLogs();
+
+  useEffect(() => {
+    const handler = (e) => {
+      const res = e.detail;
+      setState(prev => ({ ...prev, testStatus: res.success ? 'PASSED' : 'FAILED' }));
+      console[res.success ? 'log' : 'error'](`TEST RUN COMPLETE: ${res.success ? 'SUCCESS' : 'FAILURE'}`);
+    };
+    window.addEventListener('TEST_RESULT', handler);
+    return () => window.removeEventListener('TEST_RESULT', handler);
+  }, []);
 
   const interact = async (input) => {
     addLog(`User: ${input}`, 'user');
@@ -16,7 +26,11 @@ export const useCollaboration = (aiService) => {
 
   const uiAction = async (type, val) => {
     try {
-      console.log(`UI_EVENT_TRIGGER: ${type}`, val);
+      console.log(`UI EVENT TRIGGER: ${type}`, val);
+      if (type === 'RUN_TESTS') {
+        setState(s => ({ ...s, testStatus: 'RUNNING' }));
+        return;
+      }
       console.debug(`CTX: ${JSON.stringify(val).slice(0, 50)}`);
       const res = await aiService.handleUiAction(type, val, state);
       setSubtitle(res.subtitle);

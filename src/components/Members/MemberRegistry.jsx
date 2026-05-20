@@ -6,11 +6,11 @@ export const MemberRegistry = ({ members, onAction }) => {
   return (
     <div className="member-registry-screen">
       <header className="registry-header">
-        <h1 className="glitch-text" data-text="MEMBER_DATABASE_V1.0">
-          MEMBER_DATABASE_V1.0
+        <h1 className="glitch-text" data-text="MEMBERS">
+          MEMBERS
         </h1>
         <div className="stats-bar">
-          ACTIVE_NODES: {members.length} | SYNC_STATUS: OPTIMAL
+          ACTIVE MEMBERS: {members.length} | SYSTEM STATUS: OPTIMAL
         </div>
       </header>
       

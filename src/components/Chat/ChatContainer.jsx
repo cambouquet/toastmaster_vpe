@@ -15,7 +15,10 @@ export const ChatContainer = () => {
   const [showDebug, setShowDebug] = useState(false);
   const isWorkspace = state.currentScreen === 'workspace';
 
-  const runHealthCheck = () => HealthService.check(state, logs);
+  const runHealthCheck = () => {
+    HealthService.check(state, logs);
+    uiAction('RUN_TESTS');
+  };
 
   return (
     <div className="chat-container">
@@ -26,7 +29,11 @@ export const ChatContainer = () => {
       )}
       {subtitle && subtitle !== 'Standby.' && <Subtitles text={subtitle} />}
       <div className="bottom-input-wrap">
-        <ChatInput onSend={interact} onToggleDebug={() => setShowDebug(!showDebug)} />
+        <ChatInput 
+          onSend={interact} 
+          onToggleDebug={() => setShowDebug(!showDebug)} 
+          testStatus={state.testStatus}
+        />
       </div>
       {showDebug && (
         <DebugPanel 

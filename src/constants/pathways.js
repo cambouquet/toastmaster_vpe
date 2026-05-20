@@ -1,6 +1,6 @@
 export const PATHWAYS = [
-  'DYNAMIC_LEADERSHIP', 'EFFECTIVE_COACHING', 'INNOVATIVE_PLANNING',
-  'LEADERSHIP_DEVELOPMENT', 'MOTIVATIONAL_STRATEGIES', 'PERSUASIVE_INFLUENCE',
-  'PRESENTATION_MASTERY', 'STRATEGIC_RELATIONSHIPS', 'TEAM_COLLABORATION',
-  'VISIONARY_COMMUNICATION', 'ENGAGING_HUMOR'
+  'Dynamic Leadership', 'Effective Coaching', 'Innovative Planning',
+  'Leadership Development', 'Motivational Strategies', 'Persuasive Influence',
+  'Presentation Mastery', 'Strategic Relationships', 'Team Collaboration',
+  'Visionary Communication', 'Engaging Humor'
 ];

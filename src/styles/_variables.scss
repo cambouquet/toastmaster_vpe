@@ -8,10 +8,5 @@ $border-cyan: rgba(0, 186, 196, 0.15);
   background: rgba(10, 12, 16, 0.85);
   backdrop-filter: blur(50px) saturate(200%);
   border: 1px solid $border-cyan;
-  clip-path: polygon(
-    0 0, 
-    calc(100% - 20px) 0, 100% 20px, 
-    100% 100%, 
-    20px 100%, 0 calc(100% - 20px)
-  );
+  // clip-path removed to prevent cropping absolute children
 }

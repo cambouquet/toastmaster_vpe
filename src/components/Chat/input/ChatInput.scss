@@ -52,6 +52,28 @@
         &:hover:not(:disabled) { color: $accent-cyan; transform: scale(1.1); }
         &:disabled { opacity: 0.2; cursor: default; }
       }
+
+      .debug-btn {
+        background: transparent;
+        border: none;
+        color: rgba(0, 186, 196, 0.4);
+        cursor: pointer;
+        padding: 5px;
+        display: flex;
+        transition: all 0.3s;
+        
+        &.running {
+          animation: spin 2s linear infinite;
+          color: $accent-cyan;
+        }
+        
+        &.error {
+          color: #ff4444;
+          filter: drop-shadow(0 0 5px #ff4444);
+        }
+        
+        &:hover { color: #fff; }
+      }
     }
 
     .char-count {
@@ -66,4 +88,9 @@
   0% { opacity: 0.3; transform: scale(0.8); }
   50% { opacity: 1; transform: scale(1.2); }
   100% { opacity: 0.3; transform: scale(0.8); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
