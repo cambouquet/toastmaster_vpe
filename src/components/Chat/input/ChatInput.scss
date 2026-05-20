@@ -23,6 +23,22 @@
         display: flex;
         align-items: center;
         gap: 15px;
+
+        .status-orb {
+          width: 4px;
+          height: 4px;
+          background: $accent-cyan;
+          border-radius: 50%;
+          box-shadow: 0 0 5px $accent-cyan;
+          animation: pulse 2s infinite ease-in-out;
+        }
+
+        .char-count {
+          font-size: 0.6rem;
+          font-weight: 800;
+          color: rgba(0, 186, 196, 0.4);
+          letter-spacing: 1px;
+        }
       }
 
       .send-btn {
@@ -43,4 +59,10 @@
       font-family: 'Courier New', monospace;
     }
   }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0.3; transform: scale(0.8); }
 }
