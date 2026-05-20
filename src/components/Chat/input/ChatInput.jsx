@@ -19,11 +19,11 @@ export const ChatInput = ({ onSend }) => {
         <input 
           value={text} 
           onChange={(e) => setText(e.target.value.slice(0, MAX_CHARS))} 
-          placeholder="message vpe..."
+          placeholder="What do you need?"
         />
-        <span className="char-count">
-          {MAX_CHARS - text.length}
-        </span>
+        <div className="input-actions">
+          <span className="char-count">{MAX_CHARS - text.length}</span>
+        </div>
       </div>
     </form>
   );

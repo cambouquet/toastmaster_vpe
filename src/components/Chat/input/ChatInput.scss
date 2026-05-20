@@ -6,28 +6,41 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0,0,0,0.5);
+  background: linear-gradient(to top, rgba(2, 2, 3, 0.95), transparent);
+  padding: 20px 40px 40px;
 
   .chat-input {
-    padding: 1rem 3rem;
-    display: flex;
-    gap: 1.5rem;
-
     .input-container {
-      flex: 1;
+      @include sharp-panel;
+      background: rgba(0, 186, 196, 0.05);
+      padding: 0 20px;
       display: flex;
       align-items: center;
-      position: relative;
+      gap: 15px;
+      border: 1px solid rgba(0, 186, 196, 0.3);
+      
+      .input-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .send-btn {
+        background: transparent;
+        border: none;
+        color: rgba(0, 186, 196, 0.6);
+        cursor: pointer;
+        padding: 5px;
+        transition: all 0.2s;
+        &:hover:not(:disabled) { color: $accent-cyan; transform: scale(1.1); }
+        &:disabled { opacity: 0.2; cursor: default; }
+      }
     }
 
     .char-count {
-      font-size: 0.7rem;
-      color: rgba(255, 255, 255, 0.5);
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      margin-left: 1rem;
-      min-width: 2.5rem;
-      text-align: right;
+      font-size: 0.65rem;
+      color: rgba(0, 186, 196, 0.6);
+      font-family: 'Courier New', monospace;
     }
   }
 }

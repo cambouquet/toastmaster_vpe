@@ -7,15 +7,14 @@ export const MemberCard = ({ name }) => {
 
   return (
     <div className={`member-card ${status.toLowerCase()}`}>
-      <div className="card-glitch-overlay"></div>
       <div className="member-info">
         <span className="name">{name.toUpperCase()}</span>
-        <span className="metadata">PATHWAY: DYNAMIC_LEADERSHIP</span>
+        <span className="metadata">PHW: DYNAMIC_LEADERSHIP</span>
       </div>
       
       <div className="member-stats">
         <div className="stat">
-          <label>LVL</label>
+          <label style={{ opacity: 0.6, fontSize: '0.6rem', color: '#00bac4' }}>LVL</label>
           <div className="progress-bar">
             {Array.from({ length: 5 }).map((_, i) => (
               <div key={i} className={`segment ${i < level ? 'filled' : ''}`} />

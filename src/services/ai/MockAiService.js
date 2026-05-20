@@ -9,6 +9,21 @@ export class MockAiService {
         newState: { theme, status: 'planning' }
       };
     }
+
+    if (input.includes('members') || input.includes('registry')) {
+      return {
+        subtitle: "Accessing encrypted member registry...",
+        newState: { currentScreen: 'members' }
+      };
+    }
+
+    if (input.includes('workspace') || input.includes('back')) {
+      return {
+        subtitle: "Returning to workspace core.",
+        newState: { currentScreen: 'workspace' }
+      };
+    }
+
     return { subtitle: `Processing: ${text}` };
   }
 

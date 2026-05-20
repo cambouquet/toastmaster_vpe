@@ -2,22 +2,17 @@ input {
   flex: 1;
   background: transparent;
   border: none;
-  padding: 1.2rem 0;
+  padding: 1rem 0;
   color: #fff;
   font-family: inherit;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 300;
-  letter-spacing: 0.02em;
   outline: none;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
   &::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(0, 186, 196, 0.6);
     font-weight: 400;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
   }
-
-  &:focus { background: rgba(255, 255, 255, 0.02); }
 }
