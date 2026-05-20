@@ -1,0 +1,35 @@
+@import '../../styles/variables';
+
+.card {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(0, 243, 255, 0.1);
+  padding: 1.8rem;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  min-width: 0; 
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      45deg, transparent 0%, rgba(0, 243, 255, 0.03) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(0, 243, 255, 0.4);
+    &::after { opacity: 1; }
+  }
+
+  &.editing {
+    background: rgba(0, 243, 255, 0.02);
+    border-color: rgba(0, 243, 255, 0.4);
+    cursor: text;
+  }
+}

@@ -1,176 +1,42 @@
-@import '../../styles/variables';
+@import './Card.scss';
+@import './RoleEntry.scss';
+@import './Dropdown.scss';
+@import './Grid.scss';
 
 .workspace-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: auto;
-  gap: 1.5rem;
-  padding: 2rem;
-  
-  .card {
-    background: rgba(255, 255, 255, 0.01);
-    border: 1px solid rgba(0, 243, 255, 0.1);
-    padding: 1.8rem;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-    min-width: 0; 
+  label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: rgba(0, 243, 255, 0.75);
+    display: block;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+  }
+
+  .val-stack {
     position: relative;
+    margin-top: 0.5rem;
+    min-height: 1.8rem;
+  }
 
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        45deg, 
-        transparent 0%, 
-        rgba(0, 243, 255, 0.03) 100%
-      );
-      opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: none; // Crucial: allow clicks to pass through to content
-    }
+  .val, .inline-input {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.2;
+    display: block;
+    width: 100%;
+  }
 
-    &:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(0, 243, 255, 0.4);
-      
-      &::after {
-        opacity: 1;
-      }
-    }
+  .val.hidden { visibility: hidden; }
 
-    &.editing {
-      background: rgba(0, 243, 255, 0.02);
-      border-color: rgba(0, 243, 255, 0.4);
-      cursor: text;
-    }
-
-    label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: rgba(0, 243, 255, 0.75);
-      display: block;
-      margin-bottom: 0.8rem;
-      font-weight: 600;
-    }
-
-    .val-stack {
-      position: relative;
-      margin-top: 0.5rem;
-      min-height: 1.8rem; // Match the line-height of the text
-    }
-
-    .val, .inline-input {
-      font-size: 1.5rem;
-      font-weight: 300;
-      color: #fff;
-      letter-spacing: -0.01em;
-      line-height: 1.2;
-      display: block;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-    }
-
-    .val.hidden {
-      visibility: hidden;
-    }
-
-    .inline-input {
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: transparent;
-      border: none;
-      font-family: inherit;
-      outline: none;
-      -webkit-appearance: none;
-    }
-
-    .role-entry {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      padding: 0.4rem 0.6rem;
-      border-bottom: none;
-      font-size: 0.85rem;
-      gap: 1rem;
-      border-radius: 2px;
-      transition: background 0.2s;
-      cursor: pointer;
-      position: relative;
-      z-index: 5; 
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      &:last-child { border-bottom: none; }
-
-      .role-label { 
-        color: rgba(255, 255, 255, 0.5);
-        font-weight: 400;
-        pointer-events: none;
-      }
-      
-      .role-val {
-        color: rgba(255, 255, 255, 0.9);
-        font-weight: 500;
-        &.open { 
-          color: rgba(0, 243, 255, 0.6); 
-          font-size: 0.8rem;
-        }
-        &.hidden { visibility: hidden; }
-      }
-    }
-
-    .role-input-wrap {
-      display: flex;
-      justify-content: flex-end;
-      min-width: 100px;
-      position: relative;
-    }
-
-    .custom-dropdown {
-      position: absolute;
-      top: calc(100% + 2px);
-      right: -0.6rem; // Compensate for parent padding to align with edge
-      width: 140px;
-      background: #050508;
-      border: none;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
-      z-index: 1000;
-      border-radius: 2px;
-      max-height: 250px;
-      overflow-y: auto;
-      border-right: 2px solid rgba(0, 243, 255, 0.5); // Visual continuity accent
-
-      &::-webkit-scrollbar { width: 2px; }
-      &::-webkit-scrollbar-thumb { background: rgba(0, 243, 255, 0.3); }
-
-      .dropdown-item {
-        padding: 0.5rem 1rem 0.5rem 0.8rem;
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 0.8rem;
-        text-align: right;
-        transition: all 0.15s;
-        border-bottom: none;
-
-        &.clear { 
-          color: rgba(255, 255, 255, 0.25); 
-          font-size: 0.7rem;
-        }
-
-        &.active { color: $accent-cyan; }
-
-        &:hover {
-          background: rgba(0, 243, 255, 0.05);
-          color: #fff;
-        }
-
-        &:last-child { border-bottom: none; }
-      }
-    }
+  .inline-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    border: none;
+    outline: none;
   }
 }

@@ -1,0 +1,30 @@
+@import '../../styles/variables';
+
+.custom-dropdown {
+  position: absolute;
+  top: calc(100% + 2px);
+  right: -0.6rem;
+  width: 140px;
+  background: #050508;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  border-radius: 2px;
+  max-height: 250px;
+  overflow-y: auto;
+  border-right: 2px solid rgba(0, 243, 255, 0.5);
+
+  &::-webkit-scrollbar { width: 2px; }
+  &::-webkit-scrollbar-thumb { background: rgba(0, 243, 255, 0.3); }
+
+  .dropdown-item {
+    padding: 0.5rem 1rem 0.5rem 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    text-align: right;
+    transition: all 0.15s;
+
+    &.clear { color: rgba(255, 255, 255, 0.25); font-size: 0.7rem; }
+    &.active { color: $accent-cyan; }
+    &:hover { background: rgba(0, 243, 255, 0.05); color: #fff; }
+  }
+}
