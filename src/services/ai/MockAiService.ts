@@ -1,11 +1,18 @@
 import { AiService } from './AiService';
+import { CollabResponse } from '../../models/Collaboration';
 
 export class MockAiService implements AiService {
-  async sendMessage(text: string): Promise<string> {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(`VPE Bot: I received "${text}". How can I help you with Toastmasters?`);
-      }, 1000);
-    });
+  async processInput(text: string): Promise<CollabResponse> {
+    if (text.toLowerCase().includes('meeting')) {
+      return { 
+        subtitle: "Initializing meeting planner. What's the theme?",
+        newState: { status: 'planning', roles: { speakers: [] } }
+      };
+    }
+    return { subtitle: `Processing: ${text}` };
+  }
+
+  async handleUiAction(action: string, value: any): Promise<CollabResponse> {
+    return { subtitle: `Updated ${action}`, newState: { [action]: value } };
   }
 }

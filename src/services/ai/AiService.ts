@@ -1,5 +1,6 @@
-import { Message } from '../../models/Message';
+import { CollabResponse } from '../../models/Collaboration';
 
 export interface AiService {
-  sendMessage(text: string): Promise<string>;
+  processInput(text: string): Promise<CollabResponse>;
+  handleUiAction(action: string, value: any): Promise<CollabResponse>;
 }

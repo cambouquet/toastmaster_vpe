@@ -1,0 +1,26 @@
+@import '../../styles/variables';
+
+.subtitles-overlay {
+  position: fixed;
+  bottom: 15vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  text-align: center;
+  pointer-events: none;
+  z-index: 100;
+
+  .caption-text {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    clip-path: polygon(5px 0, 100% 0, 100% 100%, 0 100%, 0 5px);
+    border-left: 3px solid $accent-cyan;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+}

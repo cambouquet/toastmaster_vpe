@@ -1,0 +1,39 @@
+@import '../../styles/variables';
+
+.bottom-input-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid $border-cyan;
+  background: rgba(0,0,0,0.5);
+
+  .chat-input {
+    padding: 1.5rem 3rem;
+    display: flex;
+    gap: 1.5rem;
+
+    input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid $border-cyan;
+      padding: 0.8rem 0;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      outline: none;
+      transition: all 0.3s;
+      &:focus { border-bottom-color: $accent-cyan; }
+    }
+
+    button {
+      background: $accent-cyan;
+      color: #000;
+      border: none;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      clip-path: polygon(10px 0, 100% 0, 100% 100%, 0 100%, 0 10px);
+    }
+  }
+}
