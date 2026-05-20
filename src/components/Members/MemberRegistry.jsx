@@ -1,9 +1,8 @@
 import React from 'react';
-import { CLUB_MEMBERS } from '../../models/Members';
 import { MemberCard } from './MemberCard';
 import './MemberRegistry.scss';
 
-export const MemberRegistry = () => {
+export const MemberRegistry = ({ members, onAction }) => {
   return (
     <div className="member-registry-screen">
       <header className="registry-header">
@@ -11,13 +10,18 @@ export const MemberRegistry = () => {
           MEMBER_DATABASE_V1.0
         </h1>
         <div className="stats-bar">
-          ACTIVE_NODES: {CLUB_MEMBERS.length} | SYNC_STATUS: OPTIMAL
+          ACTIVE_NODES: {members.length} | SYNC_STATUS: OPTIMAL
         </div>
       </header>
       
       <div className="members-grid">
-        {CLUB_MEMBERS.map(member => (
-          <MemberCard key={member} name={member} />
+        {members.map(member => (
+          <MemberCard 
+            key={member.id} 
+            member={member} 
+            onEdit={(updates) => onAction('editMember', updates)}
+            onDelete={(id) => onAction('deleteMember', id)}
+          />
         ))}
       </div>
     </div>

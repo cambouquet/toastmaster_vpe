@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { RoleDropdown } from './RoleDropdown';
 
-export const RoleEntry = ({ label, value, isEditing, onEdit, onBlur }) => {
+export const RoleEntry = ({ label, value, members, isEditing, onEdit, onBlur }) => {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -23,7 +23,13 @@ export const RoleEntry = ({ label, value, isEditing, onEdit, onBlur }) => {
         <div className={`role-val ${!value ? 'open' : ''}`}>
           {value || 'Open'}
         </div>
-        {isEditing && <RoleDropdown value={value} onSelect={onBlur} />}
+        {isEditing && (
+          <RoleDropdown 
+            value={value} 
+            members={members} 
+            onSelect={onBlur} 
+          />
+        )}
       </div>
     </div>
   );

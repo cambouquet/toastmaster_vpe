@@ -22,6 +22,7 @@ export const MeetingWorkspace = ({ state, onAction }) => {
       />
       <RolesSection 
         roles={state.roles} 
+        members={state.members}
         editing={editing} 
         onEdit={setEditing} 
         onAction={onAction} 

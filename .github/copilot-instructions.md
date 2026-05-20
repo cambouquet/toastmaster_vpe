@@ -12,4 +12,5 @@
 - **Scrollbars**: No visible scrollbars. Use `-ms-overflow-style: none`, `scrollbar-width: none`, and `::-webkit-scrollbar { display: none }`.
 - **UI Colors**: Prefer muted tones. Avoid "Aggressive Cyan". Use `$accent-cyan: #00bac4`.
 - **Navigation**: AI-driven via chat, no static menu bars.
+- **Interactions**: Prefer in-place direct editing on click for high-density data. Avoid explicit edit icons.
 - **File Length**: Maximum 42 lines per file.

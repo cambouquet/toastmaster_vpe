@@ -37,23 +37,139 @@
   padding: 20px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   border-color: rgba(0, 186, 196, 0.1);
+  box-sizing: border-box;
+  max-width: 100%;
 
   &:hover {
-    transform: translateY(-2px);
     border-color: rgba(0, 186, 196, 0.4);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   }
 
-  .name { display: block; font-weight: bold; font-size: 1rem; color: rgba(224, 250, 255, 0.9); }
-  .metadata { font-size: 0.65rem; color: $accent-cyan; opacity: 0.6; }
+  .purge-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: $accent-cyan;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    padding: 4px;
+    z-index: 5;
+    &:hover { color: #ff4444; }
+  }
+
+  &:hover .purge-btn {
+    opacity: 0.4;
+    &:hover { opacity: 1; }
+  }
+
+  .member-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .name-in {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed rgba(0, 186, 196, 0.3);
+    color: #fff;
+    font: inherit;
+    font-weight: bold;
+    outline: none;
+    padding: 0;
+    text-transform: uppercase;
+  }
+
+  .pth-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+    
+    .tag {
+      font-size: 0.6rem;
+      background: rgba(0, 186, 196, 0.1);
+      padding: 2px 6px;
+      border-radius: 2px;
+      cursor: pointer;
+      &:hover { background: rgba(255, 68, 68, 0.2); }
+    }
+
+    select {
+      background: transparent;
+      border: 1px dashed rgba(0, 186, 196, 0.2);
+      color: $accent-cyan;
+      font-size: 0.6rem;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+
+  .lvl-ctrl {
+    display: flex;
+    gap: 2px;
+    .seg {
+      width: 12px;
+      height: 4px;
+      background: rgba(0, 186, 196, 0.1);
+      cursor: pointer;
+      &.f { background: $accent-cyan; box-shadow: 0 0 5px $accent-cyan; }
+    }
+  }
+
+  .member-stats label {
+    font-size: 0.6rem;
+    color: $accent-cyan;
+    opacity: 0.6;
+    margin-bottom: 4px;
+    display: block;
+  }
   
   .member-stats {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
+  }
+
+  .card-actions {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    gap: 5px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 10;
+  }
+
+  &:hover .card-actions {
+    opacity: 0.2;
+    &:hover { opacity: 1; }
+  }
+
+  .action-icon {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+
+    &.edit-btn { color: rgba(0, 186, 196, 0.4); &:hover { color: $accent-cyan; } }
+    &.del-btn { color: rgba(255, 0, 0, 0.3); &:hover { color: #ff4444; } }
+  }
+
+  &:hover .card-actions, &.is-editing .card-actions {
+    opacity: 1;
   }
 }
 

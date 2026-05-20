@@ -1,7 +1,7 @@
 import React from 'react';
 import { RoleEntry } from './RoleEntry';
 
-export const RolesSection = ({ roles, editing, onEdit, onBlur, onAction }) => {
+export const RolesSection = ({ roles, members, editing, onEdit, onBlur, onAction }) => {
   const getRoleLabel = (r) => r.charAt(0).toUpperCase() + r.slice(1);
   const isAnyRoleEditing = ['toastmaster', 'timer'].includes(editing);
 
@@ -14,9 +14,10 @@ export const RolesSection = ({ roles, editing, onEdit, onBlur, onAction }) => {
             key={r}
             label={getRoleLabel(r)}
             value={roles[r]}
+            members={members}
             isEditing={editing === r}
             onEdit={() => onEdit(r)}
-            onBlur={(v) => { onEdit(null); if (v) onAction(`roles.${r}`, v); }}
+            onBlur={(v) => { onEdit(null); if (v !== undefined) onAction(`roles.${r}`, v); }}
           />
         ))}
       </div>

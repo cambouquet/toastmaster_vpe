@@ -1,22 +1,21 @@
 import React from 'react';
-import { CLUB_MEMBERS } from '../../../models/Members';
 
-export const RoleDropdown = ({ value, onSelect }) => (
+export const RoleDropdown = ({ value, members = [], onSelect }) => (
   <div className="custom-dropdown">
     <div className="dropdown-item clear" onClick={(e) => {
       e.stopPropagation();
       onSelect('');
     }}>Clear Role</div>
-    {CLUB_MEMBERS.map(m => (
+    {members.map(m => (
       <div 
-        key={m} 
-        className={`dropdown-item ${value === m ? 'active' : ''}`}
+        key={m.id} 
+        className={`dropdown-item ${value === m.name ? 'active' : ''}`}
         onClick={(e) => {
           e.stopPropagation();
-          onSelect(m);
+          onSelect(m.name);
         }}
       >
-        {m} {value === m && '•'}
+        {m.name} {value === m.name && '•'}
       </div>
     ))}
   </div>
