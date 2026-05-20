@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
-import { MeetingState } from '../../models/Collaboration';
 import { EditableCard } from './EditableCard';
 import { RoleEntry } from './RoleEntry';
 import './Workspace.scss';
 
-interface Props { 
-  state: MeetingState; 
-  onAction: (type: string, val: any) => void; 
-}
+export const MeetingWorkspace = ({ state, onAction }) => {
+  const [editing, setEditing] = useState(null);
 
-export const MeetingWorkspace: React.FC<Props> = ({ state, onAction }) => {
-  const [editing, setEditing] = useState<string | null>(null);
-
-  const getRoleLabel = (r: string) => r.charAt(0).toUpperCase() + r.slice(1);
+  const getRoleLabel = (r) => r.charAt(0).toUpperCase() + r.slice(1);
 
   return (
     <div className="workspace-grid" style={{ paddingTop: '4rem' }}>
@@ -30,7 +24,7 @@ export const MeetingWorkspace: React.FC<Props> = ({ state, onAction }) => {
             <RoleEntry 
               key={r}
               label={getRoleLabel(r)}
-              value={(state.roles as any)[r]}
+              value={state.roles[r]}
               isEditing={editing === r}
               onEdit={() => setEditing(r)}
               onBlur={(v) => { setEditing(null); if (v) onAction(`roles.${r}`, v); }}

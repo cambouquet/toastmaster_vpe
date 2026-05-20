@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import './ChatInput.scss';
 
-interface Props { onSend: (text: string) => void; }
-
-export const ChatInput: React.FC<Props> = ({ onSend }) => {
+export const ChatInput = ({ onSend }) => {
   const [text, setText] = useState('');
   const MAX_CHARS = 180;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim()) {
       onSend(text);

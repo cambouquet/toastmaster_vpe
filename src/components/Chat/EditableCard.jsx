@@ -1,19 +1,10 @@
 import React from 'react';
 
-interface Props {
-  label: string;
-  value: string | undefined;
-  isEditing: boolean;
-  onEdit: () => void;
-  onBlur: (val: string) => void;
-  placeholder?: string;
-}
-
-export const EditableCard: React.FC<Props> = ({ 
+export const EditableCard = ({ 
   label, value, isEditing, onEdit, onBlur, placeholder = 'Undefined' 
 }) => {
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') e.target.blur();
   };
 
   return (

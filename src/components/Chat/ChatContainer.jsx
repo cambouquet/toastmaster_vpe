@@ -7,7 +7,7 @@ import { ChatInput } from './ChatInput';
 
 const aiService = new MockAiService();
 
-export const ChatContainer: React.FC = () => {
+export const ChatContainer = () => {
   const { state, subtitle, interact, uiAction } = useCollaboration(aiService);
 
   return (

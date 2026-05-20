@@ -1,20 +1,18 @@
 import { useState } from 'react';
-import { MeetingState } from '../models/Collaboration';
-import { AiService } from '../services/ai/AiService';
 
-export const useCollaboration = (aiService: AiService) => {
-  const [state, setState] = useState<MeetingState>({
+export const useCollaboration = (aiService) => {
+  const [state, setState] = useState({
     status: 'planning', roles: { speakers: [] }
   });
   const [subtitle, setSubtitle] = useState('Standby.');
 
-  const interact = async (input: string) => {
+  const interact = async (input) => {
     const res = await aiService.processInput(input);
     setSubtitle(res.subtitle);
     if (res.newState) setState(prev => ({ ...prev, ...res.newState }));
   };
 
-  const uiAction = async (type: string, val: any) => {
+  const uiAction = async (type, val) => {
     const res = await aiService.handleUiAction(type, val);
     setSubtitle(res.subtitle);
     if (res.newState) {

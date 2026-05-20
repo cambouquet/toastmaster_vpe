@@ -1,18 +1,10 @@
 import React from 'react';
 
-interface Props {
-  label: string;
-  value: string | undefined;
-  isEditing: boolean;
-  onEdit: () => void;
-  onBlur: (val: string) => void;
-}
-
-export const RoleEntry: React.FC<Props> = ({ 
+export const RoleEntry = ({ 
   label, value, isEditing, onEdit, onBlur 
 }) => {
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') (e.target as HTMLInputElement).blur();
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') e.target.blur();
   };
 
   return (

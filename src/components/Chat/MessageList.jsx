@@ -1,8 +1,7 @@
 import React from 'react';
-import { Message } from '../../models/Message';
 import { MessageItem } from './MessageItem';
 
-export const MessageList: React.FC<{ messages: Message[] }> = ({ messages }) => {
+export const MessageList = ({ messages }) => {
   return (
     <div className="message-list">
       {messages.map((msg) => (

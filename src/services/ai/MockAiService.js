@@ -1,8 +1,5 @@
-import { AiService } from './AiService';
-import { CollabResponse } from '../../models/Collaboration';
-
-export class MockAiService implements AiService {
-  async processInput(text: string): Promise<CollabResponse> {
+export class MockAiService {
+  async processInput(text) {
     const input = text.toLowerCase();
     if (input.includes('theme')) {
       const themeMatch = text.match(/theme (will be|is) (.*)/i);
@@ -15,7 +12,7 @@ export class MockAiService implements AiService {
     return { subtitle: `Processing: ${text}` };
   }
 
-  async handleUiAction(action: string, value: any): Promise<CollabResponse> {
+  async handleUiAction(action, value) {
     if (action === 'theme') {
       return { 
         subtitle: `Got it. The theme is now set to ${value}.`, 
