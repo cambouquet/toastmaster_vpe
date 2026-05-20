@@ -1,0 +1,1 @@
+I want to create an application that can act as a VPE for my toastmaster club. I want an app, chatbot style and a bot that can be integrated in whatsapp. Hardcode for now the llm part, i will plug later to a real agemt. but separate well the code. Use react+sass+vite and follow clean code and SOLID principles. Don't write any file with more than 42 lines
