@@ -28,6 +28,7 @@
       );
       opacity: 0;
       transition: opacity 0.2s;
+      pointer-events: none; // Crucial: allow clicks to pass through to content
     }
 
     &:hover {
@@ -92,23 +93,56 @@
       display: grid;
       grid-template-columns: 1fr auto;
       align-items: center;
-      padding: 0.6rem 0;
+      padding: 0.6rem 0.4rem;
       border-bottom: 1px solid rgba(0, 243, 255, 0.1);
       font-size: 0.9rem;
       gap: 1rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+      cursor: pointer;
+      position: relative;
+      z-index: 5; // Lift above card hover overlay
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
 
       &:last-child { border-bottom: none; }
 
       .role-label { 
         color: rgba(255, 255, 255, 0.65);
         font-weight: 400;
+        pointer-events: none;
       }
       
       .role-val {
         color: #fff;
         font-weight: 500;
         &.open { color: $accent-cyan; }
+        &.hidden { visibility: hidden; }
       }
+    }
+
+    .role-input-wrap {
+      display: flex;
+      justify-content: flex-end;
+      min-width: 100px;
+      position: relative;
+    }
+
+    .inline-input-small {
+      position: absolute;
+      right: 0;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: right;
+      width: 154px; // Explicit width to cover potential text
+      outline: none;
+      padding: 0;
     }
   }
 }

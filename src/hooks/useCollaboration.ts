@@ -17,7 +17,17 @@ export const useCollaboration = (aiService: AiService) => {
   const uiAction = async (type: string, val: any) => {
     const res = await aiService.handleUiAction(type, val);
     setSubtitle(res.subtitle);
-    if (res.newState) setState(prev => ({ ...prev, ...res.newState }));
+    if (res.newState) {
+      setState(prev => {
+        const next = { ...prev };
+        if (res.newState?.roles) {
+          next.roles = { ...next.roles, ...res.newState.roles };
+        }
+        if (res.newState?.theme) next.theme = res.newState.theme;
+        if (res.newState?.date) next.date = res.newState.date;
+        return next;
+      });
+    }
   };
 
   return { state, subtitle, interact, uiAction };

@@ -22,6 +22,16 @@ export class MockAiService implements AiService {
         newState: { theme: value } 
       };
     }
+    
+    if (action.startsWith('roles.')) {
+      const role = action.split('.')[1];
+      const roleName = role.charAt(0).toUpperCase() + role.slice(1);
+      return {
+        subtitle: `${roleName} assigned to ${value}. Excellent choice.`,
+        newState: { roles: { [role]: value } }
+      };
+    }
+
     return { subtitle: `Updated ${action}`, newState: { [action]: value } };
   }
 }
