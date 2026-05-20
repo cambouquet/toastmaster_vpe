@@ -1,0 +1,64 @@
+@import '../../styles/variables';
+
+.member-registry-screen {
+  padding: 40px;
+  min-height: 100vh;
+  background: $bg-void;
+  color: $accent-cyan;
+  font-family: 'Courier New', monospace;
+
+  .registry-header {
+    margin-bottom: 40px;
+    border-left: 4px solid $accent-cyan;
+    padding-left: 20px;
+    
+    h1 { margin: 0; font-size: 2rem; letter-spacing: 4px; }
+    .stats-bar { font-size: 0.8rem; opacity: 0.6; margin-top: 10px; }
+  }
+
+  .members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+}
+
+.member-card {
+  @include sharp-panel;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-5px) scale(1.02);
+    border-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+  }
+
+  .name { display: block; font-weight: bold; font-size: 1.1rem; }
+  .metadata { font-size: 0.7rem; color: #fff; opacity: 0.5; }
+  
+  .member-stats {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.progress-bar {
+  display: flex;
+  gap: 3px;
+  margin-top: 5px;
+  .segment {
+    width: 15px; height: 4px; background: rgba(0, 243, 255, 0.1);
+    &.filled { background: $accent-cyan; box-shadow: 0 0 5px $accent-cyan; }
+  }
+}
+
+.status-indicator {
+  font-size: 0.7rem; padding: 2px 8px; border: 1px solid currentColor;
+  &.online { color: $accent-cyan; }
+  &.stdby { color: #555; border-color: #333; }
+}
