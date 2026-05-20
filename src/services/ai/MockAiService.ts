@@ -16,6 +16,12 @@ export class MockAiService implements AiService {
   }
 
   async handleUiAction(action: string, value: any): Promise<CollabResponse> {
+    if (action === 'theme') {
+      return { 
+        subtitle: `Got it. The theme is now set to ${value}.`, 
+        newState: { theme: value } 
+      };
+    }
     return { subtitle: `Updated ${action}`, newState: { [action]: value } };
   }
 }

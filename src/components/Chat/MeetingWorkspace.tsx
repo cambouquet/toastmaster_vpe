@@ -8,11 +8,43 @@ interface Props {
 }
 
 export const MeetingWorkspace: React.FC<Props> = ({ state, onAction }) => {
+  const [isEditingTheme, setIsEditingTheme] = React.useState(false);
+
+  const handleThemeBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    setIsEditingTheme(false);
+    const val = e.target.value.trim();
+    if (val && val !== state.theme) {
+      onAction('theme', val);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      (e.target as HTMLInputElement).blur();
+    }
+  };
+
   return (
     <div className="workspace-grid" style={{ paddingTop: '4rem' }}>
-      <div className="card theme" onClick={() => onAction('theme', 'Prompting Theme...')}>
+      <div 
+        className={`card theme ${isEditingTheme ? 'editing' : ''}`} 
+        onClick={() => !isEditingTheme && setIsEditingTheme(true)}
+      >
         <label>Current Theme</label>
-        <div className="val">{state.theme || 'Undefined'}</div>
+        <div className="val-stack">
+          <div className={`val ${isEditingTheme ? 'hidden' : ''}`}>
+            {state.theme || 'Undefined'}
+          </div>
+          {isEditingTheme && (
+            <input
+              autoFocus
+              className="inline-input"
+              defaultValue={state.theme}
+              onBlur={handleThemeBlur}
+              onKeyDown={handleKeyDown}
+            />
+          )}
+        </div>
       </div>
       <div className="card roles">
         <label>Key Roles</label>

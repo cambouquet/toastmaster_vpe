@@ -11,31 +11,81 @@
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid $border-cyan;
     padding: 1.8rem;
-    transition: all 0.3s;
+    transition: all 0.2s ease-in-out;
     cursor: pointer;
-    min-width: 0; // Prevent content from pushing card width
+    min-width: 0; 
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        45deg, 
+        transparent 0%, 
+        rgba(0, 243, 255, 0.03) 100%
+      );
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
 
     &:hover {
-      background: rgba(0, 243, 255, 0.05);
-      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(0, 243, 255, 0.4);
+      
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    &.editing {
+      background: rgba(0, 243, 255, 0.03);
+      border-color: $accent-cyan;
+      cursor: text;
     }
 
     label {
       font-size: 0.65rem;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      color: rgba(0, 243, 255, 0.5);
+      color: rgba(0, 243, 255, 0.75);
       display: block;
       margin-bottom: 0.8rem;
       font-weight: 600;
     }
 
-    .val {
+    .val-stack {
+      position: relative;
+      margin-top: 0.5rem;
+      min-height: 1.8rem; // Match the line-height of the text
+    }
+
+    .val, .inline-input {
       font-size: 1.5rem;
       font-weight: 300;
       color: #fff;
       letter-spacing: -0.01em;
-      margin-top: 0.5rem;
+      line-height: 1.2;
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .val.hidden {
+      visibility: hidden;
+    }
+
+    .inline-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: transparent;
+      border: none;
+      font-family: inherit;
+      outline: none;
+      -webkit-appearance: none;
     }
 
     .role-entry {
@@ -43,14 +93,14 @@
       grid-template-columns: 1fr auto;
       align-items: center;
       padding: 0.6rem 0;
-      border-bottom: 1px solid rgba(0, 243, 255, 0.05);
+      border-bottom: 1px solid rgba(0, 243, 255, 0.1);
       font-size: 0.9rem;
       gap: 1rem;
 
       &:last-child { border-bottom: none; }
 
       .role-label { 
-        color: $text-secondary;
+        color: rgba(255, 255, 255, 0.65);
         font-weight: 400;
       }
       
