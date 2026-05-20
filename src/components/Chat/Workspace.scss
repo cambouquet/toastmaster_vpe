@@ -8,14 +8,13 @@
   padding: 2rem;
   
   .card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid $border-cyan;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(0, 243, 255, 0.1);
     padding: 1.8rem;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     min-width: 0; 
     position: relative;
-    overflow: hidden;
 
     &::after {
       content: '';
@@ -41,8 +40,8 @@
     }
 
     &.editing {
-      background: rgba(0, 243, 255, 0.03);
-      border-color: $accent-cyan;
+      background: rgba(0, 243, 255, 0.02);
+      border-color: rgba(0, 243, 255, 0.4);
       cursor: text;
     }
 
@@ -93,32 +92,35 @@
       display: grid;
       grid-template-columns: 1fr auto;
       align-items: center;
-      padding: 0.6rem 0.4rem;
-      border-bottom: 1px solid rgba(0, 243, 255, 0.1);
-      font-size: 0.9rem;
+      padding: 0.4rem 0.6rem;
+      border-bottom: none;
+      font-size: 0.85rem;
       gap: 1rem;
-      border-radius: 4px;
+      border-radius: 2px;
       transition: background 0.2s;
       cursor: pointer;
       position: relative;
-      z-index: 5; // Lift above card hover overlay
+      z-index: 5; 
 
       &:hover {
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.05);
       }
 
       &:last-child { border-bottom: none; }
 
       .role-label { 
-        color: rgba(255, 255, 255, 0.65);
+        color: rgba(255, 255, 255, 0.5);
         font-weight: 400;
         pointer-events: none;
       }
       
       .role-val {
-        color: #fff;
+        color: rgba(255, 255, 255, 0.9);
         font-weight: 500;
-        &.open { color: $accent-cyan; }
+        &.open { 
+          color: rgba(0, 243, 255, 0.6); 
+          font-size: 0.8rem;
+        }
         &.hidden { visibility: hidden; }
       }
     }
@@ -130,19 +132,45 @@
       position: relative;
     }
 
-    .inline-input-small {
+    .custom-dropdown {
       position: absolute;
-      right: 0;
-      background: transparent;
+      top: calc(100% + 2px);
+      right: -0.6rem; // Compensate for parent padding to align with edge
+      width: 140px;
+      background: #050508;
       border: none;
-      color: #fff;
-      font-family: inherit;
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-align: right;
-      width: 154px; // Explicit width to cover potential text
-      outline: none;
-      padding: 0;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      border-radius: 2px;
+      max-height: 250px;
+      overflow-y: auto;
+      border-right: 2px solid rgba(0, 243, 255, 0.5); // Visual continuity accent
+
+      &::-webkit-scrollbar { width: 2px; }
+      &::-webkit-scrollbar-thumb { background: rgba(0, 243, 255, 0.3); }
+
+      .dropdown-item {
+        padding: 0.5rem 1rem 0.5rem 0.8rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.8rem;
+        text-align: right;
+        transition: all 0.15s;
+        border-bottom: none;
+
+        &.clear { 
+          color: rgba(255, 255, 255, 0.25); 
+          font-size: 0.7rem;
+        }
+
+        &.active { color: $accent-cyan; }
+
+        &:hover {
+          background: rgba(0, 243, 255, 0.05);
+          color: #fff;
+        }
+
+        &:last-child { border-bottom: none; }
+      }
     }
   }
 }
