@@ -3,8 +3,10 @@ import { RoleEntry } from './RoleEntry';
 
 export const RolesSection = ({ roles, editing, onEdit, onBlur, onAction }) => {
   const getRoleLabel = (r) => r.charAt(0).toUpperCase() + r.slice(1);
+  const isAnyRoleEditing = ['toastmaster', 'timer'].includes(editing);
+
   return (
-    <div className="card roles">
+    <div className={`card roles ${isAnyRoleEditing ? 'editing' : ''}`}>
       <label>Key Roles</label>
       <div className="role-stack">
         {['toastmaster', 'timer'].map(r => (

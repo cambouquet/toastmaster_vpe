@@ -13,10 +13,14 @@ export const RoleEntry = ({ label, value, isEditing, onEdit, onBlur }) => {
   }, [isEditing, onBlur, value]);
 
   return (
-    <div className='role-entry' onClick={onEdit} ref={dropdownRef}>
+    <div 
+      className={`role-entry ${isEditing ? 'editing' : ''}`} 
+      onClick={onEdit} 
+      ref={dropdownRef}
+    >
       <span className='role-label'>{label}</span>
       <div className='role-input-wrap'>
-        <div className={'role-val' + (!value ? ' open' : '')}>
+        <div className={`role-val ${!value ? 'open' : ''}`}>
           {value || 'Open'}
         </div>
         {isEditing && <RoleDropdown value={value} onSelect={onBlur} />}

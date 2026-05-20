@@ -1,5 +1,5 @@
 import React from 'react';
-import { CLUB_MEMBERS } from '../../models/Members';
+import { CLUB_MEMBERS } from '../../../models/Members';
 
 export const RoleDropdown = ({ value, onSelect }) => (
   <div className="custom-dropdown">

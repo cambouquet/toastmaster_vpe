@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EditableCard } from './EditableCard';
+import { EditableCard } from '../shared/EditableCard';
 import { RolesSection } from './RolesSection';
 import './Workspace.scss';
 

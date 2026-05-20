@@ -1,9 +1,9 @@
 import React from 'react';
 import { useCollaboration } from '../../hooks/useCollaboration';
 import { MockAiService } from '../../services/ai/MockAiService';
-import { MeetingWorkspace } from './MeetingWorkspace';
-import { Subtitles } from './Subtitles';
-import { ChatInput } from './ChatInput';
+import { MeetingWorkspace } from './workspace/MeetingWorkspace';
+import { Subtitles } from './messaging/Subtitles';
+import { ChatInput } from './input/ChatInput';
 
 const aiService = new MockAiService();
 

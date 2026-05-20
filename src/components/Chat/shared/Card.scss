@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .card {
   background: rgba(255, 255, 255, 0.01);
@@ -31,5 +31,6 @@
     background: rgba(0, 243, 255, 0.02);
     border-color: rgba(0, 243, 255, 0.4);
     cursor: text;
+    z-index: 50; 
   }
 }

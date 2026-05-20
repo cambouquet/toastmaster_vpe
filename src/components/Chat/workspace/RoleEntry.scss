@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .role-entry {
   display: grid;
@@ -11,7 +11,11 @@
   transition: background 0.2s;
   cursor: pointer;
   position: relative;
-  z-index: 5; 
+  z-index: 1; 
+
+  &.editing {
+    z-index: 100;
+  }
 
   &:hover { background: rgba(255, 255, 255, 0.05); }
 
@@ -27,5 +31,6 @@
       color: rgba(0, 243, 255, 0.6); 
       font-size: 0.8rem;
     }
+    &.hidden { visibility: hidden; }
   }
 }
