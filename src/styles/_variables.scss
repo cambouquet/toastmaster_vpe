@@ -1,0 +1,17 @@
+$bg-void: #020203;
+$accent-cyan: #00f3ff;
+$text-primary: #ffffff;
+$text-secondary: rgba(255, 255, 255, 0.4);
+$border-cyan: rgba(0, 243, 255, 0.2);
+
+@mixin sharp-panel {
+  background: rgba(10, 12, 16, 0.85);
+  backdrop-filter: blur(50px) saturate(200%);
+  border: 1px solid $border-cyan;
+  clip-path: polygon(
+    0 0, 
+    calc(100% - 20px) 0, 100% 20px, 
+    100% 100%, 
+    20px 100%, 0 calc(100% - 20px)
+  );
+}

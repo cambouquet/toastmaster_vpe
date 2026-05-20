@@ -11,7 +11,13 @@ export const ChatContainer: React.FC = () => {
 
   return (
     <div className="chat-container">
-      <header>VPE Toastmaster Assistant</header>
+      <header>
+        <span>Toastmaster // Terminal 2077</span>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div style={{ width: '4px', height: '14px', background: '#00f3ff' }}></div>
+          <span style={{ fontSize: '0.6rem', color: 'rgba(0, 243, 255, 0.4)' }}>Uplink_v2.077</span>
+        </div>
+      </header>
       <MessageList messages={messages} />
       <ChatInput onSend={sendMessage} />
     </div>
