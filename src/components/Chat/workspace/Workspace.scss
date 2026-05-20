@@ -12,6 +12,7 @@
     display: block;
     margin-bottom: 0.8rem;
     font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
   }
 
   .val-stack {
@@ -22,11 +23,12 @@
 
   .val, .inline-input {
     font-size: 1.5rem;
-    font-weight: 300;
+    font-weight: 400;
     color: #fff;
     line-height: 1.2;
     display: block;
     width: 100%;
+    font-family: 'Space Grotesk', sans-serif;
   }
 
   .val.hidden { visibility: hidden; }

@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@100..800&family=Orbitron:wght@400..900&display=swap');
 @import './styles/variables';
 
 body {
   margin: 0;
-  background-color: #050508;
+  background-color: #020205;
   color: #fff;
-  font-family: 'Sora', -apple-system, system-ui, sans-serif;
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -23,7 +23,7 @@ body {
   overflow: hidden;
 }
 
-.debug-panel {
+  .debug-panel {
   position: absolute;
   right: 30px;
   bottom: 140px;
@@ -34,7 +34,7 @@ body {
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(0, 186, 196, 0.05);
   display: flex;
   flex-direction: column;
-  font-family: 'Sora', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   z-index: 1000;
   clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
 
@@ -52,13 +52,24 @@ body {
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid rgba(0, 186, 196, 0.1);
-    
+
     .header-orb {
       width: 6px; height: 6px;
       background: $accent-cyan;
       border-radius: 50%;
       box-shadow: 0 0 8px $accent-cyan;
       margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .header-actions {
+      display: flex; gap: 12px; align-items: center;
+      .clear-btn {
+        background: rgba(0, 186, 196, 0.1); border: 1px solid rgba(0, 186, 196, 0.2);
+        color: $accent-cyan; font-size: 0.5rem; font-weight: 700; padding: 2px 6px;
+        cursor: pointer; transition: 0.2s;
+        &:hover { background: rgba(0, 186, 196, 0.2); }
+      }
     }
 
     .title {
@@ -66,6 +77,7 @@ body {
       font-weight: 800;
       letter-spacing: 0.15em;
       color: rgba(0, 186, 196, 0.8);
+      flex: 1;
     }
 
     .close-btn {
@@ -113,7 +125,6 @@ body {
       &.info .indicator { color: $accent-cyan; }
       &.error .indicator, &.error .msg { color: #ff4d4d; }
       &.warn .indicator, &.warn .msg { color: #ffcc00; }
-      &.debug .indicator, &.debug .msg { color: #888; opacity: 0.6; }
       &.user .msg { color: #fff; border-right: 1px solid rgba(255,255,255,0.1); }
       &.ai .msg { color: $accent-cyan; }
     }

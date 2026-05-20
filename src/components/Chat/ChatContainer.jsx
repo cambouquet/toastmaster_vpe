@@ -6,13 +6,16 @@ import { MemberRegistry } from '../Members/MemberRegistry';
 import { Subtitles } from './messaging/Subtitles';
 import { ChatInput } from './input/ChatInput';
 import { DebugPanel } from '../shared/DebugPanel';
+import { HealthService } from '../../services/system/HealthService';
 
 const aiService = new MockAiService();
 
 export const ChatContainer = () => {
-  const { state, subtitle, interact, uiAction, logs } = useCollaboration(aiService);
+  const { state, subtitle, interact, uiAction, logs, clearLogs } = useCollaboration(aiService);
   const [showDebug, setShowDebug] = useState(false);
   const isWorkspace = state.currentScreen === 'workspace';
+
+  const runHealthCheck = () => HealthService.check(state, logs);
 
   return (
     <div className="chat-container">
@@ -25,7 +28,15 @@ export const ChatContainer = () => {
       <div className="bottom-input-wrap">
         <ChatInput onSend={interact} onToggleDebug={() => setShowDebug(!showDebug)} />
       </div>
-      {showDebug && <DebugPanel logs={logs} state={state} onClose={() => setShowDebug(false)} />}
+      {showDebug && (
+        <DebugPanel 
+          logs={logs} 
+          state={state} 
+          onClose={() => setShowDebug(false)} 
+          onClear={clearLogs}
+          onHealth={runHealthCheck}
+        />
+      )}
     </div>
   );
 };

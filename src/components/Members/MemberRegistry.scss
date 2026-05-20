@@ -7,7 +7,7 @@
   overflow-y: auto;
   background: $bg-void;
   color: $accent-cyan;
-  font-family: 'Courier New', monospace;
+  font-family: 'Space Grotesk', sans-serif;
 
   /* No visible scrollbars */
   -ms-overflow-style: none;
@@ -20,15 +20,28 @@
     border-left: 2px solid rgba(0, 186, 196, 0.4);
     padding-left: 15px;
     
-    h1 { margin: 0; font-size: 1.2rem; letter-spacing: 2px; }
-    .stats-bar { font-size: 0.7rem; opacity: 0.3; margin-top: 5px; }
+    h1 { 
+      margin: 0; 
+      font-size: 1.2rem; 
+      letter-spacing: 0.3em; 
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 800;
+    }
+    .stats-bar { 
+      font-size: 0.7rem; 
+      opacity: 0.5; 
+      margin-top: 5px; 
+      font-family: 'JetBrains Mono', monospace;
+    }
   }
 
   .members-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
+    grid-template-columns: 1fr;
+    gap: 15px;
     padding: 10px 5px;
+    max-width: 800px;
+    margin: 0 auto;
   }
 }
 
@@ -79,10 +92,17 @@
     border-bottom: 1px dashed rgba(0, 186, 196, 0.3);
     color: #fff;
     font: inherit;
-    font-weight: bold;
+    font-weight: 800;
     outline: none;
     padding: 0;
     text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .name {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    letter-spacing: 0.1em;
   }
 
   .pth-tags {
@@ -90,6 +110,8 @@
     flex-wrap: wrap;
     gap: 4px;
     margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0;
     
     .tag {
       font-size: 0.6rem;
@@ -101,12 +123,13 @@
     }
 
     select {
-      background: transparent;
+      background: rgba(2, 2, 5, 0.8);
       border: 1px dashed rgba(0, 186, 196, 0.2);
       color: $accent-cyan;
       font-size: 0.6rem;
       outline: none;
       cursor: pointer;
+      font-family: inherit;
     }
   }
 
@@ -128,6 +151,7 @@
     opacity: 0.6;
     margin-bottom: 4px;
     display: block;
+    font-family: 'JetBrains Mono', monospace;
   }
   
   .member-stats {
@@ -136,6 +160,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
   }
 
   .card-actions {

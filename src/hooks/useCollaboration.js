@@ -5,7 +5,7 @@ import { INITIAL_STATE } from '../data/initialState';
 export const useCollaboration = (aiService) => {
   const [state, setState] = useState(INITIAL_STATE);
   const [subtitle, setSubtitle] = useState('Standby.');
-  const { logs, addLog } = useSystemLogs();
+  const { logs, addLog, clearLogs } = useSystemLogs();
 
   const interact = async (input) => {
     addLog(`User: ${input}`, 'user');
@@ -34,5 +34,5 @@ export const useCollaboration = (aiService) => {
     }
   };
 
-  return { state, subtitle, interact, uiAction, logs };
+  return { state, subtitle, interact, uiAction, logs, clearLogs };
 };
