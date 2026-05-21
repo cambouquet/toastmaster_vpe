@@ -9,9 +9,6 @@ export const MemberRegistry = ({ members, onAction }) => {
         <h1 className="glitch-text" data-text="MEMBERS">
           MEMBERS
         </h1>
-        <div className="stats-bar">
-          ACTIVE MEMBERS: {members.length} &nbsp;|&nbsp; SYSTEM STATUS: OPTIMAL
-        </div>
       </header>
       
       <div className="members-grid">
