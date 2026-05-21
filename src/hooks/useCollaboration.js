@@ -42,8 +42,10 @@ export const useCollaboration = (aiService) => {
     const res = await aiService.processInput(input, state, (streamUpdate) => {
       if (reqId === lastReq.current) {
         setSubtitle(streamUpdate.subtitle);
+        addLog(`Agent: ${streamUpdate.subtitle}`, 'bot');
         if (streamUpdate.newState) {
           setState(p => ({ ...p, ...streamUpdate.newState }));
+          addLog('Artifact synced to local state.', 'info');
         }
       }
     });

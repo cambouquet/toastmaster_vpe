@@ -7,6 +7,10 @@ export const DebugPanel = ({ logs, state, onClose, onClear, onHealth }) => (
       <div className="header-orb" />
       <span className="title">CORE KERNEL V2.0.77</span>
       <div className="header-actions">
+        <button className="clear-btn" onClick={() => {
+          const text = logs.map(l => `[${l.time}] ${l.type.toUpperCase()}: ${l.msg}`).join('\n');
+          navigator.clipboard.writeText(text);
+        }}>COPY ALL</button>
         <button className="clear-btn" onClick={onHealth}>HEALTH</button>
         <button className="clear-btn" onClick={onClear}>CLEAR</button>
         <button className="close-btn" onClick={onClose}>
@@ -20,16 +24,11 @@ export const DebugPanel = ({ logs, state, onClose, onClear, onHealth }) => (
         <span className="key-item warn">▲ WRN</span>
         <span className="key-item error">✖ ERR</span>
       </div>
-      <div className="status-grid">
-        <div className="status-cell">
-          <label>NODE ENV</label>
-          <div className="val">SECURE</div>
-        </div>
-      </div>
       <div className="section scroll-hidden">
         <label>SYSTEM LOG STREAM</label>
         {logs.map((l, i) => (
-          <div key={i} className={`log-entry ${l.type}`}>
+          <div key={i} className={`log-entry ${l.type}`} 
+               onClick={() => navigator.clipboard.writeText(`[${l.time}] ${l.msg}`)}>
             <span className="indicator">•</span>
             <span className="time">{l.time.split(' ')[0]}</span>
             <span className="msg">{l.msg}</span>
