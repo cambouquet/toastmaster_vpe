@@ -4,6 +4,16 @@ import { AgentService } from "./AgentService";
 export class MockAiService {
   async processInput(text, state, onStream) {
     const input = text.toLowerCase();
+    
+    if (input.includes("login as ")) {
+      const name = text.split("login as ")[1].trim();
+      const isVpe = name.toLowerCase().includes("vpe") || name.toLowerCase().includes("president");
+      return {
+        subtitle: `Identity verified: ${name}.`,
+        newState: { currentUser: { name, role: isVpe ? "VPE" : "MEMBER" } }
+      };
+    }
+
     if (input.includes("agent") || input.includes("connect")) {
       return AgentService.streamFromMockAgent(text, onStream);
     }

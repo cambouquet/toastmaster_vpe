@@ -9,11 +9,19 @@ import './Workspace.scss';
 
 export const MeetingWorkspace = ({ state, onAction }) => {
   const [editing, setEditing] = useState(null);
+  const isVpe = state.currentUser?.role === 'VPE';
+
   const handleUpdate = (key, val) => {
     setEditing(null);
+    if (!isVpe) return; // Prevent non-VPE from updating meeting details
     if (val !== undefined) onAction(key, val);
   };
-  const common = { state, editing, onEdit: setEditing, onUpdate: handleUpdate };
+  const common = { 
+    state, 
+    editing, 
+    onEdit: (key) => isVpe && setEditing(key), 
+    onUpdate: handleUpdate 
+  };
 
   return (
     <div className='workspace-screen'>
@@ -24,7 +32,7 @@ export const MeetingWorkspace = ({ state, onAction }) => {
         <MeetingSchedule {...common} />
         <EditableCard 
           label='Meeting Theme' value={state.theme}
-          isEditing={editing === 'theme'} onEdit={() => setEditing('theme')}
+          isEditing={editing === 'theme'} onEdit={() => isVpe && setEditing('theme')}
           onBlur={(val) => handleUpdate('theme', val)}
         />
         <BriefingSection {...common} />
@@ -32,10 +40,12 @@ export const MeetingWorkspace = ({ state, onAction }) => {
         <RolesSection 
           roles={state.roles} members={state.members}
           editing={editing} onEdit={setEditing} onAction={onAction} 
+          currentUser={state.currentUser}
         />
         <SpeakersSection 
           speakers={state.roles.speakers} members={state.members}
           editing={editing} onEdit={setEditing} onAction={onAction} 
+          currentUser={state.currentUser}
         />
       </div>
     </div>

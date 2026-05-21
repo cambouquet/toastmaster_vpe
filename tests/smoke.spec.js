@@ -55,6 +55,11 @@ test('workspace data density check', async ({ page }) => {
 test('role selection logic', async ({ page }) => {
   await page.goto('http://localhost:5177');
   
+  // Login as VPE to allow selection
+  const chatInput = page.locator('.chat-input input');
+  await chatInput.fill('login as VPE David');
+  await chatInput.press('Enter');
+  
   // Find Toastmaster role entry and click it
   const tmRow = page.locator('.role-entry', { hasText: 'Toastmaster' });
   await tmRow.click();
@@ -65,6 +70,40 @@ test('role selection logic', async ({ page }) => {
   // Verify it no longer says "Open" and shows the name
   await expect(tmRow.locator('.role-val')).toHaveText('David Wilson');
   await expect(tmRow.locator('.role-val')).not.toHaveClass(/open/);
+});
+
+test('member permission restrictions', async ({ page }) => {
+  await page.goto('http://localhost:5177');
+  
+  // Login as a normal member
+  const chatInput = page.locator('.chat-input input');
+  await chatInput.fill('login as Elena Rodriguez');
+  await chatInput.press('Enter');
+  
+  // Verify HUD update
+  await expect(page.locator('.system-status-readout')).toContainText('ID: Elena Rodriguez (MEMBER)');
+  
+  // Try to edit Meeting Theme (should be restricted)
+  const themeCard = page.locator('.card', { hasText: 'Meeting Theme' });
+  await themeCard.click();
+  await expect(themeCard).not.toHaveClass(/editing/);
+  
+  // Try to select someone else for a role
+  const toastmasterRow = page.locator('.role-entry', { hasText: 'Toastmaster' });
+  await toastmasterRow.click();
+  
+  // If dropdown opens, it should only contain her name (or be empty if logic is strict)
+  // Our logic allows selecting herself for an empty role.
+  const dropdownItems = page.locator('.dropdown-item');
+  const count = await dropdownItems.count();
+  for (let i = 0; i < count; i++) {
+    const text = await dropdownItems.nth(i).innerText();
+    // Use trim to avoid whitespace issues
+    const cleanText = text.trim();
+    if (cleanText !== 'Clear Role' && cleanText !== 'Elena Rodriguez •' && cleanText !== 'Elena Rodriguez') {
+      throw new Error(`Non-VPE user sees unauthorized member in dropdown: "${cleanText}"`);
+    }
+  }
 });
 
 test('navigation intent', async ({ page }) => {

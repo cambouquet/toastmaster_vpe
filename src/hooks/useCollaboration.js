@@ -3,7 +3,12 @@ import { useSystemLogs } from "./useSystemLogs";
 import { INITIAL_STATE } from "../data/initialState";
 import { useCollaborationEffects } from "./useCollaborationEffects";
 export const useCollaboration = (aiService) => {
-  const [state, setState] = useState({ ...INITIAL_STATE, testStatus: "STANDBY", ackCount: 0 });
+  const [state, setState] = useState({ 
+    ...INITIAL_STATE, 
+    testStatus: "STANDBY", 
+    ackCount: 0,
+    currentUser: { name: "Guest", role: "NONE" } // Mock identity
+  });
   const [subtitle, setSubtitle] = useState("Standby.");
   const { logs, addLog, clearLogs } = useSystemLogs();
   const lastReq = useRef(0), lastInput = useRef(""), lastSent = useRef(""), lastAct = useRef(0);

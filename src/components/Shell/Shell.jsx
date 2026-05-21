@@ -24,6 +24,7 @@ export const Shell = () => {
   return (
     <div className="app-shell">
       <div className="system-status-readout">
+        ID: {state.currentUser.name} ({state.currentUser.role}) &nbsp;|&nbsp; 
         STATUS: OPERATIONAL &nbsp;|&nbsp; NODE: {state.currentScreen.toUpperCase()} &nbsp;|&nbsp; NODES: {isWorkspace ? 11 : state.members.length}
       </div>
       
