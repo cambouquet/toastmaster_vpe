@@ -1,37 +1,24 @@
-import React, { useState } from 'react';
-import { PATHWAYS } from '../../constants/pathways';
-import { PathwayNode } from './PathwayNode';
-
+import React, { useState } from "react";
+import { PATHWAYS } from "../../constants/pathways";
+import { PathwayNode } from "./PathwayNode";
+import { DeleteButton } from "../shared/DeleteButton";
 export const MemberCard = ({ member, onEdit, onDelete }) => {
-  const { id, name, enrolled = [], status } = member;
-  const [editing, setEditing] = useState(false);
-  const [conf, setConf] = useState(false);
+  const { id, name, enrolled = [], status } = member, [edit, setEdit] = useState(false);
   const up = (u) => onEdit({ id, updates: u });
-
-  const setItem = (idx, updates) => {
-    const next = [...enrolled];
-    next[idx] = { ...next[idx], ...updates };
-    up({ enrolled: next });
-  };
-
-  const addPth = (n) => up({ enrolled: [...enrolled, { name: n, level: 1 }] });
-  const delPth = (idx) => up({ enrolled: enrolled.filter((_, i) => i !== idx) });
-
+  const setP = (i, u) => { const n = [...enrolled]; n[i] = { ...n[i], ...u }; up({ enrolled: n }); };
+  const addP = (n) => up({ enrolled: [...enrolled, { name: n, level: 1, projects: 0 }] });
+  const delP = (i) => up({ enrolled: enrolled.filter((_, idx) => idx !== i) });
   return (
-    <div className={`member-card ${status.toLowerCase()} ${editing ? 'edit' : ''}`} onClick={() => setEditing(!editing)} onMouseLeave={() => setConf(false)}>
-      <button className={`purge-btn ${conf ? 'conf' : ''}`} onClick={e => { e.stopPropagation(); if (conf) onDelete(id); else setConf(true); }}>
-        {conf ? 'SURE?' : <svg viewBox="0 0 24 24" width="12"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19V4M6,19A2,2,0,0,0,8,21H16A2,2,0,0,0,18,19V7H6V19Z" /></svg>}
-      </button>
+    <div className={`member-card ${status.toLowerCase()} ${edit ? "edit" : ""}`} onClick={() => setEdit(!edit)}>
+      <DeleteButton onDelete={() => onDelete(id)} className="purge-btn" />
       <div className="member-info">
-        {editing ? <input autoFocus className="name-in" value={name} onClick={e => e.stopPropagation()} onChange={e => up({ name: e.target.value.toUpperCase() })} /> : <span className="name">{name?.toUpperCase()}</span>}
+        {edit ? <input autoFocus className="name-in" value={name} onClick={e => e.stopPropagation()} onChange={e => up({ name: e.target.value.toUpperCase() })} /> : <span className="name">{name?.toUpperCase()}</span>}
         <div className="enrolled-list" onClick={e => e.stopPropagation()}>
-          {enrolled.map((p, i) => (
-            <PathwayNode key={i} item={p} onUpdate={(u) => setItem(i, u)} onRemove={() => delPth(i)} />
-          ))}
-          <PathwayNode isNew available={PATHWAYS.filter(p => !enrolled.find(e => e.name === p))} onUpdate={addPth} />
+          {enrolled.map((p, i) => <PathwayNode key={i} item={p} onUpdate={(u) => setP(i, u)} onRemove={() => delP(i)} />)}
+          <PathwayNode isNew available={PATHWAYS.filter(p => !enrolled.find(e => e.name === p))} onUpdate={addP} />
         </div>
       </div>
-      <div className={`status-indicator ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); up({ status: status === 'ONLINE' ? 'AWAY' : 'ONLINE' }); }}>{status === 'STDBY' ? 'AWAY' : status}</div>
+      <div className={`status-indicator ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}>{status === "STDBY" ? "AWAY" : status}</div>
     </div>
   );
 };

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { PATHWAYS, LVL_REQS } from "../../constants/pathways";
+import { DeleteButton } from "../shared/DeleteButton";
 export const PathwayNode = ({ item, onUpdate, onRemove, isNew, available }) => {
-  const [pick, setPick] = useState(false), [conf, setConf] = useState(false);
+  const [pick, setPick] = useState(false);
   if (isNew) return (
-    <div className="enrolled-item add-node" onMouseEnter={() => setPick(true)} onMouseLeave={() => setPick(false)}>
-      <div className="p-header"><div className="p-selector"><span className="p-name">+ PATHWAY</span>
+    <div className={`enrolled-item add-node ${pick ? "picking" : ""}`} onMouseEnter={() => setPick(true)} onMouseLeave={() => setPick(false)}>
+      <div className="p-header"><div className={`p-selector ${pick ? "open" : ""}`}><span className="p-name">+ PATHWAY</span>
         {pick && <div className="p-options scroll-hidden">{available.map(p => <div key={p} className="p-opt" onClick={() => { onUpdate(p); setPick(false); }}>{p}</div>)}</div>}
       </div></div>
     </div>
@@ -16,14 +17,13 @@ export const PathwayNode = ({ item, onUpdate, onRemove, isNew, available }) => {
     else if (item.level < 5) up({ level: item.level + 1, projects: 0 });
   };
   return (
-    <div className={`enrolled-item ${pick ? "picking" : ""}`} onMouseLeave={() => { setPick(false); setConf(false); }}>
+    <div className={`enrolled-item ${pick ? "picking" : ""}`} onMouseLeave={() => setPick(false)}>
       <div className="p-header">
         <div className={`p-selector ${pick ? "open" : ""}`}>
           <span className="p-name" onClick={() => setPick(!pick)}>{item.name}</span>
           {pick && <div className="p-options scroll-hidden">{PATHWAYS.map(p => <div key={p} className={`p-opt ${p === item.name ? "active" : ""}`} onClick={() => { up({ name: p }); setPick(false); }}>{p}</div>)}</div>}
         </div>
-        <button className="p-del-btn" onClick={() => setConf(true)}>{conf ? "!" : "x"}</button>
-        {conf && <span className="p-conf-t" onClick={() => onRemove()}>SURE?</span>}
+        <DeleteButton onDelete={onRemove} className="p-del-btn" />
       </div>
       <div className="lvl-v2" onClick={next} style={{ cursor: "pointer" }}>
         <div className="lvl-line">{[1, 2, 3, 4, 5].map(v => (

@@ -1,43 +1,13 @@
-@import '../../styles/variables';
-@import './MemberCard.scss';
-@import './PathwayNode.scss';
-
+@import "../../styles/variables";
+@import "./MemberCard.scss";
+@import "./PathwayNode.scss";
+@import "../shared/DeleteButton.scss";
 .member-registry-screen {
-  padding: 0 40px;
-  padding-bottom: 200px;
-  height: 100vh;
-  overflow-y: auto;
-  background: transparent;
-  color: $accent-cyan;
-  font-family: 'Space Grotesk', sans-serif;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar { display: none; }
-
+  padding: 0 40px; padding-bottom: 200px; height: 100vh; overflow-y: auto; background: transparent; color: $accent-cyan; font-family: "Space Grotesk", sans-serif; -ms-overflow-style: none; scrollbar-width: none; &::-webkit-scrollbar { display: none; }
   .registry-header {
-    position: sticky; top: 0; z-index: 100;
-    padding: 60px 0 40px 30px; margin-bottom: 40px;
-    border-left: 4px solid $accent-cyan;
-    background: linear-gradient(90deg, rgba(10, 12, 16, 0.95) 0%, transparent 100%);
-    
-    h1 { 
-      margin: 0; font-size: 1.8rem; letter-spacing: 0.5em; 
-      font-family: 'Orbitron', sans-serif; font-weight: 900;
-      color: #fff; text-shadow: 0 0 15px rgba(0, 186, 196, 0.3);
-    }
-    .stats-bar { 
-      font-size: 0.8rem; opacity: 0.4; margin-top: 12px; 
-      font-family: 'JetBrains Mono', monospace; 
-      letter-spacing: 0.2em;
-    }
+    position: sticky; top: 0; z-index: 100; padding: 60px 0 40px 30px; margin-bottom: 40px; border-left: 4px solid $accent-cyan; background: linear-gradient(90deg, rgba(10, 12, 16, 0.95) 0%, transparent 100%);
+    h1 { margin: 0; font-size: 1.8rem; letter-spacing: 0.5em; font-family: "Orbitron", sans-serif; font-weight: 900; color: #fff; text-shadow: 0 0 15px rgba(0, 186, 196, 0.3); }
+    .stats-bar { font-size: 0.8rem; opacity: 0.4; margin-top: 12px; font-family: "JetBrains Mono", monospace; letter-spacing: 0.2em; }
   }
-
-  .members-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
-    padding: 10px 5px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
+  .members-grid { display: grid; grid-template-columns: 1fr; gap: 15px; padding: 10px 5px; max-width: 800px; margin: 0 auto; }
 }

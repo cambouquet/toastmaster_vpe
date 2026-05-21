@@ -1,0 +1,13 @@
+@import "../../styles/variables";
+.delete-ctrl {
+  display: flex; align-items: center; gap: 8px; position: relative;
+  .del-btn { 
+    background: transparent; border: none; color: $accent-cyan; cursor: pointer; padding: 4px; display: flex; align-items: center; transition: all 0.2s; opacity: 0.4;
+    &:hover { opacity: 1; color: #ff4444; }
+  }
+  .conf-t { 
+    font-family: "JetBrains Mono", monospace; font-size: 0.6rem; font-weight: 800; color: #ff4444; cursor: pointer; letter-spacing: 1px; animation: glitch-blink 0.5s infinite;
+  }
+  &.conf { .del-btn { opacity: 1; color: #ff4444; } }
+}
+@keyframes glitch-blink { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
