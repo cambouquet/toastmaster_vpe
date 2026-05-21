@@ -3,7 +3,7 @@ import { PATHWAYS } from "../../constants/pathways";
 import { PathwayNode } from "./PathwayNode";
 import { DeleteButton } from "../shared/DeleteButton";
 export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
-  const { id, name, enrolled = [], status = 'ONLINE', role = 'MEMBER' } = member, [edit, setEdit] = useState(false);
+  const { id, name, enrolled = [], status = 'ONLINE', role = 'MEMBER', title = 'MEMBER' } = member, [edit, setEdit] = useState(false);
   const isVpe = currentUser?.role === 'VPE';
   const isOwnCard = name === currentUser?.name;
 
@@ -17,35 +17,46 @@ export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
   const cycleRole = (e) => {
     e.stopPropagation();
     if (!isVpe) return;
-    const roles = ['GUEST', 'MEMBER', 'VPE'];
-    const next = roles[(roles.indexOf(role) + 1) % roles.length];
-    up({ role: next });
+    const titles = ['MEMBER', 'PRESIDENT', 'VP EDUCATION', 'VP MEMBERSHIP', 'VP PUBLIC RELATIONS', 'SECRETARY', 'TREASURER', 'SERGEANT AT ARMS'];
+    const next = titles[(titles.indexOf(title) + 1) % titles.length];
+    up({ title: next, role: next === 'VP EDUCATION' ? 'VPE' : 'MEMBER' });
   };
 
   return (
     <div className={`member-card ${status.toLowerCase()} ${role.toLowerCase()} ${edit ? "edit" : ""}`} onClick={() => canEdit && setEdit(!edit)}>
-      <div className="card-controls">
-        <div className={`status-indicator ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); if (canEdit) up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}>{status === "STDBY" ? "AWAY" : status}</div>
-        <div className={`role-tag ${role.toLowerCase()}`} onClick={cycleRole}>{role}</div>
-        {isVpe && <DeleteButton onDelete={() => onDelete(id)} className="purge-btn" />}
+      <div className="card-header-left">
+        <div className={`status-pill ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); if (canEdit) up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}></div>
+        <div className={`role-badge ${role.toLowerCase()}`} onClick={cycleRole}>{title}</div>
       </div>
-      <div className="member-info">
-        {edit ? (
-          <input 
-            autoFocus 
-            className="name-in" 
-            value={name} 
-            onClick={e => e.stopPropagation()} 
-            onKeyDown={e => e.key === 'Enter' && setEdit(false)}
-            onBlur={() => setEdit(false)}
-            onChange={e => up({ name: e.target.value.toUpperCase() })} 
-          />
-        ) : (
-          <span className="name">{name?.toUpperCase()}</span>
-        )}
-        <div className="enrolled-list" onClick={e => e.stopPropagation()}>
-          {enrolled.map((p, i) => <PathwayNode key={p.name} item={p} onUpdate={(u) => setP(i, u)} onRemove={() => delP(i)} />)}
-          <PathwayNode isNew available={PATHWAYS.filter(p => !enrolled.find(e => e.name === p))} onUpdate={addP} />
+      
+      {isVpe && <DeleteButton onDelete={() => onDelete(id)} className="purge-btn" />}
+
+      <div className="member-main-content">
+        <div className="member-info">
+          {edit ? (
+            <input 
+              autoFocus 
+              className="name-in" 
+              value={name} 
+              onClick={e => e.stopPropagation()} 
+              onKeyDown={e => e.key === 'Enter' && setEdit(false)}
+              onBlur={() => setEdit(false)}
+              onChange={e => up({ name: e.target.value.toUpperCase() })} 
+            />
+          ) : (
+            <span className="name">{name?.toUpperCase()}</span>
+          )}
+          <div className="enrolled-list" onClick={e => e.stopPropagation()}>
+            {enrolled.map((p, i) => <PathwayNode key={p.name} item={p} onUpdate={(u) => setP(i, u)} onRemove={() => delP(i)} />)}
+            <PathwayNode isNew available={PATHWAYS.filter(p => !enrolled.find(e => e.name === p))} onUpdate={addP} />
+          </div>
+        </div>
+
+        <div className="profile-photo-slot">
+          <div className="avatar-frame">
+            <div className="glitch-overlay"></div>
+            <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`} alt={name} />
+          </div>
         </div>
       </div>
     </div>
