@@ -1,45 +1,36 @@
-@import '../../styles/variables';
-.enrolled-list { margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 15px; font-family: 'JetBrains Mono', monospace; align-items: flex-start; position: relative; }
+@import "../../styles/variables";
 .enrolled-item {
-  display: flex; flex-direction: column; gap: 4px; font-size: 0.65rem; padding: 0; position: relative; min-width: 145px;
-  .p-header { display: flex; justify-content: flex-start; align-items: center; gap: 6px; width: fit-content; height: 14px; }
-  .p-selector {
-    position: relative; display: flex; align-items: center;
+  display: flex; flex-direction: column; gap: 12px; padding: 12px; border: 1px solid rgba(0, 186, 196, 0.1); background: rgba(0, 0, 0, 0.4); border-radius: 2px; position: relative;
+  &.picking { z-index: 100; border-color: $accent-cyan; }
+  .p-header { display: flex; justify-content: space-between; align-items: center; position: relative; height: 18px; }
+  .p-selector { 
+    font-size: 0.65rem; 
     .p-options { 
-      position: absolute; top: calc(100% + 2px); left: -10px; background: $bg-void; border: 1px solid rgba(0, 186, 196, 0.4); padding: 5px; z-index: 50; width: 140px; max-height: 150px; overflow-y: auto; box-shadow: 0 0 15px rgba(0, 0, 0, 0.9), 0 0 5px $accent-cyan;
-      &::before { content: ''; position: absolute; top: -10px; left: 0; width: 100%; height: 10px; }
+      position: absolute; top: calc(100% + 5px); left: 0; background: #0a0c10; border: 1px solid $accent-cyan; z-index: 1000; width: 170px; max-height: 200px; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
       .p-opt { 
-        padding: 6px 10px; cursor: pointer; transition: all 0.1s;
-        &:hover { background: rgba(0, 186, 196, 0.1); color: #fff; } 
-        &.active { color: #fff; background: rgba(0, 186, 196, 0.25); border-left: none; } 
+        padding: 8px 12px; cursor: pointer; color: rgba(255,255,255,0.5); border-bottom: 1px solid rgba(0, 186, 196, 0.1); font-family: "JetBrains Mono", monospace; font-size: 0.6rem;
+        &:hover { background: rgba(0, 186, 196, 0.2); color: #fff; }
+        &.active { background: rgba(0, 186, 196, 0.3); color: $accent-cyan; font-weight: bold; border-left: 2px solid $accent-cyan; }
       }
     }
   }
-  .p-name { cursor: pointer; opacity: 0.8; font-weight: 600; white-space: nowrap; min-width: 110px; display: inline-block; &:hover { color: #fff; opacity: 1; } &.confirm { color: #ff4444; opacity: 1; } }
-  .p-del-btn { background: transparent; border: none; color: rgba(255, 68, 68, 0.4); cursor: pointer; opacity: 0; transition: all 0.2s; padding: 0; display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; &:hover { color: #ff4444; background: rgba(255, 68, 68, 0.05); } }
-  &:hover .p-del-btn { opacity: 1; }
-  &.add-node { 
-    border: 1px dashed rgba(0, 186, 196, 0.3); padding: 2px 8px; border-radius: 2px; height: auto; transition: all 0.2s; cursor: pointer;
-    &:hover { border-color: $accent-cyan; background: rgba(0, 186, 196, 0.05); }
-    .p-name { min-width: auto; font-weight: 400; font-size: 0.6rem; color: rgba(0, 186, 196, 0.6); pointer-events: none; }
-    .p-header, .p-selector { width: 100%; }
-  }
+  .p-name { color: #fff; font-family: "Orbitron", sans-serif; font-weight: 700; cursor: pointer; letter-spacing: 1px; transition: color 0.2s; &:hover { color: $accent-cyan; } }
+  .p-del-btn { background: transparent; border: none; color: #f44; cursor: pointer; font-size: 0.7rem; opacity: 0.4; &:hover { opacity: 1; } }
+  .p-conf-t { position: absolute; right: 25px; color: #f44; font-size: 0.6rem; cursor: pointer; font-weight: 900; }
+  &.add-node { border-style: dashed; opacity: 0.4; &:hover { opacity: 1; border-color: $accent-cyan; } }
 }
-.lvl-ctrl { 
-  display: flex; gap: 6px; margin-top: 10px;
-  .lvl-sq {
-    width: 24px; height: 24px; border: 1px solid rgba(0, 186, 196, 0.2); background: rgba(0, 0, 0, 0.3);
-    display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;
-    span { font-family: 'Orbitron', sans-serif; font-size: 0.6rem; color: rgba(0, 186, 196, 0.4); }
-    
-    &.m { background: $accent-cyan; border-color: $accent-cyan; span { color: #000; font-weight: 800; } }
-    &.a { 
-      border-color: $accent-cyan; background: rgba(0, 243, 255, 0.05); box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
-      .xp-g { display: grid; gap: 2px; padding: 3px; width: 100%; height: 100%; box-sizing: border-box; }
-      .xp-p { background: rgba(0, 243, 255, 0.1); &.f { background: $accent-cyan; box-shadow: 0 0 5px $accent-cyan; } }
+.lvl-v2 {
+  display: flex; flex-direction: column; gap: 10px;
+  .lvl-line { 
+    display: flex; justify-content: space-between; align-items: center;
+    .l-pt { 
+      position: relative; flex: 1; display: flex; align-items: center;
+      .l-circle { width: 18px; height: 18px; border: 1px solid rgba(0, 186, 196, 0.3); border-radius: 50%; background: #000; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; cursor: pointer; z-index: 2; transition: all 0.2s; span { opacity: 0.6; } }
+      .l-link { flex: 1; height: 1px; background: rgba(0, 186, 196, 0.2); margin: 0; }
+      &.m { .l-circle { background: $accent-cyan; border-color: $accent-cyan; span { color: #000; opacity: 1; font-weight: 900; } } .l-link { background: $accent-cyan; } }
+      &.a { .l-circle { border-color: $accent-cyan; box-shadow: 0 0 10px $accent-cyan; span { color: #fff; opacity: 1; } } }
+      &:last-child { flex: 0; .l-link { display: none; } }
     }
-    &:hover:not(.m) { border-color: #fff; span { color: #fff; } }
   }
+  .xp-line { display: flex; gap: 3px; height: 3px; .x-pt { flex: 1; background: rgba(0, 186, 196, 0.1); cursor: pointer; transition: all 0.2s; &.f { background: $accent-cyan; box-shadow: 0 0 5px $accent-cyan; } &:hover { background: rgba(255, 255, 255, 0.2); } } }
 }
-
-
