@@ -39,7 +39,15 @@ export const useCollaboration = (aiService) => {
     if (!isType) addLog(`User: ${input}`, 'user');
     lastSent.current = input; 
 
-    const res = await aiService.processInput(input, state);
+    const res = await aiService.processInput(input, state, (streamUpdate) => {
+      if (reqId === lastReq.current) {
+        setSubtitle(streamUpdate.subtitle);
+        if (streamUpdate.newState) {
+          setState(p => ({ ...p, ...streamUpdate.newState }));
+        }
+      }
+    });
+
     if (reqId !== lastReq.current) return;
     
     setSubtitle(res.subtitle);
