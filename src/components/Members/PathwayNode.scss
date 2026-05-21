@@ -5,7 +5,9 @@
   .p-header { display: flex; justify-content: flex-start; align-items: center; gap: 6px; width: fit-content; height: 14px; }
   .p-selector {
     position: relative; display: flex; align-items: center;
-    .p-options { position: absolute; top: 20px; left: -10px; background: $bg-void; border: 1px solid rgba(0, 186, 196, 0.4); padding: 5px; z-index: 50; width: 140px; max-height: 150px; overflow-y: auto; box-shadow: 0 0 15px rgba(0, 0, 0, 0.9), 0 0 5px $accent-cyan;
+    .p-options { 
+      position: absolute; top: calc(100% + 2px); left: -10px; background: $bg-void; border: 1px solid rgba(0, 186, 196, 0.4); padding: 5px; z-index: 50; width: 140px; max-height: 150px; overflow-y: auto; box-shadow: 0 0 15px rgba(0, 0, 0, 0.9), 0 0 5px $accent-cyan;
+      &::before { content: ''; position: absolute; top: -10px; left: 0; width: 100%; height: 10px; }
       .p-opt { 
         padding: 6px 10px; cursor: pointer; transition: all 0.1s;
         &:hover { background: rgba(0, 186, 196, 0.1); color: #fff; } 
