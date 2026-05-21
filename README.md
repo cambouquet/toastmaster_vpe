@@ -21,9 +21,9 @@ The project follows a domain-driven structure to ensure separation of concerns b
 npm install
 ```
 
-### Run Dev Server
+### Launch Everything (Keycloak + Frontend + Mock Agent)
 ```bash
-npm run dev # Port 5177
+npm start
 ```
 
 ### Testing

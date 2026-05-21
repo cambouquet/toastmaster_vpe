@@ -1,14 +1,25 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSystemLogs } from "./useSystemLogs";
 import { INITIAL_STATE } from "../data/initialState";
 import { useCollaborationEffects } from "./useCollaborationEffects";
+import { getIdentity } from "../services/auth/KeycloakService";
+
 export const useCollaboration = (aiService) => {
   const [state, setState] = useState({ 
     ...INITIAL_STATE, 
     testStatus: "STANDBY", 
     ackCount: 0,
-    currentUser: { name: "Guest", role: "NONE" } // Mock identity
+    currentUser: getIdentity() 
   });
+  
+  // Update identity if it changes (e.g. after login)
+  useEffect(() => {
+    const identity = getIdentity();
+    if (identity.name !== state.currentUser.name) {
+      setState(s => ({ ...s, currentUser: identity }));
+    }
+  }, []);
+
   const [subtitle, setSubtitle] = useState("Standby.");
   const { logs, addLog, clearLogs } = useSystemLogs();
   const lastReq = useRef(0), lastInput = useRef(""), lastSent = useRef(""), lastAct = useRef(0);

@@ -1,5 +1,16 @@
 # Domain Model: Toastmaster VPE
 
+## Authentication & Identity
+The system uses **Keycloak** for real user management.
+- **Identity Provider**: Keycloak running on port 8080.
+- **Roles**:
+  - `VPE` or `admin`: Full command authority.
+  - `MEMBER`: Restricted self-assignment role.
+  - `NONE` (Guest): Read-only access.
+- **Interaction**:
+  - Typing `login` redirects to the Keycloak SSO.
+  - Typing `logout` clears the session.
+
 ## State Structure
 The application state is managed as a flat object with nested `roles` and `members` logic.
 

@@ -1,0 +1,34 @@
+{
+  "realm": "toastmaster",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "mission-control",
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "webOrigins": ["*"],
+      "redirectUris": ["http://localhost:5177/*"]
+    }
+  ],
+  "roles": {
+    "realm": [
+      { "name": "VPE" },
+      { "name": "MEMBER" },
+      { "name": "GUEST" }
+    ]
+  },
+  "users": [
+    {
+      "username": "vpe",
+      "enabled": true,
+      "realmRoles": ["VPE"],
+      "credentials": [{ "type": "password", "value": "vpe", "temporary": false }]
+    },
+    {
+      "username": "member",
+      "enabled": true,
+      "realmRoles": ["MEMBER"],
+      "credentials": [{ "type": "password", "value": "member", "temporary": false }]
+    }
+  ]
+}

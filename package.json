@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "npm run dev",
+    "start:prod": "podman-compose up -d && npm run dev",
+    "stop": "podman compose down",
     "dev": "concurrently \"npm run dev:fe\" \"npm run dev:be\"",
     "dev:fe": "vite",
     "dev:be": "node mock_agent/server.cjs",
@@ -14,6 +17,7 @@
   "dependencies": {
     "cors": "^2.8.6",
     "express": "^5.2.1",
+    "keycloak-js": "^26.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
