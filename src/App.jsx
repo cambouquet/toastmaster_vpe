@@ -1,6 +1,6 @@
 import React from 'react';
 import { ErrorBoundary } from './components/shared/ErrorBoundary';
-import { ChatContainer } from './components/Chat/ChatContainer';
+import { Shell } from './components/Shell/Shell';
 import './App.scss';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <div className="glitch-scanline"></div>
       <ErrorBoundary>
-        <ChatContainer />
+        <Shell />
       </ErrorBoundary>
     </div>
   );

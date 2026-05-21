@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useCollaboration } from '../../hooks/useCollaboration';
 import { MockAiService } from '../../services/ai/MockAiService';
-import { MeetingWorkspace } from './workspace/MeetingWorkspace';
+import { MeetingWorkspace } from '../Workspace/MeetingWorkspace';
 import { MemberRegistry } from '../Members/MemberRegistry';
-import { Subtitles } from './messaging/Subtitles';
-import { ChatInput } from './input/ChatInput';
+import { Subtitles } from '../Agent/messaging/Subtitles';
+import { ChatInput } from '../Agent/input/ChatInput';
 import { DebugPanel } from '../shared/DebugPanel';
 import { HealthService } from '../../services/system/HealthService';
-import './Chat.scss';
+import './Shell.scss';
 
 const aiService = new MockAiService();
 
-export const ChatContainer = () => {
+export const Shell = () => {
   const { state, subtitle, interact, uiAction, logs, clearLogs } = useCollaboration(aiService);
   const [showDebug, setShowDebug] = useState(false);
   const isWorkspace = state.currentScreen === 'workspace';
@@ -22,7 +22,7 @@ export const ChatContainer = () => {
   };
 
   return (
-    <div className="chat-container">
+    <div className="app-shell">
       {isWorkspace ? (
         <MeetingWorkspace state={state} onAction={uiAction} />
       ) : (
