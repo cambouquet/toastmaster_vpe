@@ -1,179 +1,38 @@
 @import '../../../styles/variables';
 @import './InputBase.scss';
+@import './input-anims';
+@import './input-elements';
 
 .bottom-input-wrap {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 40px;
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 40px; z-index: 10;
   background: linear-gradient(to top, #020205 60%, transparent);
-  z-index: 10;
+}
 
-  .chat-input {
-    .input-container {
-      @include sharp-panel;
-      background: rgba(2, 2, 5, 0.85);
-      padding: 0 20px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      border: 1px solid rgba(0, 186, 196, 0.2);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.2s;
-      --mask-w: calc(var(--tw, 0px) + 70px);
+.chat-input .input-container {
+  @include sharp-panel;
+  background: rgba(2, 2, 5, 0.95);
+  padding: 0 20px; display: flex; align-items: center; gap: 15px;
+  position: relative; overflow: hidden;
 
-      .measure {
-        position: absolute;
-        visibility: hidden;
-        white-space: pre;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1rem;
-        font-weight: 400;
-        pointer-events: none;
-      }
-
-      &::before {
-        content: '';
-        position: absolute;
-        bottom: 0; left: 0;
-        height: 100%;
-        width: 100%;
-        background: $accent-cyan;
-        opacity: 0.08;
-        pointer-events: none;
-        z-index: 0;
-        // Progress Overlay: Fills as you type
-        clip-path: inset(0 calc(100% - var(--mask-w)) 0 0);
-        transition: clip-path 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .pulse-wave {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, 
-          transparent 0%, 
-          rgba(0, 243, 255, 0.05) 30%, 
-          rgba(0, 243, 255, 0.2) 50%, 
-          rgba(0, 243, 255, 0.05) 70%, 
-          transparent 100%
-        );
-        background-size: 300px 100%;
-        background-repeat: no-repeat;
-        background-position: -300px 0;
-        pointer-events: none;
-        z-index: 1;
-        // Match the Progress Overlay exactly
-        clip-path: inset(0 calc(100% - var(--mask-w)) 0 0);
-      }
-
-      &.pulse .pulse-wave {
-        animation: wave-progress 1s cubic-bezier(0.2, 0, 0.2, 1);
-      }
-      
-      input {
-        position: relative;
-        z-index: 1;
-        background: transparent;
-      }
-
-      .input-actions {
-        z-index: 1;
-      }
-      
-      .input-actions {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-
-        .status-orb {
-          width: 4px;
-          height: 4px;
-          background: $accent-cyan;
-          border-radius: 50%;
-          box-shadow: 0 0 5px $accent-cyan;
-        }
-
-        &.pulse .status-orb {
-          animation: orb-ping 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .char-count {
-          font-size: 0.6rem;
-          font-weight: 800;
-          color: rgba(0, 186, 196, 0.4);
-          letter-spacing: 1px;
-          font-family: 'JetBrains Mono', monospace;
-        }
-      }
-
-      .send-btn {
-        background: transparent;
-        border: none;
-        color: rgba(0, 186, 196, 0.6);
-        cursor: pointer;
-        padding: 5px;
-        transition: all 0.2s;
-        &:hover:not(:disabled) { color: $accent-cyan; transform: scale(1.1); }
-        &:disabled { opacity: 0.2; cursor: default; }
-      }
-
-      .debug-btn {
-        background: transparent;
-        border: none;
-        color: rgba(0, 186, 196, 0.4);
-        cursor: pointer;
-        padding: 5px;
-        display: flex;
-        transition: all 0.3s;
-        
-        &.running {
-          animation: spin 2s linear infinite;
-          color: $accent-cyan;
-        }
-        
-        &.error {
-          color: #ff4444;
-          filter: drop-shadow(0 0 5px #ff4444);
-        }
-        
-        &:hover { color: #fff; }
-      }
-    }
+  .pulse-wave {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, 
+      transparent 15%, 
+      rgba(0, 186, 196, 0.4) 40%, 
+      rgba(255, 255, 255, 1) 50%, 
+      rgba(0, 186, 196, 0) 52%
+    );
+    filter: blur(12px) brightness(2);
+    mix-blend-mode: color-dodge;
+    z-index: 2; opacity: 0;
+    pointer-events: none;
   }
-}
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-@keyframes wave-progress {
-  0% { background-position: -300px 0; }
-  100% { background-position: var(--mask-w) 0; }
-}
-
-@keyframes orb-ping {
-  0% { transform: scale(1); box-shadow: 0 0 3px $accent-cyan; opacity: 1; }
-  50% { transform: scale(1.3); box-shadow: 0 0 8px $accent-cyan; opacity: 0.5; }
-  100% { transform: scale(1); box-shadow: 0 0 3px $accent-cyan; opacity: 1; }
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-  0% { opacity: 0.3; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.2); }
-  100% { opacity: 0.3; transform: scale(0.8); }
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  &.pulse {
+    border-color: rgba(0, 186, 196, 0.8);
+    box-shadow: 0 0 30px rgba(0, 186, 196, 0.15);
+    .pulse-wave { animation: energy-sweep 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+  }
 }

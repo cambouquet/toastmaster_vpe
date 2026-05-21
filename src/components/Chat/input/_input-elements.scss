@@ -1,0 +1,36 @@
+@import '../../../styles/variables';
+
+.input-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 5;
+
+  .status-orb {
+    width: 6px; height: 6px;
+    background: $accent-cyan;
+    border-radius: 50%;
+    box-shadow: 0 0 8px $accent-cyan;
+  }
+
+  &.pulse .status-orb { animation: orb-ping 0.8s ease-in-out; }
+
+  .char-count {
+    font-size: 0.6rem;
+    color: rgba($accent-cyan, 0.4);
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+.send-btn, .debug-btn {
+  background: transparent; border: none; cursor: pointer;
+  color: rgba($accent-cyan, 0.4);
+  transition: all 0.3s;
+  &:hover:not(:disabled) { color: #fff; transform: scale(1.1); }
+  &:disabled { opacity: 0.2; }
+}
+
+.debug-btn {
+  &.running { animation: spin 2s linear infinite; color: $accent-cyan; }
+  &.error { color: #ff4444; filter: drop-shadow(0 0 5px #ff4444); }
+}

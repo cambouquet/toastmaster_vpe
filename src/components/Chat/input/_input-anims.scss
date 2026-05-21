@@ -1,0 +1,18 @@
+@import '../../../styles/variables';
+
+@keyframes energy-sweep {
+  0% { transform: translateX(-120%) skewX(-15deg); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateX(120%) skewX(-15deg); opacity: 0; }
+}
+
+@keyframes orb-ping {
+  0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 8px $accent-cyan; }
+  50% { transform: scale(1.8); opacity: 0.4; box-shadow: 0 0 15px $accent-cyan; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
