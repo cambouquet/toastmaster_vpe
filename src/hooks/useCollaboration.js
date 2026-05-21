@@ -18,14 +18,23 @@ export const useCollaboration = (aiService) => {
     if (!isType) addLog(`[USER] ${input}`, "user");
     lastSent.current = input; 
     const res = await aiService.processInput(input, state, (u) => {
-      if (reqId === lastReq.current) { setSubtitle(u.subtitle); addLog(`[AGENT] ${u.subtitle}`, "bot"); up(u.newState); }
+      if (reqId === lastReq.current) { 
+        setSubtitle(u.subtitle); 
+        if (u.subtitle) addLog(`[AGENT] ${u.subtitle}`, "bot"); 
+        up(u.newState); 
+      }
     });
-    if (reqId === lastReq.current) up(res.newState);
+    if (reqId === lastReq.current) {
+      setSubtitle(res.subtitle);
+      if (res.subtitle) addLog(`[AGENT] ${res.subtitle}`, "bot");
+      up(res.newState);
+    }
   };
   const uiAction = async (type, val) => {
     if (type === "RUN_TESTS") return setState(s => ({ ...s, testStatus: "RUNNING" }));
     const res = await aiService.handleUiAction(type, val, state);
     setSubtitle(res.subtitle);
+    if (res.subtitle) addLog(`[SYS] ${res.subtitle}`, "info");
     up(res.newState);
   };
   useCollaborationEffects(lastAct, lastInput, setState, interact);
