@@ -1,15 +1,24 @@
 import React from 'react';
 import { RoleEntry } from './RoleEntry';
 
-export const RolesSection = ({ roles, members, editing, onEdit, onBlur, onAction }) => {
-  const getRoleLabel = (r) => r.charAt(0).toUpperCase() + r.slice(1);
-  const isAnyRoleEditing = ['toastmaster', 'timer'].includes(editing);
+export const RolesSection = ({ roles, members, editing, onEdit, onAction }) => {
+  const getRoleLabel = (r) => {
+    const labels = {
+      toastmaster: 'Toastmaster', genEvaluator: 'General Evaluator',
+      topicsMaster: 'Table Topics Master', timer: 'Timer',
+      grammarian: 'Grammarian', ahCounter: 'Ah-Counter'
+    };
+    return labels[r] || r;
+  };
+
+  const roleKeys = ['toastmaster', 'genEvaluator', 'topicsMaster', 'timer', 'grammarian', 'ahCounter'];
+  const isAnyRoleEditing = roleKeys.includes(editing);
 
   return (
     <div className={`card roles ${isAnyRoleEditing ? 'editing' : ''}`}>
-      <label>Key Roles</label>
+      <label>Meeting Roles</label>
       <div className="role-stack">
-        {['toastmaster', 'timer'].map(r => (
+        {roleKeys.map(r => (
           <RoleEntry 
             key={r}
             label={getRoleLabel(r)}

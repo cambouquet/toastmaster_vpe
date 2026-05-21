@@ -26,6 +26,10 @@ export class MockAiService {
 
   async handleUiAction(action, val, state) {
     console.log(`UI:${action}`, val);
+    const flatKeys = ["theme", "date", "location", "wordOfTheDay", "wordDefinition"];
+    if (flatKeys.includes(action)) {
+      return { subtitle: `${action} updated.`, newState: { [action]: val } };
+    }
     if (action === "editMember") {
       const next = state.members.map(m => m.id === val.id ? { ...m, ...val.updates } : m);
       return { subtitle: "Registry updated.", newState: { members: next } };
@@ -35,8 +39,17 @@ export class MockAiService {
       return { subtitle: "Node purged.", newState: { members: next } };
     }
     if (action.startsWith("roles.")) {
-      const role = action.split(".")[1];
-      return { subtitle: `${role} updated.`, newState: { roles: { [role]: val } } };
+      const parts = action.split(".");
+      if (parts[1] === "speaker") {
+        const field = parts[2];
+        const { id, val: newVal } = val;
+        const nextSpeakers = state.roles.speakers.map(s => 
+          s.id === id ? { ...s, [field]: newVal } : s
+        );
+        return { subtitle: "Speaker updated.", newState: { roles: { ...state.roles, speakers: nextSpeakers } } };
+      }
+      const role = parts[1];
+      return { subtitle: `${role} updated.`, newState: { roles: { ...state.roles, [role]: val } } };
     }
     if (action === "RUN_TESTS") {
       TestRunnerService.runTests().then(res => {

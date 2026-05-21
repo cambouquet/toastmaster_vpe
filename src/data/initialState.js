@@ -1,6 +1,23 @@
 export const INITIAL_STATE = {
   status: 'planning', 
-  roles: { speakers: [] },
+  theme: 'Visionary Futures',
+  date: '2026-05-27',
+  location: 'Terminal 4 / Node-77',
+  wordOfTheDay: 'Resilience',
+  wordDefinition: 'The capacity to recover quickly from difficulties.',
+  roles: { 
+    toastmaster: '', 
+    genEvaluator: '', 
+    topicsMaster: '',
+    timer: '', 
+    grammarian: '', 
+    ahCounter: '',
+    speakers: [
+      { id: 1, name: '', title: '', pathway: '', level: '' },
+      { id: 2, name: '', title: '', pathway: '', level: '' },
+      { id: 3, name: '', title: '', pathway: '', level: '' }
+    ]
+  },
   currentScreen: 'workspace',
   members: [
     { id: '1', name: 'Alice Chen', enrolled: [{ name: 'Dynamic Leadership', level: 3 }], status: 'ONLINE' },

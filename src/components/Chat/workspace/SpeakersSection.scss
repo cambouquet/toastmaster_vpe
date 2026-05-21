@@ -1,0 +1,32 @@
+@import '../../../styles/variables';
+
+.speakers-card {
+  grid-column: span 2;
+
+  .speakers-list {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 1.5rem;
+  }
+
+  .speaker-row {
+    border-left: 2px solid rgba(0, 186, 196, 0.2);
+    padding-left: 1rem;
+  }
+
+  .slot-id {
+    font-size: 0.6rem; font-family: 'JetBrains Mono', monospace; 
+    color: $accent-cyan; opacity: 0.6; margin-bottom: 0.5rem;
+  }
+
+  .speaker-fields {
+    display: flex; flex-direction: column; gap: 0.5rem;
+    
+    input {
+      background: transparent; border: none; border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+      color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem;
+      padding: 0.2rem 0; outline: none; transition: border-color 0.2s;
+      
+      &:focus { border-bottom-color: $accent-cyan; }
+      &::placeholder { color: rgba(255, 255, 255, 0.2); font-size: 0.75rem; }
+    }
+  }
+}
