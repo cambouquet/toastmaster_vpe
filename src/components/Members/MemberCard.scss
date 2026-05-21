@@ -4,7 +4,7 @@
   padding: 20px; position: relative; display: flex; 
   flex-direction: column; transition: all 0.2s; 
   border-color: rgba(0, 186, 196, 0.1); box-sizing: border-box; 
-  max-width: 100%; 
+  max-width: 100%; cursor: pointer;
   
   &:hover, &:has(.picking) { 
     z-index: 1001;

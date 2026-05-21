@@ -13,7 +13,19 @@ export const MemberCard = ({ member, onEdit, onDelete }) => {
       <DeleteButton onDelete={() => onDelete(id)} className="purge-btn" />
       <div className={`status-indicator ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}>{status === "STDBY" ? "AWAY" : status}</div>
       <div className="member-info">
-        {edit ? <input autoFocus className="name-in" value={name} onClick={e => e.stopPropagation()} onChange={e => up({ name: e.target.value.toUpperCase() })} /> : <span className="name">{name?.toUpperCase()}</span>}
+        {edit ? (
+          <input 
+            autoFocus 
+            className="name-in" 
+            value={name} 
+            onClick={e => e.stopPropagation()} 
+            onKeyDown={e => e.key === 'Enter' && setEdit(false)}
+            onBlur={() => setEdit(false)}
+            onChange={e => up({ name: e.target.value.toUpperCase() })} 
+          />
+        ) : (
+          <span className="name">{name?.toUpperCase()}</span>
+        )}
         <div className="enrolled-list" onClick={e => e.stopPropagation()}>
           {enrolled.map((p, i) => <PathwayNode key={p.name} item={p} onUpdate={(u) => setP(i, u)} onRemove={() => delP(i)} />)}
           <PathwayNode isNew available={PATHWAYS.filter(p => !enrolled.find(e => e.name === p))} onUpdate={addP} />
