@@ -31,6 +31,17 @@ export class MockAiService {
   async handleUiAction(action, val, state) {
     const flatKeys = ["theme", "date", "location", "room", "registrationLink", "mapUrl", "zoomLink", "wordOfTheDay", "wordDefinition"];
     if (flatKeys.includes(action)) return { subtitle: `${action} updated.`, newState: { [action]: val } };
+    
+    if (action.startsWith('roles.')) {
+      const parts = action.split('.');
+      if (parts[1] === 'speaker') {
+        const field = parts[2];
+        const next = state.roles.speakers.map(s => s.id === val.id ? { ...s, [field]: val.val } : s);
+        return { subtitle: `Speaker updated.`, newState: { roles: { speakers: next } } };
+      }
+      return { subtitle: `${parts[1]} assigned.`, newState: { roles: { [parts[1]]: val } } };
+    }
+
     if (action === "editMember") {
       const next = state.members.map(m => m.id === val.id ? { ...m, ...val.updates } : m);
       return { subtitle: "Registry updated.", newState: { members: next } };

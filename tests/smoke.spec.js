@@ -52,6 +52,21 @@ test('workspace data density check', async ({ page }) => {
   await expect(page.locator('text=Meeting Roles')).toBeVisible();
 });
 
+test('role selection logic', async ({ page }) => {
+  await page.goto('http://localhost:5177');
+  
+  // Find Toastmaster role entry and click it
+  const tmRow = page.locator('.role-entry', { hasText: 'Toastmaster' });
+  await tmRow.click();
+  
+  // Select David Wilson from dropdown
+  await page.click('.dropdown-item:has-text("David Wilson")');
+  
+  // Verify it no longer says "Open" and shows the name
+  await expect(tmRow.locator('.role-val')).toHaveText('David Wilson');
+  await expect(tmRow.locator('.role-val')).not.toHaveClass(/open/);
+});
+
 test('navigation intent', async ({ page }) => {
   await page.goto('/');
   const chatInput = page.locator('.chat-input input');
