@@ -1,4 +1,4 @@
-@import '../../../styles/variables';
+@import "../../../styles/variables";
 
 .input-actions {
   display: flex;
@@ -18,15 +18,14 @@
   .char-count {
     font-size: 0.6rem;
     color: rgba($accent-cyan, 0.4);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
   }
 }
 
 .send-btn, .debug-btn {
-  background: transparent; border: none; cursor: pointer;
+  background: transparent; border: none;
   color: rgba($accent-cyan, 0.4);
   transition: all 0.3s;
-  &:hover:not(:disabled) { color: #fff; transform: scale(1.1); }
   &:disabled { opacity: 0.2; }
 }
 

@@ -1,27 +1,10 @@
-@import '../../../styles/variables';
-
+@import "../../../styles/variables";
 .subtitles-overlay {
-  position: fixed;
-  bottom: 15vh;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  text-align: center;
-  pointer-events: none;
-  z-index: 100;
-
+  position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%);
+  width: 90%; text-align: center; pointer-events: none; z-index: 10000;
   .caption-text {
-    background: rgba(0, 0, 0, 0.9);
-    color: #fff;
-    display: inline-block;
-    padding: 0.6rem 2rem;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.4;
-    letter-spacing: 0.02em;
-    user-select: text;
-    pointer-events: auto;
-    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.95); color: #fff; display: inline-block; padding: 10px 30px;
+    font-family: "Space Grotesk", sans-serif; font-size: 1.1rem; line-height: 1.4; border-radius: 2px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
   }
 }

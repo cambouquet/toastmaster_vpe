@@ -7,6 +7,7 @@ import { Subtitles } from './messaging/Subtitles';
 import { ChatInput } from './input/ChatInput';
 import { DebugPanel } from '../shared/DebugPanel';
 import { HealthService } from '../../services/system/HealthService';
+import './Chat.scss';
 
 const aiService = new MockAiService();
 

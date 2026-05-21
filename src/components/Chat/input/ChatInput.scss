@@ -1,41 +1,36 @@
-@import '../../../styles/variables';
-@import './InputBase.scss';
-@import './input-anims';
-@import './input-elements';
+@import "../../../styles/variables";
+@import "./InputBase.scss";
+@import "./_input-anims";
+@import "./_input-elements";
 
-.bottom-input-wrap {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 40px; z-index: 10;
-  background: linear-gradient(to top, #020205 60%, transparent);
-}
+.chat-input {
+  .input-container {
+    border-top: 1px solid rgba(0, 186, 196, 0.3);
+    background: rgba(2, 2, 5, 0.95);
+    padding: 0 20px; display: flex; align-items: center; gap: 15px;
+    position: relative; overflow: visible;
+    --wave-end: calc(var(--tw, 0px) + 60px);
 
-.chat-input .input-container {
-  @include multi-border;
-  background: rgba(2, 2, 5, 0.95);
-  padding: 0 20px; display: flex; align-items: center; gap: 15px;
-  position: relative; overflow: hidden;
-  --wave-end: calc(var(--tw, 0px) + 60px);
+    .wave-layer {
+      position: absolute; top: -1px; left: 0; width: var(--wave-end);
+      height: 1px; z-index: 4;
+    }
 
-  .wave-layer {
-    position: absolute; left: 0; width: var(--wave-end);
-    height: 100%; pointer-events: none; z-index: 4;
-  }
+    .pulse-wave {
+      position: absolute; top: 0; left: 0; width: 100%; height: 1px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba($accent-cyan, 0.4), 
+        rgba(255, 255, 255, 0.8), 
+        transparent
+      );
+      mix-blend-mode: screen; opacity: 0;
+      animation: border-wave 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
 
-  .pulse-wave {
-    position: absolute; top: 0; left: 0; width: 100%; height: 1px;
-    background: linear-gradient(90deg, 
-      transparent, 
-      rgba($accent-cyan, 0.4), 
-      rgba(255, 255, 255, 0.8), 
-      transparent
-    );
-    mix-blend-mode: screen; opacity: 0;
-    animation: border-wave 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    &.bottom { top: auto; bottom: 0; }
-  }
-
-  .measure { 
-    position: absolute; visibility: hidden; pointer-events: none; 
-    white-space: pre; font-family: 'Space Grotesk', sans-serif; font-size: 1rem;
+    .measure { 
+      position: absolute; visibility: hidden; 
+      white-space: pre; font-family: "Space Grotesk", sans-serif; font-size: 1rem;
+    }
   }
 }

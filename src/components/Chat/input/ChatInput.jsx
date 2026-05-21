@@ -23,7 +23,7 @@ export const ChatInput = ({ onSend, onType, onToggleDebug, testStatus }) => {
     <form className='chat-input' onSubmit={send}>
       <div className='input-container' style={{ '--tw': `${w}px` }}>
         {waves.map(id => (
-          <div key={id} className='wave-layer'><div className='pulse-wave top'/><div className='pulse-wave bottom'/></div>
+          <div key={id} className='wave-layer'><div className='pulse-wave top'/></div>
         ))}
         <span ref={mRef} className='measure'>{text}</span>
         <input value={text} placeholder='What do you need?'
