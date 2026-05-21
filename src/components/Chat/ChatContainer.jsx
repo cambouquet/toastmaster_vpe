@@ -34,6 +34,7 @@ export const ChatContainer = () => {
           onType={(txt) => interact(txt, true)}
           onToggleDebug={() => setShowDebug(!showDebug)} 
           testStatus={state.testStatus}
+          ackCount={state.ackCount}
         />
       </div>
       {showDebug && (

@@ -10,7 +10,7 @@ export const MemberRegistry = ({ members, onAction }) => {
           MEMBERS
         </h1>
         <div className="stats-bar">
-          ACTIVE MEMBERS: {members.length} | SYSTEM STATUS: OPTIMAL
+          ACTIVE MEMBERS: {members.length} &nbsp;|&nbsp; SYSTEM STATUS: OPTIMAL
         </div>
       </header>
       

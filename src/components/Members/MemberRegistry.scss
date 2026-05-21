@@ -3,11 +3,11 @@
 @import './PathwayNode.scss';
 
 .member-registry-screen {
-  padding: 0 20px;
-  padding-bottom: 120px;
+  padding: 0 40px;
+  padding-bottom: 200px;
   height: 100vh;
   overflow-y: auto;
-  background: $bg-void;
+  background: transparent;
   color: $accent-cyan;
   font-family: 'Space Grotesk', sans-serif;
   -ms-overflow-style: none;
@@ -18,13 +18,9 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: $bg-void;
-    backdrop-filter: blur(8px);
-    padding: 20px 0;
-    padding-left: 15px;
+    padding: 40px 0 20px 15px;
     margin-bottom: 20px;
     border-left: 2px solid rgba(0, 186, 196, 0.4);
-    box-shadow: 0 10px 20px $bg-void;
     h1 { margin: 0; font-size: 1.2rem; letter-spacing: 0.3em; font-family: 'Orbitron', sans-serif; font-weight: 800; }
     .stats-bar { font-size: 0.7rem; opacity: 0.5; margin-top: 5px; font-family: 'JetBrains Mono', monospace; }
   }

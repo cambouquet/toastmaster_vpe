@@ -5,6 +5,7 @@ import { PathwayNode } from './PathwayNode';
 export const MemberCard = ({ member, onEdit, onDelete }) => {
   const { id, name, enrolled = [], status } = member;
   const [editing, setEditing] = useState(false);
+  const [conf, setConf] = useState(false);
   const up = (u) => onEdit({ id, updates: u });
 
   const setItem = (idx, updates) => {
@@ -17,8 +18,10 @@ export const MemberCard = ({ member, onEdit, onDelete }) => {
   const delPth = (idx) => up({ enrolled: enrolled.filter((_, i) => i !== idx) });
 
   return (
-    <div className={`member-card ${status.toLowerCase()} ${editing ? 'edit' : ''}`} onClick={() => setEditing(!editing)}>
-      <button className="purge-btn" onClick={e => { e.stopPropagation(); onDelete(id); }}><svg viewBox="0 0 24 24" width="12"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19V4M6,19A2,2,0,0,0,8,21H16A2,2,0,0,0,18,19V7H6V19Z" /></svg></button>
+    <div className={`member-card ${status.toLowerCase()} ${editing ? 'edit' : ''}`} onClick={() => setEditing(!editing)} onMouseLeave={() => setConf(false)}>
+      <button className={`purge-btn ${conf ? 'conf' : ''}`} onClick={e => { e.stopPropagation(); if (conf) onDelete(id); else setConf(true); }}>
+        {conf ? 'SURE?' : <svg viewBox="0 0 24 24" width="12"><path fill="currentColor" d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19V4M6,19A2,2,0,0,0,8,21H16A2,2,0,0,0,18,19V7H6V19Z" /></svg>}
+      </button>
       <div className="member-info">
         {editing ? <input autoFocus className="name-in" value={name} onClick={e => e.stopPropagation()} onChange={e => up({ name: e.target.value.toUpperCase() })} /> : <span className="name">{name?.toUpperCase()}</span>}
         <div className="enrolled-list" onClick={e => e.stopPropagation()}>
