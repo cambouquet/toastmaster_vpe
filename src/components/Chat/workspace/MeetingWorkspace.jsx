@@ -15,9 +15,7 @@ export const MeetingWorkspace = ({ state, onAction }) => {
     <div className='workspace-screen'>
       <header className="registry-header">
         <h1 className="glitch-text" data-text="NEXT MEETING">NEXT MEETING</h1>
-        <div className="stats-bar">
-          OPERATIONAL THEME: {state.theme?.toUpperCase() || 'NONE'} &nbsp;|&nbsp; ROLE: VPE
-        </div>
+        <div className="stats-bar">ROLE: VPE</div>
       </header>
 
       <div className='workspace-grid'>
