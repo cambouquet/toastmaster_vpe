@@ -11,11 +11,7 @@ export const PathwayNode = ({ item, onUpdate, onRemove, isNew, available }) => {
     </div>
   );
   const up = (u) => onUpdate({ ...item, ...u }), req = LVL_REQS[item.level] || 3;
-  const next = () => {
-    const cp = item.projects || 0;
-    if (cp < req) up({ projects: cp + 1 });
-    else if (item.level < 5) up({ level: item.level + 1, projects: 0 });
-  };
+  const go = (l, p) => p >= (LVL_REQS[l] || 3) && l < 5 ? up({ level: l + 1, projects: 0 }) : up({ level: l, projects: p });
   return (
     <div className={`enrolled-item ${pick ? "picking" : ""}`} onMouseLeave={() => setPick(false)}>
       <div className="p-header">
@@ -25,7 +21,7 @@ export const PathwayNode = ({ item, onUpdate, onRemove, isNew, available }) => {
         </div>
         <DeleteButton onDelete={onRemove} className="p-del-btn" />
       </div>
-      <div className="lvl-v2" onClick={next} style={{ cursor: "pointer" }}>
+      <div className="lvl-v2" onClick={() => go(item.level, (item.projects || 0) + 1)} style={{ cursor: "pointer" }}>
         <div className="lvl-line">{[1, 2, 3, 4, 5].map(v => (
           <div key={v} className={`l-pt ${v < item.level ? "m" : v === item.level ? "a" : ""}`} onClick={(e) => { e.stopPropagation(); up({ level: v, projects: 0 }); }}>
             <div className="l-circle"><span>{v}</span></div>
@@ -33,7 +29,7 @@ export const PathwayNode = ({ item, onUpdate, onRemove, isNew, available }) => {
           </div>
         ))}</div>
         <div className="xp-line">{Array.from({ length: req }).map((_, i) => (
-          <div key={i} className={`x-pt ${i < (item.projects || 0) ? "f" : ""}`} onClick={(e) => { e.stopPropagation(); up({ projects: i + 1 }); }} />
+          <div key={i} className={`x-pt ${i < (item.projects || 0) ? "f" : ""}`} onClick={(e) => { e.stopPropagation(); go(item.level, i + 1); }} />
         ))}</div>
       </div>
     </div>
