@@ -11,6 +11,7 @@ export const MemberCard = ({ member, onEdit, onDelete }) => {
   return (
     <div className={`member-card ${status.toLowerCase()} ${edit ? "edit" : ""}`} onClick={() => setEdit(!edit)}>
       <DeleteButton onDelete={() => onDelete(id)} className="purge-btn" />
+      <div className={`status-indicator ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}>{status === "STDBY" ? "AWAY" : status}</div>
       <div className="member-info">
         {edit ? <input autoFocus className="name-in" value={name} onClick={e => e.stopPropagation()} onChange={e => up({ name: e.target.value.toUpperCase() })} /> : <span className="name">{name?.toUpperCase()}</span>}
         <div className="enrolled-list" onClick={e => e.stopPropagation()}>
@@ -18,7 +19,6 @@ export const MemberCard = ({ member, onEdit, onDelete }) => {
           <PathwayNode isNew available={PATHWAYS.filter(p => !enrolled.find(e => e.name === p))} onUpdate={addP} />
         </div>
       </div>
-      <div className={`status-indicator ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}>{status === "STDBY" ? "AWAY" : status}</div>
     </div>
   );
 };
