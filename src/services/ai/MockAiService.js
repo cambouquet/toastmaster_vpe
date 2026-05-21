@@ -26,7 +26,7 @@ export class MockAiService {
 
   async handleUiAction(action, val, state) {
     console.log(`UI:${action}`, val);
-    const flatKeys = ["theme", "date", "location", "wordOfTheDay", "wordDefinition"];
+    const flatKeys = ["theme", "date", "location", "room", "registrationLink", "mapUrl", "zoomLink", "wordOfTheDay", "wordDefinition"];
     if (flatKeys.includes(action)) {
       return { subtitle: `${action} updated.`, newState: { [action]: val } };
     }
