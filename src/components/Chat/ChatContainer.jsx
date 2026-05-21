@@ -16,8 +16,8 @@ export const ChatContainer = () => {
   const isWorkspace = state.currentScreen === 'workspace';
 
   const runHealthCheck = () => {
-    HealthService.check(state, logs);
     uiAction('RUN_TESTS');
+    return HealthService.check(state, logs);
   };
 
   return (

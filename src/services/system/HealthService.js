@@ -10,7 +10,7 @@ export class HealthService {
       timestamp: new Date().toISOString()
     };
     window._lastHealthReport = report;
-    console.log("HEALTH_REPORT", report);
+    console.log(`[SYS] DIAG_COMPLETE: ${report.status}`);
     return report;
   }
 }
