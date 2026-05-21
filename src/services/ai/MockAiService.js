@@ -3,6 +3,9 @@ import { AgentService } from "./AgentService";
 import { login, logout } from "../auth/KeycloakService";
 
 export class MockAiService {
+  login() { login(); }
+  logout() { logout(); }
+
   async processInput(text, state, onStream) {
     const input = text.toLowerCase();
     

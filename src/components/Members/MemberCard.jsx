@@ -4,7 +4,8 @@ import { PathwayNode } from "./PathwayNode";
 import { DeleteButton } from "../shared/DeleteButton";
 export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
   const { id, name, enrolled = [], status = 'ONLINE', role = 'MEMBER', title = 'MEMBER' } = member, [edit, setEdit] = useState(false);
-  const isVpe = currentUser?.role === 'VPE';
+  const isAdmin = currentUser?.role === 'ADMIN';
+  const isVpe = currentUser?.role === 'VPE' || isAdmin;
   const isOwnCard = name === currentUser?.name;
 
   const up = (u) => onEdit({ id, updates: u });
@@ -23,7 +24,7 @@ export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
   };
 
   return (
-    <div className={`member-card ${status.toLowerCase()} ${role.toLowerCase()} ${edit ? "edit" : ""}`} onClick={() => canEdit && setEdit(!edit)}>
+    <div className={`member-card ${status.toLowerCase()} ${role.toLowerCase()} ${edit ? "edit" : ""} ${canEdit ? "clickable" : ""}`} onClick={() => canEdit && setEdit(!edit)}>
       <div className="card-header-left">
         <div className={`status-pill ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); if (canEdit) up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}></div>
         <div className={`role-badge ${role.toLowerCase()}`} onClick={cycleRole}>{title}</div>

@@ -30,9 +30,14 @@ export const initKeycloak = (onAuthenticated) => {
 
 export const getIdentity = () => {
   if (USE_MOCK) {
+    const isLoggedOut = localStorage.getItem('mock_logged_out') === 'true';
+    if (isLoggedOut) {
+      return { name: "Guest", role: "NONE" };
+    }
     return {
       name: "Dev Admin",
-      role: "VPE",
+      role: "ADMIN",
+      title: "SYSTEM ARCHITECT",
       token: "mock-token"
     };
   }
@@ -51,13 +56,18 @@ export const getIdentity = () => {
 };
 
 export const login = () => {
-  if (USE_MOCK) alert("Mock Login: You are already logged in as VPE.");
-  else keycloak.login();
+  if (USE_MOCK) {
+    localStorage.removeItem('mock_logged_out');
+    window.location.reload();
+  } else keycloak.login();
 };
 
 export const logout = () => {
-  if (USE_MOCK) window.location.reload();
-  else keycloak.logout();
+  if (USE_MOCK) {
+    localStorage.setItem('mock_logged_out', 'true');
+    alert("Mock Session Terminated. Returning to Guest state.");
+    window.location.reload();
+  } else keycloak.logout();
 };
 
 export default keycloak;

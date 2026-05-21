@@ -1,6 +1,6 @@
 export const MEMBERS_DATA = [
   { id: '1', name: 'Alice Chen', role: 'VPE', title: 'VP EDUCATION', enrolled: [{ name: 'Dynamic Leadership', level: 3 }], status: 'ONLINE' },
-  { id: '0', name: 'Dev Admin', role: 'VPE', title: 'SYSTEM ARCHITECT', enrolled: [], status: 'ONLINE' },
+  { id: '0', name: 'Dev Admin', role: 'ADMIN', title: 'SYSTEM ARCHITECT', enrolled: [], status: 'ONLINE' },
   { id: '2', name: 'Bob Smith', role: 'MEMBER', title: 'PRESIDENT', enrolled: [{ name: 'Strategic Relationships', level: 2 }], status: 'ONLINE' },
   { id: '3', name: 'Catherine Miller', role: 'MEMBER', title: 'VP MEMBERSHIP', enrolled: [{ name: 'Presentation Mastery', level: 5 }], status: 'STDBY' },
   { id: '4', name: 'David Wilson', role: 'MEMBER', title: 'SECRETARY', enrolled: [{ name: 'Innovative Planning', level: 1 }], status: 'ONLINE' },

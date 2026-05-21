@@ -19,7 +19,7 @@ export const RolesSection = ({ roles, members, editing, onEdit, onAction, curren
       <label>Meeting Roles</label>
       <div className="role-stack">
         {roleKeys.map(r => {
-          const isVpe = currentUser?.role === 'VPE';
+          const isVpe = currentUser?.role === 'VPE' || currentUser?.role === 'ADMIN';
           const isMember = currentUser?.role === 'MEMBER';
           const isOwnRole = roles[r] === currentUser?.name;
           const canEdit = isVpe || (isMember && (!roles[r] || roles[r] === 'Open' || isOwnRole));

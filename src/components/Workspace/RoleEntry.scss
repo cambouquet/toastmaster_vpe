@@ -9,9 +9,10 @@
   gap: 1rem;
   border-radius: 2px;
   transition: background 0.2s;
-  cursor: pointer;
   position: relative;
   z-index: 1; 
+
+  &.clickable { cursor: pointer; }
 
   &.editing {
     z-index: 100;

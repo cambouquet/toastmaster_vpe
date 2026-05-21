@@ -26,6 +26,9 @@ export const Shell = () => {
       <div className="system-status-readout">
         ID: {state.currentUser.name} ({state.currentUser.role}) &nbsp;|&nbsp; 
         STATUS: OPERATIONAL &nbsp;|&nbsp; NODE: {state.currentScreen.toUpperCase()} &nbsp;|&nbsp; NODES: {isWorkspace ? 11 : state.members.length}
+        <button className="auth-btn" onClick={() => (state.currentUser.role === 'NONE' || state.currentUser.name === 'Guest' ? aiService.login() : aiService.logout())}>
+          {state.currentUser.role === 'NONE' || state.currentUser.name === 'Guest' ? 'AUTH_UPLINK' : 'DISCONNECT'}
+        </button>
       </div>
       
       {isWorkspace ? (

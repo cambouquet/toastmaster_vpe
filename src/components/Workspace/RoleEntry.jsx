@@ -14,7 +14,7 @@ export const RoleEntry = ({ label, value, members, isEditing, onEdit, onBlur }) 
 
   return (
     <div 
-      className={`role-entry ${isEditing ? 'editing' : ''}`} 
+      className={`role-entry ${onEdit ? 'clickable' : ''} ${isEditing ? 'editing' : ''}`} 
       onClick={onEdit} 
       ref={dropdownRef}
     >

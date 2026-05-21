@@ -9,7 +9,7 @@ import './Workspace.scss';
 
 export const MeetingWorkspace = ({ state, onAction }) => {
   const [editing, setEditing] = useState(null);
-  const isVpe = state.currentUser?.role === 'VPE';
+  const isVpe = state.currentUser?.role === 'VPE' || state.currentUser?.role === 'ADMIN';
 
   const handleUpdate = (key, val) => {
     setEditing(null);

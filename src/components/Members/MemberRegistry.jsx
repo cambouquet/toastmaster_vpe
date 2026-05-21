@@ -3,6 +3,8 @@ import { MemberCard } from './MemberCard';
 import './MemberRegistry.scss';
 
 export const MemberRegistry = ({ members, onAction, currentUser }) => {
+  const isAdmin = currentUser?.role === 'ADMIN';
+
   const addMember = () => {
     const name = prompt("Enter Member Name:");
     if (!name) return;
@@ -16,6 +18,15 @@ export const MemberRegistry = ({ members, onAction, currentUser }) => {
     });
   };
 
+  const visibleMembers = members.filter(m => {
+    // Admin sees everyone
+    if (isAdmin) return true;
+    // Don't show Admin to others
+    if (m.role === 'ADMIN') return false;
+    // Don't show Guests to others
+    return m.role !== 'GUEST';
+  });
+
   return (
     <div className="member-registry-screen">
       <header className="registry-header">
@@ -28,7 +39,7 @@ export const MemberRegistry = ({ members, onAction, currentUser }) => {
       </header>
       
       <div className="members-grid">
-        {members.filter(m => m.role !== 'GUEST').map(member => (
+        {visibleMembers.map(member => (
           <MemberCard 
             key={member.id} 
             member={member} 

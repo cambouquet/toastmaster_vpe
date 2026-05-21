@@ -4,9 +4,10 @@
   @include multi-border;
   padding: 1.8rem;
   transition: all 0.2s ease-in-out;
-  cursor: pointer;
   min-width: 0; 
   position: relative;
+
+  &.clickable { cursor: pointer; }
 
   &::after {
     content: '';

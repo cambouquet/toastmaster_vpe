@@ -3,7 +3,7 @@ import { RoleEntry } from './RoleEntry';
 import './SpeakersSection.scss';
 
 export const SpeakersSection = ({ speakers, members, editing, onEdit, onAction, currentUser }) => {
-  const isVpe = currentUser?.role === 'VPE';
+  const isVpe = currentUser?.role === 'VPE' || currentUser?.role === 'ADMIN';
   return (
     <div className='card speakers-card'>
       <label>Speakers & Evaluations</label>

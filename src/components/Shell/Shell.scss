@@ -3,7 +3,16 @@
 .system-status-readout {
   position: fixed; top: 15px; right: 40px; 
   font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: rgba(0, 186, 196, 0.4);
-  letter-spacing: 0.1em; pointer-events: none; z-index: 9998;
+  letter-spacing: 0.1em; z-index: 9998;
+  display: flex; align-items: center; gap: 15px;
+
+  .auth-btn {
+    pointer-events: auto;
+    background: transparent; border: 1px solid rgba(0, 186, 196, 0.3);
+    color: rgba(0, 186, 196, 0.6); font-family: inherit; font-size: 0.55rem; padding: 2px 8px;
+    cursor: pointer; transition: all 0.2s;
+    &:hover { background: rgba(0, 186, 196, 0.8); color: #000; border-color: transparent; }
+  }
 }
 .bottom-input-wrap {
   position: fixed; bottom: 0; left: 0; right: 0; padding: 0 40px; 
