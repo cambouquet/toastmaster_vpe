@@ -1,8 +1,7 @@
 @import '../../../styles/variables';
 
 .card {
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px solid rgba(0, 243, 255, 0.1);
+  @include multi-border;
   padding: 1.8rem;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
@@ -14,7 +13,7 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(
-      45deg, transparent 0%, rgba(0, 243, 255, 0.03) 100%
+      45deg, transparent 0%, rgba(0, 186, 196, 0.05) 100%
     );
     opacity: 0;
     transition: opacity 0.2s;
@@ -22,8 +21,10 @@
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(0, 243, 255, 0.4);
+    background: 
+      linear-gradient(rgba(10, 12, 16, 0.95), rgba(10, 12, 16, 0.95)) padding-box,
+      linear-gradient(135deg, #ff0055, #00ffaa, #0055ff) border-box;
+    animation: border-flow 4s linear infinite;
     &::after { opacity: 1; }
   }
 

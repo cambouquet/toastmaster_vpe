@@ -6,6 +6,7 @@ import './App.scss';
 function App() {
   return (
     <div className="App">
+      <div className="glitch-scanline"></div>
       <ErrorBoundary>
         <ChatContainer />
       </ErrorBoundary>

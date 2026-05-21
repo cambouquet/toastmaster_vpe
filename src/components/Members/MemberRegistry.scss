@@ -15,14 +15,21 @@
   &::-webkit-scrollbar { display: none; }
 
   .registry-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    padding: 40px 0 20px 15px;
-    margin-bottom: 20px;
-    border-left: 2px solid rgba(0, 186, 196, 0.4);
-    h1 { margin: 0; font-size: 1.2rem; letter-spacing: 0.3em; font-family: 'Orbitron', sans-serif; font-weight: 800; }
-    .stats-bar { font-size: 0.7rem; opacity: 0.5; margin-top: 5px; font-family: 'JetBrains Mono', monospace; }
+    position: sticky; top: 0; z-index: 100;
+    padding: 60px 0 40px 30px; margin-bottom: 40px;
+    border-left: 4px solid $accent-cyan;
+    background: linear-gradient(90deg, rgba(10, 12, 16, 0.95) 0%, transparent 100%);
+    
+    h1 { 
+      margin: 0; font-size: 1.8rem; letter-spacing: 0.5em; 
+      font-family: 'Orbitron', sans-serif; font-weight: 900;
+      color: #fff; text-shadow: 0 0 15px rgba(0, 186, 196, 0.3);
+    }
+    .stats-bar { 
+      font-size: 0.8rem; opacity: 0.4; margin-top: 12px; 
+      font-family: 'JetBrains Mono', monospace; 
+      letter-spacing: 0.2em;
+    }
   }
 
   .members-grid {

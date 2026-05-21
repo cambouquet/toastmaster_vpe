@@ -15,7 +15,9 @@ export const MeetingWorkspace = ({ state, onAction }) => {
     <div className='workspace-screen'>
       <header className="registry-header">
         <h1 className="glitch-text" data-text="NEXT MEETING">NEXT MEETING</h1>
-        <div className="stats-bar">ROLE: VPE</div>
+        <div className="stats-bar">
+          ROLE: VPE &nbsp;|&nbsp; SESSION: {new Date().toLocaleDateString()} &nbsp;|&nbsp; STATUS: OPTIMAL
+        </div>
       </header>
 
       <div className='workspace-grid'>

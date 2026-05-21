@@ -3,10 +3,23 @@ $accent-cyan: #00bac4;
 $text-primary: #e0faff;
 $text-secondary: rgba(224, 250, 255, 0.3);
 $border-cyan: rgba(0, 186, 196, 0.15);
+$gradient-mutli: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(0, 255, 0, 0.05), rgba(0, 186, 196, 0.2));
 
 @mixin sharp-panel {
   background: rgba(10, 12, 16, 0.85);
   backdrop-filter: blur(50px) saturate(200%);
   border: 1px solid $border-cyan;
   // clip-path removed to prevent cropping absolute children
+}
+
+@mixin multi-border {
+  border: 1px solid transparent;
+  background: 
+    linear-gradient(rgba(10, 12, 16, 0.95), rgba(10, 12, 16, 0.95)) padding-box,
+    linear-gradient(135deg, rgba(255,0,0,0.1), rgba(0,255,0,0.05), rgba(0,186,196,0.3)) border-box;
+}
+
+@keyframes border-flow {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
 }
