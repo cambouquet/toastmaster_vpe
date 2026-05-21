@@ -20,15 +20,16 @@ export const RolesSection = ({ roles, members, editing, onEdit, onAction, curren
       <div className="role-stack">
         {roleKeys.map(r => {
           const isVpe = currentUser?.role === 'VPE';
+          const isMember = currentUser?.role === 'MEMBER';
           const isOwnRole = roles[r] === currentUser?.name;
-          const canEdit = isVpe || (!roles[r] || roles[r] === 'Open' || isOwnRole);
+          const canEdit = isVpe || (isMember && (!roles[r] || roles[r] === 'Open' || isOwnRole));
 
           return (
             <RoleEntry 
               key={r}
               label={getRoleLabel(r)}
               value={roles[r]}
-              members={isVpe ? members : members.filter(m => m.name === currentUser?.name)}
+              members={isVpe ? members : (isMember ? members.filter(m => m.name === currentUser?.name) : [])}
               isEditing={editing === r}
               onEdit={() => canEdit && onEdit(r)}
               onBlur={(v) => { 

@@ -14,24 +14,24 @@ export const SpeakersSection = ({ speakers, members, editing, onEdit, onAction, 
             <div className='speaker-config'>
               <RoleEntry 
                 label="Speaker" value={s.name} 
-                members={isVpe ? members : members.filter(m => m.name === currentUser?.name)}
+                members={isVpe ? members : (currentUser?.role === 'MEMBER' ? members.filter(m => m.name === currentUser?.name) : [])}
                 isEditing={editing === `spk-${s.id}`} 
-                onEdit={() => (isVpe || !s.name || s.name === currentUser?.name) && onEdit(`spk-${s.id}`)}
+                onEdit={() => (isVpe || (currentUser?.role === 'MEMBER' && (!s.name || s.name === currentUser?.name))) && onEdit(`spk-${s.id}`)}
                 onBlur={(v) => { onEdit(null); onAction('roles.speaker.name', { id: s.id, val: v }); }}
               />
               <div className="title-input">
                 <label className="sub-label">Speech Title</label>
                 <input 
                   defaultValue={s.title}
-                  disabled={!isVpe && s.name !== currentUser?.name}
+                  disabled={!isVpe && (currentUser?.role !== 'MEMBER' || s.name !== currentUser?.name)}
                   onBlur={(e) => onAction('roles.speaker.title', { id: s.id, val: e.target.value })}
                 />
               </div>
               <RoleEntry 
                 label="Evaluator" value={s.evaluator} 
-                members={isVpe ? members : members.filter(m => m.name === currentUser?.name)}
+                members={isVpe ? members : (currentUser?.role === 'MEMBER' ? members.filter(m => m.name === currentUser?.name) : [])}
                 isEditing={editing === `eval-${s.id}`} 
-                onEdit={() => (isVpe || !s.evaluator || s.evaluator === currentUser?.name) && onEdit(`eval-${s.id}`)}
+                onEdit={() => (isVpe || (currentUser?.role === 'MEMBER' && (!s.evaluator || s.evaluator === currentUser?.name))) && onEdit(`eval-${s.id}`)}
                 onBlur={(v) => { onEdit(null); onAction('roles.speaker.evaluator', { id: s.id, val: v }); }}
               />
             </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { MemberCard } from './MemberCard';
 import './MemberRegistry.scss';
 
-export const MemberRegistry = ({ members, onAction }) => {
+export const MemberRegistry = ({ members, onAction, currentUser }) => {
   return (
     <div className="member-registry-screen">
       <header className="registry-header">
@@ -18,6 +18,7 @@ export const MemberRegistry = ({ members, onAction }) => {
             member={member} 
             onEdit={(updates) => onAction('editMember', updates)}
             onDelete={(id) => onAction('deleteMember', id)}
+            currentUser={currentUser}
           />
         ))}
       </div>

@@ -2,16 +2,22 @@ import React, { useState } from "react";
 import { PATHWAYS } from "../../constants/pathways";
 import { PathwayNode } from "./PathwayNode";
 import { DeleteButton } from "../shared/DeleteButton";
-export const MemberCard = ({ member, onEdit, onDelete }) => {
+export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
   const { id, name, enrolled = [], status } = member, [edit, setEdit] = useState(false);
+  const isVpe = currentUser?.role === 'VPE';
+  const isOwnCard = name === currentUser?.name;
+
   const up = (u) => onEdit({ id, updates: u });
   const setP = (i, u) => { const n = [...enrolled]; n[i] = { ...n[i], ...u }; up({ enrolled: n }); };
   const addP = (n) => up({ enrolled: [...enrolled, { name: n, level: 1, projects: 0 }] });
   const delP = (i) => up({ enrolled: enrolled.filter((_, idx) => idx !== i) });
+  
+  const canEdit = isVpe || isOwnCard;
+
   return (
-    <div className={`member-card ${status.toLowerCase()} ${edit ? "edit" : ""}`} onClick={() => setEdit(!edit)}>
-      <DeleteButton onDelete={() => onDelete(id)} className="purge-btn" />
-      <div className={`status-indicator ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}>{status === "STDBY" ? "AWAY" : status}</div>
+    <div className={`member-card ${status.toLowerCase()} ${edit ? "edit" : ""}`} onClick={() => canEdit && setEdit(!edit)}>
+      {isVpe && <DeleteButton onDelete={() => onDelete(id)} className="purge-btn" />}
+      <div className={`status-indicator ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); if (canEdit) up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}>{status === "STDBY" ? "AWAY" : status}</div>
       <div className="member-info">
         {edit ? (
           <input 

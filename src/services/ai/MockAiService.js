@@ -5,12 +5,14 @@ export class MockAiService {
   async processInput(text, state, onStream) {
     const input = text.toLowerCase();
     
-    if (input.includes("login as ")) {
-      const name = text.split("login as ")[1].trim();
-      const isVpe = name.toLowerCase().includes("vpe") || name.toLowerCase().includes("president");
+    if (input.includes("login as ") || input === "logout") {
+      const name = input === "logout" ? "guest" : text.split(/login as /i)[1].trim();
+      const isGuest = name.toLowerCase() === "guest";
+      const isVpe = !isGuest && (name.toLowerCase().includes("vpe") || name.toLowerCase().includes("president"));
+      
       return {
-        subtitle: `Identity verified: ${name}.`,
-        newState: { currentUser: { name, role: isVpe ? "VPE" : "MEMBER" } }
+        subtitle: isGuest ? "Identity cleared. Access restricted." : `Identity verified: ${name}.`,
+        newState: { currentUser: { name: isGuest ? "Guest" : name, role: isGuest ? "NONE" : (isVpe ? "VPE" : "MEMBER") } }
       };
     }
 

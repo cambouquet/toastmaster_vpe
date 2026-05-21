@@ -106,6 +106,27 @@ test('member permission restrictions', async ({ page }) => {
   }
 });
 
+test('guest readonly enforcement', async ({ page }) => {
+  await page.goto('http://localhost:5177');
+  
+  // Default user is Guest (NONE)
+  await expect(page.locator('.system-status-readout')).toContainText('ID: Guest (NONE)');
+  
+  // Try to click any role (should not be editable)
+  const tmRow = page.locator('.role-entry', { hasText: 'Toastmaster' });
+  await tmRow.click();
+  await expect(tmRow).not.toHaveClass(/editing/);
+  
+  // Go to members and try to edit a card
+  await page.locator('.chat-input input').fill('go to members');
+  await page.locator('.chat-input input').press('Enter');
+  
+  const firstCard = page.locator('.member-card').first();
+  await firstCard.click();
+  await expect(firstCard).not.toHaveClass(/edit/);
+  await expect(page.locator('.purge-btn')).not.toBeVisible();
+});
+
 test('navigation intent', async ({ page }) => {
   await page.goto('/');
   const chatInput = page.locator('.chat-input input');

@@ -31,7 +31,7 @@ export const Shell = () => {
       {isWorkspace ? (
         <MeetingWorkspace state={state} onAction={uiAction} />
       ) : (
-        <MemberRegistry members={state.members} onAction={uiAction} />
+        <MemberRegistry members={state.members} onAction={uiAction} currentUser={state.currentUser} />
       )}
 
       {subtitle && subtitle !== 'Standby.' && <Subtitles text={subtitle} />}
