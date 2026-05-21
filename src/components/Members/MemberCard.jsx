@@ -14,7 +14,7 @@ export const MemberCard = ({ member, onEdit, onDelete }) => {
       <div className="member-info">
         {edit ? <input autoFocus className="name-in" value={name} onClick={e => e.stopPropagation()} onChange={e => up({ name: e.target.value.toUpperCase() })} /> : <span className="name">{name?.toUpperCase()}</span>}
         <div className="enrolled-list" onClick={e => e.stopPropagation()}>
-          {enrolled.map((p, i) => <PathwayNode key={i} item={p} onUpdate={(u) => setP(i, u)} onRemove={() => delP(i)} />)}
+          {enrolled.map((p, i) => <PathwayNode key={p.name} item={p} onUpdate={(u) => setP(i, u)} onRemove={() => delP(i)} />)}
           <PathwayNode isNew available={PATHWAYS.filter(p => !enrolled.find(e => e.name === p))} onUpdate={addP} />
         </div>
       </div>

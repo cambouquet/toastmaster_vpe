@@ -26,8 +26,8 @@ export const DebugPanel = ({ logs, state, onClose, onClear, onHealth }) => {
       <div className="debug-content scroll-hidden">
         <label>SYSTEM LOGS</label>
         <div className="scroll-hidden" style={{ flex: 1, overflowY: "auto" }}>
-          {logs.map((l, i) => (
-            <div key={i} className={`log-entry ${l.type}`} onClick={() => copy(`[${l.time}] ${l.msg}`)}>
+          {logs.map((l) => (
+            <div key={l.id} className={`log-entry ${l.type}`} onClick={() => copy(`[${l.time}] ${l.msg}`)}>
               <span className="time">{l.time.split(" ")[0]}</span>
               <span className="msg">{l.msg}</span>
             </div>

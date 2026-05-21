@@ -7,20 +7,12 @@ export const useSystemLogs = () => {
   const addLog = useCallback((msg, type = 'info') => {
     const text = typeof msg === 'object' ? JSON.stringify(msg) : String(msg);
     setLogs(prev => [{ 
+      id: Math.random().toString(36).substr(2, 9),
       time: new Date().toLocaleTimeString(), 
       msg: text, 
       type 
     }, ...prev].slice(0, 25));
   }, []);
-
-  useEffect(() => {
-    const originals = { log: console.log, error: console.error, warn: console.warn, info: console.info };
-    console.log = (...args) => { originals.log(...args); addLog(args[0], 'info'); };
-    console.info = (...args) => { originals.info(...args); addLog(args[0], 'info'); };
-    console.error = (...args) => { originals.error(...args); addLog(args[0], 'error'); };
-    console.warn = (...args) => { originals.warn(...args); addLog(args[0], 'warn'); };
-    return () => Object.assign(console, originals);
-  }, [addLog]);
 
   return { logs, addLog, clearLogs };
 };

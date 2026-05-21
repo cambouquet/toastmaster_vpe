@@ -1,5 +1,10 @@
 @import "../../styles/variables";
 .chat-container { display: flex; flex-direction: column; height: 100vh; width: 100vw; position: relative; overflow: hidden; }
+.system-status-readout {
+  position: fixed; top: 15px; right: 40px; 
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: rgba(0, 186, 196, 0.4);
+  letter-spacing: 0.1em; pointer-events: none; z-index: 9998;
+}
 .bottom-input-wrap {
   position: fixed; bottom: 0; left: 0; right: 0; padding: 0 40px; 
   background: #020205; z-index: 9999;

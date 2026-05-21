@@ -10,7 +10,7 @@ export const ChatInput = ({ onSend, onType, onToggleDebug, testStatus, ackCount 
 
   useEffect(() => {
     if (!ackCount) return;
-    const id = Date.now();
+    const id = `wave-${ackCount}-${Math.random().toString(36).substr(2, 9)}`;
     setWaves(v => [...v.slice(-2), id]);
     setTimeout(() => setWaves(v => v.filter(i => i !== id)), 2000);
   }, [ackCount]);

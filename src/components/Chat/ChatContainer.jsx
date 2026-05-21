@@ -29,6 +29,9 @@ export const ChatContainer = () => {
         <MemberRegistry members={state.members} onAction={uiAction} />
       )}
       {subtitle && subtitle !== 'Standby.' && <Subtitles text={subtitle} />}
+      <div className="system-status-readout">
+        STATUS: OPERATIONAL &nbsp;|&nbsp; NODE: {state.currentScreen} &nbsp;|&nbsp; NODES: {isWorkspace ? 11 : state.members.length}
+      </div>
       <div className="bottom-input-wrap">
         <ChatInput 
           onSend={(txt) => interact(txt)} 
