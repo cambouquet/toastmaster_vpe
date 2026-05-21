@@ -1,0 +1,23 @@
+export const MEMBERS_DATA = [
+  { id: '1', name: 'Alice Chen', role: 'VPE', title: 'VP EDUCATION', enrolled: [{ name: 'Dynamic Leadership', level: 3 }], status: 'ONLINE' },
+  { id: '0', name: 'Dev Admin', role: 'VPE', title: 'SYSTEM ARCHITECT', enrolled: [], status: 'ONLINE' },
+  { id: '2', name: 'Bob Smith', role: 'MEMBER', title: 'PRESIDENT', enrolled: [{ name: 'Strategic Relationships', level: 2 }], status: 'ONLINE' },
+  { id: '3', name: 'Catherine Miller', role: 'MEMBER', title: 'VP MEMBERSHIP', enrolled: [{ name: 'Presentation Mastery', level: 5 }], status: 'STDBY' },
+  { id: '4', name: 'David Wilson', role: 'MEMBER', title: 'SECRETARY', enrolled: [{ name: 'Innovative Planning', level: 1 }], status: 'ONLINE' },
+  { id: '5', name: 'Elena Rodriguez', role: 'MEMBER', title: 'TREASURER', enrolled: [{ name: 'Leadership Development', level: 4 }], status: 'ONLINE' },
+  { id: '6', name: 'Frank Thompson', role: 'GUEST', title: 'GUEST', enrolled: [{ name: 'Effective Coaching', level: 2 }], status: 'STDBY' },
+  { id: '7', name: 'Grace Lee', role: 'MEMBER', title: 'SERGEANT AT ARMS', enrolled: [{ name: 'Team Collaboration', level: 3 }], status: 'ONLINE' },
+  { id: '8', name: 'Henry Ford', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Engaging Humor', level: 1 }], status: 'ONLINE' },
+  { id: '9', name: 'Ivy Watson', role: 'MEMBER', title: 'VP PUBLIC RELATIONS', enrolled: [{ name: 'Persuasive Influence', level: 4 }], status: 'ONLINE' },
+  { id: '10', name: 'Jack Reacher', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Motivational Strategies', level: 2 }], status: 'STDBY' },
+  { id: '11', name: 'Karen Page', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Visionary Communication', level: 3 }], status: 'ONLINE' },
+  { id: '12', name: 'Leo Messi', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Mastering Fundamentals', level: 1 }], status: 'ONLINE' },
+  { id: '13', name: 'Mia Khalifa', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Leadership Development', level: 2 }], status: 'ONLINE' },
+  { id: '14', name: 'Noah Ark', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Team Collaboration', level: 5 }], status: 'ONLINE' },
+  { id: '15', name: 'Olivia Pope', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Dynamic Leadership', level: 2 }], status: 'STDBY' },
+  { id: '16', name: 'Peter Parker', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Innovative Planning', level: 3 }], status: 'ONLINE' },
+  { id: '17', name: 'Quinn Fabray', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Strategic Relationships', level: 1 }], status: 'ONLINE' },
+  { id: '18', name: 'Riley Reid', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Engaging Humor', level: 4 }], status: 'ONLINE' },
+  { id: '19', name: 'Sam Fisher', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Persuasive Influence', level: 2 }], status: 'STDBY' },
+  { id: '20', name: 'Toby Flenderson', role: 'MEMBER', title: 'MEMBER', enrolled: [{ name: 'Presentation Mastery', level: 1 }], status: 'ONLINE' }
+];

@@ -12,6 +12,29 @@ export const useCollaboration = (aiService) => {
     currentUser: getIdentity() 
   });
   
+  // Load persisted state on mount
+  useEffect(() => {
+    fetch('http://localhost:3001/api/state')
+      .then(r => r.json())
+      .then(data => {
+        if (data && data.members && data.members.length > 0) {
+          setState(s => ({ ...s, members: data.members }));
+        }
+      })
+      .catch(e => console.error("Persistence Load Error:", e));
+  }, []);
+
+  // Sync state to backend when members change
+  useEffect(() => {
+    if (state.members !== INITIAL_STATE.members) {
+      fetch('http://localhost:3001/api/state', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ members: state.members })
+      }).catch(e => console.error("Persistence Sync Error:", e));
+    }
+  }, [state.members]);
+
   // Update identity if it changes (e.g. after login)
   useEffect(() => {
     const identity = getIdentity();

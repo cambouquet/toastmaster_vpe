@@ -58,6 +58,10 @@ export class MockAiService {
       const next = state.members.map(m => m.id === val.id ? { ...m, ...val.updates } : m);
       return { subtitle: "Registry updated.", newState: { members: next } };
     }
+    if (action === "addMember") {
+      const next = [...state.members, val];
+      return { subtitle: "New node synchronized.", newState: { members: next } };
+    }
     if (action === "deleteMember") return { subtitle: "Node purged.", newState: { members: state.members.filter(m => m.id !== val) } };
     return { subtitle: "Action processed.", newState: { [action]: val } };
   }

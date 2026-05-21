@@ -3,12 +3,28 @@ import { MemberCard } from './MemberCard';
 import './MemberRegistry.scss';
 
 export const MemberRegistry = ({ members, onAction, currentUser }) => {
+  const addMember = () => {
+    const name = prompt("Enter Member Name:");
+    if (!name) return;
+    onAction('addMember', {
+      id: Date.now().toString(),
+      name: name.toUpperCase(),
+      role: 'MEMBER',
+      title: 'MEMBER',
+      enrolled: [],
+      status: 'ONLINE'
+    });
+  };
+
   return (
     <div className="member-registry-screen">
       <header className="registry-header">
-        <h1 className="glitch-text" data-text="MEMBERS">
-          MEMBERS
-        </h1>
+        <div className="header-left">
+          <h1 className="glitch-text" data-text="MEMBERS">
+            MEMBERS
+          </h1>
+          <button className="add-member-btn" onClick={addMember}>+</button>
+        </div>
       </header>
       
       <div className="members-grid">
