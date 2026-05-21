@@ -12,7 +12,7 @@ export const MemberRegistry = ({ members, onAction, currentUser }) => {
       </header>
       
       <div className="members-grid">
-        {members.map(member => (
+        {members.filter(m => m.role !== 'GUEST').map(member => (
           <MemberCard 
             key={member.id} 
             member={member} 

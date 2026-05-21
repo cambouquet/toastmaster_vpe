@@ -3,7 +3,7 @@ import { PATHWAYS } from "../../constants/pathways";
 import { PathwayNode } from "./PathwayNode";
 import { DeleteButton } from "../shared/DeleteButton";
 export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
-  const { id, name, enrolled = [], status } = member, [edit, setEdit] = useState(false);
+  const { id, name, enrolled = [], status = 'ONLINE', role = 'MEMBER' } = member, [edit, setEdit] = useState(false);
   const isVpe = currentUser?.role === 'VPE';
   const isOwnCard = name === currentUser?.name;
 
@@ -14,10 +14,21 @@ export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
   
   const canEdit = isVpe || isOwnCard;
 
+  const cycleRole = (e) => {
+    e.stopPropagation();
+    if (!isVpe) return;
+    const roles = ['GUEST', 'MEMBER', 'VPE'];
+    const next = roles[(roles.indexOf(role) + 1) % roles.length];
+    up({ role: next });
+  };
+
   return (
-    <div className={`member-card ${status.toLowerCase()} ${edit ? "edit" : ""}`} onClick={() => canEdit && setEdit(!edit)}>
-      {isVpe && <DeleteButton onDelete={() => onDelete(id)} className="purge-btn" />}
-      <div className={`status-indicator ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); if (canEdit) up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}>{status === "STDBY" ? "AWAY" : status}</div>
+    <div className={`member-card ${status.toLowerCase()} ${role.toLowerCase()} ${edit ? "edit" : ""}`} onClick={() => canEdit && setEdit(!edit)}>
+      <div className="card-controls">
+        <div className={`status-indicator ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); if (canEdit) up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}>{status === "STDBY" ? "AWAY" : status}</div>
+        <div className={`role-tag ${role.toLowerCase()}`} onClick={cycleRole}>{role}</div>
+        {isVpe && <DeleteButton onDelete={() => onDelete(id)} className="purge-btn" />}
+      </div>
       <div className="member-info">
         {edit ? (
           <input 
