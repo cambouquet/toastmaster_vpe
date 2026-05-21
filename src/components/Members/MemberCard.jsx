@@ -25,13 +25,7 @@ export const MemberCard = ({ member, onEdit, onDelete }) => {
           {enrolled.map((p, i) => (
             <PathwayNode key={i} item={p} onUpdate={(u) => setItem(i, u)} onRemove={() => delPth(i)} />
           ))}
-          <div className="add-node">
-            <select className="add-pth-sel" onChange={e => addPth(e.target.value)} value="">
-              <option value="" disabled>+</option>
-              {PATHWAYS.filter(p => !enrolled.find(e => e.name === p)).map(p => <option key={p} value={p}>{p}</option>)}
-            </select>
-            <div className="add-visual">+</div>
-          </div>
+          <PathwayNode isNew available={PATHWAYS.filter(p => !enrolled.find(e => e.name === p))} onUpdate={addPth} />
         </div>
       </div>
       <div className={`status-indicator ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); up({ status: status === 'ONLINE' ? 'AWAY' : 'ONLINE' }); }}>{status === 'STDBY' ? 'AWAY' : status}</div>

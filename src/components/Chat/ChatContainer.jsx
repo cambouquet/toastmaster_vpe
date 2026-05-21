@@ -30,7 +30,8 @@ export const ChatContainer = () => {
       {subtitle && subtitle !== 'Standby.' && <Subtitles text={subtitle} />}
       <div className="bottom-input-wrap">
         <ChatInput 
-          onSend={interact} 
+          onSend={(txt) => interact(txt)} 
+          onType={(txt) => interact(txt, true)}
           onToggleDebug={() => setShowDebug(!showDebug)} 
           testStatus={state.testStatus}
         />

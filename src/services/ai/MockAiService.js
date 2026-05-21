@@ -21,7 +21,7 @@ export class MockAiService {
         newState: { currentScreen: isMem ? "members" : "workspace" } 
       };
     }
-    return { subtitle: `Processing: ${text}` };
+    return { subtitle: "" };
   }
 
   async handleUiAction(action, val, state) {

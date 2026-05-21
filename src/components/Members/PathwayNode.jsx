@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
 import { PATHWAYS } from '../../constants/pathways';
 
-export const PathwayNode = ({ item, onUpdate, onRemove }) => {
+export const PathwayNode = ({ item, onUpdate, onRemove, isNew = false, available = [] }) => {
   const [pick, setPick] = useState(false);
   const [conf, setConf] = useState(false);
   
-  const handleDel = () => {
-    if (conf) onRemove();
-    else setConf(true);
-  };
+  const handleDel = () => conf ? onRemove() : setConf(true);
+
+  if (isNew) return (
+    <div 
+      className={`enrolled-item add-node ${pick ? 'open' : ''}`} 
+      onMouseEnter={() => setPick(true)}
+      onMouseLeave={() => setPick(false)}
+    >
+      <div className="p-header">
+        <div className={`p-selector ${pick ? 'open' : ''}`}>
+          <span className="p-name">+ PATHWAY</span>
+          {pick && <div className="p-options scroll-hidden">
+            {available.map(p => <div key={p} className="p-opt" onClick={() => { onUpdate(p); setPick(false); }}>{p}</div>)}
+          </div>}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="enrolled-item" onMouseLeave={() => { setPick(false); setConf(false); }}>
