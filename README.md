@@ -1,0 +1,42 @@
+# Toastmaster VPE Mission Control
+
+A high-density "Cyber-Noir" command shell for managing Toastmaster club education and meetings. This application prioritizes data density, tactical in-place editing, and AI-driven collaboration.
+
+## Core Architecture
+
+The project follows a domain-driven structure to ensure separation of concerns between the Agent, Meeting Workspace, and Member Registry.
+
+### Directory Overview
+- `src/components/Shell/`: structural parent, manages high-level routing and the global Status HUD.
+- `src/components/Workspace/`: The Dashboard for meeting planning (11 distinct metadata nodes).
+- `src/components/Agent/`: AI interaction interface, including `ChatInput` with transmission pulse.
+- `src/components/Members/`: Registry for member profiles, pathways, and status tracking.
+- `src/services/ai/`: Brain of the application, handling intent resolution and UI actions.
+- `src/hooks/`: Reactive state management (e.g., `useCollaboration` orchestrates AI and UI sync).
+
+## Development
+
+### Setup
+```bash
+npm install
+```
+
+### Run Dev Server
+```bash
+npm run dev # Port 5177
+```
+
+### Testing
+```bash
+npx playwright test
+```
+
+## UI Principles
+- **Tactical Editing**: No explicit save buttons. Edit items directly in-place.
+- **Cyber-Noir Aesthetic**: Muted cyan (`#00bac4`) on ultra-dark backgrounds.
+- **Max File length**: No file exceeds 42 lines.
+- **No Scrollbars**: Clean, fixed-layout interface.
+
+## Documentation
+- See [CODING_GUIDELINES.md](CODING_GUIDELINES.md) for strict architectural and design rules.
+- See `.github/copilot-instructions.md` for AI agent operational constraints.
