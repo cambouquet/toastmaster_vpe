@@ -16,13 +16,17 @@
 }
 
 @keyframes signal-scan {
-  0% { color: rgba(0, 186, 196, 0.2); }
-  50% { color: #00bac4; text-shadow: 0 0 5px #00bac4; }
-  100% { color: rgba(0, 186, 196, 0.2); }
+  0% { color: rgba(120, 120, 120, 0.4); }
+  50% { color: #fff; text-shadow: 0 0 10px #fff; }
+  100% { color: rgba(120, 120, 120, 0.4); }
 }
 
-@keyframes bar-grow {
-  0% { transform: scaleY(0.2); opacity: 0.3; }
-  50% { transform: scaleY(1); opacity: 0.8; }
-  100% { transform: scaleY(0.2); opacity: 0.3; }
+@keyframes power-glow {
+  0%, 100% { filter: drop-shadow(0 0 2px $accent-cyan) brightness(1); }
+  50% { filter: drop-shadow(0 0 12px $accent-cyan) brightness(1.5); }
+}
+
+@keyframes logout-glow {
+  0%, 100% { filter: drop-shadow(0 0 2px #ff3e3e) brightness(1); }
+  50% { filter: drop-shadow(0 0 10px #ff3e3e) brightness(1.4); }
 }

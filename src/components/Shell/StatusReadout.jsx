@@ -1,9 +1,4 @@
 import React from 'react';
-const Bars = ({ active }) => (
-  <div className={`signal-bars ${active ? 'active' : ''}`}>
-    <span className="bar b1"></span><span className="bar b2"></span><span className="bar b3"></span>
-  </div>
-);
 export const StatusReadout = ({ isAuth, user }) => (
   <div className="status-content" key={isAuth ? user.name : 'OFFLINE'}>
     <div className="logo-wrap">
@@ -16,20 +11,15 @@ export const StatusReadout = ({ isAuth, user }) => (
     <span className="sep px-2">//</span>
     {!isAuth ? (
       <div className="status-meta-group">
-        <span className="lbl">STATUS:</span><span className="val err">[ NOT LOGGED IN ]</span>
+        <span className="lbl">STATUS:</span><span className="val err">[ DISCONNECTED ]</span>
         <span className="sep">|</span>
-        <div className="signal-status">
-          <span className="val dim sm scan">CLICK TO START...</span><Bars />
-        </div>
+        <span className="val dim sm scan">CLICK HERE TO PLUG IN...</span>
       </div>
     ) : (
       <div className="status-meta-group">
         <span className="lbl">USER:</span><span className="val hi">[{user.name}]</span>
         <span className="sep">|</span><span className="lbl">ROLE:</span><span className="val">[{user.role}]</span>
-        <span className="sep">|</span>
-        <div className="signal-status">
-          <span className="val ok sm">ONLINE</span><Bars active />
-        </div>
+        <span className="sep">|</span><span className="val ok sm">ONLINE</span>
       </div>
     )}
   </div>
