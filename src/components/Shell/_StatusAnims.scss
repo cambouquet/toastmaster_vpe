@@ -14,3 +14,15 @@
   93% { opacity: 0.4; }
   94% { opacity: 1; }
 }
+
+@keyframes signal-scan {
+  0% { color: rgba(0, 186, 196, 0.2); }
+  50% { color: #00bac4; text-shadow: 0 0 5px #00bac4; }
+  100% { color: rgba(0, 186, 196, 0.2); }
+}
+
+@keyframes bar-grow {
+  0% { transform: scaleY(0.2); opacity: 0.3; }
+  50% { transform: scaleY(1); opacity: 0.8; }
+  100% { transform: scaleY(0.2); opacity: 0.3; }
+}

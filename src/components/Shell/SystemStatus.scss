@@ -14,7 +14,7 @@
     &::after { opacity: 0.6; }
   }
   &::after {
-    content: "OS_CORE_SYNCHRONIZED"; position: absolute; bottom: -12px; left: 0;
+    content: "TOASTMASTER_VPE_READY"; position: absolute; bottom: -12px; left: 0;
     font-size: 7px; color: $accent-cyan; opacity: 0; transition: 0.3s;
     font-weight: 900; letter-spacing: 2px;
   }

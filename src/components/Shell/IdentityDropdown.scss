@@ -19,7 +19,7 @@
   }
 
   &::before {
-    content: "IDENTITY_ACCESS_LAYER"; position: absolute; top: -10px; right: 0;
+    content: "USER_SESSION_LAYER"; position: absolute; top: -10px; right: 0;
     font-size: 6px; color: $accent-cyan; opacity: 0.5; font-weight: 900;
   }
 }

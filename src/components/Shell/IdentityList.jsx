@@ -1,15 +1,13 @@
 import React from 'react';
 import { MEMBERS_DATA } from '../../data/members';
-
 export const IdentityList = ({ search, setSearch, onAuth, onCreate }) => {
   const extras = JSON.parse(sessionStorage.getItem('mock_extra_members') || '[]');
   const all = [...MEMBERS_DATA, ...extras].filter(m => m.role !== 'GUEST');
   const filtered = all.filter(m => m.name.toLowerCase().includes(search.toLowerCase()));
-
   return (
     <>
       <div className="search-box">
-        <input autoFocus spellCheck="false" className="role-search" placeholder="IDENTIFY_USER..." 
+        <input autoFocus spellCheck="false" className="role-search" placeholder="SEARCH_MEMBER..." 
           value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
       <div className="scrollable">
@@ -20,8 +18,8 @@ export const IdentityList = ({ search, setSearch, onAuth, onCreate }) => {
               <div className="meta"><span className="name">{m.name}</span><span className="role">{m.role}</span></div>
             </button>
           ))}</div>
-        ) : <div className="no-result">No identity matches found.</div>}
-        <button className="create-opt" onClick={onCreate}>+ Create New User</button>
+        ) : <div className="no-result">No members found.</div>}
+        <button className="create-opt" onClick={onCreate}>+ Add New Member</button>
       </div>
     </>
   );
