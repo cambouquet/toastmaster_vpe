@@ -15,10 +15,24 @@
     &.ok { color: #00ffaa; text-shadow: 0 0 8px rgba(0, 255, 170, 0.4); }
     &.dim { opacity: 0.4; font-weight: 300; }
     &.sm { font-size: 0.55rem; letter-spacing: 0; }
-    &.scan { animation: signal-scan 2.5s infinite; }
+    &.scan { animation: signal-scan 2.5s infinite ease-in-out; animation-delay: -100s; }
   }
   .sep { color: rgba($accent-cyan, 0.2); margin: 0 4px; line-height: 1; display: flex; align-items: center;
     &.px-2 { margin: 0 10px; opacity: 0.6; color: $accent-cyan; font-weight: 900; text-shadow: 0 0 5px $accent-cyan; }
   }
-  .status-meta-group { display: flex; align-items: center; gap: 4px; height: 100%; }
+  .status-meta-group { 
+    display: flex; align-items: center; gap: 4px; height: 100%; 
+    &.clickable { 
+      cursor: pointer; 
+      &:hover { 
+        .val.err { text-shadow: 0 0 12px rgba(255, 62, 62, 0.6); }
+        .val.scan { 
+          color: $accent-cyan; opacity: 1; 
+          text-shadow: 0 0 15px $accent-cyan;
+          transform: scale(1.05); transition: all 0.2s ease;
+          animation-duration: 8s;
+        }
+      } 
+    }
+  }
 }

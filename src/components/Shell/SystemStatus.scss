@@ -14,7 +14,7 @@
   }
   .status-display-area {
     width: 0; opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    overflow: hidden; pointer-events: none; height: 100%; display: flex; align-items: center;
+    overflow: hidden; pointer-events: auto; height: 100%; display: flex; align-items: center;
   }
   .auth-wrap { 
     position: relative; width: 32px; height: 32px; flex-shrink: 0; 
@@ -23,7 +23,8 @@
   .auth-btn {
     background: transparent; border: none; color: $accent-cyan; width: 100%; height: 100%; cursor: pointer;
     display: flex; align-items: center; justify-content: center; transition: all 0.2s;
-    animation: power-glow 2s infinite ease-in-out;
+    animation: signal-scan 2.5s infinite ease-in-out;
+    animation-delay: -100s;
     &:hover { background: $accent-cyan; color: #000; animation: none; filter: none; }
     &.active { 
        color: #ff3e3e; animation: logout-glow 3s infinite ease-in-out;

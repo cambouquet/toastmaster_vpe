@@ -22,7 +22,7 @@ export const SystemStatus = ({ user, screen, nodeCount, onAuth }) => {
   return (
     <div className={`system-status-readout ${showRoles ? 'is-connected' : ''} ${isAuth ? 'is-auth' : ''}`}>
       <div className="status-display-area">
-        <StatusReadout isAuth={isAuth} user={user} />
+        <StatusReadout isAuth={isAuth} user={user} onToggleAuth={handleAuth} />
       </div>
 
       <div className="auth-wrap">
