@@ -44,7 +44,15 @@ export class MockAiService {
   }
 
   async handleUiAction(action, val, state) {
-    if (action === "login") { login(); return { }; }
+    if (action === "login") { 
+      // check if val is an ID string or a member object (for creation)
+      if (typeof val === 'object') {
+        login(val.id, val);
+      } else {
+        login(val); 
+      }
+      return { }; 
+    }
     if (action === "logout") { logout(); return { }; }
     if (action === "CLEAR_LOGS") return { notification: "System logs cleared." };
     if (action === "RUN_DIAG") return { notification: "Diagnostics complete." };

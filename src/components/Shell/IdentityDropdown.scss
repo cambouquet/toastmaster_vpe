@@ -1,0 +1,25 @@
+@import "../../styles/variables";
+@import "./IdentityForms";
+@import "./IdentityGrid";
+
+.role-selector {
+  position: absolute; top: calc(100% + 1px); right: 0; width: 300px;
+  background: #000; border: 1px solid rgba($accent-cyan, 0.4);
+  display: flex; flex-direction: column; z-index: 10000; 
+  box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+  font-family: "Space Grotesk", sans-serif;
+  color: #fff;
+  clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);
+
+  .close-btn { 
+    position: absolute; top: 12px; right: 12px;
+    background: transparent; border: none; z-index: 10;
+    color: rgba(255,255,255,0.2); cursor: pointer; font-size: 1rem;
+    &:hover { color: #ff3e3e; }
+  }
+
+  &::before {
+    content: "IDENTITY_ACCESS_LAYER"; position: absolute; top: -10px; right: 0;
+    font-size: 6px; color: $accent-cyan; opacity: 0.5; font-weight: 900;
+  }
+}

@@ -1,0 +1,40 @@
+@import "../../styles/variables";
+
+.scrollable { 
+  max-height: 300px; overflow-y: auto; padding: 6px;
+  scrollbar-width: none; &::-webkit-scrollbar { display: none; }
+}
+
+.members-grid { display: flex; flex-direction: column; gap: 2px; }
+
+.member-item {
+  background: transparent; border: none; padding: 10px 12px; 
+  cursor: pointer; display: flex; align-items: center; gap: 12px;
+  width: 100%; transition: all 0.1s;
+  
+  .avatar {
+    width: 18px; height: 18px; border: 1px solid rgba($accent-cyan, 0.3);
+    color: rgba($accent-cyan, 0.6); display: flex; align-items: center; justify-content: center;
+    font-size: 0.55rem; font-weight: 800;
+  }
+
+  .meta { 
+    flex: 1; display: flex; flex-direction: column; align-items: flex-start;
+    .name { color: rgba(255,255,255,0.8); font-size: 0.8rem; font-weight: 500; }
+    .role { color: $accent-cyan; font-size: 0.5rem; font-weight: 700; opacity: 0.3; letter-spacing: 0.5px; }
+  }
+
+  &:hover { 
+    background: rgba($accent-cyan, 0.08);
+    .avatar { border-color: $accent-cyan; color: $accent-cyan; }
+    .meta .name { color: #fff; }
+    .meta .role { opacity: 0.6; }
+  }
+}
+
+.create-opt {
+  margin: 6px; padding: 10px; background: rgba($accent-cyan, 0.03); border: 1px solid rgba($accent-cyan, 0.2);
+  color: rgba($accent-cyan, 0.6); font-size: 0.6rem; font-weight: 800; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 1px; text-align: center; width: calc(100% - 12px);
+  &:hover { background: $accent-cyan; color: #000; border-color: $accent-cyan; }
+}

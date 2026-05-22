@@ -10,7 +10,12 @@
     
     .header-left { display: flex; align-items: center; gap: 30px; }
     
-    h1 { margin: 0; font-size: 1.8rem; letter-spacing: 0.5em; font-family: "Orbitron", sans-serif; font-weight: 900; color: #fff; text-shadow: 0 0 15px rgba(0, 186, 196, 0.3); }
+    h1 { 
+      margin: 0; font-size: 1.4rem; letter-spacing: 0.3em; 
+      font-family: "Orbitron", sans-serif; font-weight: 900; 
+      color: #fff; text-shadow: 0 0 15px rgba(0, 186, 196, 0.3);
+      &::before { content: ':: '; color: $accent-cyan; }
+    }
     
     .add-member-btn {
       background: transparent; border: 1px solid $accent-cyan; color: $accent-cyan;

@@ -1,4 +1,5 @@
 import Keycloak from 'keycloak-js';
+import { MEMBERS_DATA } from '../../data/members';
 
 const USE_MOCK = true; // Switch to false once Podman/Keycloak is ready
 
@@ -31,18 +32,26 @@ export const initKeycloak = (onAuthenticated) => {
 export const getIdentity = () => {
   if (USE_MOCK) {
     const isLoggedOut = localStorage.getItem('mock_logged_out') === 'true';
-    if (isLoggedOut) {
-      return { name: "Guest", role: "NONE" };
-    }
+    if (isLoggedOut) return { name: "AUTHORIZATION_REQUIRED", role: "NONE" };
+    
+    const memberId = localStorage.getItem('mock_member_id');
+    if (!memberId) return { name: "AUTHORIZATION_REQUIRED", role: "NONE" };
+
+    const extraMembers = JSON.parse(sessionStorage.getItem('mock_extra_members') || '[]');
+    const allMembers = [...MEMBERS_DATA, ...extraMembers];
+    const member = allMembers.find(m => m.id === memberId);
+
+    if (!member) return { name: "AUTHORIZATION_REQUIRED", role: "NONE" };
+
     return {
-      name: "Dev Admin",
-      role: "ADMIN",
-      title: "SYSTEM ARCHITECT",
+      name: member.name,
+      role: member.role,
+      title: member.title,
       token: "mock-token"
     };
   }
 
-  if (!keycloak || !keycloak.authenticated) return { name: "Guest", role: "NONE" };
+  if (!keycloak || !keycloak.authenticated) return { name: "AUTHORIZATION_REQUIRED", role: "NONE" };
   
   const name = keycloak.tokenParsed?.preferred_username || "User";
   const roles = keycloak.tokenParsed?.realm_access?.roles || [];
@@ -55,10 +64,24 @@ export const getIdentity = () => {
   };
 };
 
-export const login = () => {
+export const login = (memberId = '0', newMemberData = null) => {
   if (USE_MOCK) {
+    let memberName = 'Unknown';
+    if (newMemberData) {
+      // Temporary persistence for the "new" member during this session's reload
+      const sessionMembers = JSON.parse(sessionStorage.getItem('mock_extra_members') || '[]');
+      sessionMembers.push(newMemberData);
+      sessionStorage.setItem('mock_extra_members', JSON.stringify(sessionMembers));
+      memberName = newMemberData.name;
+    } else {
+      const allMembers = [...MEMBERS_DATA, ...JSON.parse(sessionStorage.getItem('mock_extra_members') || '[]')];
+      const member = allMembers.find(m => m.id === memberId) || MEMBERS_DATA[0];
+      memberName = member.name;
+    }
+    
     localStorage.removeItem('mock_logged_out');
-    sessionStorage.setItem('pending_notification', 'Uplink established. System ready.');
+    localStorage.setItem('mock_member_id', memberId);
+    sessionStorage.setItem('pending_notification', `Uplink established. Identified as ${memberName}.`);
     window.location.reload();
   } else keycloak.login();
 };
@@ -66,6 +89,8 @@ export const login = () => {
 export const logout = () => {
   if (USE_MOCK) {
     localStorage.setItem('mock_logged_out', 'true');
+    localStorage.removeItem('mock_member_id');
+    localStorage.removeItem('mock_user_role');
     sessionStorage.setItem('pending_notification', 'Connection terminated. Rest well, user.');
     window.location.reload();
   } else keycloak.logout();

@@ -1,33 +1,41 @@
 @import "../../styles/variables";
-.app-shell { display: flex; flex-direction: column; height: 100vh; width: 100vw; position: relative; overflow: hidden; }
-.system-status-readout {
-  position: fixed; top: 15px; right: 40px; 
-  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: rgba(0, 186, 196, 0.4);
-  letter-spacing: 0.1em; z-index: 9998;
-  display: flex; align-items: center; gap: 15px;
+.app-shell { 
+  display: flex; flex-direction: column; height: 100vh; width: 100vw; position: relative; overflow: hidden; 
 
-  .auth-btn {
-    pointer-events: auto;
-    background: transparent; border: 1px solid rgba(0, 186, 196, 0.3);
-    color: rgba(0, 186, 196, 0.6); font-family: inherit; font-size: 0.55rem; padding: 2px 8px;
-    cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; justify-content: center;
-    
-    &.icn {
-      width: 24px; height: 24px; padding: 0; border-radius: 4px; border-color: rgba(0, 186, 196, 0.15);
-      &.active { color: #ff3e3e; border-color: rgba(255, 62, 62, 0.2); }
-    }
-
-    &:hover { 
-      background: rgba(0, 186, 196, 0.1); border-color: rgba(0, 186, 196, 0.8); color: $accent-cyan;
-      &.active { background: rgba(255, 62, 62, 0.1); border-color: #ff3e3e; color: #ff3e3e; }
+  &.is-transitioning {
+    filter: brightness(1.2) contrast(1.1);
+    .system-glitch-overlay {
+      opacity: 1; pointer-events: all;
+      animation: glitch-sweep 0.4s steps(4) infinite;
     }
   }
 }
+
+.system-glitch-overlay {
+  position: fixed; inset: 0; background: rgba($accent-cyan, 0.05); 
+  z-index: 20000; opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  &::before {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.5) 3px);
+  }
+}
+
+@keyframes glitch-sweep {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
 .bottom-input-wrap {
   position: fixed; bottom: 0; left: 0; right: 0; padding: 0 40px; 
   background: #020205; z-index: 9999;
   pointer-events: none;
-  * { pointer-events: none; }
-  input, button, .debug-btn, svg, path { pointer-events: auto; }
+  
+  // Re-enable pointer events for the interactive parts
+  .chat-input, 
+  .debug-btn-wrap, 
+  .debug-btn,
+  input, 
+  button { 
+    pointer-events: auto; 
+  }
 }

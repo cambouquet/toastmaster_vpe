@@ -1,0 +1,33 @@
+@import "../../styles/variables";
+
+.status-content {
+  padding: 0 15px; display: flex; align-items: center; gap: 6px; font-size: 0.65rem;
+  animation: decode-in 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
+
+  .logo-wrap {
+    display: flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; color: $accent-cyan; margin-right: 6px;
+    filter: drop-shadow(0 0 5px $accent-cyan);
+    animation: logo-flicker 4s infinite;
+  }
+
+  .app-name { 
+    color: #fff; font-weight: 900; letter-spacing: 4px; 
+    text-shadow: 0 0 10px rgba($accent-cyan, 0.3);
+  }
+
+  .lbl { color: $accent-cyan; font-weight: 900; opacity: 0.4; font-size: 0.52rem; 
+    letter-spacing: 1.5px; margin-left: 4px; }
+  
+  .val { color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    &.hi { color: $accent-cyan; text-shadow: 0 0 8px rgba($accent-cyan, 0.4); }
+    &.err { color: #ff3e3e; text-shadow: 0 0 8px rgba(255, 62, 62, 0.4); }
+    &.ok { color: #00ffaa; text-shadow: 0 0 8px rgba(0, 255, 170, 0.4); }
+    &.dim { opacity: 0.4; font-weight: 300; }
+    &.sm { font-size: 0.55rem; letter-spacing: 0; }
+  }
+
+  .sep { color: rgba($accent-cyan, 0.2); margin: 0 4px; 
+    &.px-2 { margin: 0 10px; opacity: 0.6; color: $accent-cyan; font-weight: 900; }
+  }
+}
