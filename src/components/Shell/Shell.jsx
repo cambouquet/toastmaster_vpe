@@ -33,7 +33,7 @@ export const Shell = () => {
       {isWorkspace ? <MeetingWorkspace state={state} onAction={uiAction} /> : <MemberRegistry members={state.members} onAction={uiAction} currentUser={state.currentUser} />}
 
       <SystemNotification notifications={notifications} onDismiss={dismiss} />
-      {subtitle && subtitle !== 'Standby.' && <Subtitles text={subtitle} />}
+      <Subtitles text={subtitle} />
 
       <div className="bottom-input-wrap">
         <ChatInput onSend={(txt) => interact(txt)} onType={(txt) => interact(txt, true)} onToggleDebug={onToggleDebug} testStatus={state.testStatus} ackCount={state.ackCount} />

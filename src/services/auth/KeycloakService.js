@@ -58,6 +58,7 @@ export const getIdentity = () => {
 export const login = () => {
   if (USE_MOCK) {
     localStorage.removeItem('mock_logged_out');
+    sessionStorage.setItem('pending_notification', 'Uplink established. System ready.');
     window.location.reload();
   } else keycloak.login();
 };
@@ -65,7 +66,7 @@ export const login = () => {
 export const logout = () => {
   if (USE_MOCK) {
     localStorage.setItem('mock_logged_out', 'true');
-    sessionStorage.setItem('pending_notification', 'Mock Session Terminated. Returning to Guest state.');
+    sessionStorage.setItem('pending_notification', 'Connection terminated. Rest well, user.');
     window.location.reload();
   } else keycloak.logout();
 };

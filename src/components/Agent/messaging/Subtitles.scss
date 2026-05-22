@@ -2,6 +2,18 @@
 .subtitles-overlay {
   position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%);
   width: 90%; text-align: center; pointer-events: none; z-index: 10000;
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  
+  &.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  &.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+
   .caption-text {
     background: rgba(0, 0, 0, 0.95); color: #fff; display: inline-block; padding: 10px 30px;
     font-family: "Space Grotesk", sans-serif; font-size: 1.1rem; line-height: 1.4; border-radius: 2px;
