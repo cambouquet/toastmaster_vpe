@@ -1,0 +1,16 @@
+@import '../../styles/variables';
+.notification-tray {
+  position: fixed; top: 60px; right: 40px; 
+  display: flex; flex-direction: column; gap: 10px; z-index: 10000;
+  pointer-events: none;
+}
+.notification-item {
+  background: rgba(2, 2, 5, 0.95); border: 1px solid rgba(0, 186, 196, 0.2);
+  padding: 10px 15px; min-width: 200px; display: flex; align-items: center; gap: 12px;
+  animation: slideIn 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  pointer-events: auto;
+  cursor: pointer;
+  .notif-bar { width: 3px; height: 15px; background: $accent-cyan; box-shadow: 0 0 10px $accent-cyan; }
+  .notif-msg { font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; color: #fff; letter-spacing: 0.02em; font-weight: 500; }
+}
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }

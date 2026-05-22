@@ -6,16 +6,7 @@ export const MemberRegistry = ({ members, onAction, currentUser }) => {
   const isAdmin = currentUser?.role === 'ADMIN';
 
   const addMember = () => {
-    const name = prompt("Enter Member Name:");
-    if (!name) return;
-    onAction('addMember', {
-      id: Date.now().toString(),
-      name: name.toUpperCase(),
-      role: 'MEMBER',
-      title: 'MEMBER',
-      enrolled: [],
-      status: 'ONLINE'
-    });
+    onAction('ADD_MEMBER_REQUEST');
   };
 
   const visibleMembers = members.filter(m => {

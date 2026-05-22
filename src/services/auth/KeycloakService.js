@@ -65,7 +65,7 @@ export const login = () => {
 export const logout = () => {
   if (USE_MOCK) {
     localStorage.setItem('mock_logged_out', 'true');
-    alert("Mock Session Terminated. Returning to Guest state.");
+    sessionStorage.setItem('pending_notification', 'Mock Session Terminated. Returning to Guest state.');
     window.location.reload();
   } else keycloak.logout();
 };

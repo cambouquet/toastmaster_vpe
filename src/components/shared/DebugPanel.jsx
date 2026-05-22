@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-export const DebugPanel = ({ logs, state, onClose, onClear, onHealth }) => {
+export const DebugPanel = ({ logs, state, onClose, onClear, onHealth, onDump }) => {
   const [copied, setC] = useState(false);
   const [pos, setP] = useState({ x: window.innerWidth - 350, y: 150 });
   const [isD, setD] = useState(false);
@@ -13,7 +13,7 @@ export const DebugPanel = ({ logs, state, onClose, onClear, onHealth }) => {
         <span className="title">CORE KERNEL</span>
         <div className="header-actions">
           <button className="clear-btn" onClick={onClear}>CLEAR</button>
-          <button className="clear-btn" onClick={() => copy(logs.map(l => `[${l.time}] ${l.msg}`).join("\n"))}>
+          <button className="clear-btn" onClick={() => { onDump(); copy(logs.map(l => `[${l.time}] ${l.msg}`).join("\n")); }}>
             {copied ? "SYNCED" : "DUMP"}
           </button>
           <button className="clear-btn" onClick={() => {

@@ -44,6 +44,13 @@ export class MockAiService {
   }
 
   async handleUiAction(action, val, state) {
+    if (action === "login") { login(); return { subtitle: "Redirecting..." }; }
+    if (action === "logout") { logout(); return { subtitle: "Logging out..." }; }
+    if (action === "CLEAR_LOGS") return { subtitle: "System logs cleared." };
+    if (action === "RUN_DIAG") return { subtitle: "Diagnostics complete." };
+    if (action === "DUMP_LOGS") return { subtitle: "Logs dumped to clipboard." };
+    if (action === "TOGGLE_DEBUG") return { subtitle: `Kernel debugger ${val ? 'active' : 'idle'}.` };
+    if (action === "ADD_MEMBER_REQUEST") return { subtitle: "Register members via Mission Control." };
     const flatKeys = ["theme", "date", "location", "room", "registrationLink", "mapUrl", "zoomLink", "wordOfTheDay", "wordDefinition"];
     if (flatKeys.includes(action)) return { subtitle: `${action} updated.`, newState: { [action]: val } };
     

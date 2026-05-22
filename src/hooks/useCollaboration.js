@@ -3,50 +3,21 @@ import { useSystemLogs } from "./useSystemLogs";
 import { INITIAL_STATE } from "../data/initialState";
 import { useCollaborationEffects } from "./useCollaborationEffects";
 import { getIdentity } from "../services/auth/KeycloakService";
+import { useNotifications } from "./useNotifications";
+import { usePersistence } from "./usePersistence";
 
 export const useCollaboration = (aiService) => {
-  const [state, setState] = useState({ 
-    ...INITIAL_STATE, 
-    testStatus: "STANDBY", 
-    ackCount: 0,
-    currentUser: getIdentity() 
-  });
-  
-  // Load persisted state on mount
-  useEffect(() => {
-    fetch('http://localhost:3001/api/state')
-      .then(r => r.json())
-      .then(data => {
-        if (data && data.members && data.members.length > 0) {
-          setState(s => ({ ...s, members: data.members }));
-        }
-      })
-      .catch(e => console.error("Persistence Load Error:", e));
-  }, []);
-
-  // Sync state to backend when members change
-  useEffect(() => {
-    if (state.members !== INITIAL_STATE.members) {
-      fetch('http://localhost:3001/api/state', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ members: state.members })
-      }).catch(e => console.error("Persistence Sync Error:", e));
-    }
-  }, [state.members]);
-
-  // Update identity if it changes (e.g. after login)
-  useEffect(() => {
-    const identity = getIdentity();
-    if (identity.name !== state.currentUser.name) {
-      setState(s => ({ ...s, currentUser: identity }));
-    }
-  }, []);
-
+  const [state, setState] = useState({ ...INITIAL_STATE, testStatus: "STANDBY", ackCount: 0, currentUser: getIdentity() });
   const [subtitle, setSubtitle] = useState("Standby.");
+  const { notifications, notify, dismiss } = useNotifications();
+  
   const { logs, addLog, clearLogs } = useSystemLogs();
+
+  usePersistence(state, setState, notify, addLog);
+  
   const lastReq = useRef(0), lastInput = useRef(""), lastSent = useRef(""), lastAct = useRef(0);
   const up = (ns) => ns && setState(p => ({ ...p, ...ns, roles: ns.roles ? { ...p.roles, ...ns.roles } : p.roles }));
+  
   const interact = async (input, isType = false, isUser = true) => {
     if (isUser) lastAct.current = Date.now();
     if (isType && input === lastSent.current) return;
@@ -57,25 +28,20 @@ export const useCollaboration = (aiService) => {
     if (!isType) addLog(`[USER] ${input}`, "user");
     lastSent.current = input; 
     const res = await aiService.processInput(input, state, (u) => {
-      if (reqId === lastReq.current) { 
-        setSubtitle(u.subtitle); 
-        if (u.subtitle) addLog(`[AGENT] ${u.subtitle}`, "bot"); 
-        up(u.newState); 
-      }
+      if (reqId === lastReq.current) { setSubtitle(u.subtitle); if (u.subtitle) addLog(`[AGENT] ${u.subtitle}`, "bot"); up(u.newState); }
     });
-    if (reqId === lastReq.current) {
-      setSubtitle(res.subtitle);
-      if (res.subtitle) addLog(`[AGENT] ${res.subtitle}`, "bot");
-      up(res.newState);
-    }
+    if (reqId === lastReq.current) { setSubtitle(res.subtitle); if (res.subtitle) addLog(`[AGENT] ${res.subtitle}`, "bot"); up(res.newState); }
   };
+
   const uiAction = async (type, val) => {
+    addLog(`[ACTION] ${type}${val ? ': ' + JSON.stringify(val) : ''}`, "info");
     if (type === "RUN_TESTS") return setState(s => ({ ...s, testStatus: "RUNNING" }));
     const res = await aiService.handleUiAction(type, val, state);
     setSubtitle(res.subtitle);
-    if (res.subtitle) addLog(`[SYS] ${res.subtitle}`, "info");
+    if (res.subtitle) { addLog(`[SYS] ${res.subtitle}`, "info"); notify(res.subtitle); }
     up(res.newState);
   };
-  useCollaborationEffects(lastAct, lastInput, setState, interact);
-  return { state, subtitle, interact, uiAction, logs, clearLogs };
+
+  useCollaborationEffects(lastAct, lastInput, setState, interact, addLog);
+  return { state, subtitle, interact, uiAction, logs, clearLogs, notify, notifications, dismiss };
 };

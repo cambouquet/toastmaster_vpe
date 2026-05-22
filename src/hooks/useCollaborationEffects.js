@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-export const useCollaborationEffects = (lastAct, lastInput, setState, interact) => {
+export const useCollaborationEffects = (lastAct, lastInput, setState, interact, addLog) => {
   useEffect(() => {
     const itv = setInterval(() => {
       const now = Date.now(), inp = lastInput.current;
@@ -13,7 +13,11 @@ export const useCollaborationEffects = (lastAct, lastInput, setState, interact) 
   }, []);
 
   useEffect(() => {
-    const handler = (e) => setState(p => ({ ...p, testStatus: e.detail.success ? "PASSED" : "FAILED" }));
+    const handler = (e) => {
+      const status = e.detail.success ? "PASSED" : "FAILED";
+      setState(p => ({ ...p, testStatus: status }));
+      addLog(`[DIAG] Test result: ${status}`, e.detail.success ? "info" : "error");
+    };
     window.addEventListener("TEST_RESULT", handler);
     return () => window.removeEventListener("TEST_RESULT", handler);
   }, []);
