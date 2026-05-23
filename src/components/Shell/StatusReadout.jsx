@@ -16,10 +16,13 @@ export const StatusReadout = ({ isAuth, user, onToggleAuth }) => (
         <span className="val dim sm scan">SYNC IN...</span>
       </button>
     ) : (
-      <div className="status-meta-group">
-        <span className="lbl">USER:</span><span className="val hi">[{user.name}]</span>
-        <span className="sep">|</span><span className="lbl">ROLE:</span><span className="val">[{user.role}]</span>
-        <span className="sep">|</span><span className="val ok sm">ONLINE</span>
+      <div className="status-meta-group" style={{ whiteSpace: 'nowrap' }}>
+        <span className="lbl">ID:</span>
+        <span className="val hi">{user.name}</span>
+        <span className="sep">·</span>
+        <span className="val sm dim">{user.role}</span>
+        <span className="sep">|</span>
+        <span className="val ok sm">ONLINE</span>
       </div>
     )}
   </div>

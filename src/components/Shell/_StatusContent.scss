@@ -2,6 +2,7 @@
 .status-content {
   padding: 0 15px; display: flex; align-items: center; gap: 6px; font-size: 0.65rem; height: 100%;
   animation: decode-in 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
+  white-space: nowrap;
   .logo-wrap {
     display: flex; align-items: center; justify-content: center; width: 14px; height: 14px; 
     color: $accent-cyan; margin-right: 6px; flex-shrink: 0;
