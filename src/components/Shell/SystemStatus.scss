@@ -12,6 +12,9 @@
     border-color: $accent-cyan; background: #10151a; 
     .status-display-area { width: 440px; opacity: 1; }
   }
+  &:has(.status-meta-group:hover) {
+    .auth-btn:not(.active), .val.scan { animation-duration: 6s; }
+  }
   .status-display-area {
     width: 0; opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     overflow: hidden; pointer-events: auto; height: 100%; display: flex; align-items: center;
@@ -25,10 +28,10 @@
     display: flex; align-items: center; justify-content: center; transition: all 0.2s;
     animation: signal-scan 2.5s infinite ease-in-out;
     animation-delay: -100s;
-    &:hover { background: $accent-cyan; color: #000; animation: none; filter: none; }
+    &:hover { background: $accent-cyan; color: #000; transition: background 0.2s; }
     &.active { 
        color: #ff3e3e; animation: logout-glow 3s infinite ease-in-out;
-       &:hover { background: #ff3e3e; color: #fff; animation: none; filter: none; }
+       &:hover { background: #ff3e3e; color: #fff; }
     }
   }
 }
