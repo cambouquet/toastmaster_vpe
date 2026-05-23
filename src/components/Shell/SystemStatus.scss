@@ -36,6 +36,7 @@
     &:hover { background: $accent-cyan; color: #000; transition: background 0.2s; }
     &.active { 
        color: #ff3e3e; animation: logout-glow 3s infinite ease-in-out;
+       cursor: pointer;
        &:hover { background: #ff3e3e; color: #fff; }
     }
   }
