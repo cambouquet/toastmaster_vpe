@@ -13,7 +13,7 @@
     .status-display-area { width: 440px; opacity: 1; }
   }
   &:has(.status-meta-group:hover) {
-    .auth-btn:not(.active), .val.scan { animation-duration: 6s; }
+    .auth-btn:not(.active), .val.scan, .logo-wrap.scan { animation-duration: 6s; }
   }
   .status-display-area {
     width: 0; opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -24,10 +24,9 @@
     display: flex; align-items: center; justify-content: center;
   }
   .auth-btn {
-    background: transparent; border: none; color: $accent-cyan; width: 100%; height: 100%; cursor: pointer;
+    background: transparent; border: none; color: $accent-cyan; width: 100%; height: 100%; cursor: default;
     display: flex; align-items: center; justify-content: center; transition: all 0.2s;
     animation: signal-scan 2.5s infinite ease-in-out;
-    animation-delay: -100s;
     &:hover { background: $accent-cyan; color: #000; transition: background 0.2s; }
     &.active { 
        color: #ff3e3e; animation: logout-glow 3s infinite ease-in-out;
