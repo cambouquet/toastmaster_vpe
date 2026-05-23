@@ -27,8 +27,7 @@
       &:hover { 
         .val.err { text-shadow: 0 0 8px rgba(255, 62, 62, 0.4); }
         .val.scan { 
-          color: $accent-cyan; opacity: 1; 
-          text-shadow: 0 0 8px rgba($accent-cyan, 0.5);
+
           transition: all 0.3s ease;
         }
       } 
