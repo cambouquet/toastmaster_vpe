@@ -27,6 +27,8 @@ export const StatusReadout = ({ isAuth, user, onToggleAuth }) => (
         <span className="val ok sm">ONLINE</span>
         <span className="sep">|</span>
         <SystemClock />
+        <span className="sep">|</span>
+        <span className="val hi sm">TOKYO</span>
       </div>
     )}
   </div>
