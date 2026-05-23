@@ -21,7 +21,7 @@ test('system health check', async ({ page }) => {
 });
 
 test('workspace data density check', async ({ page }) => {
-  await page.goto('http://localhost:5177');
+  await page.goto('http://localhost:1777');
   
   // Should start on workspace by default, if not navigate
   const workspaceBtn = page.locator('button:has-text("WORKSPACE")');
@@ -53,7 +53,7 @@ test('workspace data density check', async ({ page }) => {
 });
 
 test('role selection logic', async ({ page }) => {
-  await page.goto('http://localhost:5177');
+  await page.goto('http://localhost:1777');
   
   // Login as VPE to allow selection
   const chatInput = page.locator('.chat-input input');
@@ -73,7 +73,7 @@ test('role selection logic', async ({ page }) => {
 });
 
 test('member permission restrictions', async ({ page }) => {
-  await page.goto('http://localhost:5177');
+  await page.goto('http://localhost:1777');
   
   // Login as a normal member
   const chatInput = page.locator('.chat-input input');
@@ -107,7 +107,7 @@ test('member permission restrictions', async ({ page }) => {
 });
 
 test('guest readonly enforcement', async ({ page }) => {
-  await page.goto('http://localhost:5177');
+  await page.goto('http://localhost:1777');
   
   // Default user is Guest (NONE)
   await expect(page.locator('.system-status-readout')).toContainText('ID: Guest (NONE)');

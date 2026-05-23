@@ -5,7 +5,7 @@
 - **Single Responsibility**: If a file grows too large, extract logic into hooks or smaller sub-components.
 
 ## 2. Technical Stack
-- **React + Vite**: Fast, modern frontend framework running on port 5177.
+- **React + Vite**: Fast, modern frontend framework running on port 1777.
 - **Pure JavaScript (JSX)**: No TypeScript. Keep the code lean, readable, and free of type boilerplate.
 - **Sass (SCSS)**: Style with variables and mixins. Use scoped styles per component.
 - **Testing**: Playwright for E2E smoke tests and UI interaction validation.

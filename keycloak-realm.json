@@ -7,7 +7,7 @@
       "publicClient": true,
       "directAccessGrantsEnabled": true,
       "webOrigins": ["*"],
-      "redirectUris": ["http://localhost:5177/*"]
+      "redirectUris": ["http://localhost:1777/*"]
     }
   ],
   "roles": {

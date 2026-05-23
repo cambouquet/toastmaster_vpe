@@ -1,0 +1,45 @@
+@import "../../styles/variables";
+
+.sync-overlay {
+  position: fixed; inset: 0; z-index: 30000;
+  background: #000; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 20px; font-family: "Space Grotesk", sans-serif;
+  
+  .sync-lines {
+    position: absolute; inset: 0; overflow: hidden; opacity: 0.3;
+    background: repeating-linear-gradient(90deg, transparent 0, transparent 49.5%, rgba($accent-cyan, 0.1) 50%, transparent 50.5%);
+    background-size: 40px 100%;
+    animation: grid-scroll 10s linear infinite;
+  }
+
+  .sync-core {
+    position: relative; width: 120px; height: 120px;
+    .outer {
+      position: absolute; inset: 0; border: 2px solid $accent-cyan;
+      border-radius: 50%; border-top-color: transparent; border-bottom-color: transparent;
+      animation: spin-sync 1s linear infinite;
+    }
+    .inner {
+      position: absolute; inset: 15px; border: 1px solid rgba($accent-cyan, 0.4);
+      border-radius: 50%; animation: spin-sync 2s linear reverse infinite;
+    }
+    .pulse {
+      position: absolute; inset: 40px; background: $accent-cyan;
+      border-radius: 50%; filter: blur(10px);
+      animation: signal-scan 1s infinite ease-in-out;
+    }
+  }
+
+  .sync-status {
+    text-align: center;
+    .title { color: $accent-cyan; font-weight: 900; letter-spacing: 4px; font-size: 0.8rem; margin-bottom: 4px; }
+    .progress { color: #fff; font-size: 0.6rem; opacity: 0.6; font-family: monospace; }
+  }
+}
+
+@keyframes spin-sync { 
+  from { transform: rotate(0deg); } to { transform: rotate(360deg); } 
+}
+@keyframes grid-scroll {
+  from { background-position: 0 0; } to { background-position: 400px 0; }
+}

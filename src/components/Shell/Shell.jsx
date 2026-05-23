@@ -9,19 +9,31 @@ import { Subtitles } from '../Agent/messaging/Subtitles';
 import { MainContent } from './MainContent';
 import { HealthService } from '../../services/system/HealthService';
 import './Shell.scss';
+import { SyncOverlay } from './SyncOverlay';
 const aiService = new MockAiService();
 export const Shell = () => {
   const { state, subtitle, interact, uiAction, logs, clearLogs, notifications, dismiss } = useCollaboration(aiService);
   const [showDebug, setShowDebug] = useState(false);
-  const [trans, setTrans] = useState(false);
+  const [syncProgress, setSyncProgress] = useState(0);
+
   const onAuth = (role, extra) => {
-    setTrans(true); setTimeout(() => setTrans(false), 800);
-    if (role === 'logout') return uiAction('logout');
-    uiAction('login', role === 'addMember' ? extra.id : role);
+    let current = 0;
+    const interval = setInterval(() => {
+      current += Math.floor(Math.random() * 15) + 5;
+      if (current >= 100) {
+        clearInterval(interval);
+        setSyncProgress(0);
+        if (role === 'logout') return uiAction('logout');
+        uiAction('login', role === 'addMember' ? extra.id : role);
+      } else {
+        setSyncProgress(current);
+      }
+    }, 120);
   };
   return (
-    <div className={`app-shell ${trans ? 'is-transitioning' : ''}`}>
+    <div className={`app-shell ${syncProgress > 0 ? 'is-transitioning' : ''}`}>
       <div className="system-glitch-overlay" />
+      {syncProgress > 0 && <SyncOverlay progress={syncProgress} />}
       <SystemStatus user={state.currentUser} onAuth={onAuth} />
       <MainContent isWorkspace={state.currentScreen === 'workspace'} state={state} uiAction={uiAction} />
       <SystemNotification notifications={notifications} onDismiss={dismiss} />
