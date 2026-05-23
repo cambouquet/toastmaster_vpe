@@ -10,11 +10,11 @@ export const StatusReadout = ({ isAuth, user, onToggleAuth }) => (
     <span className="app-name">TOASTMASTER</span>
     <span className="sep px-2">//</span>
     {!isAuth ? (
-      <div className="status-meta-group clickable" onClick={onToggleAuth}>
+      <button className="status-meta-group clickable" onClick={onToggleAuth}>
         <span className="lbl">STATUS:</span><span className="val err">DISCONNECTED</span>
         <span className="sep">|</span>
         <span className="val dim sm scan">SYNC IN...</span>
-      </div>
+      </button>
     ) : (
       <div className="status-meta-group">
         <span className="lbl">USER:</span><span className="val hi">[{user.name}]</span>

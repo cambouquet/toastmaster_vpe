@@ -9,9 +9,12 @@ export const SystemStatus = ({ user, screen, nodeCount, onAuth }) => {
   const [search, setSearch] = useState('');
   
   const handleAuth = () => {
-    if (isAuth) return onAuth('logout');
     setShowRoles(!showRoles);
     setSearch('');
+  };
+
+  const handlePowerBtn = () => {
+    if (isAuth) onAuth('logout');
   };
 
   const handleIdentity = (id, data) => {
@@ -21,12 +24,13 @@ export const SystemStatus = ({ user, screen, nodeCount, onAuth }) => {
 
   return (
     <div className={`system-status-readout ${showRoles ? 'is-connected' : ''} ${isAuth ? 'is-auth' : ''}`}>
+      <div className="system-status-bg" />
       <div className="status-display-area">
         <StatusReadout isAuth={isAuth} user={user} onToggleAuth={handleAuth} />
       </div>
 
       <div className="auth-wrap">
-        <button className={`auth-btn icn ${isAuth ? 'active' : ''}`} onClick={handleAuth}>
+        <button className={`auth-btn icn ${isAuth ? 'active' : ''}`} onClick={handlePowerBtn}>
           <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M12 2v10M18.4 6.6a9 9 0 1 1-12.8 0" />
           </svg>

@@ -4,12 +4,18 @@
 .system-status-readout {
   position: fixed; top: 12px; right: 40px; font-family: "Space Grotesk", sans-serif;
   z-index: 10001; display: flex; align-items: center; pointer-events: auto; height: 32px;
-  background: #000; border: 1px solid rgba($accent-cyan, 0.4); border-left: 6px solid $accent-cyan;
   transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-  clip-path: polygon(0 0, 100% 0, 100% 70%, 98% 100%, 0 100%);
   box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+  
+  .system-status-bg {
+    position: absolute; inset: 0; background: #000; z-index: -1;
+    border: 1px solid rgba($accent-cyan, 0.4); border-left: 6px solid $accent-cyan;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 98% 100%, 0 100%);
+    transition: all 0.4s ease;
+  }
+
   &:hover, &.is-connected, &.is-auth { 
-    border-color: $accent-cyan; background: #10151a; 
+    .system-status-bg { border-color: $accent-cyan; background: #10151a; }
     .status-display-area { width: 440px; opacity: 1; }
   }
   &:has(.status-meta-group:hover) {
