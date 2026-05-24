@@ -9,33 +9,34 @@ export const MissionControl = ({ state }) => {
       <AppHeader app="MISSION CONTROL" title="IDENTITY LAB" />
       
       <div className="workspace-grid">
-        <EditableCard label="GLOBAL UPLINK" value="ACTIVE NODE // 1024" />
-        <EditableCard label="SYSTEM IDENTITY" value="LIBERATION.K" />
-        
+        <EditableCard label="SYSTEM IDENTITY" value={state.currentUser?.name || 'GUEST_USER'} />
+        <EditableCard label="ACCESS LEVEL" value={state.currentUser?.role || 'UNAUTHORIZED'} />
+        <EditableCard label="UPLINK STATUS" value={state.offline ? 'DISCONNECTED' : 'ENCRYPTED SYNC'} />
+
         <div className="card security-section">
-          <label>SECURITY LOGS</label>
+          <label>SECURITY MONITOR</label>
           <div className="status-grid">
             <div className="status-box err">
               <span className="box-lbl">NODE 08</span>
-              <span className="box-val">BRUTE FORCE DETECTED</span>
+              <span className="box-val">INTRUSION DETECTED</span>
             </div>
             <div className="status-box ok">
               <span className="box-lbl">NODE 77</span>
-              <span className="box-val">SUCCESS</span>
+              <span className="box-val">FIREWALL ACTIVE</span>
             </div>
           </div>
         </div>
 
         <div className="card telemetry-section">
-          <label>TELEMETRY</label>
+          <label>NEURAL TELEMETRY</label>
           <div className="status-grid">
             <div className="status-box hi">
-              <span className="box-lbl">RANK</span>
-              <span className="box-val">ELITE // LVL 42</span>
+              <span className="box-lbl">SYNC RATE</span>
+              <span className="box-val">99.8% STABLE</span>
             </div>
             <div className="status-box">
-              <span className="box-lbl">SYNC</span>
-              <span className="box-val">100% NEURAL</span>
+              <span className="box-lbl">LATENCY</span>
+              <span className="box-val">24MS // TOKYO_01</span>
             </div>
           </div>
         </div>
