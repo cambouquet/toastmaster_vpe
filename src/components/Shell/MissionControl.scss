@@ -1,0 +1,33 @@
+@import "../../styles/variables";
+
+.mission-control {
+  padding: 40px; color: #fff; height: 100%; display: flex; flex-direction: column; gap: 30px;
+  animation: decode-in 0.8s ease;
+
+  .mc-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
+  }
+
+  .mc-card {
+    background: rgba($accent-cyan, 0.05); border: 1px solid rgba($accent-cyan, 0.1); padding: 15px;
+    .lbl { font-size: 0.6rem; opacity: 0.5; margin-bottom: 5px; }
+    .val { font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; }
+    .stats { margin-top: 15px; display: flex; flex-direction: column; gap: 5px; }
+    .stat { display: flex; justify-content: space-between; font-size: 0.6rem; }
+    .stat .l { opacity: 0.4; }
+    .xp-bar { height: 2px; background: rgba(255,255,255,0.1); margin: 10px 0; .fill { height: 100%; background: $accent-cyan; } }
+    .sub { font-size: 0.5rem; opacity: 0.4; }
+    .log { font-size: 0.55rem; margin-top: 5px; &.err { color: #ff3e3e; } &.ok { color: #00ffaa; } }
+  }
+
+  .mc-main-visual {
+    flex: 1; border: 1px solid rgba($accent-cyan, 0.03); position: relative;
+    display: flex; align-items: center; justify-content: center;
+    .hex-grid { 
+      position: absolute; inset: 0; opacity: 0.1;
+      background-image: radial-gradient($accent-cyan 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .core-sync { font-size: 0.6rem; color: $accent-cyan; letter-spacing: 5px; font-weight: 900; }
+  }
+}

@@ -1,8 +1,9 @@
 @import "../../styles/variables";
 
 .logo-wrap {
-  display: flex; align-items: center; justify-content: center; width: 14px; height: 14px; 
-  color: $accent-cyan; margin-right: 6px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px; // Default HUD size
+  color: $accent-cyan; flex-shrink: 0;
   &.scan { animation: signal-scan 2.5s infinite ease-in-out; }
 }
 

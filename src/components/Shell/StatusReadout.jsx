@@ -14,14 +14,17 @@ const StatusGuest = ({ onAuth }) => (
   </button>
 );
 
-export const StatusReadout = ({ isAuth, user, onToggleAuth }) => {
+export const StatusReadout = ({ isAuth, user, currentApp, onToggleAuth, onToggleNav }) => {
   const online = MEMBERS_DATA.filter(m => m.status === 'ONLINE').length;
   const offline = MEMBERS_DATA.length - online;
+  const appName = currentApp === 'mission-control' ? 'MISSION CONTROL' : 'TOASTMASTER';
 
   return (
     <div className="status-content">
-      <Logo scan={!isAuth} />
-      <span className="app-name">TOASTMASTER</span>
+      <div onClick={onToggleNav} style={{ cursor: 'pointer', display: 'flex' }}>
+        <Logo scan={!isAuth} />
+      </div>
+      <span className="app-name">{appName}</span>
       <span className="sep px-2">//</span>
       {!isAuth ? <StatusGuest onAuth={onToggleAuth} /> : (
         <div className="status-meta-group" style={{ whiteSpace: 'nowrap' }}>

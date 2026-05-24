@@ -7,7 +7,7 @@ export const IdentityCreationForm = ({ search, setSearch, onAuth, onCancel }) =>
   };
   return (
     <div className="creation-form">
-      <div className="form-header">:: CREATE_NEW_PROFILE</div>
+      <div className="form-header">:: CREATE NEW PROFILE</div>
       <div className="field-group">
         <span className="field-label">NAME</span>
         <input autoFocus spellCheck="false" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="..." />

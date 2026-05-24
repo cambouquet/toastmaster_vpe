@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=JetBrains+Mono:wght@100..800&family=Orbitron:wght@400..900&display=swap');
+@import '../variables';
+
+body {
+  margin: 0;
+  background-color: #020205;
+  color: #fff;
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.015em;
+  height: 100vh;
+  overflow: hidden;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(0, 243, 255, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(0, 243, 255, 0.03) 0px, transparent 50%);
+}
+
+.App {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}

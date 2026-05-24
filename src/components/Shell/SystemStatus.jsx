@@ -3,8 +3,8 @@ import { StatusReadout } from './StatusReadout';
 import { SystemPower } from './SystemPower';
 import './SystemStatus.scss';
 
-export const SystemStatus = ({ user, screen, nodeCount, onAuth }) => {
-  const isAuth = user.role !== 'NONE' && user.name !== 'AUTHORIZATION_REQUIRED';
+export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav }) => {
+  const isAuth = user.role !== 'NONE' && user.name !== 'AUTHORIZATION REQUIRED';
   const [showRoles, setShowRoles] = useState(false);
   const [search, setSearch] = useState('');
   
@@ -16,7 +16,13 @@ export const SystemStatus = ({ user, screen, nodeCount, onAuth }) => {
     <div className={`system-status-readout ${showRoles ? 'is-connected' : ''} ${isAuth ? 'is-auth' : ''}`}>
       <div className="system-status-bg" />
       <div className="status-display-area">
-        <StatusReadout isAuth={isAuth} user={user} onToggleAuth={handleAuth} />
+        <StatusReadout 
+          isAuth={isAuth} 
+          user={user} 
+          currentApp={currentApp}
+          onToggleAuth={handleAuth} 
+          onToggleNav={onToggleNav} 
+        />
       </div>
       <SystemPower 
         isAuth={isAuth} showRoles={showRoles} onPower={handlePowerBtn}

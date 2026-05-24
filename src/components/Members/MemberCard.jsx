@@ -1,64 +1,34 @@
 import React, { useState } from "react";
-import { PATHWAYS } from "../../constants/pathways";
-import { PathwayNode } from "./PathwayNode";
-import { DeleteButton } from "../shared/DeleteButton";
-export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
-  const { id, name, enrolled = [], status = 'ONLINE', role = 'MEMBER', title = 'MEMBER' } = member, [edit, setEdit] = useState(false);
-  const isAdmin = currentUser?.role === 'ADMIN';
-  const isVpe = currentUser?.role === 'VPE' || isAdmin;
-  const isOwnCard = name === currentUser?.name;
+import { MemberPathways } from "./MemberPathways";
+import { MemberCardHeader } from "./MemberCardHeader";
 
+export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
+  const { id, name, enrolled = [], status = 'ONLINE', role = 'MEMBER', title = 'MEMBER' } = member;
+  const [edit, setEdit] = useState(false);
+  const isVpe = currentUser?.role === 'VPE' || currentUser?.role === 'ADMIN';
+  const canEdit = isVpe || name === currentUser?.name;
   const up = (u) => onEdit({ id, updates: u });
-  const setP = (i, u) => { const n = [...enrolled]; n[i] = { ...n[i], ...u }; up({ enrolled: n }); };
-  const addP = (n) => up({ enrolled: [...enrolled, { name: n, level: 1, projects: 0 }] });
-  const delP = (i) => up({ enrolled: enrolled.filter((_, idx) => idx !== i) });
-  
-  const canEdit = isVpe || isOwnCard;
 
   const cycleRole = (e) => {
     e.stopPropagation();
     if (!isVpe) return;
-    const titles = ['MEMBER', 'PRESIDENT', 'VP EDUCATION', 'VP MEMBERSHIP', 'VP PUBLIC RELATIONS', 'SECRETARY', 'TREASURER', 'SERGEANT AT ARMS'];
-    const next = titles[(titles.indexOf(title) + 1) % titles.length];
+    const t = ['MEMBER', 'PRESIDENT', 'VP EDUCATION', 'VP MEMBERSHIP', 'VP PUBLIC RELATIONS', 'SECRETARY', 'TREASURER', 'SERGEANT AT ARMS'];
+    const next = t[(t.indexOf(title) + 1) % t.length];
     up({ title: next, role: next === 'VP EDUCATION' ? 'VPE' : 'MEMBER' });
   };
 
   return (
     <div className={`member-card ${status.toLowerCase()} ${role.toLowerCase()} ${edit ? "edit" : ""} ${canEdit ? "clickable" : ""}`} onClick={() => canEdit && setEdit(!edit)}>
-      <div className="card-header-left">
-        <div className={`status-pill ${status.toLowerCase()}`} onClick={e => { e.stopPropagation(); if (canEdit) up({ status: status === "ONLINE" ? "AWAY" : "ONLINE" }); }}></div>
-        <div className={`role-badge ${role.toLowerCase()}`} onClick={cycleRole}>{title}</div>
-      </div>
-      
-      {isVpe && <DeleteButton onDelete={() => onDelete(id)} className="purge-btn" />}
-
+      <MemberCardHeader status={status} title={title} role={role} canEdit={canEdit} isVpe={isVpe} up={up} cycleRole={cycleRole} onDelete={onDelete} id={id} />
       <div className="member-main-content">
         <div className="member-info">
-          {edit ? (
-            <input 
-              autoFocus 
-              className="name-in" 
-              value={name} 
-              onClick={e => e.stopPropagation()} 
-              onKeyDown={e => e.key === 'Enter' && setEdit(false)}
-              onBlur={() => setEdit(false)}
-              onChange={e => up({ name: e.target.value.toUpperCase() })} 
-            />
-          ) : (
-            <span className="name">{name?.toUpperCase()}</span>
-          )}
-          <div className="enrolled-list" onClick={e => e.stopPropagation()}>
-            {enrolled.map((p, i) => <PathwayNode key={p.name} item={p} onUpdate={(u) => setP(i, u)} onRemove={() => delP(i)} />)}
-            <PathwayNode isNew available={PATHWAYS.filter(p => !enrolled.find(e => e.name === p))} onUpdate={addP} />
-          </div>
+          {edit ? <input autoFocus className="name-in" value={name} onClick={e => e.stopPropagation()} onKeyDown={e => e.key === 'Enter' && setEdit(false)}
+              onBlur={() => setEdit(false)} onChange={e => up({ name: e.target.value.toUpperCase() })} />
+            : <span className="name">{name?.toUpperCase()}</span>}
+          <MemberPathways enrolled={enrolled} setP={(i, u) => { const n = [...enrolled]; n[i] = { ...n[i], ...u }; up({ enrolled: n }); }}
+            addP={(n) => up({ enrolled: [...enrolled, { name: n, level: 1, projects: 0 }] })} delP={(i) => up({ enrolled: enrolled.filter((_, idx) => idx !== i) })} />
         </div>
-
-        <div className="profile-photo-slot">
-          <div className="avatar-frame">
-            <div className="glitch-overlay"></div>
-            <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`} alt={name} />
-          </div>
-        </div>
+        <div className="profile-photo-slot"><div className="avatar-frame"><div className="glitch-overlay" /><img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`} alt={name} /></div></div>
       </div>
     </div>
   );

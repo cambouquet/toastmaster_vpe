@@ -10,8 +10,8 @@ export const SyncOverlay = ({ progress }) => (
       <div className="pulse" />
     </div>
     <div className="sync-status">
-      <div className="title">UPLINK_ESTABLISHING</div>
-      <div className="progress">{progress}% // VERIFYING_NODES</div>
+      <div className="title">UPLINK ESTABLISHING</div>
+      <div className="progress">{progress}% // VERIFYING NODES</div>
     </div>
   </div>
 );

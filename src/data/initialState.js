@@ -24,6 +24,7 @@ export const INITIAL_STATE = {
       { id: 3, name: '', title: '', evaluator: '' }
     ]
   },
+  currentApp: 'mission-control',
   currentScreen: 'workspace',
   members: MEMBERS_DATA
 };

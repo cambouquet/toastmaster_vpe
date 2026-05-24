@@ -7,7 +7,7 @@ export const IdentityList = ({ search, setSearch, onAuth, onCreate }) => {
   return (
     <>
       <div className="search-box">
-        <input autoFocus spellCheck="false" className="role-search" placeholder="SEARCH_MEMBER..." 
+        <input autoFocus spellCheck="false" className="role-search" placeholder="SEARCH MEMBER..." 
           value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
       <div className="scrollable">
