@@ -1,0 +1,50 @@
+@import "../../styles/variables";
+
+.app-loading-overlay {
+  position: fixed; inset: 0; z-index: 40000; background: #000;
+  display: flex; align-items: center; justify-content: center;
+  font-family: inherit; animation: slide-in 0.3s ease-out;
+  .glitch-bg {
+    position: absolute; inset: 0; opacity: 0.1;
+    background-image: linear-gradient(rgba($accent-cyan, 0.1) 1px, transparent 1px);
+    background-size: 100% 4px;
+  }
+  .loading-content { position: relative; text-align: center; width: 400px; }
+  .sigil-pair {
+    display: flex; align-items: center; justify-content: center; gap: 24px;
+    margin-bottom: 35px; color: $accent-cyan;
+    .sigil-main, .sigil-sep, .sigil-app { display: flex; align-items: center; justify-content: center; }
+    .sigil-main { animation: pulse-glow 2s infinite ease-in-out; }
+    .sigil-sep { font-size: 2rem; font-weight: 100; opacity: 0.2; transform: translateY(-2px); }
+    .sigil-app {
+      opacity: 0.8; animation: pulse-glow 2s infinite ease-in-out reverse;
+      transform: translateY(14px); // Optical baseline alignment for 60px vs 80px logo
+      &.tm { color: #fff; filter: drop-shadow(0 0 5px rgba(#fff, 0.4)); }
+      &.mc { color: $accent-cyan; }
+    }
+  }
+  .hud-line {
+    color: #fff; font-size: 0.9rem; font-weight: 900; letter-spacing: 4px; 
+    margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 12px;
+    .title { opacity: 0.5; font-weight: 400; }
+    .sep { color: $accent-cyan; opacity: 0.8; }
+    .subject { text-shadow: 0 0 10px rgba($accent-cyan, 0.6); }
+  }
+  .load-bar-wrap {
+    height: 4px; background: rgba($accent-cyan, 0.1); width: 100%; position: relative; 
+    overflow: hidden; margin-bottom: 12px;
+    .load-bar { height: 100%; background: $accent-cyan; box-shadow: 0 0 15px $accent-cyan; }
+  }
+  .percent-row {
+    display: flex; justify-content: space-between; align-items: center;
+    color: $accent-cyan; font-size: 0.7rem; font-weight: 700; 
+    .digit { font-variant-numeric: tabular-nums; letter-spacing: 2px; text-shadow: 0 0 5px $accent-cyan; }
+    .mode { font-weight: 300; opacity: 0.4; text-transform: uppercase; letter-spacing: 1px; }
+  }
+  &.fade-out { opacity: 0; pointer-events: none; transition: opacity 0.6s; }
+}
+@keyframes slide-in { from { opacity: 0; transform: scale(1.05); } to { opacity: 1; transform: scale(1); } }
+@keyframes pulse-glow {
+  0%, 100% { filter: drop-shadow(0 0 2px $accent-cyan); opacity: 0.8; }
+  50% { filter: drop-shadow(0 0 10px $accent-cyan); opacity: 1; }
+}

@@ -23,6 +23,16 @@ export const useCollaborationActions = ({ ai, state, refs, up, addLog, notify, s
   const uiAction = useCallback(async (type, val) => {
     addLog(`[ACTION] ${type}${val ? ': ' + JSON.stringify(val) : ''}`, "info");
     if (type === "RUN_TESTS") return up({ testStatus: "RUNNING" });
+    
+    if (type === "SWITCH_APP") {
+      up({ switchingTo: val });
+      setTimeout(async () => {
+        const res = await ai.handleUiAction(type, val, state);
+        up({ ...res.newState, switchingTo: null });
+      }, 2000);
+      return;
+    }
+
     const res = await ai.handleUiAction(type, val, state);
     if (res.notification) { notify(res.notification); addLog(`[SYS] ${res.notification}`, "info"); }
     if (res.subtitle) { setTimedSubtitle(res.subtitle); addLog(`[AGENT] ${res.subtitle}`, "ai"); }

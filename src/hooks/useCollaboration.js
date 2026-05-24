@@ -9,7 +9,13 @@ import { useSubtitleQueue } from "./useSubtitleQueue";
 import { useCollaborationActions } from "./useCollaborationActions";
 
 export const useCollaboration = (ai) => {
-  const [state, setState] = useState({ ...INITIAL_STATE, testStatus: "STANDBY", ackCount: 0, currentUser: getIdentity() });
+  const [state, setState] = useState({ 
+    ...INITIAL_STATE, 
+    testStatus: "STANDBY", 
+    ackCount: 0, 
+    currentUser: getIdentity(),
+    switchingTo: null 
+  });
   const { subtitle, setTimedSubtitle } = useSubtitleQueue();
   const { notifications, notify, dismiss } = useNotifications();
   const { logs, addLog, clearLogs } = useSystemLogs();
