@@ -12,7 +12,7 @@ import { HealthService } from '../../services/system/HealthService';
 export const ShellLayout = ({ state, props, handlers, flags }) => (
   <div className={`app-shell ${props.syncProgress > 0 ? 'is-transitioning' : ''}`}>
     <div className="system-glitch-overlay" />
-    {props.syncProgress > 0 && <SyncOverlay progress={props.syncProgress} />}
+    {props.syncProgress > 0 && <SyncOverlay progress={props.syncProgress} type={props.syncType} />}
     {flags.showNav && (
       <NavigationOverlay currentApp={state.currentApp} onClose={handlers.toggleNav}
         onSwitch={(app) => handlers.uiAction('SWITCH_APP', app)} />

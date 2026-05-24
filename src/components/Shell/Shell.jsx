@@ -11,12 +11,12 @@ export const Shell = () => {
   const { state, subtitle, interact, uiAction, logs, clearLogs, notifications, dismiss } = useCollaboration(aiService);
   const [showDebug, setShowDebug] = useState(false);
   const [showNav, setShowNav] = useState(false);
-  const { syncProgress, onAuth } = useAuthSync(uiAction);
+  const { syncProgress, syncType, onAuth } = useAuthSync(uiAction);
 
   return (
     <ShellLayout 
       state={state}
-      props={{ syncProgress, notifications, subtitle, logs }}
+      props={{ syncProgress, syncType, notifications, subtitle, logs }}
       handlers={{ 
         uiAction, onAuth, interact, dismiss, clearLogs,
         toggleNav: () => setShowNav(!showNav),

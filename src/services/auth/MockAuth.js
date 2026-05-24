@@ -26,13 +26,10 @@ export const mockLogin = (memberId = '0', newMemberData = null) => {
   }
   localStorage.removeItem('mock_logged_out');
   localStorage.setItem('mock_member_id', memberId);
-  sessionStorage.setItem('pending_notification', `Uplink established. Identified as ${name}.`);
-  window.location.reload();
+  return { name, role: 'USER' }; // Simplified for state transition
 };
 
 export const mockLogout = () => {
   localStorage.setItem('mock_logged_out', 'true');
   localStorage.removeItem('mock_member_id');
-  sessionStorage.setItem('pending_notification', 'Connection terminated. Rest well, user.');
-  window.location.reload();
 };

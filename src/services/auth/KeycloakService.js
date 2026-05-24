@@ -29,13 +29,13 @@ export const getIdentity = () => {
 };
 
 export const login = (memberId = '0', data = null) => {
-  if (USE_MOCK) mockLogin(memberId, data);
-  else keycloak.login();
+  if (USE_MOCK) return mockLogin(memberId, data);
+  keycloak.login();
 };
 
 export const logout = () => {
-  if (USE_MOCK) mockLogout();
-  else keycloak.logout();
+  if (USE_MOCK) return mockLogout();
+  keycloak.logout();
 };
 
 export default keycloak;

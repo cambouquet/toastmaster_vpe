@@ -17,6 +17,18 @@
     .title { color: $accent-cyan; font-weight: 900; letter-spacing: 4px; font-size: 0.8rem; margin-bottom: 4px; }
     .progress { color: #fff; font-size: 0.6rem; opacity: 0.6; font-family: monospace; }
   }
+
+  &.sync-out {
+    $out-red: #ff3e3e;
+    .sync-lines { background: repeating-linear-gradient(90deg, transparent 0, transparent 49.5%, rgba($out-red, 0.1) 50%, transparent 50.5%); }
+    .sync-core {
+      .outer { border-left-color: $out-red; border-right-color: $out-red; }
+      .inner { border-color: rgba($out-red, 0.4); }
+      .pulse { background: $out-red; box-shadow: 0 0 20px $out-red; }
+    }
+    .sync-status .title { color: $out-red; }
+  }
 }
+
 @keyframes spin-sync { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes grid-scroll { from { background-position: 0 0; } to { background-position: 400px 0; } }
