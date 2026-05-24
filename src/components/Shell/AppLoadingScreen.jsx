@@ -31,13 +31,13 @@ export const AppLoadingScreen = ({ app, onFinish, isInitial = false }) => {
       <div className="glitch-bg" />
       <div className="loading-content">
         <div className="sigil-pair">
-          <div className="sigil-main">
-            <Logo style={{ width: 80, height: 80 }} scan={true} />
-          </div>
+          <Logo style={{ width: 80, height: 80 }} />
           <div className="sigil-sep">//</div>
-          <div className={`sigil-app ${isTM ? 'tm' : 'mc'}`}>
-            {isTM ? <ToastmasterLogo style={{ width: 60, height: 60 }} /> : <Logo style={{ width: 60, height: 60 }} />}
-          </div>
+          {isTM ? (
+            <ToastmasterLogo style={{ width: 60, height: 60 }} />
+          ) : (
+            <Logo style={{ width: 60, height: 60 }} />
+          )}
         </div>
         <div className="hud-line">
           <span className="title">{isInitial ? 'INITIALIZING' : 'INTERFACE SWITCH'}</span>

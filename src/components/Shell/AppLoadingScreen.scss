@@ -13,14 +13,19 @@
   .sigil-pair {
     display: flex; align-items: center; justify-content: center; gap: 24px;
     margin-bottom: 35px; color: $accent-cyan;
-    .sigil-main, .sigil-sep, .sigil-app { display: flex; align-items: center; justify-content: center; }
-    .sigil-main { animation: pulse-glow 2s infinite ease-in-out; }
-    .sigil-sep { font-size: 2rem; font-weight: 100; opacity: 0.2; transform: translateY(-2px); }
-    .sigil-app {
-      opacity: 0.8; animation: pulse-glow 2s infinite ease-in-out reverse;
-      transform: translateY(14px); // Optical baseline alignment for 60px vs 80px logo
-      &.tm { color: #fff; filter: drop-shadow(0 0 5px rgba(#fff, 0.4)); }
-      &.mc { color: $accent-cyan; }
+    
+    .logo-core-wrap, .logo-tm-wrap {
+      animation: pulse-glow 2s infinite ease-in-out;
+    }
+
+    .logo-tm-wrap {
+      color: #fff; filter: drop-shadow(0 0 5px rgba(#fff, 0.4));
+      animation-delay: -1s;
+    }
+
+    .sigil-sep { 
+      font-size: 2rem; font-weight: 100; opacity: 0.2;
+      line-height: 1;
     }
   }
   .hud-line {

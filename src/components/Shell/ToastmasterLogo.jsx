@@ -1,13 +1,11 @@
 import React from 'react';
 
-export const ToastmasterLogo = ({ scan, className = "", style = {} }) => (
-  <div className={`logo-wrap ${scan ? 'scan' : ''} ${className}`} 
-    style={{ color: 'inherit', width: 24, height: 24, position: 'relative', ...style }}>
-    <svg viewBox="0 0 100 100" fill="currentColor" style={{ display: 'block', width: '100%', height: '100%' }}>
-      {/* Heavy Blocky 'T' Shape */}
-      <path d="M5 15h90v15H60v55H40V30H5V15z" />
-      {/* Depth Shadow */}
-      <path d="M10 20l80 0v5l-80 0z" opacity="0.3" fill="#000" />
+export const ToastmasterLogo = ({ className = "", style = {} }) => (
+  <div className={`logo-tm-wrap ${className}`} 
+    style={{ ...style, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <svg viewBox="0 0 100 110" fill="currentColor" style={{ width: '100%', height: '100%' }}>
+      <path d="M5 25h90v15H60v55H40V40H5V25z" />
+      <path d="M10 30l80 0v5l-80 0z" opacity="0.3" fill="#000" />
     </svg>
   </div>
 );
