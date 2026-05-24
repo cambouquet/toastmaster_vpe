@@ -10,9 +10,9 @@ export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => (
     <div className="nav-content" onClick={e => e.stopPropagation()}>
       <div className="nav-header">
         <Logo style={{ width: 24, height: 24, marginRight: 8 }} />
-        <span className="lbl">SYSTEM BRIDGE</span>
+        <span className="lbl">SYSTEM INTERFACE</span>
         <span className="sep px-2">//</span>
-        <span className="val hi">GLOBAL CLUSTER</span>
+        <span className="val hi">APP SWITCHER</span>
       </div>
       <div className="grid-container">
         <NavGridItem 

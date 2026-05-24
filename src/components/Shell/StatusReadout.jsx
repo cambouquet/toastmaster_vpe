@@ -1,7 +1,6 @@
 import React from 'react';
 import { Logo } from './Logo';
 import { ToastmasterLogo } from './ToastmasterLogo';
-import { MissionControlLogo } from './MissionControlLogo';
 import { StatusMeta } from './StatusMeta';
 import { MEMBERS_DATA } from '../../data/members';
 
@@ -13,14 +12,14 @@ const StatusGuest = ({ onAuth }) => (
 
 export const StatusReadout = ({ isAuth, user, currentApp, onToggleAuth, onToggleNav }) => {
   const online = MEMBERS_DATA.filter(m => m.status === 'ONLINE').length;
-  const isMC = currentApp === 'mission-control', AppIcon = isMC ? MissionControlLogo : ToastmasterLogo;
+  const isMC = currentApp === 'mission-control', AppIcon = isMC ? Logo : ToastmasterLogo;
   
   return (
     <div className="status-content">
       <div className="status-main-info">
         <div className="app-breadcrumb">
           <AppIcon style={{ width: 14, height: 14, opacity: 0.9, marginRight: 8 }} />
-          <span className="app-name">{isMC ? 'MISSION' : 'TOASTMASTER'}</span>
+          <span className="app-name">{isMC ? 'MISSION CONTROL' : 'TOASTMASTER'}</span>
         </div>
         <span className="sep px-2">//</span>
         {!isAuth ? <StatusGuest onAuth={onToggleAuth} /> : (
