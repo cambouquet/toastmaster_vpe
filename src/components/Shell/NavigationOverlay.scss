@@ -40,7 +40,14 @@
   aspect-ratio: 1; border: 1px solid rgba($accent-cyan, 0.1); background: rgba($accent-cyan, 0.02);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
   transition: all 0.2s; cursor: not-allowed;
+  position: relative; overflow: hidden;
   
+  .beta-tag {
+    position: absolute; top: 0; right: 0; background: $accent-cyan; color: #000;
+    font-size: 0.45rem; font-weight: 900; padding: 2px 6px; letter-spacing: 1px;
+    clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+
   .icn { font-size: 1.5rem; font-weight: 900; opacity: 0.3; }
   .label { font-size: 0.6rem; font-weight: 700; letter-spacing: 1px; }
   .status { font-size: 0.5rem; opacity: 0.4; }

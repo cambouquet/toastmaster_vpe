@@ -15,6 +15,7 @@ export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => (
         <NavGridItem 
           id="mc" label="MISSION CONTROL" active={currentApp === 'mission-control'}
           status={currentApp === 'mission-control' ? 'CURRENT APP' : 'ONLINE'}
+          beta={true}
           onClick={() => { onSwitch('mission-control'); onClose(); }}
         >
           <Logo style={{ width: 48, height: 48, marginBottom: 10 }} />
@@ -22,6 +23,7 @@ export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => (
         <NavGridItem 
           id="tm" label="TOASTMASTER" active={currentApp === 'toastmaster'}
           status={currentApp === 'toastmaster' ? 'CURRENT APP' : 'ONLINE'}
+          beta={true}
           onClick={() => { onSwitch('toastmaster'); onClose(); }}
         >
           <ToastmasterLogo style={{ width: 48, height: 48, marginBottom: 10 }} />
