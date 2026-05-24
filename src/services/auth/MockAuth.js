@@ -1,7 +1,7 @@
 import { MEMBERS_DATA } from '../../data/members';
 
 export const getMockIdentity = () => {
-  const isLoggedOut = localStorage.getItem('mock_logged_out') === 'true';
+  const isLoggedOut = localStorage.getItem('mock_logged_out') === 'true' || !localStorage.getItem('mock_member_id');
   if (isLoggedOut) return { name: "AUTHORIZATION REQUIRED", role: "NONE" };
   const memberId = localStorage.getItem('mock_member_id');
   if (!memberId) return { name: "AUTHORIZATION REQUIRED", role: "NONE" };

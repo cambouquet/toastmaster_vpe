@@ -12,35 +12,55 @@ const StatusGuest = ({ onAuth }) => (
   </button>
 );
 
-export const StatusReadout = ({ isAuth, user, currentApp, onToggleAuth, onToggleNav }) => {
+export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth, onToggleNav }) => {
   const online = MEMBERS_DATA.filter(m => m.status === 'ONLINE').length;
-  const isMC = currentApp === 'mission-control', AppIcon = isMC ? Logo : ToastmasterLogo;
-  return (
-    <div className="status-content">
-      <div className="app-breadcrumb">
+  const isMC = currentApp === 'mission-control';
+  const AppIcon = isMC ? Logo : ToastmasterLogo;
+
+  const GuestChain = () => (
+    <>
+      <div className="t-group">
         <div className="neural-wave" style={{ '--wave-idx': 5 }}>
-          <AppIcon scan={true} style={{ width: 14, height: 14, opacity: 0.9, marginRight: 8 }} />
+          <AppIcon scan={true} style={{ width: 14, height: 14, opacity: 0.9 }} />
         </div>
-        <span className="app-name neural-wave" style={{ '--wave-idx': 4 }}>
-          {isMC ? 'MISSION CONTROL' : 'TOASTMASTER'}
-        </span>
+        <span className="sep px-1">//</span>
+        <SystemClock />
       </div>
 
-      {!isAuth ? (
+      {hovered && (
         <>
           <span className="sep px-2">//</span>
           <div className="t-group">
-            <SystemClock />
-            <span className="sep px-1">//</span>
-            <span className="val sm dim">NIGHT CITY // EARTH</span>
+            <span className="val sm dim">NIGHT CITY</span>
             <span className="sep px-1">//</span>
             <WeatherTelemetry />
           </div>
           <span className="sep px-2">//</span>
           <StatusGuest onAuth={onToggleAuth} />
         </>
+      )}
+
+      {!hovered && (
+        <>
+          <span className="sep px-1">//</span>
+          <WeatherTelemetry />
+        </>
+      )}
+    </>
+  );
+
+  return (
+    <div className="status-content">
+      {!isAuth ? (
+        <GuestChain />
       ) : (
-        <StatusMeta user={user} online={online} total={MEMBERS_DATA.length} />
+        <StatusMeta 
+          user={user} 
+          online={online} 
+          total={MEMBERS_DATA.length} 
+          hovered={hovered} 
+          AppIcon={AppIcon}
+        />
       )}
     </div>
   );

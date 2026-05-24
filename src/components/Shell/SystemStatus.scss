@@ -7,7 +7,6 @@
   position: fixed; top: 12px; right: 40px; font-family: "Space Grotesk", sans-serif;
   z-index: 10001; display: flex; align-items: center; pointer-events: auto; height: 32px;
   padding-left: 5px;
-  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   box-shadow: -10px 0 30px rgba(0,0,0,0.5);
   
   .system-status-bg {
@@ -17,20 +16,15 @@
     transition: all 0.4s ease;
   }
 
-  &.is-auth {
-    .status-display-area { width: 760px; opacity: 1; }
+  .status-display-area {
+    width: 760px;
+    overflow: hidden; pointer-events: auto; height: 100%; display: flex; align-items: center;
+    flex: 1;
   }
 
   &.is-connected,
   &:hover { 
     .system-status-bg { border-color: $accent-cyan; background: #10151a; }
-    .status-display-area { width: 760px; opacity: 1; }
-  }
-
-  .status-display-area {
-    width: 0; opacity: 0; transition: opacity 0.4s ease;
-    overflow: hidden; pointer-events: auto; height: 100%; display: flex; align-items: center;
-    flex: 1;
   }
 }
 

@@ -20,7 +20,7 @@ export const MeetingWorkspace = ({ state, onAction }) => {
 
   return (
     <div className='workspace-screen'>
-      <AppHeader app="TOASTMASTER" title="NEXT MEETING" />
+      <AppHeader title="NEXT MEETING" />
       <div className='workspace-grid'>
         <MeetingSchedule {...common} />
         <EditableCard label='Meeting Theme' value={state.theme} isEditing={editing === 'theme'}

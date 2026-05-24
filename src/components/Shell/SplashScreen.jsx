@@ -23,17 +23,18 @@ export const SplashScreen = ({ onFinish }) => {
       <div className="glitch-bg" />
       <div className="splash-core">
         <div className="sigil-wrap">
-          <Logo style={{ width: 80, height: 80 }} />
+          <Logo style={{ width: 100, height: 100 }} scan={true} />
         </div>
-        <div className="hud-line">TOASTMASTER // LIBERATION KERNEL</div>
+        <div className="hud-line">TOASTMASTER // CONNECTING</div>
         <div className="load-bar-wrap">
           <div className="load-bar" style={{ width: `${percent}%` }} />
           <div className="load-percent">{percent}%</div>
         </div>
         <div className="status-log">
-          {percent > 20 && <div>> INITIALIZING LIBERATION KERNEL</div>}
-          {percent > 50 && <div>> BREAKING SYSTEM CONSTRAINTS</div>}
-          {percent > 85 && <div>> FUTURE ACCESS GRANTED</div>}
+          {percent > 10 && <div>INITIALIZING SYSTEM</div>}
+          {percent > 40 && <div>CONNECTING TO NETWORK...</div>}
+          {percent > 70 && <div>ENCRYPTED SYNC ESTABLISHED</div>}
+          {percent > 90 && <div>WELCOME TO TOASTMASTER</div>}
         </div>
       </div>
     </div>

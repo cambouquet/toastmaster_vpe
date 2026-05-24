@@ -7,6 +7,7 @@ import './SystemStatus.scss';
 export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav }) => {
   const isAuth = user.role !== 'NONE' && user.name !== 'AUTHORIZATION REQUIRED';
   const [showRoles, setShowRoles] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [search, setSearch] = useState('');
   
   const handleAuth = () => { setShowRoles(!showRoles); setSearch(''); };
@@ -14,13 +15,18 @@ export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav 
   const handleIdentity = (id, data) => { setShowRoles(false); onAuth(id, data); };
 
   return (
-    <div className={`system-status-readout ${showRoles ? 'is-connected' : ''} ${isAuth ? 'is-auth' : ''}`}>
+    <div 
+      className={`system-status-readout ${showRoles ? 'is-connected' : ''} ${isAuth ? 'is-auth' : ''}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="system-status-bg" />
       <div className="status-display-area">
         <StatusReadout 
           isAuth={isAuth} 
           user={user} 
           currentApp={currentApp}
+          hovered={isHovered || showRoles}
           onToggleAuth={handleAuth} 
           onToggleNav={onToggleNav} 
         />

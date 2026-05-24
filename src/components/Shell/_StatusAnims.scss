@@ -16,8 +16,13 @@
 }
 @keyframes lock-pulse { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.1); opacity: 1; } }
 @keyframes logo-flicker { 0%, 100% { opacity: 1; } 92% { opacity: 1; } 93% { opacity: 0.4; } 94% { opacity: 1; } }
-@keyframes logout-glow {
-  0%, 100% { filter: drop-shadow(0 0 2px #ff3e3e) brightness(1); } 50% { filter: drop-shadow(0 0 10px #ff3e3e) brightness(1.4); }
+@keyframes sigil-glow {
+  0%, 100% { filter: drop-shadow(0 0 10px #00bac4) brightness(1); transform: scale(1); }
+  50% { filter: drop-shadow(0 0 25px #00bac4) brightness(1.5); transform: scale(1.05); }
+}
+
+.sigil-scan {
+  animation: sigil-glow 2s infinite ease-in-out;
 }
 
 .neural-wave {

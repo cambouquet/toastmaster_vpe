@@ -6,7 +6,7 @@ import './MissionControl.scss';
 export const MissionControl = ({ state }) => {
   return (
     <div className="workspace-screen mission-control">
-      <AppHeader app="MISSION CONTROL" title="IDENTITY LAB" />
+      <AppHeader title="IDENTITY LAB" />
       
       <div className="workspace-grid">
         <EditableCard label="SYSTEM IDENTITY" value={state.currentUser?.name || 'GUEST_USER'} />
