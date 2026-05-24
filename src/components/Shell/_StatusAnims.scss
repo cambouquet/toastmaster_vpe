@@ -1,3 +1,7 @@
+@keyframes neural-pulse {
+  0%, 100% { opacity: 0.3; filter: brightness(0.8); transform: scale(0.98); }
+  50% { opacity: 1; filter: brightness(1.2); transform: scale(1); }
+}
 @keyframes signal-scan { from { opacity: 0.3; transform: scale(0.95); } to { opacity: 0.8; transform: scale(1); } }
 @keyframes liberation-shimmer {
   0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 2px $accent-cyan); }

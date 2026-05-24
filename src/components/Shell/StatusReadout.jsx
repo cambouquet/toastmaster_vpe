@@ -19,7 +19,7 @@ export const StatusReadout = ({ isAuth, user, currentApp, onToggleAuth, onToggle
     <div className="status-content">
       <div className="status-main-info">
         <div className="app-breadcrumb">
-          <AppIcon style={{ width: 14, height: 14, opacity: 0.9, marginRight: 8 }} />
+          <AppIcon scan={!isAuth} style={{ width: 14, height: 14, opacity: 0.9, marginRight: 8 }} />
           <span className="app-name">{isMC ? 'MISSION CONTROL' : 'TOASTMASTER'}</span>
         </div>
         
