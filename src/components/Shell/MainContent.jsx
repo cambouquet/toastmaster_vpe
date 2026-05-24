@@ -1,11 +1,11 @@
 import React from 'react';
 import { MeetingWorkspace } from '../Workspace/MeetingWorkspace';
 import { MemberRegistry } from '../Members/MemberRegistry';
-import { MissionControl } from './MissionControl';
+import { IdentityLab } from './IdentityLab';
 
-export const MainContent = ({ isWorkspace, state, uiAction }) => {
-  if (state.currentApp === 'mission-control') {
-    return <MissionControl state={state} />;
+export const MainContent = ({ isWorkspace, state, uiAction, onAuth }) => {
+  if (state.currentApp === 'identity-lab' || state.currentApp === 'mission-control') {
+    return <IdentityLab state={state} uiAction={uiAction} onAuth={onAuth} />;
   }
 
   if (isWorkspace) {

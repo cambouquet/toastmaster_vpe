@@ -14,7 +14,7 @@ const StatusGuest = ({ onAuth }) => (
 
 export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth, onToggleNav }) => {
   const online = MEMBERS_DATA.filter(m => m.status === 'ONLINE').length;
-  const isMC = currentApp === 'mission-control';
+  const isMC = currentApp === 'mission-control' || currentApp === 'identity-lab';
   const AppIcon = isMC ? Logo : ToastmasterLogo;
 
   const GuestChain = () => (

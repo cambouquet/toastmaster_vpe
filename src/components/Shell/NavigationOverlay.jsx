@@ -13,10 +13,10 @@ export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => (
       </div>
       <div className="grid-container">
         <NavGridItem 
-          id="mc" label="MISSION CONTROL" active={currentApp === 'mission-control'}
-          status={currentApp === 'mission-control' ? 'CURRENT APP' : 'ONLINE'}
+          id="id-lab" label="IDENTITY LAB" active={currentApp === 'identity-lab'}
+          status={currentApp === 'identity-lab' ? 'CURRENT APP' : 'ONLINE'}
           beta={true}
-          onClick={() => { onSwitch('mission-control'); onClose(); }}
+          onClick={() => { onSwitch('identity-lab'); onClose(); }}
         >
           <Logo style={{ width: 48, height: 48, marginBottom: 10 }} />
         </NavGridItem>

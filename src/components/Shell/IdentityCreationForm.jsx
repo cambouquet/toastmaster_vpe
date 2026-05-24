@@ -1,28 +1,32 @@
-import React, { useState } from 'react';
-export const IdentityCreationForm = ({ search, setSearch, onAuth, onCancel }) => {
-  const [role, setRole] = useState('MEMBER');
-  const handleCreate = () => {
+import React from 'react';
+import './IdentityCreationForm.scss';
+
+export const IdentityCreationForm = ({ search, setSearch, onAuth }) => {
+  const handleSync = () => {
     if (!search.trim()) return;
-    onAuth('addMember', { id: `new-${Date.now()}`, name: search.trim(), role, title: 'NEW MEMBER', status: 'ONLINE' });
+    onAuth('addMember', { 
+      id: 'id-' + Date.now(), 
+      name: search.trim(), 
+      role: 'PENDING', 
+      title: 'SYNCHRONIZED_USER', 
+      status: 'STABLE' 
+    });
   };
+
   return (
-    <div className="creation-form">
-      <div className="form-header">:: CREATE NEW PROFILE</div>
-      <div className="field-group">
-        <span className="field-label">NAME</span>
-        <input autoFocus spellCheck="false" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="..." />
+    <div className='neural-link-bootstrap rainbow-box'>
+      <div className='header-glitch' data-text='CORE_IDENTITY_SYNC'>CORE_IDENTITY_SYNC</div>
+      <div className='input-bracket'>
+        <label>NEURAL_HANDLE</label>
+        <input autoFocus spellCheck='false' value={search} 
+          onChange={(e) => setSearch(e.target.value)} placeholder='ENTER_ALIAS...' 
+          onKeyDown={(e) => e.key === 'Enter' && handleSync()} />
       </div>
-      <div className="field-group">
-        <span className="field-label">ROLE</span>
-        <div className="select-wrap">
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="MEMBER">MEMBER</option><option value="OFFICER">OFFICER</option><option value="VPE">VPE</option>
-          </select>
-        </div>
-      </div>
-      <div className="form-actions">
-        <button className="cancel" onClick={onCancel}>CANCEL</button>
-        <button className="confirm" onClick={handleCreate}>CREATE</button>
+      <button className={'sync-trigger ' + (search ? 'ready' : '')} onClick={handleSync}>
+        <span>ESTABLISH_UPLINK</span>
+      </button>
+      <div className='telemetry-readout'>
+        > AUTH_PROT: MAIN_STREAM // HANDSHAKE: PENDING // SIGNAL: OPTIMAL
       </div>
     </div>
   );

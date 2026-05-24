@@ -15,7 +15,7 @@ export const useAuthSync = (uiAction) => {
         clearInterval(interval);
         setSyncProgress(0);
         if (role === 'logout') return uiAction('logout');
-        uiAction('login', role === 'addMember' ? extra.id : role);
+        uiAction('login', role === 'addMember' ? extra : role);
       } else {
         setSyncProgress(current);
       }

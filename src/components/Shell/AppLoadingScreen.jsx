@@ -7,7 +7,7 @@ export const AppLoadingScreen = ({ app, onFinish, isInitial = false }) => {
   const [percent, setPercent] = useState(0);
   const [complete, setComplete] = useState(false);
   const isTM = app === 'toastmaster';
-  const appLabel = isTM ? 'TOASTMASTER' : 'MISSION CONTROL';
+  const appLabel = isTM ? 'TOASTMASTER' : 'IDENTITY LAB';
 
   useEffect(() => {
     const duration = isInitial ? 2500 : 2000;

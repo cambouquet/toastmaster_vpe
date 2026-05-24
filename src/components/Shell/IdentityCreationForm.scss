@@ -1,0 +1,51 @@
+@import "../../styles/variables";
+
+.neural-link-bootstrap {
+  z-index: 1; width: 420px; display: flex; flex-direction: column;
+  gap: 24px; position: relative; padding: 40px;
+  background: rgba(10, 12, 16, 0.9);
+  border: 1px solid rgba($accent-cyan, 0.1);
+  transition: all 0.4s ease;
+  
+  &:hover {
+    border: 1px solid transparent;
+    background: 
+      linear-gradient(rgba(10, 12, 16, 0.95), rgba(10, 12, 16, 0.95)) padding-box,
+      $gradient-mutli border-box;
+    animation: border-flow 4s linear infinite;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .header-glitch {
+    font-size: 0.9rem; font-weight: 900; color: $accent-cyan;
+    letter-spacing: 5px; text-align: center; opacity: 0.8;
+  }
+
+  .input-bracket {
+    display: flex; flex-direction: column; gap: 8px;
+    label { font-size: 0.55rem; color: rgba($accent-cyan, 0.4); letter-spacing: 2px; }
+    input {
+      background: rgba(255, 255, 255, 0.02); border: none; 
+      border-bottom: 1px solid rgba($accent-cyan, 0.1);
+      color: #fff; padding: 12px; font-family: "JetBrains Mono", monospace;
+      font-size: 1rem; outline: none; transition: all 0.3s;
+      &:focus { border-color: $accent-cyan; background: rgba($accent-cyan, 0.05); }
+    }
+  }
+
+  .sync-trigger {
+    height: 46px; background: transparent; border: 1px solid rgba($accent-cyan, 0.2);
+    color: rgba($accent-cyan, 0.4); font-weight: 900; cursor: pointer;
+    font-size: 0.7rem; letter-spacing: 3px; transition: all 0.3s;
+    &.ready { 
+      border-color: rgba($accent-cyan, 0.6); color: rgba($accent-cyan, 0.8); 
+      &:hover { background: $accent-cyan; color: #000; border-color: $accent-cyan; }
+    }
+  }
+
+  .telemetry-readout {
+    font-size: 0.5rem; color: rgba($accent-cyan, 0.2);
+    font-family: "JetBrains Mono", monospace; text-align: center;
+  }
+}
