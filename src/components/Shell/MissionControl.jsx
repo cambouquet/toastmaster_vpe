@@ -1,35 +1,46 @@
 import React from 'react';
+import { EditableCard } from '../shared/EditableCard';
 import './MissionControl.scss';
 
-export const MissionControl = ({ state }) => (
-  <div className="mission-control">
-    <div className="mc-header-row">
-      <div className="mc-title">MISSION CONTROL // IDENTITY_LAB</div>
-      <div className="mc-status-bit"><span className="pulse" /> KERNEL_ESTABLISHED</div>
-    </div>
-    <div className="mc-grid">
-      <div className="mc-card telemetry">
-        <div className="lbl">GLOBAL UPLINK</div>
-        <div className="val hi">ACTIVE</div>
-        <div className="stats">
-          <div className="stat"><span className="l">NODES</span><span className="v">1,024</span></div>
-          <div className="stat"><span className="l">TRAFFIC</span><span className="v">84 GB/S</span></div>
+export const MissionControl = ({ state }) => {
+  return (
+    <div className="workspace-screen mission-control">
+      <header className="registry-header">
+        <h1 className="glitch-text" data-text="IDENTITY LAB">IDENTITY LAB</h1>
+      </header>
+      
+      <div className="workspace-grid">
+        <EditableCard label="GLOBAL UPLINK" value="ACTIVE NODE // 1024" />
+        <EditableCard label="SYSTEM IDENTITY" value="LIBERATION.K" />
+        
+        <div className="card security-section">
+          <label>SECURITY LOGS</label>
+          <div className="status-grid">
+            <div className="status-box err">
+              <span className="box-lbl">NODE 08</span>
+              <span className="box-val">BRUTE FORCE DETECTED</span>
+            </div>
+            <div className="status-box ok">
+              <span className="box-lbl">NODE 77</span>
+              <span className="box-val">SUCCESS</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="card telemetry-section">
+          <label>TELEMETRY</label>
+          <div className="status-grid">
+            <div className="status-box hi">
+              <span className="box-lbl">RANK</span>
+              <span className="box-val">ELITE // LVL 42</span>
+            </div>
+            <div className="status-box">
+              <span className="box-lbl">SYNC</span>
+              <span className="box-val">100% NEURAL</span>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="mc-card user-profile">
-        <div className="lbl">USER RANK</div>
-        <div className="val">ELITE ARCHITECT</div>
-        <div className="sub">LEVEL 42</div>
-      </div>
-      <div className="mc-card alerts">
-        <div className="lbl">SECURITY LOGS</div>
-        <div className="log err">> BRUTE FORCE DETECTED (NODE 08)</div>
-        <div className="log ok">> HANDSHAKE SUCCESS (NODE 77)</div>
-      </div>
     </div>
-    <div className="mc-main-visual">
-      <div className="hex-grid" />
-      <div className="core-sync">SYSTEM IDENTITY: LIBERATION_K</div>
-    </div>
-  </div>
-);
+  );
+};

@@ -1,57 +1,33 @@
 @import "../../styles/variables";
 
 .mission-control {
-  padding: 40px; 
-  color: #fff; 
-  height: calc(100vh - 120px); // Subtract header/footer
-  display: flex; 
-  flex-direction: column; 
-  gap: 30px;
-  overflow-y: auto;
-  scrollbar-width: none;
-  &::-webkit-scrollbar { display: none; }
   animation: decode-in 0.8s ease;
 
-  .mc-header-row {
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid rgba($accent-cyan, 0.2); padding-bottom: 10px;
-    .mc-title { font-size: 0.7rem; font-weight: 900; letter-spacing: 3px; opacity: 0.8; }
-    .mc-status-bit { 
-       display: flex; align-items: center; gap: 8px; font-size: 0.55rem; color: $accent-cyan;
-       .pulse { width: 6px; height: 6px; border-radius: 50%; background: $accent-cyan; animation: pulse 2s infinite; }
+  .status-grid {
+    display: flex; flex-direction: column; gap: 8px;
+  }
+
+  .status-box {
+    background: rgba($accent-cyan, 0.03); border-left: 2px solid rgba($accent-cyan, 0.2);
+    padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;
+    transition: all 0.3s ease;
+
+    &:hover { background: rgba($accent-cyan, 0.06); border-left-color: $accent-cyan; }
+
+    .box-lbl { font-size: 0.6rem; font-weight: 700; opacity: 0.5; letter-spacing: 1px; }
+    .box-val { font-size: 0.8rem; font-weight: 400; font-family: "Space Grotesk", sans-serif; }
+
+    &.err { 
+      border-left-color: #ff3e3e; 
+      .box-val { color: #ff3e3e; text-shadow: 0 0 8px rgba(255, 62, 62, 0.4); }
+    }
+    &.ok { 
+      border-left-color: #00ffaa; 
+      .box-val { color: #00ffaa; text-shadow: 0 0 8px rgba(0, 255, 170, 0.4); }
+    }
+    &.hi { 
+      border-left-color: $accent-cyan; 
+      .box-val { color: $accent-cyan; text-shadow: 0 0 8px rgba($accent-cyan, 0.4); }
     }
   }
-
-  .mc-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;
-  }
-
-  .mc-card {
-    background: rgba($accent-cyan, 0.05); border: 1px solid rgba($accent-cyan, 0.1); padding: 15px;
-    .lbl { font-size: 0.6rem; opacity: 0.5; margin-bottom: 5px; }
-    .val { font-size: 1.2rem; font-weight: 800; letter-spacing: 2px; }
-    .stats { margin-top: 15px; display: flex; flex-direction: column; gap: 5px; }
-    .stat { display: flex; justify-content: space-between; font-size: 0.6rem; }
-    .stat .l { opacity: 0.4; }
-    .xp-bar { height: 2px; background: rgba(255,255,255,0.1); margin: 10px 0; .fill { height: 100%; background: $accent-cyan; } }
-    .sub { font-size: 0.5rem; opacity: 0.4; }
-    .log { font-size: 0.55rem; margin-top: 5px; &.err { color: #ff3e3e; } &.ok { color: #00ffaa; } }
-  }
-
-  .mc-main-visual {
-    flex: 1; border: 1px solid rgba($accent-cyan, 0.03); position: relative;
-    display: flex; align-items: center; justify-content: center;
-    .hex-grid { 
-      position: absolute; inset: 0; opacity: 0.1;
-      background-image: radial-gradient($accent-cyan 1px, transparent 1px);
-      background-size: 30px 30px;
-    }
-    .core-sync { font-size: 0.6rem; color: $accent-cyan; letter-spacing: 5px; font-weight: 900; }
-  }
-}
-
-@keyframes pulse {
-  0% { opacity: 0.4; box-shadow: 0 0 0 0 rgba($accent-cyan, 0.4); }
-  70% { opacity: 1; box-shadow: 0 0 0 10px rgba($accent-cyan, 0); }
-  100% { opacity: 0.4; box-shadow: 0 0 0 0 rgba($accent-cyan, 0); }
 }
