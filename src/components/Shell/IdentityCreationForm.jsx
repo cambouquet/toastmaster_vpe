@@ -1,33 +1,32 @@
 import React from 'react';
+import { KIdBrand } from './KIdBrand';
 import './IdentityCreationForm.scss';
 
 export const IdentityCreationForm = ({ search, setSearch, onAuth }) => {
   const handleSync = () => {
     if (!search.trim()) return;
     onAuth('addMember', { 
-      id: 'id-' + Date.now(), 
+      id: 'kid-' + Date.now(), 
       name: search.trim(), 
-      role: 'PENDING', 
-      title: 'SYNCHRONIZED_USER', 
+      role: 'K-USER', 
+      title: 'K-IDENTITY VERIFIED', 
       status: 'STABLE' 
     });
   };
 
   return (
     <div className='neural-link-bootstrap rainbow-box'>
-      <div className='header-glitch' data-text='CORE_IDENTITY_SYNC'>CORE_IDENTITY_SYNC</div>
+      <div className='id-wordmark'>
+        <KIdBrand className='brand-svg' />
+      </div>
       <div className='input-bracket'>
-        <label>NEURAL_HANDLE</label>
         <input autoFocus spellCheck='false' value={search} 
-          onChange={(e) => setSearch(e.target.value)} placeholder='ENTER_ALIAS...' 
+          onChange={(e) => setSearch(e.target.value)} placeholder='SPECIFY ALIAS' 
           onKeyDown={(e) => e.key === 'Enter' && handleSync()} />
       </div>
       <button className={'sync-trigger ' + (search ? 'ready' : '')} onClick={handleSync}>
-        <span>ESTABLISH_UPLINK</span>
+        <span>SYNC</span>
       </button>
-      <div className='telemetry-readout'>
-        > AUTH_PROT: MAIN_STREAM // HANDSHAKE: PENDING // SIGNAL: OPTIMAL
-      </div>
     </div>
   );
 };

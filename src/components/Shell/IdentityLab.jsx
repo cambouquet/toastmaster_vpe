@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { EditableCard } from '../shared/EditableCard';
 import { AppHeader } from '../shared/AppHeader';
 import { IdentityCreationForm } from './IdentityCreationForm';
+import { KFontValidator } from './KFontValidator';
 import './IdentityLab.scss';
 
 export const IdentityLab = ({ state, onAuth }) => {
@@ -11,6 +12,7 @@ export const IdentityLab = ({ state, onAuth }) => {
   if (!isAuth) {
     return (
       <div className='workspace-screen identity-lab guest-mode'>
+        <KFontValidator />
         <IdentityCreationForm search={search} setSearch={setSearch} onAuth={onAuth} />
         <div className='guest-footer'>[ UNREGISTERED_INTERNAL_UPLINK_077 ]</div>
       </div>

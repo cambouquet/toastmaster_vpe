@@ -1,14 +1,14 @@
 import React from 'react';
 
-export const Logo = ({ className = "", style = {} }) => (
-  <div className={`logo-core-wrap ${className}`} style={{ ...style, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    <svg viewBox="0 0 100 100" fill="currentColor" style={{ width: '100%', height: '100%' }}>
-      <path d="M19 95 L22 5 L25 95 Z" />
-      <path d="M25 40 Q65 5 96 22 L38 52 Z" />
-      <path d="M17 52 L31 66 L27 70 L13 56 Z" />
-      <path d="M25 63 Q65 85 98 98 L88 98 Q58 85 25 68 Z" />
-      <circle cx="22" cy="45" r="2.5" fill="#000" opacity="0.4" />
-      <path d="M45 40l12 2.5v1.5l-12-2.5z" fill="#000" opacity="0.3" />
+export const Logo = ({ className = '', style = {} }) => (
+  <div className={'logo-core-wrap ' + className} style={{ ...style, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <svg viewBox='0 0 100 100' fill='currentColor' style={{ width: '100%', height: '100%' }}>
+      <path d='M19 95 L22 5 L25 95 Z' />
+      <path d='M25 40 Q65 5 96 22 L38 52 Z' />
+      <path d='M17 52 L31 66 L27 70 L13 56 Z' />
+      <path d='M25 63 Q65 85 98 98 L88 98 Q58 85 25 68 Z' />
+      <circle cx='22' cy='45' r='2.5' fill='rgba(0,0,0,0.2)' />
+      <path d='M45 40l12 2.5v1.5l-12-2.5z' fill='rgba(0,0,0,0.1)' />
     </svg>
   </div>
 );

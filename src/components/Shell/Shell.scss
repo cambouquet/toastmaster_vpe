@@ -11,8 +11,8 @@
   }
 
   .global-bg-logo {
-    position: fixed; top: 50%; left: 50%; width: 420px; height: 420px;
-    transform: translate(-50%, -50%); opacity: 0.015; filter: blur(3px);
+    position: fixed; top: 50%; left: 50%; width: 520px; height: 520px;
+    transform: translate(-50%, -50%); color: rgba($accent-cyan, 0.08); filter: blur(5px);
     z-index: -1; pointer-events: none;
     svg { width: 100%; height: 100%; transition: all 0.5s; }
   }

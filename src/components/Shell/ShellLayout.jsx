@@ -14,15 +14,14 @@ import { Logo } from './Logo';
 export const ShellLayout = ({ state, props, handlers, flags }) => (
   <div className={`app-shell ${props.syncProgress > 0 ? 'is-transitioning' : ''}`}>
     <div className="system-glitch-overlay" />
-    <div className="global-bg-logo"><Logo /></div>
     {props.syncProgress > 0 && <SyncOverlay progress={props.syncProgress} type={props.syncType} />}
     {state.switchingTo && <AppLoadingScreen app={state.switchingTo} />}
     {flags.showNav && (
       <NavigationOverlay currentApp={state.currentApp} onClose={handlers.toggleNav}
         onSwitch={(app) => handlers.uiAction('SWITCH_APP', app)} />
     )}
-    <SystemStatus user={state.currentUser} currentApp={state.currentApp}
-      onAuth={handlers.onAuth} onToggleNav={handlers.toggleNav} />
+    {/* <SystemStatus user={state.currentUser} currentApp={state.currentApp}
+      onAuth={handlers.onAuth} onToggleNav={handlers.toggleNav} /> */}
     <MainContent 
       isWorkspace={state.currentScreen === 'workspace'} 
       state={state} 
