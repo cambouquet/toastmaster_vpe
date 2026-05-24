@@ -1,0 +1,27 @@
+@import "../../styles/variables";
+
+.logo-wrap {
+  display: flex; align-items: center; justify-content: center; width: 14px; height: 14px; 
+  color: $accent-cyan; margin-right: 6px; flex-shrink: 0;
+  &.scan { animation: signal-scan 2.5s infinite ease-in-out; }
+}
+
+.val { 
+  color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; line-height: 1; margin: 0;
+  &.hi { color: $accent-cyan; text-shadow: 0 0 8px rgba($accent-cyan, 0.4); }
+  &.err { color: #ff3e3e; text-shadow: 0 0 8px rgba(255, 62, 62, 0.4); }
+  &.ok { color: #00ffaa; text-shadow: 0 0 8px rgba(0, 255, 170, 0.4); }
+  &.dim { opacity: 0.4; font-weight: 300; }
+  &.sm { font-size: 0.55rem; letter-spacing: 0; }
+  &.scan { animation: signal-scan 2.5s infinite ease-in-out; }
+}
+
+.sep { 
+  color: rgba($accent-cyan, 0.2); margin: 0 4px; line-height: 1; display: flex; align-items: center;
+  &.px-2 { margin: 0 10px; opacity: 0.6; color: $accent-cyan; font-weight: 900; text-shadow: 0 0 5px $accent-cyan; }
+}
+
+.lbl { 
+  color: $accent-cyan; font-weight: 900; opacity: 0.4; font-size: 0.52rem; 
+  letter-spacing: 1.5px; margin: 0 0 0 4px; line-height: 1; 
+}

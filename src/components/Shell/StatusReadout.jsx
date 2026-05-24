@@ -1,35 +1,39 @@
 import React from 'react';
 import { SystemClock } from './SystemClock';
+import { NetworkSignal } from './NetworkSignal';
+import { MessagingTelemetry } from './MessagingTelemetry';
+import { WeatherTelemetry } from './WeatherTelemetry';
+import { Logo } from './Logo';
+import { MEMBERS_DATA } from '../../data/members';
 
-export const StatusReadout = ({ isAuth, user, onToggleAuth }) => (
-  <div className="status-content">
-    <div className={`logo-wrap ${!isAuth ? 'scan' : ''}`} style={{ cursor: 'default' }}>
-      <svg viewBox="0 0 100 100" fill="currentColor">
-        <path d="M5 15h90v15H60v55H40V30H5V15z" />
-        <path d="M10 20l80 0v5l-80 0z" opacity="0.3" fill="#000" />
-      </svg>
-    </div>
-    <span className="app-name">TOASTMASTER</span>
-    <span className="sep px-2">//</span>
-    {!isAuth ? (
-      <button className="status-meta-group clickable" onClick={onToggleAuth}>
-        <span className="lbl">STATUS:</span><span className="val err">DISCONNECTED</span>
-        <span className="sep">|</span>
-        <span className="val dim sm scan">SYNC IN...</span>
-      </button>
-    ) : (
-      <div className="status-meta-group" style={{ whiteSpace: 'nowrap' }}>
-        <span className="lbl">ID:</span>
-        <span className="val hi">{user.name}</span>
-        <span className="sep">·</span>
-        <span className="val sm dim">{user.role}</span>
-        <span className="sep">|</span>
-        <span className="val ok sm">ONLINE</span>
-        <span className="sep">|</span>
-        <SystemClock />
-        <span className="sep">|</span>
-        <span className="val hi sm">TOKYO</span>
-      </div>
-    )}
-  </div>
+const StatusGuest = ({ onAuth }) => (
+  <button className="status-meta-group clickable" onClick={onAuth}>
+    <span className="lbl">STATUS:</span><span className="val err">DISCONNECTED</span>
+    <span className="sep">|</span>
+    <span className="val dim sm scan">SYNC IN...</span>
+  </button>
 );
+
+export const StatusReadout = ({ isAuth, user, onToggleAuth }) => {
+  const online = MEMBERS_DATA.filter(m => m.status === 'ONLINE').length;
+  const offline = MEMBERS_DATA.length - online;
+
+  return (
+    <div className="status-content">
+      <Logo scan={!isAuth} />
+      <span className="app-name">TOASTMASTER</span>
+      <span className="sep px-2">//</span>
+      {!isAuth ? <StatusGuest onAuth={onToggleAuth} /> : (
+        <div className="status-meta-group" style={{ whiteSpace: 'nowrap' }}>
+          <span className="lbl">ID:</span><span className="val hi">{user.name}</span>
+          <span className="sep">·</span><span className="val sm dim">{user.role}</span>
+          <span className="sep">|</span><SystemClock /><span className="sep">|</span>
+          <WeatherTelemetry /><span className="sep">|</span>
+          <span className="val hi sm">TOKYO</span><span className="sep">|</span>
+          <NetworkSignal online={online} offline={offline} />
+          <span className="sep">|</span><MessagingTelemetry unreadCount={0} />
+        </div>
+      )}
+    </div>
+  );
+};
