@@ -37,7 +37,7 @@ export const handleUiActions = (action, val, state) => {
     const next = state.members.map(m => m.id === val.id ? { ...m, ...val } : m);
     return { subtitle: "Registry updated.", newState: { members: next } };
   }
-  if (action === "addMember") return { subtitle: "New node synchronized.", newState: { members: [...state.members, val] } };
-  if (action === "deleteMember") return { subtitle: "Node purged.", newState: { members: state.members.filter(m => m.id !== val) } };
+  if (action === "addMember") return { subtitle: "New profile synchronized.", newState: { members: [...state.members, val] } };
+  if (action === "deleteMember") return { subtitle: "Profile purged.", newState: { members: state.members.filter(m => m.id !== val) } };
   return { subtitle: "Action processed.", newState: { [action]: val } };
 };

@@ -17,11 +17,11 @@ export const MissionControl = ({ state }) => {
           <label>SECURITY MONITOR</label>
           <div className="status-grid">
             <div className="status-box err">
-              <span className="box-lbl">NODE 08</span>
+              <span className="box-lbl">APP 08</span>
               <span className="box-val">INTRUSION DETECTED</span>
             </div>
             <div className="status-box ok">
-              <span className="box-lbl">NODE 77</span>
+              <span className="box-lbl">APP 77</span>
               <span className="box-val">FIREWALL ACTIVE</span>
             </div>
           </div>
