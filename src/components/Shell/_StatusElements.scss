@@ -11,8 +11,19 @@
 
 .sep { 
   color: rgba($accent-cyan, 0.2); margin: 0 4px; display: flex; align-items: center; height: 100%; font-size: 0.55rem;
-  &.px-2 { 
-    margin: 0 6px; opacity: 0.8; color: $accent-cyan; font-weight: 500; 
+  &.px-2 { margin: 0 6px; opacity: 0.8; color: $accent-cyan; font-weight: 500; }
+  &.mx-2 { margin: 0 10px; opacity: 0.3; }
+}
+
+.status-main-info {
+  display: flex; align-items: center; flex: 1;
+}
+
+.status-guest-wrap {
+  display: flex; align-items: center; flex: 1;
+  .guest-action-cell {
+    margin-left: auto; display: flex; align-items: center;
+    background: rgba($accent-cyan, 0.05); height: 100%; padding-left: 2px;
   }
 }
 

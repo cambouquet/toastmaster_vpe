@@ -2,11 +2,12 @@ import React from 'react';
 import { Logo } from './Logo';
 import { ToastmasterLogo } from './ToastmasterLogo';
 import { StatusMeta } from './StatusMeta';
+import { SystemClock } from './SystemClock';
 import { MEMBERS_DATA } from '../../data/members';
 
 const StatusGuest = ({ onAuth }) => (
   <button className="status-meta-group clickable" onClick={onAuth}>
-    <span className="lbl">UPLINK:</span><span className="val err scan">NEURAL SYNC REQ...</span>
+    <span className="val sm scan">SYNC IN...</span>
   </button>
 );
 
@@ -21,8 +22,20 @@ export const StatusReadout = ({ isAuth, user, currentApp, onToggleAuth, onToggle
           <AppIcon style={{ width: 14, height: 14, opacity: 0.9, marginRight: 8 }} />
           <span className="app-name">{isMC ? 'MISSION CONTROL' : 'TOASTMASTER'}</span>
         </div>
+        
         <span className="sep px-2">//</span>
-        {!isAuth ? <StatusGuest onAuth={onToggleAuth} /> : (
+        
+        {!isAuth ? (
+          <div className="status-guest-wrap">
+            <SystemClock />
+            <span className="sep mx-2">|</span>
+            <span className="val sm dim">NIGHT CITY // EARTH</span>
+            <div className="guest-action-cell">
+              <span className="sep px-2">//</span>
+              <StatusGuest onAuth={onToggleAuth} />
+            </div>
+          </div>
+        ) : (
           <StatusMeta user={user} online={online} total={MEMBERS_DATA.length} />
         )}
       </div>

@@ -1,0 +1,31 @@
+@import "../../styles/variables";
+
+.registry-header {
+  position: sticky; top: 0; z-index: 100;
+  padding: 60px 0 40px 30px; margin-bottom: 40px;
+  border-left: 4px solid $accent-cyan;
+  background: linear-gradient(90deg, rgba(10,12,16,0.9) 0%, transparent 100%);
+  
+  .app-id-tag {
+    font-size: 0.6rem; font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.3em; margin-bottom: 8px; display: flex; align-items: center;
+    gap: 10px; opacity: 0.6;
+    
+    .tag-prefix { color: $accent-cyan; background: rgba($accent-cyan, 0.1); padding: 2px 6px; }
+    .tag-val { font-weight: 700; color: #fff; }
+  }
+
+  .header-main { display: flex; align-items: center; justify-content: space-between; padding-right: 40px; }
+
+  h1 { 
+    margin: 0; font-size: 1.8rem; letter-spacing: 0.5em; 
+    font-family: "Orbitron", sans-serif; font-weight: 900;
+    color: #fff; text-shadow: 0 0 15px rgba(0, 186, 196, 0.3);
+  }
+
+  .stats-bar { 
+    font-size: 0.8rem; opacity: 0.4; margin-top: 12px; 
+    font-family: "JetBrains Mono", monospace; 
+    letter-spacing: 0.2em; display: flex; gap: 20px;
+  }
+}

@@ -1,13 +1,12 @@
 import React from 'react';
 import { EditableCard } from '../shared/EditableCard';
+import { AppHeader } from '../shared/AppHeader';
 import './MissionControl.scss';
 
 export const MissionControl = ({ state }) => {
   return (
     <div className="workspace-screen mission-control">
-      <header className="registry-header">
-        <h1 className="glitch-text" data-text="IDENTITY LAB">IDENTITY LAB</h1>
-      </header>
+      <AppHeader app="MISSION CONTROL" title="IDENTITY LAB" />
       
       <div className="workspace-grid">
         <EditableCard label="GLOBAL UPLINK" value="ACTIVE NODE // 1024" />

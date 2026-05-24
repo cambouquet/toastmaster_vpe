@@ -5,6 +5,7 @@ import { BriefingSection } from './BriefingSection';
 import { ActionSection } from './ActionSection';
 import { MeetingSchedule } from './MeetingSchedule';
 import { EditableCard } from '../shared/EditableCard';
+import { AppHeader } from '../shared/AppHeader';
 import './Workspace.scss';
 
 export const MeetingWorkspace = ({ state, onAction }) => {
@@ -19,7 +20,7 @@ export const MeetingWorkspace = ({ state, onAction }) => {
 
   return (
     <div className='workspace-screen'>
-      <header className="registry-header"><h1 className="glitch-text" data-text="NEXT MEETING">NEXT MEETING</h1></header>
+      <AppHeader app="TOASTMASTER" title="NEXT MEETING" />
       <div className='workspace-grid'>
         <MeetingSchedule {...common} />
         <EditableCard label='Meeting Theme' value={state.theme} isEditing={editing === 'theme'}
