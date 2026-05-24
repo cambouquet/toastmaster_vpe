@@ -18,7 +18,7 @@
 
   &:hover, &.is-connected, &.is-auth { 
     .system-status-bg { border-color: $accent-cyan; background: #10151a; }
-    .status-display-area { width: 700px; opacity: 1; overflow: visible; }
+    .status-display-area { width: 500px; opacity: 1; overflow: visible; }
   }
   &:has(.status-meta-group:hover) {
     .auth-btn:not(.active), .val.scan, .logo-wrap.scan { animation-duration: 6s; }

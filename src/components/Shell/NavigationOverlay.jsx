@@ -1,5 +1,6 @@
 import React from 'react';
 import { Logo } from './Logo';
+import { ToastmasterLogo } from './ToastmasterLogo';
 import { NavGridItem } from './NavGridItem';
 import './NavigationOverlay.scss';
 
@@ -26,7 +27,7 @@ export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => (
           status={currentApp === 'toastmaster' ? 'CURRENT NODE' : 'ONLINE'}
           onClick={() => { onSwitch('toastmaster'); onClose(); }}
         >
-          <div className="icn" style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: 10, color: 'inherit' }}>T</div>
+          <ToastmasterLogo style={{ width: 48, height: 48, marginBottom: 10 }} />
         </NavGridItem>
         <NavGridItem id="n3" label="NODE 0003" status="OFFLINE" locked>
           <div className="icn">??</div>

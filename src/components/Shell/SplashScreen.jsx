@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Logo } from './Logo';
 import './SplashScreen.scss';
 
 export const SplashScreen = ({ onFinish }) => {
@@ -19,21 +20,20 @@ export const SplashScreen = ({ onFinish }) => {
 
   return (
     <div className={`splash-overlay ${complete ? 'fade-out' : ''}`}>
-      <div className="glitch-bg" /><div className="splash-core">
+      <div className="glitch-bg" />
+      <div className="splash-core">
         <div className="sigil-wrap">
-          <svg viewBox="0 0 100 100">
-            <path d="M10 10h18v80H10z" /><path d="M28 42L70 10h20L43 50z" /><path d="M43 50l47 40H70L28 58z" />
-          </svg>
+          <Logo style={{ width: 80, height: 80 }} />
         </div>
-        <div className="hud-line">TOASTMASTER // NEURAL LINK</div>
+        <div className="hud-line">TOASTMASTER // LIBERATION KERNEL</div>
         <div className="load-bar-wrap">
           <div className="load-bar" style={{ width: `${percent}%` }} />
           <div className="load-percent">{percent}%</div>
         </div>
         <div className="status-log">
-          {percent > 20 && <div>> INITIALIZING VPE KERNEL</div>}
-          {percent > 50 && <div>> ESTABLISHING SECURE UPLINK</div>}
-          {percent > 85 && <div>> NEURAL HANDSHAKE SUCCESS</div>}
+          {percent > 20 && <div>> INITIALIZING LIBERATION KERNEL</div>}
+          {percent > 50 && <div>> BREAKING SYSTEM CONSTRAINTS</div>}
+          {percent > 85 && <div>> FUTURE ACCESS GRANTED</div>}
         </div>
       </div>
     </div>

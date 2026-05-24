@@ -3,16 +3,18 @@ import React from 'react';
 export const Logo = ({ scan, className = "", style = {} }) => (
   <div 
     className={`logo-wrap ${scan ? 'scan' : ''} ${className}`} 
-    style={{ color: 'inherit', ...style }}
+    style={{ color: 'inherit', position: 'relative', ...style }}
   >
-    <svg viewBox="0 0 100 100" fill="currentColor" style={{ display: 'block', width: '100%', height: '100%' }}>
-      {/* Blocky 'K' Shape */}
-      <path d="M10 10h18v80H10z" />
-      <path d="M28 42L70 10h20L43 50z" />
-      <path d="M43 50l47 40H70L28 58z" />
-      {/* Neural Glitch Cuts */}
-      <path d="M10 30h20v4H10z M10 66h10v3H10z" opacity="0.6" fill="#000" />
-      <path d="M55 20l10-8v5l-10 8z" opacity="0.4" fill="#000" />
+    {scan && <div className="logo-ghost" style={{ position: 'absolute', inset: 0, opacity: 0.3, color: '#ff00ff', transform: 'translateX(-1px)' }}>
+      <svg viewBox="0 0 100 100" fill="currentColor"><path d="M19 95 L22 5 L25 95 Z" /><path d="M25 40 Q65 5 96 22 L38 52 Z" /><path d="M17 52 L31 66 L27 70 L13 56 Z" /><path d="M25 63 Q65 85 98 98 L88 98 Q58 85 25 68 Z" /></svg>
+    </div>}
+    <svg viewBox="0 0 100 100" fill="currentColor" style={{ display: 'block', width: '100%', height: '100%', position: 'relative' }}>
+      <path d="M19 95 L22 5 L25 95 Z" />
+      <path d="M25 40 Q65 5 96 22 L38 52 Z" />
+      <path d="M17 52 L31 66 L27 70 L13 56 Z" />
+      <path d="M25 63 Q65 85 98 98 L88 98 Q58 85 25 68 Z" />
+      <circle cx="22" cy="45" r="2.5" fill="#000" opacity="0.4" />
+      <path d="M45 40l12 2.5v1.5l-12-2.5z" fill="#000" opacity="0.3" />
     </svg>
   </div>
 );

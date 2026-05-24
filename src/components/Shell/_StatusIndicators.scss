@@ -1,0 +1,16 @@
+@import "../../styles/variables";
+
+.msg-indicator, .weather-indicator {
+  display: flex; align-items: center; gap: 6px;
+  svg { display: block; flex-shrink: 0; }
+  .val { line-height: 1; margin: 0; }
+}
+
+.sync-signal {
+  display: flex; align-items: center; justify-content: center; width: 12px; height: 100%; margin: 0 4px;
+  .status-dot {
+    width: 6px; height: 6px; background: #00ffaa; border-radius: 50%;
+    box-shadow: 0 0 8px #00ffaa;
+    animation: signal-scan 1s infinite alternate ease-in-out;
+  }
+}

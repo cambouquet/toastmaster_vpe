@@ -1,0 +1,21 @@
+@import "../../styles/variables";
+
+.val { 
+  color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; line-height: 1; margin: 0;
+  &.hi { color: $accent-cyan; text-shadow: 0 0 8px rgba($accent-cyan, 0.4); }
+  &.err { color: #ff3e3e; text-shadow: 0 0 8px rgba(255, 62, 62, 0.4); }
+  &.ok { color: #00ffaa; text-shadow: 0 0 8px rgba(0, 255, 170, 0.4); }
+  &.dim { opacity: 0.4; font-weight: 300; }
+  &.sm { font-size: 0.55rem; letter-spacing: 0; }
+  &.scan { animation: signal-scan 2.5s infinite ease-in-out; }
+}
+
+.lbl { 
+  color: $accent-cyan; font-weight: 900; opacity: 0.4; font-size: 0.52rem; 
+  letter-spacing: 1.5px; margin: 0 0 0 4px; line-height: 1; 
+}
+
+.app-name { 
+  color: #fff; font-weight: 900; letter-spacing: 2px; line-height: 1; flex-shrink: 0; 
+  text-shadow: 0 0 10px rgba($accent-cyan, 0.3); margin: 0; 
+}
