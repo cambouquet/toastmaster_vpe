@@ -20,6 +20,11 @@
   0%, 100% { filter: drop-shadow(0 0 2px #ff3e3e) brightness(1); } 50% { filter: drop-shadow(0 0 10px #ff3e3e) brightness(1.4); }
 }
 
+.neural-wave {
+  animation: neural-pulse 3s infinite ease-in-out both;
+  animation-delay: calc(var(--wave-idx, 0) * 0.2s);
+}
+
 @keyframes scan-roll {
   from { top: -100%; } to { top: 200%; }
 }

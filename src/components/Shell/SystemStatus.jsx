@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StatusReadout } from './StatusReadout';
 import { SystemPower } from './SystemPower';
+import { Logo } from './Logo';
 import './SystemStatus.scss';
 
 export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav }) => {
@@ -24,6 +25,11 @@ export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav 
           onToggleNav={onToggleNav} 
         />
       </div>
+      <button className="system-trigger terminal-glitch neural-wave" 
+        onClick={onToggleNav} style={{ '--wave-idx': 1 }}>
+        <div className="scanline" />
+        <Logo scan={true} style={{ width: 16, height: 16 }} />
+      </button>
       <SystemPower 
         isAuth={isAuth} showRoles={showRoles} onPower={handlePowerBtn}
         onIdentity={handleIdentity} onClose={() => setShowRoles(false)}

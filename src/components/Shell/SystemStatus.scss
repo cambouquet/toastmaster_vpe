@@ -17,13 +17,17 @@
     transition: all 0.4s ease;
   }
 
+  &.is-auth {
+    .status-display-area { width: 660px; opacity: 1; }
+  }
+
   &.is-connected,
   &:hover { 
     .system-status-bg { border-color: $accent-cyan; background: #10151a; }
-    .status-display-area { width: 500px; opacity: 1; overflow: visible; }
+    .status-display-area { width: 760px; opacity: 1; overflow: visible; }
   }
   &:has(.status-meta-group:hover) {
-    .auth-btn:not(.active), .val.scan, .logo-wrap.scan { animation-duration: 6s; }
+    .auth-btn:not(.active), .val.scan, .logo-wrap.scan { animation-duration: 3s; }
   }
   .status-display-area {
     width: 0; opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
