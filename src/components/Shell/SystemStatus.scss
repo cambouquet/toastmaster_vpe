@@ -18,19 +18,24 @@
   }
 
   &.is-auth {
-    .status-display-area { width: 660px; opacity: 1; }
+    .status-display-area { width: 760px; opacity: 1; }
   }
 
   &.is-connected,
   &:hover { 
     .system-status-bg { border-color: $accent-cyan; background: #10151a; }
-    .status-display-area { width: 760px; opacity: 1; overflow: visible; }
+    .status-display-area { width: 760px; opacity: 1; }
   }
-  &:has(.status-meta-group:hover) {
-    .auth-btn:not(.active), .val.scan, .logo-wrap.scan { animation-duration: 3s; }
-  }
+
   .status-display-area {
-    width: 0; opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 0; opacity: 0; transition: opacity 0.4s ease;
     overflow: hidden; pointer-events: auto; height: 100%; display: flex; align-items: center;
+    flex: 1;
   }
+}
+
+.system-trigger {
+  width: 32px; height: 32px; border: none; background: transparent;
+  display: flex; align-items: center; justify-content: center;
+  border-left: 1px solid rgba($accent-cyan, 0.2); flex-shrink: 0;
 }

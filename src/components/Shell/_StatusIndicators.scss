@@ -7,10 +7,9 @@
 }
 
 .sync-signal {
-  display: flex; align-items: center; justify-content: center; width: 12px; height: 100%; margin: 0 4px;
+  display: flex; align-items: center; gap: 4px; height: 100%;
   .status-dot {
-    width: 6px; height: 6px; background: #00ffaa; border-radius: 50%;
-    box-shadow: 0 0 8px #00ffaa;
-    animation: signal-scan 1s infinite alternate ease-in-out;
+    width: 4px; height: 4px; background: #00ffaa; border-radius: 50%;
+    opacity: 0.8; flex-shrink: 0; box-shadow: 0 0 5px #00ffaa;
   }
 }

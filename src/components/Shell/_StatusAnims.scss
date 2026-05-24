@@ -35,3 +35,6 @@
   4% { transform: translate(2px, -2px); opacity: 1; color: #00ffff; }
   6% { transform: translate(0); }
 }
+
+@keyframes neural-glow { 0%, 100% { text-shadow: 0 0 4px #00bac4; } 50% { text-shadow: 0 0 10px #00bac4; } }
+.neural-glow { animation: neural-glow 3s infinite ease-in-out; }

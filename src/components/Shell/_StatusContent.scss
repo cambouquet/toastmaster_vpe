@@ -2,25 +2,14 @@
 @import "./StatusElements";
 
 .status-content {
-  display: flex; align-items: center; justify-content: space-between;
-  width: 100%; height: 100%; font-size: 0.65rem;
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: 0 15px; width: 100%; height: 100%; font-size: 0.65rem;
   animation: decode-in 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
-  white-space: nowrap;
-
-  .status-main-info {
-    display: flex; align-items: center; padding-left: 12px;
-  }
-
-  .status-meta-group { 
-    display: flex; align-items: center; gap: 4px; height: 100%; 
-    background: transparent; border: none; padding: 0; font-family: inherit;
-    &.clickable { cursor: pointer; 
-      &:hover { .val.err { text-shadow: 0 0 8px rgba(255, 62, 62, 0.4); } } 
-    }
-  }
+  white-space: nowrap; flex-wrap: nowrap;
 
   .app-breadcrumb {
     display: flex; align-items: center; padding: 0; height: 100%; border: none;
+    margin-right: auto; flex-shrink: 0;
   }
   
   @import "./StatusIndicators";
