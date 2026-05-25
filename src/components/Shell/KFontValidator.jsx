@@ -8,8 +8,8 @@ export const KFontValidator = () => {
   const silver = "O".split("");
   const kId = ["K"];
   const [testInput, setTestInput] = React.useState("TEST");
-  const [ratio, setRatio] = React.useState(0.625);
-  const [spacing, setSpacing] = React.useState(4);
+  const [ratio, setRatio] = React.useState(0.620);
+  const [spacing, setSpacing] = React.useState(3);
   
   const getCharStyle = (char) => {
     if (char === "I") return { color: "#ffffff", border: "1px solid #ffffff", bg: "rgba(255, 255, 255, 0.1)" };
@@ -159,7 +159,7 @@ export const KFontValidator = () => {
           </div>
 
           <div style={{ marginTop: "60px", display: "flex", flexWrap: "wrap", gap: "15px", justifyContent: "center" }}>
-            {[...kId, ...gold, ...silver, ...finalized].filter(char => char.trim()).map(char => {
+            {[...new Set([...kId, ...gold, ...silver, ...finalized])].filter(char => char.trim()).map((char, index) => {
               const style = getCharStyle(char);
               let status = "OK";
               if (kId.includes(char)) status = "SIGNATURE";

@@ -20,8 +20,8 @@ export const ShellLayout = ({ state, props, handlers, flags }) => (
       <NavigationOverlay currentApp={state.currentApp} onClose={handlers.toggleNav}
         onSwitch={(app) => handlers.uiAction('SWITCH_APP', app)} />
     )}
-    {/* <SystemStatus user={state.currentUser} currentApp={state.currentApp}
-      onAuth={handlers.onAuth} onToggleNav={handlers.toggleNav} /> */}
+    <SystemStatus user={state.currentUser} currentApp={state.currentApp}
+      onAuth={handlers.onAuth} onToggleNav={handlers.toggleNav} />
     <MainContent 
       isWorkspace={state.currentScreen === 'workspace'} 
       state={state} 
@@ -30,7 +30,7 @@ export const ShellLayout = ({ state, props, handlers, flags }) => (
     />
     <SystemNotification notifications={props.notifications} onDismiss={handlers.dismiss} />
     <Subtitles text={props.subtitle} />
-    {state.currentApp !== 'IDENTITY LAB' && (
+    {state.currentApp !== 'IDENTITY LAB' && state.currentApp !== 'font-lab' && (
       <div className="bottom-input-wrap">
         <ChatInput onSend={handlers.interact} onType={(t) => handlers.interact(t, true)} 
           onToggleDebug={handlers.toggleDebug} testStatus={state.testStatus} />

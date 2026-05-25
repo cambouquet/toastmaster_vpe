@@ -29,7 +29,11 @@
 - **K-Font Requirement**: All proper names, titles, and system identifiers MUST be rendered using the **K-Font**. No exceptions.
 - **Minimalism**: No scrollbars. Use `-ms-overflow-style: none`, `scrollbar-width: none`, and `::-webkit-scrollbar { display: none }`.
 
-## 5. Communication Pattern
+## 5. Aesthetics: "2077 Mainstream"
+- **Narrative Depth**: Avoid raw technical keys like `SYSTEM_FONT_FORGE`. Use natural, immersive language that feels like part of a lived-in 2077 world (e.g. "K-Font Construction Deck").
+- **Visual Texture**: Interface elements should feel physical, technical, and grounded in a near-future cyberpunk reality.
+
+## 6. Communication Pattern
 - **Collaboration Style**: The bot acts as a VPE assistant, updating a shared workspace grid.
 - **Subtitle Overlay**: Bot messages appear as clean, non-aggressive captions at the bottom.
 - **User Input**: Limit user messages to **180 characters** to ensure concise interactions.

@@ -28,6 +28,14 @@ export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => (
         >
           <ToastmasterLogo style={{ width: 48, height: 48, marginBottom: 10 }} />
         </NavGridItem>
+        <NavGridItem 
+          id="font-lab" label="FONT LAB" active={currentApp === 'font-lab'}
+          status={currentApp === 'font-lab' ? 'CURRENT APP' : 'ONLINE'}
+          beta={true}
+          onClick={() => { onSwitch('font-lab'); onClose(); }}
+        >
+          <div className="icn" style={{ fontSize: '24px', fontWeight: 'bold', color: '#00bac4', fontFamily: 'monospace' }}>K</div>
+        </NavGridItem>
         <NavGridItem id="n3" label="APP 0003" status="OFFLINE" locked>
           <div className="icn">??</div>
         </NavGridItem>

@@ -9,14 +9,6 @@ export const IdentityLab = ({ state, onAuth }) => {
   const [search, setSearch] = useState('');
   const isAuth = state.currentUser?.role !== 'NONE' && state.currentUser?.name !== 'AUTHORIZATION REQUIRED';
 
-  if (!isAuth) {
-    return (
-      <div className='workspace-screen identity-lab guest-mode' style={{ padding: 0 }}>
-        <KFontValidator />
-      </div>
-    );
-  }
-
   return (
     <div className='workspace-screen identity-lab'>
       <AppHeader title='IDENTITY LAB' />
