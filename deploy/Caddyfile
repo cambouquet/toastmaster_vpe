@@ -1,0 +1,3 @@
+k-app.tech, www.k-app.tech {
+    reverse_proxy app:80
+}

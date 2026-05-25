@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusReadout } from './StatusReadout';
 import { SystemPower } from './SystemPower';
 import './SystemStatus.scss';
@@ -11,18 +11,39 @@ export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav,
   const [search, setSearch] = useState('');
   
   const hasAlerts = notifications?.length > 0;
+
+  useEffect(() => {
+    const checkRotation = () => {
+      if (window.innerWidth < 768) {
+        return setInterval(() => {
+          setMobileStep((prev) => (prev + 1) % 3);
+        }, 5000);
+      }
+    };
+    
+    let interval = checkRotation();
+    
+    const handleResize = () => {
+      clearInterval(interval);
+      interval = checkRotation();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   
   const handleAuth = () => { setShowRoles(!showRoles); setSearch(''); };
   const handlePowerBtn = () => isAuth && onAuth('logout');
   const handleIdentity = (id, data) => { setShowRoles(false); onAuth(id, data); };
-  const toggleMobileRotation = () => setMobileStep((prev) => (prev + 1) % 3);
 
   return (
     <div 
       className={`system-status-readout ${showRoles ? 'is-connected' : ''} ${isAuth ? 'is-auth' : ''} step-${mobileStep}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onClick={window.innerWidth < 768 ? toggleMobileRotation : undefined}
     >
       <div className="system-status-bg" />
       <div className="status-display-area">

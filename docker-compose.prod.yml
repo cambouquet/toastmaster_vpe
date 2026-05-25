@@ -1,11 +1,24 @@
 version: '3.8'
 
 services:
-  app:
-    image: ${APP_IMAGE}
+  caddy:
+    image: caddy:2-alpine
     restart: always
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+
+  app:
+    image: ${APP_IMAGE}
+    restart: always
+    expose:
+      - "80"
     depends_on:
       - keycloak
 
@@ -26,3 +39,5 @@ services:
 
 volumes:
   keycloak_data:
+  caddy_data:
+  caddy_config:

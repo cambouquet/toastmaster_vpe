@@ -40,7 +40,7 @@
 ## 7. Responsiveness: "Multisupport HUD"
 - **Mobile-First Layout**: On screens below 768px, navigation grids must transition to 1-column layouts to preserve tap targets and readability. Grid items should switch to horizontal layouts (`flex-direction: row`) to optimize vertical space.
 - **Adaptive Status**: The Global HUD must remain functional on touch devices.
-  - **Data Rotation**: On mobile, implement a 3-step rotation (`mobileStep`) triggered by clicks to cycle through telemetry groups (e.g., App Info → Weather → Network).
+  - **Auto-Rotation**: On mobile, telemetry groups must automatically cycle every 5 seconds (e.g., App Info → Weather → Network) without requiring user interaction.
   - **Fixed Width HUD**: The HUD container must maintain a consistent width on mobile during rotation to prevent layout shifts.
   - **Animated Transitions**: Use vertical slides or fades for data transitions to provide visual feedback of the "cycle."
 - **Vesting Spaces**: Adjust padding and font sizes (1.2rem heading max on mobile) to ensure no horizontal scrolling exists.
