@@ -67,6 +67,16 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            # Check if docker is installed, if not install it
+            if ! command -v docker &> /dev/null; then
+              echo "Docker not found. Installing..."
+              curl -fsSL https://get.docker.com -o get-docker.sh
+              sudo sh get-docker.sh
+              sudo usermod -aG docker $USER
+              # Refresh groups without logout for the current shell session
+              newgrp docker <<EONG
+            fi
+            
             mkdir -p ~/app
             cd ~/app
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
