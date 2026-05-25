@@ -51,14 +51,32 @@
       flex: 1;
       height: 100%;
       overflow: visible;
-      position: relative;
+    }
+  }
+
+  .status-item-persistent {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .status-rotation-viewport {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+
+    @include mobile {
+      overflow: visible;
     }
   }
 
   /* Mobile Data Rotation Logic */
   @include mobile {
     .status-content {
-      position: relative; width: 100%; height: 100%;
+      width: 100%; height: 100%;
       display: flex; flex-direction: row; align-items: center; justify-content: flex-end;
     }
 

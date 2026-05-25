@@ -29,7 +29,7 @@ EXPOSE 80 3001
 
 # Start script
 RUN echo "#!/bin/sh" > /app/start.sh && \
-    echo "nginx" >> /app/start.sh && \
+    echo "nginx -g 'daemon on;'" >> /app/start.sh && \
     echo "node mock_agent/server.cjs" >> /app/start.sh && \
     chmod +x /app/start.sh
 
