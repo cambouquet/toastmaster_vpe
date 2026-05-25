@@ -1,10 +1,14 @@
 import Keycloak from 'keycloak-js';
 import { getMockIdentity, mockLogin, mockLogout } from './MockAuth';
 
-const USE_MOCK = true;
+const USE_MOCK = import.meta.env.MODE === 'development' && true; // Set to false to test Keycloak in dev
+const PROD_URL = 'https://auth.k-app.tech';
+const DEV_URL = 'http://localhost:8080';
 
 const keycloak = !USE_MOCK ? new Keycloak({
-  url: 'http://localhost:8080', realm: 'toastmaster', clientId: 'mission-control',
+  url: import.meta.env.PROD ? PROD_URL : DEV_URL, 
+  realm: 'toastmaster', 
+  clientId: 'mission-control',
 }) : null;
 
 export const initKeycloak = (onAuthenticated) => {

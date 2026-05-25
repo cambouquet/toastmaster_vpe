@@ -55,7 +55,7 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "docker-compose.prod.yml,keycloak-realm.json"
+          source: "docker-compose.prod.yml,keycloak-realm.json,deploy/Caddyfile"
           target: "~/app"
           rm: true
 
