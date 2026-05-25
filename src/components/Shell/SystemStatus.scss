@@ -13,7 +13,7 @@
   
   @include mobile {
     right: 12px;
-    width: 220px; /* Locked hardware width for rotation stability */
+    left: 0; /* Cross the header blue vertical line by starting at the absolute left */
     background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(15px);
     overflow: visible;
@@ -34,6 +34,10 @@
     border: 1px solid rgba($accent-cyan, 0.4); border-left: 6px solid $accent-cyan;
     clip-path: polygon(0 0, 100% 0, 100% 70%, 98% 100%, 0 100%);
     transition: all 0.4s ease;
+
+    @include mobile {
+      border-left: 4px solid $accent-cyan; /* Restoration: Make it visually cross the header line */
+    }
   }
 
   .status-display-area {
@@ -42,8 +46,8 @@
     flex: 1;
 
     @include mobile {
-      width: 183px; /* Fixed: 220px total - 32px trigger - 5px padding */
-      flex: none;
+      width: 100%; 
+      flex: 1;
       height: 100%;
       overflow: visible;
       position: relative;
