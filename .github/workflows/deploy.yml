@@ -54,8 +54,10 @@ jobs:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
           source: "docker-compose.prod.yml,keycloak-realm.json"
           target: "~/app"
+          rm: true
 
       - name: SSH into VM and Deploy
         uses: appleboy/ssh-action@v1.0.3
@@ -63,7 +65,9 @@ jobs:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
           script: |
+            mkdir -p ~/app
             cd ~/app
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
