@@ -1,9 +1,9 @@
 import React from 'react';
-import { Logo } from './Logo';
-import { ToastmasterLogo } from './ToastmasterLogo';
-import { TypeFoundryLogo } from './TypeFoundryLogo';
 import { NavGridItem } from './NavGridItem';
+import { APPS } from '../../services/system/AppRegistry';
 import './NavigationOverlay.scss';
+
+const AVAILABLE_APPS = ['identity-lab', 'toastmaster', 'font-lab'];
 
 export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => (
   <div className="nav-overlay" onClick={onClose}>
@@ -13,30 +13,21 @@ export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => (
         <span className="val hi">APP SWITCHER</span>
       </div>
       <div className="grid-container">
-        <NavGridItem 
-          id="id-lab" label="IDENTITY LAB" active={currentApp === 'identity-lab'}
-          status={currentApp === 'identity-lab' ? 'CURRENT APP' : 'ONLINE'}
-          beta={true}
-          onClick={() => { onSwitch('identity-lab'); onClose(); }}
-        >
-          <Logo style={{ width: 48, height: 48, marginBottom: 10 }} />
-        </NavGridItem>
-        <NavGridItem 
-          id="tm" label="TOASTMASTER" active={currentApp === 'toastmaster'}
-          status={currentApp === 'toastmaster' ? 'CURRENT APP' : 'ONLINE'}
-          beta={true}
-          onClick={() => { onSwitch('toastmaster'); onClose(); }}
-        >
-          <ToastmasterLogo style={{ width: 48, height: 48, marginBottom: 10 }} />
-        </NavGridItem>
-        <NavGridItem 
-          id="font-lab" label="FONT LAB" active={currentApp === 'font-lab'}
-          status={currentApp === 'font-lab' ? 'CURRENT APP' : 'ONLINE'}
-          beta={true}
-          onClick={() => { onSwitch('font-lab'); onClose(); }}
-        >
-          <TypeFoundryLogo style={{ width: 48, height: 48, marginBottom: 10 }} />
-        </NavGridItem>
+        {AVAILABLE_APPS.map(appId => {
+          const app = APPS[appId];
+          const Icon = app.Icon;
+          return (
+            <NavGridItem 
+              key={appId}
+              id={appId} label={app.name} active={currentApp === appId}
+              status={currentApp === appId ? 'CURRENT APP' : 'ONLINE'}
+              beta={true}
+              onClick={() => { onSwitch(appId); onClose(); }}
+            >
+              <Icon style={{ width: 48, height: 48, marginBottom: 10 }} />
+            </NavGridItem>
+          );
+        })}
         <NavGridItem id="n3" label="APP 0003" status="OFFLINE" locked>
           <div className="icn">??</div>
         </NavGridItem>
@@ -44,7 +35,7 @@ export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => (
           <NavGridItem key={i} label="PENDING..." status="---"><div className="icn">..</div></NavGridItem>
         ))}
       </div>
-      <div className="nav-footer">2 / 1000 APPS INITIALIZED</div>
+      <div className="nav-footer">{AVAILABLE_APPS.length} / 1000 APPS INITIALIZED</div>
     </div>
   </div>
 );

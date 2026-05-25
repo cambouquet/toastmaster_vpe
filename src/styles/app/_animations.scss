@@ -9,3 +9,64 @@
               linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
   background-size: 100% 2px, 3px 100%; pointer-events: none; opacity: 0.1;
 }
+
+/* K-Font Modular Animations */
+.kfont-wing {
+  animation: wing-wind 4s infinite ease-in-out;
+  transform-origin: 14px 50px;
+  mix-blend-mode: plus-lighter;
+}
+
+@keyframes wing-wind {
+  0%, 100% { 
+    transform: rotate(0deg) skewX(0deg); 
+    filter: drop-shadow(0 0 2px #ff0055) brightness(1);
+  }
+  25% {
+    transform: rotate(2deg) skewX(1deg);
+    filter: drop-shadow(0 0 10px #ff0055) brightness(1.8);
+  }
+  50% { 
+    transform: rotate(-1deg) skewX(-1deg); 
+    filter: drop-shadow(0 0 4px #ff0055) brightness(1.2);
+  }
+  75% {
+    transform: rotate(1deg) skewX(0.5deg);
+    filter: drop-shadow(0 0 12px #ff0055) brightness(2);
+  }
+}
+
+.kfont-purity {
+  animation: purity-hum 4s infinite ease-in-out;
+  filter: drop-shadow(0 0 2px #ffffff);
+}
+
+@keyframes purity-hum {
+  0%, 100% { 
+    filter: drop-shadow(0 0 2px #ffffff) brightness(1); 
+    transform: scaleY(1);
+  }
+  50% { 
+    filter: drop-shadow(0 0 10px #ffffff) brightness(1.8); 
+    transform: scaleY(1.02);
+    transform-origin: bottom;
+  }
+}
+
+.kfont-shiny-ring {
+  animation: o-glow 2s infinite ease-in-out;
+  transform-origin: center;
+}
+
+@keyframes o-glow {
+  0%, 100% { 
+    filter: brightness(1.2) drop-shadow(0 0 2px #00bac4); 
+    opacity: 0.9; 
+    transform: scale(1); 
+  }
+  50% { 
+    filter: brightness(2.5) drop-shadow(0 0 10px #00bac4); 
+    opacity: 1; 
+    transform: scale(1.3); 
+  }
+}

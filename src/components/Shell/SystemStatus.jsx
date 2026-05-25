@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { StatusReadout } from './StatusReadout';
 import { SystemPower } from './SystemPower';
-import { HomeLogo } from './HomeLogo';
 import './SystemStatus.scss';
 
-export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav }) => {
+export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav, notifications = [] }) => {
   const isAuth = user.role !== 'NONE' && user.name !== 'AUTHORIZATION REQUIRED';
   const [showRoles, setShowRoles] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [search, setSearch] = useState('');
+  
+  const hasAlerts = notifications?.length > 0;
   
   const handleAuth = () => { setShowRoles(!showRoles); setSearch(''); };
   const handlePowerBtn = () => isAuth && onAuth('logout');
@@ -34,7 +35,7 @@ export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav 
       <button className="system-trigger terminal-glitch neural-wave" 
         onClick={onToggleNav} style={{ '--wave-idx': 1 }}>
         <div className="scanline" />
-        <HomeLogo style={{ width: 20, height: 20 }} />
+        <div className={`status-dot ${hasAlerts ? 'is-alert' : 'is-idle'}`} />
       </button>
       <SystemPower 
         isAuth={isAuth} showRoles={showRoles} onPower={handlePowerBtn}

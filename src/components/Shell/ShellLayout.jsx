@@ -21,7 +21,8 @@ export const ShellLayout = ({ state, props, handlers, flags }) => (
         onSwitch={(app) => handlers.uiAction('SWITCH_APP', app)} />
     )}
     <SystemStatus user={state.currentUser} currentApp={state.currentApp}
-      onAuth={handlers.onAuth} onToggleNav={handlers.toggleNav} />
+      onAuth={handlers.onAuth} onToggleNav={handlers.toggleNav} 
+      notifications={props.notifications} />
     <MainContent 
       isWorkspace={state.currentScreen === 'workspace'} 
       state={state} 

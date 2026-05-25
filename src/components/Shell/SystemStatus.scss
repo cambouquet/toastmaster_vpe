@@ -47,4 +47,25 @@
   width: 32px; height: 32px; border: none; background: transparent;
   display: flex; align-items: center; justify-content: center;
   border-left: 1px solid rgba($accent-cyan, 0.2); flex-shrink: 0;
+
+  .status-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &.is-idle {
+      background: $accent-cyan;
+      box-shadow: 0 0 8px $accent-cyan;
+    }
+    
+    &.is-alert {
+      background: #ff0044;
+      box-shadow: 0 0 12px #ff0044;
+      animation: alert-pulse 1.5s infinite;
+    }
+  }
+}
+
+@keyframes alert-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.2); }
 }

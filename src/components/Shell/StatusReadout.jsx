@@ -1,12 +1,10 @@
 import React from 'react';
-import { Logo } from './Logo';
-import { ToastmasterLogo } from './ToastmasterLogo';
-import { TypeFoundryLogo } from './TypeFoundryLogo';
 import { KFontText } from './KFontText';
 import { StatusMeta } from './StatusMeta';
 import { SystemClock } from './SystemClock';
 import { WeatherTelemetry } from './WeatherTelemetry';
 import { MEMBERS_DATA } from '../../data/members';
+import { getAppInfo } from '../../services/system/AppRegistry';
 
 const StatusGuest = ({ onAuth }) => (
   <button className="t-group clickable neural-wave" onClick={onAuth} style={{ '--wave-idx': 2 }}>
@@ -16,25 +14,8 @@ const StatusGuest = ({ onAuth }) => (
 
 export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth, onToggleNav }) => {
   const online = MEMBERS_DATA.filter(m => m.status === 'ONLINE').length;
-  
-  const getAppIcon = () => {
-    if (currentApp === 'font-lab') return TypeFoundryLogo;
-    if (currentApp === 'mission-control' || currentApp === 'identity-lab') return Logo;
-    return ToastmasterLogo;
-  };
-
-  const AppIcon = getAppIcon();
-
-  const getAppName = () => {
-    if (currentApp === 'font-lab') return 'FONT LAB';
-    if (currentApp === 'identity-lab') return 'IDENTITY LAB';
-    return 'TOASTMASTER';
-  };
-
-  const getAppColor = () => {
-    if (currentApp === 'font-lab' || currentApp === 'identity-lab') return '#ff0044';
-    return '#00bac4';
-  };
+  const appInfo = getAppInfo(currentApp);
+  const AppIcon = appInfo.Icon;
 
   const GuestChain = () => (
     <>
@@ -45,10 +26,10 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth,
         <span className="sep px-1">//</span>
         <div style={{ marginRight: 6 }}>
           <KFontText 
-            text={getAppName()} 
+            text={appInfo.name} 
             height={8} 
-            color={currentApp === 'toastmaster' ? '#00bac4' : '#ffffff'} 
-            firstLetterColor={currentApp === 'toastmaster' ? '#00bac4' : '#ff0044'}
+            color={currentApp === 'toastmaster' ? appInfo.themeColor : '#ffffff'} 
+            firstLetterColor={appInfo.themeColor}
           />
         </div>
         <SystemClock />
@@ -86,7 +67,7 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth,
           online={online} 
           total={MEMBERS_DATA.length} 
           hovered={hovered} 
-          AppIcon={AppIcon}
+          AppIcon={appInfo.Icon}
         />
       )}
     </div>

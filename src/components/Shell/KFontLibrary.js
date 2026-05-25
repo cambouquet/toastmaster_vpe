@@ -33,6 +33,7 @@ const ANGEL_WING = (bx, by, tx, ty, side=1) => `M${bx} ${by} Q${side === 1 ? bx+
 const SWR = (y, x=44, w=25) => `M${x} ${y+1} L${x-4} ${y+1} L${x-4} ${y+7} L${x} ${y+7} Z M${x-6} ${y} L${x-w} ${y} L${x-w-4} ${y+4} L${x-w} ${y+8} L${x-6} ${y+8} Z`; // Reversed Saber (Right-to-Left)
 const BRIDGE = (x1, y1, cx, cy, x2, y2) => `M${x1} ${y1} Q${cx} ${cy} ${x2} ${y2} L${x2} ${y2+10} Q${cx} ${cy+10} ${x1} ${y1+10} Z`; // High-tension connector (prev. Scarf)
 const SCARF = (x1, y1, x2, y2) => `M${x1} 4 Q${x1} 64 25 64 L25 76 Q${x1} 76 ${x1} 4 Z`; // Original signature Scarf
+const GLOW_RING = (x, y, r) => `M${x-r} ${y} A${r} ${r} 0 1 1 ${x+r} ${y} A${r} ${r} 0 1 1 ${x-r} ${y} Z`;
 const SCIMITAR = (x, y, h, tx, ty, thick=8, mirror=1) => `M${x} ${y} L${x+thick*mirror} ${y} L${x+thick*mirror} ${h} Q${x+thick*mirror} ${ty} ${tx} ${ty} Q${x} ${ty} ${x} ${h} Z`; // Arabic Scimitar Blade
 const ROPE = (x, y, w=35, h=72, t=6) => {
   const r = t; // thickness
@@ -59,7 +60,7 @@ export const K_FONT_LIBRARY = {
   L: { path: `${TOWER(12)} ${SW(68, 40, 15)}`, width: 50 },
   M: { path: `${TOWER(6)} ${TOWER(40)} ${BIRD_WING(10, 4, 25, 30, 1)} ${BIRD_WING(40, 4, 25, 30, -1)}`, width: 50 },
   N: { path: `${TOWER(8)} ${TOWER(38)} ${BIRD_WING(12, 4, 38, 76, 1)}`, width: 50 },
-  O: { path: `${AU(6)} ${AD(6)} ${AL(12, 20, 60)} ${AR(38, 20, 60)}`, width: 50 },
+  O: { path: `${AU(6)} ${AD(6)} ${AL(12, 20, 60)} ${AR(38, 20, 60)} ${GLOW_RING(25, 40, 5)}`, width: 50 },
   P: { path: `${TOWER(8)} ${S1(12)} ${SW(34, 38, 10)}`, width: 50 },
   Q: { path: `${AU(6)} ${AD(6)} ${AL(12, 20, 60)} ${AR(38, 20, 60)} ${KATANA(30, 50, 1.2)}`, width: 50 },
   R: { path: `${TOWER(8)} ${S1(12)} ${SW(34, 38, 10)} ${KATANA(12, 50)}`, width: 50 },

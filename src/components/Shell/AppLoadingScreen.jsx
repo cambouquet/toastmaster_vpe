@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Logo } from './Logo';
-import { ToastmasterLogo } from './ToastmasterLogo';
+import { getAppInfo } from '../../services/system/AppRegistry';
 import './AppLoadingScreen.scss';
 
 export const AppLoadingScreen = ({ app, onFinish, isInitial = false }) => {
   const [percent, setPercent] = useState(0);
   const [complete, setComplete] = useState(false);
-  const isTM = app === 'toastmaster';
-  const appLabel = isTM ? 'TOASTMASTER' : 'IDENTITY LAB';
+  const appInfo = getAppInfo(app);
+  const AppIcon = appInfo.Icon;
 
   useEffect(() => {
     const duration = isInitial ? 2500 : 2000;
@@ -33,16 +33,12 @@ export const AppLoadingScreen = ({ app, onFinish, isInitial = false }) => {
         <div className="sigil-pair">
           <Logo style={{ width: 80, height: 80 }} />
           <div className="sigil-sep">//</div>
-          {isTM ? (
-            <ToastmasterLogo style={{ width: 60, height: 60 }} />
-          ) : (
-            <Logo style={{ width: 60, height: 60 }} />
-          )}
+          <AppIcon style={{ width: 60, height: 60 }} />
         </div>
         <div className="hud-line">
           <span className="title">{isInitial ? 'INITIALIZING' : 'INTERFACE SWITCH'}</span>
           <span className="sep">//</span>
-          <span className="subject">{appLabel}</span>
+          <span className="subject">{appInfo.name}</span>
         </div>
         <div className="load-bar-wrap">
           <div className="load-bar" style={{ width: `${percent}%` }} />

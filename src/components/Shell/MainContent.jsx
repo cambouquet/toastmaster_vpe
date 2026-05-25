@@ -11,7 +11,7 @@ export const MainContent = ({ isWorkspace, state, uiAction, onAuth }) => {
   }
 
   if (state.currentApp === 'font-lab') {
-    return <FontLab />;
+    return <FontLab user={state.currentUser} />;
   }
 
   if (isWorkspace) {

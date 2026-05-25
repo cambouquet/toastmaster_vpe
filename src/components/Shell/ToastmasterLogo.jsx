@@ -2,29 +2,27 @@ import React from 'react';
 import { K_FONT_LIBRARY } from './KFontLibrary';
 
 export const ToastmasterLogo = ({ className = "", style = {} }) => {
-  const tGlyph = K_FONT_LIBRARY.T;
-  // T: `${LS(4, 46, 25)} ${TOWER(22, 12)}`
-  // LS returns 3 sub-paths: Middle handle, Right blade, Left blade
-  const paths = tGlyph.path.split(' Z').filter(p => p.trim()).map(p => p + ' Z');
+  const kGlyph = K_FONT_LIBRARY.K;
+  const paths = kGlyph.path.split(' Z').filter(p => p.trim()).map(p => p + ' Z');
 
   return (
     <div className={`logo-tm-wrap ${className}`} 
-      style={{ ...style, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <svg viewBox="0 0 50 80" style={{ width: '100%', height: '100%' }}>
-        <defs>
-          <filter id="tm-cyan-glow">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="0.8" result="blur" />
-            <feFlood floodColor="#00bac4" result="color" />
-            <feComposite in="color" in2="blur" operator="in" result="glow" />
-            <feMerge>
-              <feMergeNode in="glow" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        <g fill="#00bac4" filter="url(#tm-cyan-glow)">
-          {paths.map((p, i) => <path key={i} d={p} />)}
-        </g>
+      style={{ ...style, display: 'flex', alignItems: 'center', gap: '8px', height: '100%' }}>
+      
+      {/* Freedom Fighter K */}
+      <svg viewBox="0 0 50 80" style={{ height: '80%', width: 'auto' }}>
+        {paths.map((p, i) => (
+          <path key={i} d={p} fill={i === 1 ? "#ff0044" : "#00bac4"} className={i === 1 ? 'kfont-wing' : ''} />
+        ))}
+      </svg>
+
+      <span style={{ color: '#00bac4', fontSize: '12px', opacity: 0.4, fontFamily: 'var(--font-technical)' }}>//</span>
+
+      {/* Mirrored Freedom Fighter K */}
+      <svg viewBox="0 0 50 80" style={{ height: '80%', width: 'auto', transform: 'scaleX(-1)' }}>
+        {paths.map((p, i) => (
+          <path key={i} d={p} fill={i === 1 ? "#ff0044" : "#00bac4"} className={i === 1 ? 'kfont-wing' : ''} />
+        ))}
       </svg>
     </div>
   );

@@ -13,20 +13,21 @@
     100% { filter: drop-shadow(0 0 2px rgba(192, 192, 192, 0.4)) brightness(1); }
   }
 
-  @keyframes ringRotate {
-    from { stroke-dashoffset: 400; }
-    to { stroke-dashoffset: 0; }
+  .number-0 {
+    opacity: 0.8;
+    filter: drop-shadow(0 0 1px rgba(0, 186, 196, 0.4));
   }
 
-  .energy-ring {
-    animation: energyCirculate 2s infinite ease-in-out;
-    
-    .kfont-ring {
-      stroke: rgba(255, 255, 255, 0.8);
-      stroke-width: 1.5px;
-      stroke-dasharray: 40 160;
-      animation: ringRotate 4s infinite linear;
-    }
+  .shiny-o {
+    // Animation handled globally
+  }
+
+  .pure-i {
+    // Animation handled globally
+  }
+
+  .fighter-k {
+    filter: drop-shadow(0 0 2px #ff0055);
   }
 
   .terminal-section {
