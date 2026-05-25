@@ -1,4 +1,4 @@
-const T = "M8 76 L11 4 L14 76 Z"; // Tower
+const TOWER = (x, h=4, b=76) => `M${x} ${b} L${x+3} ${h} L${x+6} ${b} Z`; // Forged Pillar
 const S1 = "M14 4 Q60 4 65 35 L55 35 Q50 14 14 14 Z"; // Upper Sail
 const S2 = "M14 76 Q60 76 65 45 L55 45 Q50 66 14 66 Z"; // Lower Sail
 const KT_U = "M18 32 Q50 4 75 18 L28 42 Z"; // Wing (Upper)
@@ -10,7 +10,6 @@ const AU = "M8 22 Q40 -10 72 22 L72 32 Q40 0 8 32 Z"; // Round Top
 const AD = "M8 58 Q40 90 72 58 L72 48 Q40 80 8 48 Z"; // Round Bot
 const AL = (y1=20, y2=60) => `M22 ${y1} Q-10 40 22 ${y2} L32 ${y2} Q0 40 32 ${y1} Z`; // Round Left
 const AR = (y1=20, y2=60) => `M58 ${y1} Q90 40 58 ${y2} L48 ${y2} Q80 40 48 ${y1} Z`; // Round Right
-const POLE = (x, y1=4, y2=76) => `M${x} ${y1} L${x+3} ${y2} L${x+6} ${y1} Z`; // Vertical element
 const LANCE = (bx, by, tx, ty, w=10) => {
   const dx = tx - bx;
   const dy = ty - by;
@@ -47,30 +46,30 @@ const COIL = (x, y, w, h, reversal=false) => {
 
 export const K_FONT_LIBRARY = {
   A: { path: `${LANCE(10, 76, 38, 5, 6)} ${LANCE(50, 76, 22, 5, 6)} ${SW(40, 50)}`, width: 60 },
-  B: { path: `${T} ${S1} ${S2} ${SW(34, 45)}`, width: 65 },
+  B: { path: `${TOWER(8)} ${S1} ${S2} ${SW(34, 45)}`, width: 65 },
   C: { path: `${AU} ${AD} ${AL()}`, width: 80 },
-  D: { path: `${T} ${S1} ${S2}`, width: 65 },
-  E: { path: `${T} ${SW(4)} ${SW(34, 45)} ${SW(68)}`, width: 65 },
-  F: { path: `${T} ${SW(4)} ${SW(34, 45)}`, width: 65 },
-  G: { path: `${AU} ${AD} ${AL()} ${SWR(40, 72, 35)} ${POLE(66, 40, 76)}`, width: 80 },
-  H: { path: `${T} M50 76 L53 4 L56 76 Z ${SW(34, 45)}`, width: 65 },
-  I: { path: "M5 76 L8 4 L11 76 Z", width: 16 },
+  D: { path: `${TOWER(8)} ${S1} ${S2}`, width: 65 },
+  E: { path: `${TOWER(8)} ${SW(4)} ${SW(34, 45)} ${SW(68)}`, width: 65 },
+  F: { path: `${TOWER(8)} ${SW(4)} ${SW(34, 45)}`, width: 65 },
+  G: { path: `${AU} ${AD} ${AL()} ${SWR(40, 72, 35)} ${TOWER(66, 40, 76)}`, width: 80 },
+  H: { path: `${TOWER(8)} ${TOWER(50)} ${SW(34, 45)}`, width: 65 },
+  I: { path: TOWER(5), width: 16 },
   J: { path: `${BRIDGE(55, 4, 55, 64, 35, 64)} ${BRIDGE(35, 64, 15, 64, 15, 45)}`, width: 65 },
-  K: { path: `M12 76 L15 4 L18 76 Z ${ANGEL_WING(18, 50, 75, 18, 1)} ${KATANA(18, 50)}`, width: 75 },
-  L: { path: `${T} ${SW(68)}`, width: 55 },
-  M: { path: `M5 76 L8 4 L11 76 Z M55 76 L58 4 L61 76 Z ${BIRD_WING(11, 15, 33, 50, 1)} ${BIRD_WING(55, 15, 33, 50, -1)}`, width: 65 },
-  N: { path: `${T} M50 76 L53 4 L56 76 Z ${BIRD_WING(11, 4, 53, 76, 1)}`, width: 65 },
+  K: { path: `${TOWER(12)} ${ANGEL_WING(18, 50, 75, 18, 1)} ${KATANA(18, 50)}`, width: 75 },
+  L: { path: `${TOWER(8)} ${SW(68)}`, width: 55 },
+  M: { path: `${TOWER(5)} ${TOWER(55)} ${BIRD_WING(11, 15, 33, 50, 1)} ${BIRD_WING(55, 15, 33, 50, -1)}`, width: 65 },
+  N: { path: `${TOWER(8)} ${TOWER(50)} ${BIRD_WING(11, 4, 53, 76, 1)}`, width: 65 },
   O: { path: `${AU} ${AD} ${AL()} ${AR()}`, width: 80 },
-  P: { path: `${T} ${S1} ${SW(34, 45)}`, width: 65 },
+  P: { path: `${TOWER(8)} ${S1} ${SW(34, 45)}`, width: 65 },
   Q: { path: `${AU} ${AD} ${AL()} ${AR()} ${KATANA(45, 50, 1.6)}`, width: 80 },
-  R: { path: `${T} ${S1} ${SW(34, 45)} ${KATANA(14, 50)}`, width: 65 },
+  R: { path: `${TOWER(8)} ${S1} ${SW(34, 45)} ${KATANA(14, 50)}`, width: 65 },
   S: { path: ROPE(10, 4, 55, 72, 8), width: 75 },
-  T: { path: `${LS(4, 65, 32)} M29 76 L32 12 L35 76 Z`, width: 65 },
+  T: { path: `${LS(4, 65, 32)} ${TOWER(29, 12)}`, width: 65 },
   U: { path: `${SCIMITAR(8, 4, 50, 35, 76, 10, 1)} ${SCIMITAR(62, 4, 50, 35, 76, 10, -1)}`, width: 70 },
   V: { path: `${BIRD_WING(12, 4, 35, 76, 1)} ${BIRD_WING(58, 4, 35, 76, -1)}`, width: 70 },
   W: { path: `${BIRD_WING(5, 4, 20, 76, 1)} ${BIRD_WING(65, 4, 50, 76, -1)} ${LANCE(20, 76, 45, 10, 6)} ${LANCE(50, 76, 25, 10, 6)}`, width: 70 },
   X: { path: `${LANCE(5, 76, 55, 4, 6)} ${LANCE(55, 76, 5, 4, 6)}`, width: 60 },
-  Y: { path: `M30 40 L33 76 L36 40 Z ${BIRD_WING(10, 4, 33, 40, 1)} ${BIRD_WING(56, 4, 33, 40, -1)}`, width: 65 },
+  Y: { path: `${TOWER(30, 40, 76)} ${BIRD_WING(10, 4, 33, 40, 1)} ${BIRD_WING(56, 4, 33, 40, -1)}`, width: 65 },
   Z: { path: `${LS(4, 65, 32)} ${LS(68, 65, 32)} ${LANCE(55, 12, 5, 68, 6)}`, width: 65 },
   "0": { path: `${AU} ${AD} ${AL()} ${AR()} M20 60 L60 20 L65 25 L25 70 Z`, width: 80 }
 };

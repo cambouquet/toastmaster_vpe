@@ -30,7 +30,6 @@ export const KFontValidator = () => {
     { name: "LANCE", path: "M20 76 L15 76 L35 15 L42 18 L40 4 L33 18 L38 15 Z" },
     { name: "POINT", path: "M40 10 L45 26 L40 22 L35 26 Z" },
     { name: "RING", path: "M8 22 Q40 -10 72 22 L72 32 Q40 0 8 32 Z M8 58 Q40 90 72 58 L72 48 Q40 80 8 48 Z M22 20 Q-10 40 22 60 L32 60 Q0 40 32 20 Z M58 20 Q90 40 58 60 L48 60 Q80 40 48 20 Z" },
-    { name: "POLE", path: "M38 4 L41 76 L44 4 Z" },
     { name: "COIL", path: "M55 18 Q55 4 30 4 Q5 4 5 18 C5 31 55 26 55 40" },
     { name: "SCIMITAR", path: "M60 10 L50 10 L50 50 Q50 70 20 70 Q60 70 60 50 Z" }
   ];
