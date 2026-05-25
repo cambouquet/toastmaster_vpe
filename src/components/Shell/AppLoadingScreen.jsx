@@ -33,7 +33,9 @@ export const AppLoadingScreen = ({ app, onFinish, isInitial = false }) => {
         <div className="sigil-pair">
           <Logo style={{ width: 80, height: 80 }} />
           <div className="sigil-sep">//</div>
-          <AppIcon style={{ width: 60, height: 60 }} />
+          <div style={{ width: 60, height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <AppIcon />
+          </div>
         </div>
         <div className="hud-line">
           <span className="title">{isInitial ? 'INITIALIZING' : 'INTERFACE SWITCH'}</span>

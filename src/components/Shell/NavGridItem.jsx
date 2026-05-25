@@ -19,8 +19,8 @@ export const NavGridItem = ({ id, label, status, active, locked, beta, children,
       <KFontText 
         text={label} 
         height={12} 
-        color={id === 'tm' ? '#00bac4' : '#ffffff'} 
-        firstLetterColor={id === 'tm' ? '#00bac4' : '#ff0044'}
+        color={id === 'toastmaster' ? '#00bac4' : '#ffffff'} 
+        firstLetterColor={(id === 'toastmaster' || id === 'identity-lab' || id === 'font-lab') ? '#ff0044' : (id === 'toastmaster' ? '#00bac4' : '#ffffff')}
       />
     </div>
     <span className="status">{status}</span>

@@ -11,7 +11,7 @@ export const TypeFoundryLogo = ({ className = '', style = {} }) => {
         {paths.map((p, i) => {
           // Path 1 & 2 are the sabers in F
           const isSaber = i === 1 || i === 2;
-          return <path key={i} d={p} fill={isSaber ? "#ff0044" : "#ffffff"} style={isSaber ? { filter: 'drop-shadow(0 0 2px #ff0044)' } : {}} />;
+          return <path key={i} d={p} fill={isSaber ? "#ff0044" : "#ffffff"} className={isSaber ? 'kfont-wing' : ''} style={isSaber ? { filter: 'drop-shadow(0 0 2px #ff0044)' } : {}} />;
         })}
       </svg>
     </div>

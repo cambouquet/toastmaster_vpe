@@ -39,7 +39,7 @@
 .grid-item {
   aspect-ratio: 1; border: 1px solid rgba($accent-cyan, 0.1); background: rgba($accent-cyan, 0.02);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-  transition: all 0.2s; cursor: not-allowed;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); cursor: not-allowed;
   position: relative; overflow: hidden;
   
   .beta-tag {
@@ -53,8 +53,9 @@
   .status { font-size: 0.5rem; opacity: 0.4; }
 
   &.active {
-    border-color: $accent-cyan; background: rgba($accent-cyan, 0.05); color: $accent-cyan;
+    border-color: $accent-cyan; background: rgba($accent-cyan, 0.1); color: $accent-cyan;
     cursor: pointer; box-shadow: inset 0 0 20px rgba($accent-cyan, 0.1);
+    transform: scale(1.1); z-index: 10;
     .icn { opacity: 1; }
   }
 

@@ -19,7 +19,7 @@ export const Logo = ({ className = '', style = {}, primaryColor = '#ffffff', glo
         <path d='M16 95 L22 5 L30 95 Z' fill={primaryColor} />
         
         {/* The Edge / Wing */}
-        <path d='M25 40 Q65 5 96 22 L38 52 Z' fill={glowColor} filter="url(#logo-accent-glow)" />
+        <path d='M25 40 Q65 5 96 22 L38 52 Z' fill={glowColor} className="kfont-wing" filter="url(#logo-accent-glow)" />
         
         {/* Base Support */}
         <path d='M14 52 L35 66 L30 72 L10 56 Z' fill={primaryColor} />
