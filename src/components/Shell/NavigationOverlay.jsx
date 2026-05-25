@@ -32,7 +32,9 @@ export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => {
                 beta={true}
                 onClick={() => { onSwitch(appId); onClose(); }}
               >
-                <Icon />
+                <div style={{ width: 48, height: 48, marginBottom: 10, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Icon style={{ width: '100%', height: '100%' }} />
+                </div>
               </NavGridItem>
             );
           })}

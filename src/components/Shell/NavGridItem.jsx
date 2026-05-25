@@ -20,7 +20,7 @@ export const NavGridItem = ({ id, label, status, active, locked, beta, children,
         text={label} 
         height={12} 
         color={id === 'toastmaster' ? '#00bac4' : '#ffffff'} 
-        firstLetterColor={(id === 'toastmaster' || id === 'identity-lab' || id === 'font-lab') ? '#ff0044' : (id === 'toastmaster' ? '#00bac4' : '#ffffff')}
+        firstLetterColor="#ff0044"
       />
     </div>
     <span className="status">{status}</span>
