@@ -16,9 +16,13 @@ export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => {
   return (
     <div className="nav-overlay" onClick={onClose}>
       <div className="nav-grid-bg" />
+      <div className="noise-grain" />
       <div className="nav-content" onClick={e => e.stopPropagation()}>
         <div className="nav-header">
-          <span className="val hi">APP SWITCHER</span>
+          <div className="header-glitch-wrap">
+            <span className="val hi">APP SWITCHER</span>
+            <div className="glitch-line" />
+          </div>
         </div>
         <div className="grid-container">
           {sortedApps.map(appId => {
