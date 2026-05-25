@@ -48,6 +48,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Pre-deployment cleanup
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            mkdir -p ~/app/deploy
+            # Clean up existing files that might be owned by root due to docker mounts
+            sudo rm -f ~/app/docker-compose.prod.yml ~/app/keycloak-realm.json
+            sudo rm -rf ~/app/deploy/Caddyfile
+            # Ensure the user has ownership of the target directory
+            sudo chown -R ${{ secrets.VM_USER }} ~/app
+
       - name: Copy docker-compose and config files
         uses: appleboy/scp-action@v0.1.7
         with:
