@@ -37,15 +37,26 @@
 }
 
 .grid-item {
-  aspect-ratio: 1; border: 1px solid rgba($accent-cyan, 0.1); background: rgba($accent-cyan, 0.02);
+  aspect-ratio: 1; border: 1px solid rgba($accent-cyan, 0.1); background: rgba($accent-cyan, 0.01);
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); cursor: not-allowed;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: not-allowed;
   position: relative; overflow: hidden;
-
+  
   &::before {
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(0deg, rgba($accent-cyan, 0.05) 0%, transparent 100%);
     opacity: 0; transition: opacity 0.3s;
+  }
+
+  /* 2077 Focus Brackets */
+  &::after {
+    content: ''; position: absolute; inset: 5px;
+    border: 1px solid $accent-cyan;
+    clip-path: polygon(0 0, 15px 0, 15px 1px, 1px 1px, 1px 15px, 0 15px,
+                      100% 0, 100% 15px, calc(100% - 1px) 15px, calc(100% - 1px) 1px, calc(100% - 15px) 1px, calc(100% - 15px) 0,
+                      100% 100%, calc(100% - 15px) 100%, calc(100% - 15px) calc(100% - 1px), calc(100% - 1px) calc(100% - 1px), calc(100% - 1px) calc(100% - 15px), 100% calc(100% - 15px),
+                      0 100%, 0 calc(100% - 15px), 1px calc(100% - 15px), 1px calc(100% - 1px), 15px calc(100% - 1px), 15px 100%);
+    opacity: 0; transition: all 0.2s;
   }
   
   .beta-tag {
@@ -55,33 +66,52 @@
     z-index: 2;
   }
 
-  .icn { font-size: 1.5rem; font-weight: 900; opacity: 0.3; z-index: 1; }
-  .label-wrap { z-index: 1; }
-  .status { font-size: 0.5rem; opacity: 0.4; z-index: 1; }
+  .icn { font-size: 1.5rem; font-weight: 900; opacity: 0.3; z-index: 1; transition: all 0.2s; }
+  .label-wrap { z-index: 1; transition: all 0.2s; }
+  .status { font-size: 0.4rem; opacity: 0.3; z-index: 1; letter-spacing: 2px; }
 
   &.active {
-    border-color: $accent-cyan; 
+    border-color: rgba($accent-cyan, 0.4); 
     background: rgba($accent-cyan, 0.08); 
     color: $accent-cyan;
     cursor: pointer; 
-    box-shadow: inset 0 0 30px rgba($accent-cyan, 0.1), 0 0 15px rgba($accent-cyan, 0.1);
-    transform: scale(1.1); 
-    z-index: 10;
+    box-shadow: inset 0 0 30px rgba($accent-cyan, 0.05);
 
     &::before { opacity: 1; }
+    &::after { opacity: 0.6; inset: 2px; }
 
-    &::after {
-      content: ''; position: absolute; inset: 0;
-      background: repeating-linear-gradient(0deg, rgba($accent-cyan, 0.05) 0px, transparent 1px, transparent 2px);
+    /* Tactical Background Glitch */
+    .bg-glitch {
+      position: absolute; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(0deg, rgba($accent-cyan, 0.1) 0px, transparent 1px, transparent 2px);
       background-size: 100% 3px;
-      animation: scanline-move 10s linear infinite;
-      pointer-events: none;
+      animation: scanline-move 8s linear infinite;
     }
     
-    .icn { opacity: 1; }
+    .icn { opacity: 1; filter: drop-shadow(0 0 8px $accent-cyan); }
+    .label-wrap { transform: scale(1.1); filter: brightness(1.2); }
+    .status { opacity: 1; color: $accent-cyan; text-shadow: 0 0 5px $accent-cyan; }
   }
 
-  &.locked:hover { border-color: #ff3e3e; .label { color: #ff3e3e; } }
+  &:hover:not(.locked):not(.active) {
+    background: rgba($accent-cyan, 0.05);
+    border-color: rgba($accent-cyan, 0.3);
+    cursor: pointer;
+    
+    &::after { opacity: 0.4; transform: scale(0.95); }
+    .icn { opacity: 0.8; transform: translateY(-2px); }
+    .label-wrap { transform: translateY(-1px); }
+  }
+
+  &:active:not(.locked) {
+    transform: scale(0.98);
+    background: rgba($accent-cyan, 0.15);
+  }
+}
+
+@keyframes scanline-move {
+  from { background-position: 0 0; }
+  to { background-position: 0 100%; }
 }
 
 @keyframes scanline-move {

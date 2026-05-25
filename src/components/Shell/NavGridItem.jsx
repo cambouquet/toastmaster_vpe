@@ -13,6 +13,7 @@ export const NavGridItem = ({ id, label, status, active, locked, beta, children,
       onClick={onClick}
       style={{ cursor: onClick ? 'pointer' : 'default' }}
     >
+    {active && <div className="bg-glitch" />}
     {beta && <div className="beta-tag">BETA</div>}
     {children}
     <div className="label-wrap" style={{ marginBottom: 4 }}>
