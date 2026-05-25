@@ -1,6 +1,7 @@
 import React from 'react';
 import { Logo } from './Logo';
 import { ToastmasterLogo } from './ToastmasterLogo';
+import { TypeFoundryLogo } from './TypeFoundryLogo';
 import { NavGridItem } from './NavGridItem';
 import './NavigationOverlay.scss';
 
@@ -34,7 +35,7 @@ export const NavigationOverlay = ({ onClose, currentApp, onSwitch }) => (
           beta={true}
           onClick={() => { onSwitch('font-lab'); onClose(); }}
         >
-          <div className="icn" style={{ fontSize: '24px', fontWeight: 'bold', color: '#00bac4', fontFamily: 'monospace' }}>K</div>
+          <TypeFoundryLogo style={{ width: 48, height: 48, marginBottom: 10 }} />
         </NavGridItem>
         <NavGridItem id="n3" label="APP 0003" status="OFFLINE" locked>
           <div className="icn">??</div>

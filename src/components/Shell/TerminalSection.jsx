@@ -1,0 +1,28 @@
+import React from "react";
+import { KFontText } from "./KFontText";
+
+export const TerminalSection = ({ testInput, setTestInput, ratio, spacing, getCharStyle }) => (
+  <div className='card terminal-section'>
+    <label>Live Transmission</label>
+    <div className="terminal-wrap">
+      <input 
+        type="text" 
+        maxLength={12}
+        value={testInput}
+        onChange={(e) => setTestInput(e.target.value.toUpperCase())}
+        className="terminal-input"
+        placeholder="Enter Signature"
+      />
+      <div className="terminal-output" style={{ gap: `${spacing}px` }}>
+        {testInput.split("").map((char, idx) => {
+          const style = getCharStyle(char);
+          return (
+            <div key={idx} style={{ width: `${60 * ratio}px` }} className={style.isRing ? 'energy-ring' : ''}>
+              <KFontText text={char} height={60} color={style.color} />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+);

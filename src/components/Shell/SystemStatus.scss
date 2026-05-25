@@ -28,6 +28,21 @@
   }
 }
 
+.logo-kanji-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  
+  // High-fidelity optic glow for the red sections
+  svg {
+    filter: drop-shadow(0 0 2px rgba(255, 0, 68, 0.4));
+  }
+
+  &.is-white svg { fill: #ffffff !important; }
+}
+
 .system-trigger {
   width: 32px; height: 32px; border: none; background: transparent;
   display: flex; align-items: center; justify-content: center;

@@ -14,7 +14,25 @@ export const usePersistence = (state, setState, notify, addLog, setTimedSubtitle
         setState(s => ({ ...s, members: data.members }));
       }
     }).catch(e => console.error("Load Error:", e));
+    
+    // Last Session Restoration
+    const lastSession = localStorage.getItem('vpe_last_session');
+    if (lastSession) {
+      try {
+        const { currentApp, currentScreen } = JSON.parse(lastSession);
+        setState(s => ({ ...s, currentApp, currentScreen }));
+      } catch (e) {
+        console.error("Session Restore Error:", e);
+      }
+    }
   }, [notify, addLog, setState]);
+
+  useEffect(() => {
+    localStorage.setItem('vpe_last_session', JSON.stringify({
+      currentApp: state.currentApp,
+      currentScreen: state.currentScreen
+    }));
+  }, [state.currentApp, state.currentScreen]);
 
   useEffect(() => {
     if (state.members !== INITIAL_STATE.members) {

@@ -71,5 +71,5 @@ export const K_FONT_LIBRARY = {
   X: { path: `${LANCE(10, 76, 40, 4, 5)} ${LANCE(40, 76, 10, 4, 5)}`, width: 50 },
   Y: { path: `${TOWER(22, 40, 76)} ${BIRD_WING(10, 4, 25, 40, 1)} ${BIRD_WING(40, 4, 25, 40, -1)}`, width: 50 },
   Z: { path: `${LS(4, 46, 25)} ${LS(68, 46, 25)} ${LANCE(40, 12, 10, 68, 6)}`, width: 50 },
-  "0": { path: `${AU(6)} ${AD(6)} ${AL(12, 20, 60)} ${AR(38, 20, 60)} M15 60 L35 20 L40 25 L20 70 Z`, width: 50 }
+  "0": { path: `${AU(6)} ${AD(6)} ${AL(12, 20, 60)} ${AR(38, 20, 60)}`, width: 50 }
 };
