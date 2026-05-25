@@ -12,7 +12,8 @@ const AL = (y1=20, y2=60) => `M22 ${y1} Q-10 40 22 ${y2} L32 ${y2} Q0 40 32 ${y1
 const AR = (y1=20, y2=60) => `M58 ${y1} Q90 40 58 ${y2} L48 ${y2} Q80 40 48 ${y1} Z`; // Round Right
 const POLE = (x, y1=4, y2=76) => `M${x} ${y1} L${x+3} ${y2} L${x+6} ${y1} Z`; // Vertical element
 const SWR = (y, x=72, w=35) => `M${x} ${y+1} L${x-5} ${y+1} L${x-5} ${y+7} L${x} ${y+7} Z M${x-7} ${y} L${x-w} ${y} L${x-w-5} ${y+4} L${x-w} ${y+10} L${x-7} ${y+10} Z`; // Reversed Saber (Right-to-Left)
-const SCARF = (x1, y1, cx, cy, x2, y2) => `M${x1} ${y1} Q${cx} ${cy} ${x2} ${y2} L${x2} ${y2+12} Q${cx} ${cy+12} ${x1} ${y1+12} Z`; // Solid Weapon Blade (12 units)
+const BRIDGE = (x1, y1, cx, cy, x2, y2) => `M${x1} ${y1} Q${cx} ${cy} ${x2} ${y2} L${x2} ${y2+12} Q${cx} ${cy+12} ${x1} ${y1+12} Z`; // High-tension connector (prev. Scarf)
+const SCARF = (x1, y1, x2, y2) => `M${x1} 4 Q${x1} 64 35 64 L35 76 Q${x1} 76 ${x1} 4 Z`; // Original signature Scarf
 const SCIMITAR = (x, y, h, tx, ty, thick=10, mirror=1) => `M${x} ${y} L${x+thick*mirror} ${y} L${x+thick*mirror} ${h} Q${x+thick*mirror} ${ty} ${tx} ${ty} Q${x} ${ty} ${x} ${h} Z`; // Arabic Scimitar Blade
 const ROPE = (x, y, w=50, h=72, t=8) => {
   const r = t; // thickness
@@ -34,7 +35,7 @@ export const K_FONT_LIBRARY = {
   G: { path: `${AU} ${AD} ${AL()} ${SWR(40, 72, 35)} ${POLE(66, 40, 76)}`, width: 80 },
   H: { path: `${T} M50 76 L53 4 L56 76 Z ${SW(34, 45)}`, width: 65 },
   I: { path: "M5 76 L8 4 L11 76 Z", width: 16 },
-  J: { path: `${SCARF(55, 4, 55, 64, 35, 64)} ${SCARF(35, 64, 15, 64, 15, 45)}`, width: 65 },
+  J: { path: `${BRIDGE(55, 4, 55, 64, 35, 64)} ${BRIDGE(35, 64, 15, 64, 15, 45)}`, width: 65 },
   K: { path: `M12 76 L15 4 L18 76 Z ${KT_U} ${KATANA(18, 50)}`, width: 75 },
   L: { path: `${T} ${SW(68)}`, width: 55 },
   M: { path: "M5 76 L8 4 L11 76 Z M30 76 L33 30 L36 76 Z M55 76 L58 4 L61 76 Z M11 15 L25 50 L35 50 L50 15 L45 15 L32 40 L20 15 Z", width: 65 },
