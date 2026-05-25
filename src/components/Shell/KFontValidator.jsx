@@ -20,11 +20,11 @@ export const KFontValidator = () => {
     { name: "WING", path: "M18 32 Q50 4 75 18 L28 42 Z" },
     { name: "KATANA", path: "M10 42 L21 53 L18 56 L7 45 Z M18 50 Q50 68 76 78 L68 78 Q44 68 18 54 Z" },
     { name: "SABER", path: "M11 35 L16 35 L16 41 L11 41 Z M18 34 L45 34 L50 38 L45 42 L18 42 Z" },
-    { name: "SABER_R", path: "M72 35 L67 35 L67 41 L72 41 Z M65 34 L38 34 L33 38 L38 42 L65 42 Z" },
+    { name: "SCARF", path: "M10 20 Q40 0 70 20 L70 32 Q40 12 10 32 Z" },
     { name: "STICK", path: "M29 35 L35 35 L35 41 L29 41 Z M37 34 L60 34 L65 38 L60 42 L37 42 Z M27 34 L4 34 L0 38 L4 42 L27 42 Z" },
     { name: "RING", path: "M8 22 Q40 -10 72 22 L72 32 Q40 0 8 32 Z M8 58 Q40 90 72 58 L72 48 Q40 80 8 48 Z M22 20 Q-10 40 22 60 L32 60 Q0 40 32 20 Z M58 20 Q90 40 58 60 L48 60 Q80 40 48 20 Z" },
     { name: "POLE", path: "M38 4 L41 76 L44 4 Z" },
-    { name: "SCARF", path: "M10 20 Q40 0 70 20 L73 23 Q43 3 13 23 Z" },
+    { name: "COIL", path: "M55 18 Q55 4 30 4 Q5 4 5 18 C5 31 55 26 55 40" },
     { name: "SCIMITAR", path: "M20 10 L30 10 L30 50 Q30 70 60 70 Q20 70 20 50 Z" }
   ];
 
