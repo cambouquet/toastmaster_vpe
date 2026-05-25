@@ -30,10 +30,12 @@ export const ShellLayout = ({ state, props, handlers, flags }) => (
     />
     <SystemNotification notifications={props.notifications} onDismiss={handlers.dismiss} />
     <Subtitles text={props.subtitle} />
-    <div className="bottom-input-wrap">
-      <ChatInput onSend={handlers.interact} onType={(t) => handlers.interact(t, true)} 
-        onToggleDebug={handlers.toggleDebug} testStatus={state.testStatus} />
-    </div>
+    {state.currentApp !== 'IDENTITY LAB' && (
+      <div className="bottom-input-wrap">
+        <ChatInput onSend={handlers.interact} onType={(t) => handlers.interact(t, true)} 
+          onToggleDebug={handlers.toggleDebug} testStatus={state.testStatus} />
+      </div>
+    )}
     {flags.showDebug && <DebugPanel logs={props.logs} state={state} onClose={handlers.toggleDebug} 
       onClear={() => { handlers.uiAction('CLEAR_LOGS'); handlers.clearLogs(); }} 
       onHealth={() => HealthService.check(state, props.logs)} />}
