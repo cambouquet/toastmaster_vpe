@@ -6,46 +6,15 @@
   font-family: inherit; backdrop-filter: blur(15px);
   -ms-overflow-style: none; scrollbar-width: none;
   &::-webkit-scrollbar { display: none; }
-
-  /* Neural Data Drift - Horizontal Signal Noise */
-  &::before {
-    content: ''; position: absolute; inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      rgba($accent-cyan, 0.05) 0px,
-      rgba($accent-cyan, 0.05) 1px,
-      transparent 1px,
-      transparent 2px
-    );
-    background-size: 100% 4px;
-    animation: drift-hum 10s linear infinite;
-    pointer-events: none;
-    z-index: 2;
-    opacity: 0.3;
-  }
-}
-
-@keyframes drift-hum {
-  from { background-position: 0 0; }
-  to { background-position: 0 100%; }
-}
-
-@keyframes scanner-sweep {
-  0% { transform: translateY(-100vh); }
-  100% { transform: translateY(100vh); }
 }
 
 .nav-grid-bg {
-  position: absolute; inset: 0; opacity: 0.08;
-  background-image: linear-gradient($accent-cyan 1px, transparent 1px), 
-                    linear-gradient(90deg, $accent-cyan 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: grid-pulse 4s ease-in-out infinite;
+  display: none;
 }
 
-@keyframes grid-pulse {
-  0%, 100% { opacity: 0.05; transform: scale(1); }
-  50% { opacity: 0.1; transform: scale(1.02); }
+@keyframes scanner-sweep {
+  0% { transform: translateY(-150%); }
+  100% { transform: translateY(150%); }
 }
 
 .nav-content {
@@ -96,6 +65,13 @@
   max-height: 60vh; overflow-y: auto; padding: 20px;
   -ms-overflow-style: none; scrollbar-width: none;
   &::-webkit-scrollbar { display: none; }
+
+  /* Ensure only ONE item scans at a time: either the hovered one, or the active one if none is hovered */
+  &:hover {
+    .grid-item.active:not(:hover) .bg-glitch {
+      display: none !important;
+    }
+  }
 }
 
 .grid-item {
@@ -132,7 +108,7 @@
   .label-wrap { z-index: 1; transition: all 0.2s; }
   .status { font-size: 0.4rem; opacity: 0.3; z-index: 1; letter-spacing: 2px; }
 
-  &.active {
+  &.active, &:hover:not(.locked) {
     border-color: rgba($accent-cyan, 0.4); 
     background: rgba($accent-cyan, 0.08); 
     color: $accent-cyan;
@@ -142,27 +118,41 @@
     &::before { opacity: 1; }
     &::after { opacity: 0.6; inset: 2px; }
 
-    /* Tactical Background Glitch */
+    /* Neural Scanner/Glow Container */
     .bg-glitch {
       position: absolute; inset: 0; pointer-events: none;
-      background: repeating-linear-gradient(0deg, rgba($accent-cyan, 0.1) 0px, transparent 1px, transparent 2px);
-      background-size: 100% 3px;
-      animation: scanline-move 8s linear infinite;
+      display: block !important;
+      
+      /* Pure Neural Glow - Non-flickering background depth */
+      &::before {
+        content: ''; position: absolute; inset: 0;
+        background: radial-gradient(circle at center, rgba($accent-cyan, 0.15) 0%, transparent 70%);
+        animation: glow-pulse 4s ease-in-out infinite;
+      }
+
+      /* Animated Vector Circuitry - Horizontal signal lines */
+      &::after {
+        content: ''; position: absolute; left: 0; width: 100%; height: 2px;
+        background: $accent-cyan;
+        box-shadow: 0 0 15px $accent-cyan, 0 0 30px rgba($accent-cyan, 0.5);
+        opacity: 0.8;
+        animation: data-sweep 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        filter: blur(0.5px);
+      }
     }
     
     .icn { opacity: 1; filter: drop-shadow(0 0 8px $accent-cyan); }
-    .label-wrap { transform: scale(1.1); filter: brightness(1.2); }
+    .label-wrap { 
+      transform: scale(1.1); 
+      filter: brightness(1.2);
+      animation: text-pulse 2.5s ease-in-out infinite;
+    }
     .status { opacity: 1; color: $accent-cyan; text-shadow: 0 0 5px $accent-cyan; }
   }
 
   &:hover:not(.locked):not(.active) {
-    background: rgba($accent-cyan, 0.05);
-    border-color: rgba($accent-cyan, 0.3);
-    cursor: pointer;
-    
-    &::after { opacity: 0.4; transform: scale(0.95); }
-    .icn { opacity: 0.8; transform: translateY(-2px); }
-    .label-wrap { transform: translateY(-1px); }
+    &::after { opacity: 0.4; transform: scale(0.98); }
+    .icn { transform: translateY(-2px); }
   }
 
   &:active:not(.locked) {
@@ -171,9 +161,23 @@
   }
 }
 
-@keyframes scanline-move {
-  from { background-position: 0 0; }
-  to { background-position: 0 100%; }
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.95); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes text-pulse {
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 0px $accent-cyan); }
+  50% { filter: brightness(1.4) drop-shadow(0 0 4px $accent-cyan); }
+}
+
+@keyframes data-sweep {
+  0% { top: 0%; transform: scaleX(0); opacity: 0; }
+  5% { transform: scaleX(1.2); opacity: 1; }
+  10% { transform: scaleX(1); }
+  45% { top: 100%; transform: scaleX(1); opacity: 0.8; }
+  50% { top: 100%; transform: scaleX(0); opacity: 0; }
+  100% { top: 100%; opacity: 0; }
 }
 
 @keyframes scanline-move {
