@@ -7,6 +7,7 @@ export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav,
   const isAuth = user.role !== 'NONE' && user.name !== 'AUTHORIZATION REQUIRED';
   const [showRoles, setShowRoles] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [mobileStep, setMobileStep] = useState(0);
   const [search, setSearch] = useState('');
   
   const hasAlerts = notifications?.length > 0;
@@ -14,12 +15,14 @@ export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav,
   const handleAuth = () => { setShowRoles(!showRoles); setSearch(''); };
   const handlePowerBtn = () => isAuth && onAuth('logout');
   const handleIdentity = (id, data) => { setShowRoles(false); onAuth(id, data); };
+  const toggleMobileRotation = () => setMobileStep((prev) => (prev + 1) % 3);
 
   return (
     <div 
-      className={`system-status-readout ${showRoles ? 'is-connected' : ''} ${isAuth ? 'is-auth' : ''}`}
+      className={`system-status-readout ${showRoles ? 'is-connected' : ''} ${isAuth ? 'is-auth' : ''} step-${mobileStep}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={window.innerWidth < 768 ? toggleMobileRotation : undefined}
     >
       <div className="system-status-bg" />
       <div className="status-display-area">
@@ -33,7 +36,7 @@ export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav,
         />
       </div>
       <button className="system-trigger terminal-glitch neural-wave" 
-        onClick={onToggleNav} style={{ '--wave-idx': 1 }}>
+        onClick={(e) => { e.stopPropagation(); onToggleNav(); }} style={{ '--wave-idx': 1 }}>
         <div className="scanline" />
         <div className={`status-dot ${hasAlerts ? 'is-alert' : 'is-idle'}`} />
       </button>

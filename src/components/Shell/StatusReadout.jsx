@@ -7,7 +7,9 @@ import { MEMBERS_DATA } from '../../data/members';
 import { getAppInfo } from '../../services/system/AppRegistry';
 
 const StatusGuest = ({ onAuth }) => (
-  <button className="t-group clickable neural-wave" onClick={onAuth} style={{ '--wave-idx': 2 }}>
+  <button className="t-group clickable neural-wave" 
+    onClick={(e) => { e.stopPropagation(); onAuth(); }} 
+    style={{ '--wave-idx': 2 }}>
     <span className="val sm scan">SYNC IN...</span>
   </button>
 );
@@ -19,7 +21,7 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth,
 
   const GuestChain = () => (
     <>
-      <div className="t-group">
+      <div className="t-group group-1">
         <div className="neural-wave" style={{ '--wave-idx': 5 }}>
           <AppIcon scan={true} style={{ width: 14, height: 14, opacity: 0.9 }} />
         </div>
@@ -35,25 +37,19 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth,
         <SystemClock />
       </div>
 
-      {hovered && (
-        <>
-          <span className="sep px-2">//</span>
-          <div className="t-group">
-            <span className="val sm dim">NIGHT CITY</span>
-            <span className="sep px-1">//</span>
-            <WeatherTelemetry />
-          </div>
-          <span className="sep px-2">//</span>
-          <StatusGuest onAuth={onToggleAuth} />
-        </>
-      )}
-
-      {!hovered && (
-        <>
+      <div className="t-group group-2">
+        <span className="sep px-2 mobile-hide">//</span>
+        <div className="mobile-hide">
+          <span className="val sm dim">NIGHT CITY</span>
           <span className="sep px-1">//</span>
-          <WeatherTelemetry />
-        </>
-      )}
+        </div>
+        <WeatherTelemetry />
+      </div>
+
+      <div className="t-group group-3">
+        <span className="sep px-2">//</span>
+        <StatusGuest onAuth={onToggleAuth} />
+      </div>
     </>
   );
 
