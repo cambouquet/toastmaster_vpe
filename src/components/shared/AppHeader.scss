@@ -6,6 +6,11 @@
   border-left: 4px solid $accent-cyan;
   background: linear-gradient(90deg, rgba(10,12,16,0.9) 0%, transparent 100%);
   
+  @include mobile {
+    padding: 80px 0 20px 20px;
+    margin-bottom: 20px;
+  }
+
   .app-id-tag {
     font-size: 0.6rem; font-family: "JetBrains Mono", monospace;
     letter-spacing: 0.3em; margin-bottom: 8px; display: flex; align-items: center;
@@ -21,6 +26,11 @@
     margin: 0; font-size: 1.8rem; letter-spacing: 0.5em; 
     font-family: "Orbitron", sans-serif; font-weight: 900;
     color: #fff; text-shadow: 0 0 15px rgba(0, 186, 196, 0.3);
+
+    @include mobile {
+      font-size: 1.2rem;
+      letter-spacing: 0.2em;
+    }
   }
 
   .stats-bar { 

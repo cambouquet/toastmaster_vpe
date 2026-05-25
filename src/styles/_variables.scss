@@ -5,6 +5,25 @@ $text-secondary: rgba(224, 250, 255, 0.3);
 $border-cyan: rgba(0, 186, 196, 0.15);
 $gradient-mutli: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(0, 255, 0, 0.05), rgba(0, 186, 196, 0.2));
 
+/* Breakpoints */
+$mobile: 480px;
+$tablet: 768px;
+$laptop: 1024px;
+$desktop: 1440px;
+
+@mixin mobile {
+  @media (max-width: #{$tablet - 1px}) { @content; }
+}
+
+@mixin tablet {
+  @media (min-width: #{$tablet}) and (max-width: #{$laptop - 1px}) { @content; }
+}
+
+@mixin vr-headset {
+  /* Wide FOV / High Resolution optimization */
+  @media (min-width: 2560px) { @content; }
+}
+
 @mixin sharp-panel {
   background: rgba(10, 12, 16, 0.85);
   backdrop-filter: blur(50px) saturate(200%);

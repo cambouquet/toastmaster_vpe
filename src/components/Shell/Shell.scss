@@ -37,6 +37,10 @@
   background: #020205; z-index: 9999;
   pointer-events: none;
   
+  @include mobile {
+    padding: 0 10px;
+  }
+
   // Re-enable pointer events for the interactive parts
   .chat-input, 
   .debug-btn-wrap, 

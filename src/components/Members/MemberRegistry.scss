@@ -7,6 +7,10 @@
 .member-registry-screen {
   padding: 0 40px; padding-bottom: 200px; height: 100vh; overflow-y: auto; background: transparent; color: $accent-cyan; font-family: "Space Grotesk", sans-serif; -ms-overflow-style: none; scrollbar-width: none; &::-webkit-scrollbar { display: none; }
   
+  @include mobile {
+    padding: 0 15px 150px;
+  }
+
   .add-member-btn {
     background: transparent; border: 1px solid $accent-cyan; color: $accent-cyan;
     font-family: "Orbitron", sans-serif; font-size: 1.2rem; padding: 4px 12px;
@@ -22,5 +26,10 @@
     padding: 10px 5px; 
     max-width: 1200px; 
     margin: 0 auto; 
+
+    @include mobile {
+      grid-template-columns: 1fr;
+      padding: 10px 0;
+    }
   }
 }
