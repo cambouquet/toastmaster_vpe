@@ -4,16 +4,16 @@
 @import "./StatusAuth";
 
 .system-status-readout {
-  position: fixed; top: 12px; right: 40px; font-family: "Space Grotesk", sans-serif;
+  position: fixed; top: 12px; left: 0; right: 40px; font-family: "Space Grotesk", sans-serif;
   z-index: 99999; display: flex; align-items: center; pointer-events: auto; height: 32px;
-  padding-left: 5px; cursor: pointer;
+  padding-left: 40px; cursor: pointer;
   box-shadow: -10px 0 30px rgba(0,0,0,0.5);
   transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   touch-action: manipulation;
   
   @include mobile {
-    right: 12px;
-    left: 0; /* Cross the header blue vertical line by starting at the absolute left */
+    right: 15px;
+    padding-left: 15px;
     background: rgba(0, 0, 0, 0.95);
     backdrop-filter: blur(15px);
     overflow: visible;
@@ -36,12 +36,12 @@
     transition: all 0.4s ease;
 
     @include mobile {
-      border-left: 4px solid $accent-cyan; /* Restoration: Make it visually cross the header line */
+      border-left: 6px solid $accent-cyan;
     }
   }
 
   .status-display-area {
-    width: 760px;
+    width: auto;
     overflow: hidden; pointer-events: auto; height: 100%; display: flex; align-items: center;
     flex: 1;
 
