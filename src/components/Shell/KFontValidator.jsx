@@ -3,10 +3,13 @@ import { KFontText } from "./KFontText";
 
 export const KFontValidator = () => {
   const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0";
-  const finalized = "ABDEFHIKJLNP RTSUZVXMWY".split("");
+  const finalized = "ABDEFHIKJLNP RTSUZVXMWY0".split("");
   const gold = "CQG".split("");
   const silver = "O".split("");
   const kId = ["K"];
+  const [testInput, setTestInput] = React.useState("TEST");
+  const [ratio, setRatio] = React.useState(0.625);
+  const [spacing, setSpacing] = React.useState(4);
   
   const getCharStyle = (char) => {
     if (char === "I") return { color: "#ffffff", border: "1px solid #ffffff", bg: "rgba(255, 255, 255, 0.1)" };
@@ -72,25 +75,87 @@ export const KFontValidator = () => {
         ))}
       </div>
 
-      {/* 3. Sample Sentence Workspace */}
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "40px", paddingBottom: "100px" }}>
-        <div style={{ textAlign: "center", width: "100%" }}>
-          <div style={{ fontSize: "10px", letterSpacing: "5px", opacity: 0.5, marginBottom: "20px" }}>FONT_STRESS_TEST_MODE</div>
-          
-          {/* Main Hero Sentence - Full Panagram */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "30px", justifyContent: "center", maxWidth: "1200px", margin: "0 auto" }}>
-            {["THE", "QUICK", "BROWN", "FOX", "JUMPS", "OVER", "THE", "LAZY", "DOG"].map((word, wIdx) => (
-              <div key={wIdx} style={{ display: "flex", gap: "4px", marginBottom: "15px" }}>
-                {word.split("").map((char, cIdx) => (
-                  <KFontText 
-                    key={char + cIdx} 
-                    text={char} 
-                    height={60} 
-                    color={getCharStyle(char).color} 
-                  />
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "60px", paddingBottom: "100px" }}>
+          {/* Test Lines */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "50px", alignItems: "center" }}>
+            {["TOASTMASTER", "KEYCLOAK SYNC", "KRONO SYSTEM"].map((line, lIdx) => (
+              <div key={lIdx} style={{ display: "flex", gap: `${spacing}px`, justifyContent: "center" }}>
+                {line.split(" ").map((word, wIdx) => (
+                  <div key={wIdx} style={{ display: "flex", gap: `${spacing}px` }}>
+                    {word.split("").map((char, cIdx) => {
+                      const baseH = lIdx === 0 ? 80 : 40;
+                      return (
+                        <div key={char + cIdx} style={{ width: `${baseH * ratio}px` }}>
+                          <KFontText 
+                            text={char} 
+                            height={baseH} 
+                            color={getCharStyle(char).color} 
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
                 ))}
               </div>
             ))}
+          </div>
+
+      {/* 4. Interactive Test Input */}
+          <div style={{ marginTop: "40px", borderTop: "1px solid rgba(0, 186, 196, 0.2)", paddingTop: "40px", width: "100%", maxWidth: "800px", display: "flex", flexWrap: "wrap", gap: "30px" }}>
+            <div style={{ flex: 1, minWidth: "300px" }}>
+              <div style={{ fontSize: "8px", letterSpacing: "3px", opacity: 0.5, marginBottom: "15px", textAlign: "left" }}>IDENTITY_STRESS_TEST (MAX_12_CHARS)</div>
+              <input 
+                type="text" 
+                maxLength={12}
+                value={testInput}
+                onChange={(e) => setTestInput(e.target.value.toUpperCase())}
+                style={{ 
+                  background: "rgba(0, 186, 196, 0.05)", 
+                  border: "1px solid rgba(0, 186, 196, 0.2)", 
+                  color: "#00bac4", 
+                  padding: "15px", 
+                  width: "100%", 
+                  fontSize: "20px", 
+                  outline: "none",
+                  letterSpacing: "4px",
+                  marginBottom: "30px",
+                  textAlign: "center"
+                }}
+              />
+            </div>
+
+            <div style={{ flex: 1, minWidth: "300px", display: "flex", flexDirection: "column", gap: "20px" }}>
+              <div style={{ borderBottom: "1px solid rgba(0,186,196,0.1)", paddingBottom: "10px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+                  <span style={{ fontSize: "8px", letterSpacing: "2px", opacity: 0.5 }}>WIDTH_RATIO: {ratio.toFixed(3)}</span>
+                  <span style={{ fontSize: "8px", color: "rgba(0,186,196,0.5)" }}>GOLD: 0.618</span>
+                </div>
+                <input 
+                  type="range" min="0.2" max="1.5" step="0.005" 
+                  value={ratio} onChange={(e) => setRatio(parseFloat(e.target.value))}
+                  style={{ width: "100%", accentColor: "#00bac4" }}
+                />
+              </div>
+
+              <div style={{ borderBottom: "1px solid rgba(0,186,196,0.1)", paddingBottom: "10px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+                  <span style={{ fontSize: "8px", letterSpacing: "2px", opacity: 0.5 }}>LETTER_SPACING: {spacing}px</span>
+                </div>
+                <input 
+                  type="range" min="-10" max="40" step="1" 
+                  value={spacing} onChange={(e) => setSpacing(parseInt(e.target.value))}
+                  style={{ width: "100%", accentColor: "#00bac4" }}
+                />
+              </div>
+            </div>
+
+            <div style={{ width: "100%", display: "flex", gap: `${spacing}px`, justifyContent: "center", minHeight: "80px", marginTop: "20px" }}>
+              {testInput.split("").map((char, idx) => (
+                <div key={idx} style={{ width: `${60 * ratio}px` }}>
+                  <KFontText text={char} height={60} color={getCharStyle(char).color} />
+                </div>
+              ))}
+            </div>
           </div>
 
           <div style={{ marginTop: "60px", display: "flex", flexWrap: "wrap", gap: "15px", justifyContent: "center" }}>
@@ -120,6 +185,5 @@ export const KFontValidator = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };

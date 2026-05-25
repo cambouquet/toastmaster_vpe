@@ -26,6 +26,7 @@
   - **Tactical In-place Editing**: Clicking an element turns it into a borderless input/dropdown; submission occurs on Blur or Enter. No explicit "Edit" icons.
   - **Transmission Pulse**: Chat input indicates data transfer via a vibrating top border animated wave.
   - **Global HUD**: Critical system status (Node, Node Count, Mode) fixed in top-right.
+- **K-Font Requirement**: All proper names, titles, and system identifiers MUST be rendered using the **K-Font**. No exceptions.
 - **Minimalism**: No scrollbars. Use `-ms-overflow-style: none`, `scrollbar-width: none`, and `::-webkit-scrollbar { display: none }`.
 
 ## 5. Communication Pattern
