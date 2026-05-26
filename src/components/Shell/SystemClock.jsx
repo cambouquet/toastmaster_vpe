@@ -33,6 +33,4 @@ export const SystemClock = () => {
     </div>
   );
 };
-    </div>
-  );
-};
+
