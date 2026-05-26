@@ -7,7 +7,7 @@
       "publicClient": true,
       "directAccessGrantsEnabled": true,
       "webOrigins": ["*"],
-      "redirectUris": ["http://localhost:1777/*"]
+      "redirectUris": ["http://localhost:1777/*", "https://k-app.tech/*"]
     }
   ],
   "roles": {
