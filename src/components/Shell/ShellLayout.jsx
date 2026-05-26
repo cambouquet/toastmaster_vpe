@@ -1,7 +1,6 @@
 import React from 'react';
 import { SyncOverlay } from './SyncOverlay';
 import { AppLoadingScreen } from './AppLoadingScreen';
-import { NavigationOverlay } from './NavigationOverlay';
 import { SystemStatus } from './SystemStatus';
 import { MainContent } from './MainContent';
 import { SystemNotification } from '../shared/SystemNotification';
