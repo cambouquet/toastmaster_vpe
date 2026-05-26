@@ -1,7 +1,7 @@
 import Keycloak from 'keycloak-js';
 import { getMockIdentity, mockLogin, mockLogout } from './MockAuth';
 
-const USE_MOCK = import.meta.env.MODE === 'development' && true; // Set to false to test Keycloak in dev
+const USE_MOCK = false; // Forced false to enable real Keycloak
 const PROD_URL = 'https://auth.k-app.tech';
 const DEV_URL = 'http://localhost:8080';
 

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { login, logout } from '../services/auth/KeycloakService';
 
 export const useAuthSync = (uiAction) => {
   const [syncProgress, setSyncProgress] = useState(0);
@@ -9,17 +10,22 @@ export const useAuthSync = (uiAction) => {
     const type = role === 'logout' ? 'out' : 'in';
     setSyncType(type);
     
+    // Virtual sync animation before real Keycloak redirect
     const interval = setInterval(() => {
-      current += Math.floor(Math.random() * 15) + 5;
+      current += Math.floor(Math.random() * 25) + 10;
       if (current >= 100) {
         clearInterval(interval);
         setSyncProgress(0);
-        if (role === 'logout') return uiAction('logout');
-        uiAction('login', role === 'addMember' ? extra : role);
+        if (role === 'logout') {
+          logout();
+          return uiAction('logout');
+        }
+        // Redirect to real Keycloak login
+        login();
       } else {
         setSyncProgress(current);
       }
-    }, 200);
+    }, 150);
   };
 
   return { syncProgress, syncType, onAuth };

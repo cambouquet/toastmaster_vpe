@@ -6,7 +6,12 @@
 
   &.guest-mode {
     display: flex; flex-direction: column; align-items: center;
-    justify-content: center; height: 100vh; position: relative; overflow: hidden;
+    justify-content: flex-start; min-height: 100vh; position: relative; overflow-y: auto;
+    padding-top: 80px;
+
+    @include mobile {
+      padding-top: 70px;
+    }
 
     .background-logo {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
