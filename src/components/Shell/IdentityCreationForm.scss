@@ -65,6 +65,30 @@
     }
   }
 
+  .password-display {
+    height: 50px; display: flex; flex-direction: column; justify-content: center;
+    .label { font-size: 0.6rem; color: $accent-cyan; letter-spacing: 2px; opacity: 0.5; }
+    .dots { font-size: 1.5rem; letter-spacing: 8px; color: #fff; font-family: monospace; }
+  }
+
+  .step-indicator {
+    display: flex; gap: 8px; justify-content: center; margin: 10px 0;
+    .dot { 
+      width: 6px; height: 6px; border: 1px solid rgba($accent-cyan, 0.3); 
+      &.active { background: $accent-cyan; box-shadow: 0 0 10px $accent-cyan; }
+    }
+  }
+
+  .action-stack {
+    display: flex; flex-direction: column; gap: 10px;
+    .back-trigger {
+      background: transparent; border: none; color: rgba(255,255,255,0.3);
+      font-size: 0.6rem; letter-spacing: 1px; cursor: pointer;
+      text-transform: uppercase;
+      &:hover { color: #fff; }
+    }
+  }
+
   .sync-trigger {
     height: 46px; background: transparent; border: 1px solid rgba($accent-cyan, 0.2);
     color: rgba($accent-cyan, 0.4); font-weight: 900; cursor: pointer;
