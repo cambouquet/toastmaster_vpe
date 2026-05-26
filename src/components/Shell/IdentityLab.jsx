@@ -41,7 +41,9 @@ export const IdentityLab = ({ state, onAuth }) => {
         )}
         {isSyncing && <div className='sync-success'><div className='success-icon'>✓</div><div className='success-text'>SYNC STABLE</div><button className='sync-trigger ready' onClick={() => onAuth('logout')}><span>TERMINATE SYNC</span></button></div>}
       </div>
-      <div className='guest-footer'>PERSONAL LINK // K-NET SYNC-77</div>
+      <div className='guest-footer'>
+        {isSyncing ? `SYNC LINK: K-APP.TECH/${user.name.toUpperCase()}` : 'K-APP.TECH/JOIN'} // NEURAL SYNC-77
+      </div>
     </div>
   );
 };
