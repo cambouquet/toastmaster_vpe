@@ -1,3 +1,7 @@
+{
+    email kami@k-app.tech
+}
+
 k-app.tech, www.k-app.tech {
     reverse_proxy app:80
 }
