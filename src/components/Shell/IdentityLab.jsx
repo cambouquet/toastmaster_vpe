@@ -13,9 +13,12 @@ export const IdentityLab = ({ state, onAuth }) => {
   const [step, setStep] = useState('alias'); // alias | password
   
   const members = state.members || [];
+  const currentUser = state.currentUser;
+  const isSyncing = currentUser?.role !== 'NONE' && currentUser?.name !== 'AUTHORIZATION REQUIRED';
   const nameTaken = members.some(m => m.name.toUpperCase() === alias.toUpperCase());
 
   const handleAuth = () => {
+    if (isSyncing) return;
     if (alias && password && !nameTaken) {
       onAuth('addMember', { 
         id: 'kid-' + Date.now(), 
@@ -29,6 +32,7 @@ export const IdentityLab = ({ state, onAuth }) => {
   };
 
   const handleKey = (char) => {
+    if (isSyncing) return;
     if (step === 'alias') {
       if (alias.length < 12) setAlias(prev => prev + char);
     } else {
@@ -37,6 +41,7 @@ export const IdentityLab = ({ state, onAuth }) => {
   };
 
   const handleBackspace = () => {
+    if (isSyncing) return;
     if (step === 'alias') setAlias(prev => prev.slice(0, -1));
     else setPassword(prev => prev.slice(0, -1));
   };
@@ -44,12 +49,18 @@ export const IdentityLab = ({ state, onAuth }) => {
   const isReady = step === 'alias' ? (alias && !nameTaken) : (password.length >= 4);
 
   return (
-    <div className='workspace-screen identity-lab guest-mode'>
+    <div className={`workspace-screen identity-lab guest-mode ${isSyncing ? 'synced' : ''}`}>
       <div className='background-logo'><Logo /></div>
 
       <div className='neural-link-bootstrap'>
         <div className='id-wordmark'>
-          {step === 'alias' ? (
+          {isSyncing ? (
+            <div className='synced-status'>
+              <div className='label'>CONNECTION_STABLE</div>
+              <KIdBrand className='brand-svg' text={currentUser?.name || "K-ID"} />
+              <div className='sub-label'>{currentUser?.role} // {currentUser?.title}</div>
+            </div>
+          ) : step === 'alias' ? (
             <KIdBrand className='brand-svg' text={alias || "K-ID"} isTaken={nameTaken} />
           ) : (
             <div className='password-display'>
@@ -59,41 +70,55 @@ export const IdentityLab = ({ state, onAuth }) => {
           )}
         </div>
 
-        <div className='step-indicator'>
-          <div className={`dot ${step === 'alias' ? 'active' : ''}`} />
-          <div className={`dot ${step === 'password' ? 'active' : ''}`} />
-        </div>
+        {!isSyncing && (
+          <>
+            <div className='step-indicator'>
+              <div className={`dot ${step === 'alias' ? 'active' : ''}`} />
+              <div className={`dot ${step === 'password' ? 'active' : ''}`} />
+            </div>
 
-        <div className='virtual-keyboard'>
-          <div className='keyboard-grid'>
-            {"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("").map(char => (
+            <div className='virtual-keyboard'>
+              <div className='keyboard-grid'>
+                {"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("").map(char => (
+                  <button 
+                    key={char} 
+                    className={`key ${step === 'alias' && nameTaken ? 'taken' : ''}`}
+                    onClick={() => handleKey(char)}
+                  >
+                    {char}
+                  </button>
+                ))}
+                <button className='key action backspace' onClick={handleBackspace}>DEL</button>
+              </div>
+            </div>
+
+            {step === 'alias' ? (
               <button 
-                key={char} 
-                className={`key ${step === 'alias' && nameTaken ? 'taken' : ''}`}
-                onClick={() => handleKey(char)}
+                className={`sync-trigger ${isReady ? 'ready' : ''}`} 
+                onClick={() => isReady && setStep('password')}
+                disabled={!isReady}
               >
-                {char}
+                <span>{nameTaken ? 'IDENTITY TAKEN' : 'SET PASSCODE'}</span>
               </button>
-            ))}
-            <button className='key action backspace' onClick={handleBackspace}>DEL</button>
-          </div>
-        </div>
+            ) : (
+              <div className='action-stack'>
+                <button className='sync-trigger ready' onClick={handleAuth}>
+                  <span>SYNC IDENTITY</span>
+                </button>
+                <button className='back-trigger' onClick={() => setStep('alias')}>
+                  REVISE ALIAS
+                </button>
+              </div>
+            )}
+          </>
+        )}
 
-        {step === 'alias' ? (
-          <button 
-            className={`sync-trigger ${isReady ? 'ready' : ''}`} 
-            onClick={() => isReady && setStep('password')}
-            disabled={!isReady}
-          >
-            <span>{nameTaken ? 'IDENTITY TAKEN' : 'SET PASSCODE'}</span>
-          </button>
-        ) : (
-          <div className='action-stack'>
-            <button className='sync-trigger ready' onClick={handleAuth}>
-              <span>SYNC IDENTITY</span>
-            </button>
-            <button className='back-trigger' onClick={() => setStep('alias')}>
-              REVISE ALIAS
+        {isSyncing && (
+          <div className='sync-success'>
+            <div className='success-icon'>✓</div>
+            <div className='success-text'>UPLINK ACTIVE</div>
+            <button className='sync-trigger ready' style={{ marginTop: '20px' }} onClick={() => onAuth('logout')}>
+              <span>TERMINATE LINK</span>
             </button>
           </div>
         )}
