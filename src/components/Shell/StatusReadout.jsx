@@ -20,6 +20,7 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth 
     <div className="status-content">
       {!isAuth ? (
         <>
+          <div className="desktop-spacer" style={{ flex: 1 }} />
           <div className="t-group group-1">
             <div className="status-item-persistent" style={{ width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {AppIcon && <AppIcon scan={true} style={{ width: 14, height: 14, opacity: 0.9 }} />}
@@ -31,7 +32,7 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth 
             <span className="sep px-1">//</span>
             <WeatherTelemetry />
           </div>
-          <div className="desktop-spacer" style={{ flex: 1 }} />
+          <div className="desktop-spacer" style={{ width: 40 }} />
           <div className="t-group group-2 action-group">
             <StatusGuest onAuth={onToggleAuth} />
           </div>

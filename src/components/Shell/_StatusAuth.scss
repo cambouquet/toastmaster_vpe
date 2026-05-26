@@ -1,30 +1,66 @@
 @import "../../styles/variables";
 
 .guest-sync-btn {
-  position: relative; background: transparent; border: none;
-  color: $accent-cyan; font-size: 0.55rem; padding: 4px 14px;
-  cursor: pointer; transition: all 0.2s; white-space: nowrap;
-  clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
-  text-shadow: 0 0 5px rgba($accent-cyan, 0.4);
-  font-weight: 700;
+  position: relative;
+  background: transparent;
+  border: none;
+  color: $accent-cyan;
+  font-size: 0.65rem;
+  padding: 4px 18px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+  white-space: nowrap;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  overflow: hidden;
+
+  // 2077 style clipped background
+  background: linear-gradient(135deg, transparent 4px, rgba($accent-cyan, 0.1) 0);
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
 
   &::before {
-    content: ''; position: absolute; inset: 0;
-    background: rgba($accent-cyan, 0.05);
-    border-left: 2px solid $accent-cyan; z-index: -1;
-    transition: all 0.2s;
+    content: 'SYNC_READY';
+    position: absolute;
+    top: 0; right: 8px;
+    font-size: 0.35rem;
+    opacity: 0.5;
+    font-weight: 400;
   }
-  
-  @include mobile {
-    padding: 8px 18px;
-    background: rgba($accent-cyan, 0.1);
-    &::before { background: rgba($accent-cyan, 0.15); border-left-width: 4px; }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: $accent-cyan;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
   }
-  
-  &:hover { 
+
+  &:hover {
     color: #fff;
-    &::before { background: rgba($accent-cyan, 0.3); }
-    box-shadow: 0 0 15px rgba($accent-cyan, 0.3);
+    background: linear-gradient(135deg, transparent 4px, rgba($accent-cyan, 0.3) 0);
+    box-shadow: 0 0 20px rgba($accent-cyan, 0.4);
+    
+    &::after {
+      transform: translateX(0);
+    }
+
+    span {
+      animation: glitch-text 0.3s infinite;
+    }
+  }
+
+  span {
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+
+  @include mobile {
+    padding: 8px 24px;
+    font-size: 0.75rem;
   }
 }
 
