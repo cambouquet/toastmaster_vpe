@@ -10,7 +10,7 @@ export const AppLauncher = ({ onSwitch }) => {
     <div className="app-launcher">
       <div className="launcher-header">
         <div className="status-line">SYSTEM STATUS: <span className="val hi">OPTIMIZED</span></div>
-        <div className="glitch-title" data-text="SELECT_UPLINK">SELECT_UPLINK</div>
+        <div className="glitch-title" data-text="ESTABLISH_UPLINK">ESTABLISH_UPLINK</div>
         <div className="subtitle">AVAILABLE NEURAL INTERFACES</div>
       </div>
 
