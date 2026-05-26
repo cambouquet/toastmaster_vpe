@@ -6,9 +6,9 @@ import { MEMBERS_DATA } from '../../data/members';
 import { getAppInfo } from '../../services/system/AppRegistry';
 
 const StatusGuest = ({ onAuth }) => (
-  <button className="guest-sync-btn neural-wave" onClick={(e) => { e.stopPropagation(); onAuth(); }}>
-    <span className="val sm scan">SYNC IN...</span>
-  </button>
+  <div className="status-guest-link pulse-cyan" onClick={(e) => { e.stopPropagation(); onAuth(); }}>
+    <span className="val sm">SYNC IN...</span>
+  </div>
 );
 
 export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth }) => {
@@ -20,7 +20,7 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth 
     <div className="status-content">
       <div className="desktop-spacer" style={{ flex: 1 }} />
       {!isAuth ? (
-        <div className="t-group group-all-right" style={{ display: 'flex', alignItems: 'center' }}>
+        <div className="t-group group-all-right">
           <div className="t-group group-1">
             <div className="status-item-persistent" style={{ width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {AppIcon && <AppIcon scan={true} style={{ width: 14, height: 14, opacity: 0.9 }} />}
@@ -38,7 +38,9 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth 
           </div>
         </div>
       ) : (
-        <StatusMeta user={user} online={online} total={MEMBERS_DATA.length} hovered={hovered} AppIcon={AppIcon} />
+        <div className="t-group group-all-right">
+          <StatusMeta user={user} online={online} total={MEMBERS_DATA.length} hovered={hovered} AppIcon={AppIcon} />
+        </div>
       )}
     </div>
   );

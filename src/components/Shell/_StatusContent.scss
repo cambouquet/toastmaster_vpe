@@ -7,6 +7,18 @@
   animation: decode-in 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
   white-space: nowrap; flex-wrap: nowrap;
 
+  .group-all-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+
+    @include mobile {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
   .app-breadcrumb {
     display: flex; align-items: center; padding: 0; height: 100%; border: none;
     margin-right: auto; flex-shrink: 0;
