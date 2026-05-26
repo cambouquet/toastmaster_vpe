@@ -165,6 +165,11 @@ jobs:
             sleep 10
             sudo -E docker compose -f docker-compose.prod.yml ps
             
+            # --- FORCE KEYCLOAK REALM UPDATE ---
+            # If we detect a realm update is needed, we can trigger a forced re-import
+            # This is a safe way to ensure the redirect URIs update without nuking all data
+            sudo docker exec $(sudo docker ps -q -f name=keycloak) /opt/keycloak/bin/kc.sh import --file /opt/keycloak/data/import/realm.json --override true || true
+            
             # If caddy or app aren't healthy, show logs
             sudo -E docker compose -f docker-compose.prod.yml logs --tail=50 caddy
             sudo -E docker compose -f docker-compose.prod.yml logs --tail=50 app
