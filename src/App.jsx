@@ -11,8 +11,11 @@ function App() {
     <div className="App">
       <div className="glitch-scanline"></div>
       <ErrorBoundary>
-        {loading && <SplashScreen onFinish={() => setLoading(false)} />}
-        <Shell />
+        {loading ? (
+          <SplashScreen onFinish={() => setLoading(false)} />
+        ) : (
+          <Shell />
+        )}
       </ErrorBoundary>
     </div>
   );
