@@ -40,7 +40,7 @@ export const IdentityLab = ({ state, onAuth }) => {
 
       <div className='neural-link-bootstrap'>
         <div className='id-wordmark'>
-          <KIdBrand className='brand-svg' text={search || "K-ID"} />
+          <KIdBrand className='brand-svg' text={search || "K-ID"} isTaken={nameTaken} />
         </div>
 
         <div className='virtual-keyboard'>
