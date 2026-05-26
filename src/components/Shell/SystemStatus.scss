@@ -30,6 +30,10 @@
     @include mobile { display: flex; }
   }
 
+  .desktop-spacer {
+    @include mobile { display: none !important; }
+  }
+
   .system-status-bg {
     position: absolute; inset: 0; background: #000; z-index: -1;
     border: 1px solid rgba($accent-cyan, 0.4); border-left: 6px solid $accent-cyan;

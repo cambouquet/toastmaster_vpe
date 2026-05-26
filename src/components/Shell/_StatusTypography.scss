@@ -9,6 +9,7 @@
   &.sm { font-size: 0.55rem; letter-spacing: 0; }
   &.scan { animation: neural-pulse 3s infinite ease-in-out both; }
   &.location-text { 
+    font-size: 0.55rem;
     @include mobile { font-size: 0.45rem; opacity: 0.3; } 
   }
 }

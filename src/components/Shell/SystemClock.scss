@@ -1,13 +1,13 @@
 @import "../../styles/variables";
 
 .system-clock {
-  display: flex; align-items: center; gap: 6px; font-family: monospace;
+  display: flex; align-items: center; gap: 4px; font-family: monospace;
   
   .clock-visual {
-    width: 12px; height: 12px; color: $accent-cyan; position: relative;
+    width: 10px; height: 10px; color: $accent-cyan; position: relative;
     cursor: default; transition: transform 0.2s;
     &:hover { 
-      transform: scale(1.2);
+      transform: scale(1.1);
       .clock-tooltip { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
     }
     

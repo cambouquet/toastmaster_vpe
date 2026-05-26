@@ -16,10 +16,12 @@ export const StatusMeta = ({ user, online, total, hovered, AppIcon }) => {
         <span className="sep px-1">//</span>
         <SystemClock />
         <span className="sep px-1">//</span>
-        <span className="val sm dim">NIGHT CITY</span>
+        <span className="val sm location-text">NIGHT CITY</span>
         <span className="sep px-1">//</span>
         <WeatherTelemetry />
       </div>
+
+      <div className="desktop-spacer" style={{ flex: 1 }} />
 
       <div className="t-group group-2 action-group">
         <div className="user-info-mini" style={{ display: 'flex', alignItems: 'center' }}>

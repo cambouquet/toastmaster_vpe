@@ -6,7 +6,7 @@ import { MEMBERS_DATA } from '../../data/members';
 import { getAppInfo } from '../../services/system/AppRegistry';
 
 const StatusGuest = ({ onAuth }) => (
-  <button className="clickable neural-wave guest-sync-btn" onClick={(e) => { e.stopPropagation(); onAuth(); }}>
+  <button className="guest-sync-btn neural-wave" onClick={(e) => { e.stopPropagation(); onAuth(); }}>
     <span className="val sm scan">SYNC IN...</span>
   </button>
 );
@@ -27,10 +27,11 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth 
             <span className="sep px-2">//</span>
             <SystemClock />
             <span className="sep px-1">//</span>
-            <span className="val sm dim location-text">NIGHT CITY</span>
+            <span className="val sm location-text">NIGHT CITY</span>
             <span className="sep px-1">//</span>
             <WeatherTelemetry />
           </div>
+          <div className="desktop-spacer" style={{ flex: 1 }} />
           <div className="t-group group-2 action-group">
             <StatusGuest onAuth={onToggleAuth} />
           </div>
