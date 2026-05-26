@@ -21,7 +21,7 @@ export const StatusMeta = ({ user, online, total, hovered, AppIcon }) => {
         <WeatherTelemetry />
       </div>
 
-      <div className="desktop-spacer" style={{ flex: 1 }} />
+      <div className="desktop-spacer" style={{ width: 40 }} />
 
       <div className="t-group group-2 action-group">
         <div className="user-info-mini" style={{ display: 'flex', alignItems: 'center' }}>
