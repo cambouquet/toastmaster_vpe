@@ -97,6 +97,11 @@ jobs:
               sudo usermod -aG docker $USER
             fi
             
+            # Force bypass local DNS stub to fix Docker resolution
+            sudo rm -f /etc/resolv.conf
+            echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+            echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf
+
             # Fix Docker naming/discovery and DNS
             if [ ! -f /etc/docker/daemon.json ]; then
               echo '{"dns": ["8.8.8.8", "1.1.1.1"]}' | sudo tee /etc/docker/daemon.json
