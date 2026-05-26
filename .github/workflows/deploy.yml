@@ -97,6 +97,12 @@ jobs:
               sudo usermod -aG docker $USER
             fi
             
+            # Set up Docker DNS and networking
+            if [ ! -f /etc/docker/daemon.json ]; then
+              echo '{"dns": ["8.8.8.8", "8.8.4.4"]}' | sudo tee /etc/docker/daemon.json
+              sudo systemctl restart docker
+            fi
+
             mkdir -p ~/app
             cd ~/app
             
