@@ -1,7 +1,9 @@
 export class AgentService {
   static async streamFromMockAgent(text, onStream) {
     try {
-      const res = await fetch('http://localhost:3001/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text }) });
+      const isProd = window.location.hostname !== 'localhost';
+      const baseUrl = isProd ? '' : 'http://localhost:3001';
+      const res = await fetch(`${baseUrl}/chat`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text }) });
       if (!res.ok) return { subtitle: `Agent Error: ${res.status}` };
       const reader = res.body.getReader(), dec = new TextDecoder();
       let last = { subtitle: "Connecting..." };
