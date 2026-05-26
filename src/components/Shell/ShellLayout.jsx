@@ -9,7 +9,7 @@ import { Subtitles } from '../Agent/messaging/Subtitles';
 import { ChatInput } from '../Agent/input/ChatInput';
 import { DebugPanel } from '../shared/DebugPanel';
 import { HealthService } from '../../services/system/HealthService';
-import { getAppInfo } from '../../services/system/AppRegistry';
+import { getAppInfo } from '../../services/system/AppRegistry.jsx';
 
 export const ShellLayout = ({ state, props, handlers, flags }) => {
   const appInfo = getAppInfo(state.currentApp);

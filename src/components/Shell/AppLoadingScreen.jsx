@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Logo } from './Logo';
-import { getAppInfo } from '../../services/system/AppRegistry';
+import { getAppInfo } from '../../services/system/AppRegistry.jsx';
 import './AppLoadingScreen.scss';
 
 export const AppLoadingScreen = ({ app, onFinish, isInitial = false }) => {

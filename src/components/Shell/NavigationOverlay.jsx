@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavGridItem } from './NavGridItem';
-import { APPS } from '../../services/system/AppRegistry';
+import { APPS } from '../../services/system/AppRegistry.jsx';
 import './NavigationOverlay.scss';
 
 const DEFAULT_ORDER = ['toastmaster', 'identity-lab', 'font-lab'];

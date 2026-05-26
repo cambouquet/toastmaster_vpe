@@ -3,7 +3,7 @@ import { StatusMeta } from './StatusMeta';
 import { SystemClock } from './SystemClock';
 import { WeatherTelemetry } from './WeatherTelemetry';
 import { MEMBERS_DATA } from '../../data/members';
-import { getAppInfo } from '../../services/system/AppRegistry';
+import { getAppInfo } from '../../services/system/AppRegistry.jsx';
 
 const StatusGuest = ({ onAuth }) => (
   <div className="status-guest-link pulse-cyan" onClick={(e) => { e.stopPropagation(); onAuth(); }}>

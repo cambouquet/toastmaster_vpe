@@ -1,6 +1,6 @@
 import React from 'react';
 import { KFontText } from './KFontText';
-import { getAppInfo } from '../../services/system/AppRegistry';
+import { getAppInfo } from '../../services/system/AppRegistry.jsx';
 
 export const NavGridItem = ({ id, label, status, active, locked, beta, children, onClick }) => {
   const app = getAppInfo(id);
