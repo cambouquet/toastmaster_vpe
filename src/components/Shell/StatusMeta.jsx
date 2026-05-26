@@ -16,7 +16,7 @@ export const StatusMeta = ({ user, online, total, hovered, AppIcon }) => {
         <span className="sep px-1">//</span>
         <SystemClock />
         <span className="sep px-1">//</span>
-        <span className="val sm location-text">NIGHT CITY</span>
+        <span className="val sm location-text">ANTIBES</span>
         <span className="sep px-1">//</span>
         <WeatherTelemetry />
       </div>

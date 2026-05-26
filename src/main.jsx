@@ -5,10 +5,8 @@ import { initKeycloak } from './services/auth/KeycloakService'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-initKeycloak(() => {
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
-});
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);

@@ -29,7 +29,7 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth 
               <span className="sep px-2">//</span>
               <SystemClock />
               <span className="sep px-1">//</span>
-              <span className="val sm location-text">NIGHT CITY</span>
+              <span className="val sm location-text">ANTIBES</span>
               <span className="sep px-1">//</span>
               <WeatherTelemetry />
             </div>

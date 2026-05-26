@@ -5,13 +5,27 @@ import './SplashScreen.scss';
 export const SplashScreen = ({ onFinish }) => {
   const [role, setRole] = useState('WARRIOR');
   const [displayRole, setDisplayRole] = useState('WARRIOR');
-  const [phase, setPhase] = useState('entering'); 
+  const [phase, setPhase] = useState('booting'); // booting -> logo -> motto -> cycling -> footer -> exiting
 
   useEffect(() => {
+    const sequence = [
+      { p: 'logo', d: 800 },
+      { p: 'motto', d: 1600 },
+      { p: 'cycling', d: 2400 },
+      { p: 'footer', d: 4200 },
+      { p: 'exiting', d: 5200 },
+      { p: 'complete', d: 6000 }
+    ];
+
+    sequence.forEach(({ p, d }) => {
+      setTimeout(() => {
+        if (p === 'complete') onFinish();
+        else setPhase(p);
+      }, d);
+    });
+
     const roles = ['WARRIOR', 'WOMAN', 'HUMAN'];
     let roleIdx = 0;
-
-    const t1 = setTimeout(() => setPhase('cycling'), 800);
 
     const roleTimer = setInterval(() => {
       if (roleIdx < roles.length - 1) {
@@ -34,30 +48,18 @@ export const SplashScreen = ({ onFinish }) => {
           if (iterations >= nextRole.length) clearInterval(scrambleInterval);
           iterations += 1/3;
         }, 30);
+      } else {
+        clearInterval(roleTimer);
       }
-    }, 900);
-
-    const t2 = setTimeout(() => {
-      clearInterval(roleTimer);
-      setRole('HUMAN');
-      setDisplayRole('HUMAN');
-      setPhase('exiting');
-    }, 3800);
-
-    const t3 = setTimeout(() => {
-      onFinish();
-    }, 4600);
+    }, 1000);
 
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
       clearInterval(roleTimer);
     };
   }, [onFinish]);
 
   return (
-    <div className={`splash-screen ${phase}`}>
+    <div className={`splash-screen phase-${phase}`}>
       <div className="scanner-line" />
       <div className="vignette" />
       

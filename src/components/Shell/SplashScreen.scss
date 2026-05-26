@@ -30,6 +30,9 @@
     position: relative;
     width: 180px; height: 180px;
     filter: drop-shadow(0 0 20px rgba($accent-cyan, 0.3));
+    opacity: 0;
+    transition: all 0.5s ease-out;
+    transform: scale(0.8);
   }
 
   .motto-container {
@@ -38,18 +41,25 @@
     text-align: left;
     border-left: 4px solid #fcee0a;
     padding-left: 30px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
     
     .line-1 { 
-      font-size: 3.5rem; color: #fff; margin-bottom: -10px; opacity: 0; 
-      animation: reveal-left 0.4s forwards 0.4s; 
+      font-size: 3.5rem; color: #fff; margin-bottom: -10px; 
       letter-spacing: -2px;
       font-weight: 800;
       line-height: 1;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.4s ease-out;
     }
     .line-2 { 
       font-size: 1.8rem; color: #fcee0a; margin-bottom: 20px;
       letter-spacing: 2px;
       font-weight: 400;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.4s ease-out 0.2s;
       
       .highlight { 
         color: #000;
@@ -64,17 +74,21 @@
       }
     }
     .line-3 { 
-      font-size: 0.7rem; color: rgba(255,255,255, 0.4); opacity: 0; 
-      animation: reveal-left 0.4s forwards 0.8s; 
+      font-size: 0.7rem; color: rgba(255,255,255, 0.4); 
       letter-spacing: 5px;
       font-weight: 300;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.4s ease-out 0.4s;
     }
   }
 
   .system-footer {
     position: absolute; bottom: 40px; right: 40px;
     display: flex; flex-direction: column; align-items: flex-end;
-    opacity: 0; animation: reveal 0.5s forwards 1.2s;
+    opacity: 0;
+    transition: all 0.8s ease-out;
+    transform: translateY(20px);
     
     .text { 
       font-size: 0.6rem; color: #fcee0a; font-weight: 900; 
@@ -88,12 +102,26 @@
     }
   }
 
-  &.cycling {
-    .logo-glitch-container .glitch-copy { animation: micro-glitch 0.2s infinite; }
+  // Phase reveals
+  &.phase-logo, &.phase-motto, &.phase-cycling, &.phase-footer, &.phase-exiting {
+    .logo-glitch-container { opacity: 1; transform: scale(1); }
   }
 
-  &.exiting {
-    opacity: 0; transform: scale(1.1); transition: all 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+  &.phase-motto, &.phase-cycling, &.phase-footer, &.phase-exiting {
+    .motto-container { opacity: 1; }
+    .line-1, .line-2, .line-3 { opacity: 1; transform: translateX(0); }
+  }
+
+  &.phase-cycling {
+    .logo-glitch-container { animation: micro-glitch 0.2s infinite; }
+  }
+
+  &.phase-footer, &.phase-exiting {
+    .system-footer { opacity: 1; transform: translateY(0); }
+  }
+
+  &.phase-exiting {
+    opacity: 0; transform: scale(1.05); transition: all 1s cubic-bezier(0.7, 0, 0.3, 1);
   }
 }
 
