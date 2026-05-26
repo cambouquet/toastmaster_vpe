@@ -18,9 +18,9 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth 
 
   return (
     <div className="status-content">
+      <div className="desktop-spacer" style={{ flex: 1 }} />
       {!isAuth ? (
-        <>
-          <div className="desktop-spacer" style={{ flex: 1 }} />
+        <div className="t-group group-all-right" style={{ display: 'flex', alignItems: 'center' }}>
           <div className="t-group group-1">
             <div className="status-item-persistent" style={{ width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {AppIcon && <AppIcon scan={true} style={{ width: 14, height: 14, opacity: 0.9 }} />}
@@ -36,7 +36,7 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth 
           <div className="t-group group-2 action-group">
             <StatusGuest onAuth={onToggleAuth} />
           </div>
-        </>
+        </div>
       ) : (
         <StatusMeta user={user} online={online} total={MEMBERS_DATA.length} hovered={hovered} AppIcon={AppIcon} />
       )}
