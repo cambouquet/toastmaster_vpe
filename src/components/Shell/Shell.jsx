@@ -19,10 +19,10 @@ export const Shell = () => {
       props={{ syncProgress, syncType, notifications, subtitle, logs }}
       handlers={{ 
         uiAction, onAuth, interact, dismiss, clearLogs,
-        toggleNav: () => setShowNav(!showNav),
+        toggleNav: () => uiAction('SWITCH_APP', 'launcher'),
         toggleDebug: () => setShowDebug(!showDebug)
       }}
-      flags={{ showNav, showDebug }}
+      flags={{ showNav: false, showDebug }}
     />
   );
 };

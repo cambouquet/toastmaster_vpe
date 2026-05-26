@@ -8,7 +8,7 @@ import { AppLauncher } from './AppLauncher';
 
 export const MainContent = ({ isWorkspace, state, uiAction, onAuth }) => {
   if (state.currentApp === 'launcher') {
-    return <AppLauncher onSwitch={(appId) => uiAction('SWITCH_APP', appId)} />;
+    return <AppLauncher currentApp={state.currentApp} onSwitch={(appId) => uiAction('SWITCH_APP', appId)} />;
   }
 
   if (state.currentApp === 'identity-lab' || state.currentApp === 'mission-control') {

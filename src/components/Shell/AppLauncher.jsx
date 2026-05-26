@@ -3,9 +3,9 @@ import { NavGridItem } from './NavGridItem';
 import { APPS } from '../../services/system/AppRegistry.jsx';
 import './AppLauncher.scss';
 
-const DEFAULT_ORDER = ['toastmaster', 'identity-lab', 'font-lab', 'mission-control'];
+const DEFAULT_ORDER = ['launcher', 'toastmaster', 'identity-lab', 'font-lab', 'mission-control'];
 
-export const AppLauncher = ({ onSwitch }) => {
+export const AppLauncher = ({ currentApp, onSwitch }) => {
   return (
     <div className="app-launcher">
       <div className="launcher-header">
@@ -18,13 +18,15 @@ export const AppLauncher = ({ onSwitch }) => {
         {DEFAULT_ORDER.map(appId => {
           const app = APPS[appId];
           const Icon = app.Icon;
+          const isActive = currentApp === appId;
+          
           return (
             <NavGridItem 
               key={appId}
               id={appId} 
               label={app.name} 
-              active={false}
-              status="STANDBY"
+              active={isActive}
+              status={isActive ? 'ACTIVE LINK' : 'STANDBY'}
               onClick={() => onSwitch(appId)}
             >
               <div className="app-icon-container">
