@@ -39,9 +39,9 @@ export const IdentityLab = ({ state, onAuth }) => {
             <IdentityLabActions step={step} nameTaken={nameTaken} isReady={step === 'alias' ? (alias && !nameTaken) : (password.length >= 4)} onStep={setStep} onAuth={handleAuth} />
           </>
         )}
-        {isSyncing && <div className='sync-success'><div className='success-icon'>✓</div><div className='success-text'>UPLINK_STABLE</div><button className='sync-trigger ready' onClick={() => onAuth('logout')}><span>DISCONNECT_UPLINK</span></button></div>}
+        {isSyncing && <div className='sync-success'><div className='success-icon'>✓</div><div className='success-text'>CONNECTION_STABLE</div><button className='sync-trigger ready' onClick={() => onAuth('logout')}><span>TERMINATE_CONNECTION</span></button></div>}
       </div>
-      <div className='guest-footer'>NEURAL_LINK // BOOTSTRAP_PROTOCOL_v4.2</div>
+      <div className='guest-footer'>PERSONAL_LINK // K-NET_UPLINK_77</div>
     </div>
   );
 };

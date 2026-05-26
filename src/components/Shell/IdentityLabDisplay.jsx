@@ -4,7 +4,7 @@ import { KIdBrand } from './KIdBrand';
 export const IdentityLabDisplay = ({ isSyncing, user, step, alias, password, nameTaken }) => {
   if (isSyncing) return (
     <div className='synced-status'>
-      <div className='label'>UPLINK_ESTABLISHED</div>
+      <div className='label'>NEURAL_SYNC_ACTIVE</div>
       <KIdBrand className='brand-svg' text={user?.name || "K-ID"} />
       <div className='sub-label'>{user?.role} // {user?.title}</div>
     </div>
