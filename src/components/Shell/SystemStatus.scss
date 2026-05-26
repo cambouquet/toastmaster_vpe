@@ -51,25 +51,7 @@
       flex: 1;
       height: 100%;
       overflow: visible;
-    }
-  }
-
-  .status-item-persistent {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .status-rotation-viewport {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-
-    @include mobile {
-      overflow: visible;
+      position: relative;
     }
   }
 
@@ -93,7 +75,6 @@
 
     &.step-0 .group-1 { opacity: 1 !important; transform: none !important; pointer-events: auto; }
     &.step-1 .group-2 { opacity: 1 !important; transform: none !important; pointer-events: auto; }
-    &.step-2 .group-3 { opacity: 1 !important; transform: none !important; pointer-events: auto; }
   }
 
   &.is-connected,

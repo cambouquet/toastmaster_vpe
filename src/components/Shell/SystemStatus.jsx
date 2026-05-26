@@ -16,7 +16,7 @@ export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav,
     const checkRotation = () => {
       if (window.innerWidth < 768) {
         return setInterval(() => {
-          setMobileStep((prev) => (prev + 1) % 3);
+          setMobileStep((prev) => (prev + 1) % 2);
         }, 5000);
       }
     };

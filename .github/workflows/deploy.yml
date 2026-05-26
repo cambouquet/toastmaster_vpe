@@ -98,11 +98,15 @@ jobs:
             IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
             echo "APP_IMAGE=${IMAGE_NAME}:main" > .env
             
-            # Clean up potential port 80/443 blockers
+            # Install necessary tools for port management
+            sudo apt-get update && sudo apt-get install -y psmisc
+            
+            # Clean up potential port blockers
             sudo systemctl stop nginx || true
             sudo systemctl disable nginx || true
             sudo fuser -k 80/tcp || true
             sudo fuser -k 443/tcp || true
+            sudo fuser -k 8080/tcp || true
             
             # Ensure Firewall allows traffic
             if command -v ufw &> /dev/null; then
@@ -113,5 +117,10 @@ jobs:
               sudo ufw --force enable
             fi
             
+            sudo docker compose -f docker-compose.prod.yml down --remove-orphans || true
             sudo docker compose -f docker-compose.prod.yml pull
             sudo docker compose -f docker-compose.prod.yml up -d
+            
+            # Verify status
+            sleep 5
+            sudo docker compose -f docker-compose.prod.yml ps
