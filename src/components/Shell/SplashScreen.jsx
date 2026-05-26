@@ -4,7 +4,8 @@ import './SplashScreen.scss';
 
 export const SplashScreen = ({ onFinish }) => {
   const [role, setRole] = useState('WARRIOR');
-  const [phase, setPhase] = useState('entering'); // entering, cycling, exiting
+  const [displayRole, setDisplayRole] = useState('WARRIOR');
+  const [phase, setPhase] = useState('entering'); 
 
   useEffect(() => {
     const roles = ['WARRIOR', 'WOMAN', 'HUMAN'];
@@ -15,19 +16,37 @@ export const SplashScreen = ({ onFinish }) => {
     const roleTimer = setInterval(() => {
       if (roleIdx < roles.length - 1) {
         roleIdx++;
-        setRole(roles[roleIdx]);
+        const nextRole = roles[roleIdx];
+        setRole(nextRole);
+        
+        // Scramble effect
+        let iterations = 0;
+        const chars = '!@#$%^&*()_+{}[]|;:,.<>?';
+        const scrambleInterval = setInterval(() => {
+          setDisplayRole(
+            nextRole.split("")
+              .map((char, index) => {
+                if (index < iterations) return nextRole[index];
+                return chars[Math.floor(Math.random() * chars.length)];
+              })
+              .join("")
+          );
+          if (iterations >= nextRole.length) clearInterval(scrambleInterval);
+          iterations += 1/3;
+        }, 30);
       }
-    }, 700);
+    }, 900);
 
     const t2 = setTimeout(() => {
       clearInterval(roleTimer);
       setRole('HUMAN');
+      setDisplayRole('HUMAN');
       setPhase('exiting');
-    }, 3200);
+    }, 3800);
 
     const t3 = setTimeout(() => {
       onFinish();
-    }, 4000);
+    }, 4600);
 
     return () => {
       clearTimeout(t1);
@@ -52,7 +71,7 @@ export const SplashScreen = ({ onFinish }) => {
         <div className="motto-container">
           <div className="line-1">THE LIFE GAME</div>
           <div className="line-2">
-            BECOME THE <span className="highlight">{role}</span>
+            BECOME THE <span className="highlight" data-text={displayRole}>{displayRole}</span>
           </div>
           <div className="line-3">YOU'RE MEANT TO BE</div>
         </div>
