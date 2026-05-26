@@ -18,58 +18,74 @@
   }
 
   .splash-content {
-    position: relative; text-align: center;
-    display: flex; flex-direction: column; align-items: center;
+    position: relative;
+    display: flex;
+    flex-direction: row; // Side-by-side logo and text
+    align-items: center;
+    gap: 60px;
+    padding: 40px;
   }
 
   .logo-glitch-container {
-    position: relative; margin-bottom: 60px;
-    width: 140px; height: 140px;
-    
-    .glitch-copy {
-      position: absolute; top: 0; left: 0; opacity: 0;
-      &.g1 { color: #ff0044; transform: translate(-2px, 0); }
-      &.g2 { color: $accent-cyan; transform: translate(2px, 0); }
-    }
+    position: relative;
+    width: 180px; height: 180px;
+    filter: drop-shadow(0 0 20px rgba($accent-cyan, 0.3));
   }
 
   .motto-container {
-    font-family: inherit; font-weight: 900; letter-spacing: 8px;
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    text-transform: uppercase;
+    text-align: left;
+    border-left: 4px solid #fcee0a;
+    padding-left: 30px;
     
-    .line-1 { font-size: 2.2rem; color: #fff; margin-bottom: 10px; opacity: 0; animation: reveal 0.4s forwards 0.5s; }
+    .line-1 { 
+      font-size: 3.5rem; color: #fff; margin-bottom: -10px; opacity: 0; 
+      animation: reveal-left 0.4s forwards 0.4s; 
+      letter-spacing: -2px;
+      font-weight: 800;
+      line-height: 1;
+    }
     .line-2 { 
-      font-size: 1.4rem; color: rgba($accent-cyan, 0.8); margin-bottom: 8px;
-      font-family: 'Courier New', Courier, monospace; // Data-driven font
+      font-size: 1.8rem; color: #fcee0a; margin-bottom: 20px;
+      letter-spacing: 2px;
+      font-weight: 400;
       
       .highlight { 
-        color: #fff; text-shadow: 0 0 15px #fff; 
-        position: relative; display: inline-block;
-        min-width: 140px; text-decoration: none;
-
-        &::before, &::after {
-          content: attr(data-text);
-          position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-          background: #000; clip: rect(0, 0, 0, 0); 
-        }
-
-        &::before {
-          left: -2px; text-shadow: 2px 0 #ff0044;
-          animation: glitch-anim-1 2s infinite linear alternate-reverse;
-        }
-        &::after {
-          left: 2px; text-shadow: -2px 0 $accent-cyan;
-          animation: glitch-anim-2 3s infinite linear alternate-reverse;
-        }
+        color: #000;
+        background: #fcee0a;
+        padding: 0 8px;
+        margin-left: 5px;
+        font-weight: 900;
+        box-shadow: 4px 4px 0 rgba(255,255,255,0.2);
+        display: inline-block;
+        min-width: 140px;
+        text-align: center;
       }
     }
-    .line-3 { font-size: 0.9rem; color: rgba($accent-cyan, 0.6); opacity: 0; animation: reveal 0.4s forwards 0.8s; }
+    .line-3 { 
+      font-size: 0.7rem; color: rgba(255,255,255, 0.4); opacity: 0; 
+      animation: reveal-left 0.4s forwards 0.8s; 
+      letter-spacing: 5px;
+      font-weight: 300;
+    }
   }
 
   .system-footer {
-    position: absolute; bottom: 40px; display: flex; align-items: center; gap: 20px;
+    position: absolute; bottom: 40px; right: 40px;
+    display: flex; flex-direction: column; align-items: flex-end;
     opacity: 0; animation: reveal 0.5s forwards 1.2s;
-    .rect { width: 40px; height: 1px; background: $accent-cyan; opacity: 0.4; }
-    .text { font-size: 0.6rem; color: $accent-cyan; letter-spacing: 3px; font-family: monospace; }
+    
+    .text { 
+      font-size: 0.6rem; color: #fcee0a; font-weight: 900; 
+      letter-spacing: 2px; font-family: monospace; 
+      background: #000; padding: 2px 10px;
+      border-right: 3px solid #fcee0a;
+    }
+    .sub-text {
+      font-size: 0.5rem; color: rgba(255,255,255,0.3);
+      margin-top: 5px; letter-spacing: 1px;
+    }
   }
 
   &.cycling {
@@ -83,6 +99,7 @@
 
 @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
 @keyframes reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes reveal-left { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes micro-glitch {
   0% { opacity: 0.5; transform: translate(-2px, 1px); }
   50% { opacity: 0; transform: translate(2px, -1px); }

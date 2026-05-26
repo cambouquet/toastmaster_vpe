@@ -64,22 +64,19 @@ export const SplashScreen = ({ onFinish }) => {
       <div className="splash-content">
         <div className="logo-glitch-container">
           <Logo />
-          <div className="glitch-copy g1"><Logo /></div>
-          <div className="glitch-copy g2"><Logo /></div>
         </div>
 
         <div className="motto-container">
           <div className="line-1">THE LIFE GAME</div>
           <div className="line-2">
-            BECOME THE <span className="highlight" data-text={displayRole}>{displayRole}</span>
+            BECOME THE <span className="highlight">{displayRole}</span>
           </div>
           <div className="line-3">YOU'RE MEANT TO BE</div>
         </div>
 
         <div className="system-footer">
-          <div className="rect" />
           <div className="text">STREET_LEVEL // PROTOCOL_K</div>
-          <div className="rect" />
+          <div className="sub-text">DATA_SYNC: ACTIVE // ACCESS_GRANTED</div>
         </div>
       </div>
     </div>
