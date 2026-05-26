@@ -24,7 +24,7 @@ export const INITIAL_STATE = {
       { id: 3, name: '', title: '', evaluator: '' }
     ]
   },
-  currentApp: 'toastmaster',
+  currentApp: 'launcher',
   currentScreen: 'workspace',
   members: MEMBERS_DATA
 };

@@ -4,8 +4,13 @@ import { MemberRegistry } from '../Members/MemberRegistry';
 import { IdentityLab } from './IdentityLab';
 import { KFontValidator } from './KFontValidator';
 import { FontLab } from './FontLab';
+import { AppLauncher } from './AppLauncher';
 
 export const MainContent = ({ isWorkspace, state, uiAction, onAuth }) => {
+  if (state.currentApp === 'launcher') {
+    return <AppLauncher onSwitch={(appId) => uiAction('SWITCH_APP', appId)} />;
+  }
+
   if (state.currentApp === 'identity-lab' || state.currentApp === 'mission-control') {
     return <IdentityLab state={state} uiAction={uiAction} onAuth={onAuth} />;
   }
