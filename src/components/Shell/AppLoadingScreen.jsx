@@ -31,9 +31,11 @@ export const AppLoadingScreen = ({ app, onFinish, isInitial = false }) => {
       <div className="glitch-bg" />
       <div className="loading-content">
         <div className="sigil-pair">
-          <Logo style={{ width: '80px', height: '80px' }} />
+          <div className="primary-logo-wrap">
+            <Logo />
+          </div>
           <div className="sigil-sep">//</div>
-          <div className="loading-icon-wrap">
+          <div className="app-logo-wrap">
             <AppIcon />
           </div>
         </div>

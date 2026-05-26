@@ -11,29 +11,36 @@
   }
   .loading-content { position: relative; text-align: center; width: 400px; }
   .sigil-pair {
-    display: flex; align-items: center; justify-content: center; gap: 24px;
+    display: flex; align-items: center; justify-content: center; gap: 32px;
     margin-bottom: 35px; color: $accent-cyan;
     
-    .loading-icon-wrap {
+    .primary-logo-wrap {
       width: 80px; height: 80px;
       display: flex; align-items: center; justify-content: center;
       animation: pulse-glow 2s infinite ease-in-out;
+      
+      div, svg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+      svg { object-fit: contain; }
+    }
 
-      svg, div { width: 100%; height: 100%; object-fit: contain; }
+    .app-logo-wrap {
+      width: 60px; height: 60px;
+      display: flex; align-items: center; justify-content: center;
+      animation: pulse-glow 2s infinite ease-in-out;
+      animation-delay: -1s;
+      opacity: 0.8;
+
+      div, svg { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+      svg { object-fit: contain; }
       
       &.logo-tm-wrap {
         color: #fff; filter: drop-shadow(0 0 5px rgba(#fff, 0.4));
-        animation-delay: -1s;
       }
     }
 
-    .logo-core-wrap, .logo-tm-wrap {
-      display: none; // Old classes replaced by .loading-icon-wrap logic
-    }
-
     .sigil-sep {
-      font-size: 2rem; font-weight: 100; opacity: 0.2;
-      line-height: 1;
+      font-size: 1.5rem; font-weight: 100; opacity: 0.2;
+      line-height: 1; display: flex; align-items: center;
     }
   }
   .hud-line {
