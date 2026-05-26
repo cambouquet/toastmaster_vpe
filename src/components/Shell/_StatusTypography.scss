@@ -8,6 +8,9 @@
   &.dim { opacity: 0.4; font-weight: 300; }
   &.sm { font-size: 0.55rem; letter-spacing: 0; }
   &.scan { animation: neural-pulse 3s infinite ease-in-out both; }
+  &.location-text { 
+    @include mobile { font-size: 0.45rem; opacity: 0.3; } 
+  }
 }
 
 .lbl { 

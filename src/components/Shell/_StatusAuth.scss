@@ -1,5 +1,21 @@
 @import "../../styles/variables";
 
+.guest-sync-btn {
+  background: transparent; border: 1px solid rgba($accent-cyan, 0.4);
+  color: $accent-cyan; font-size: 0.55rem; padding: 2px 8px;
+  cursor: pointer; transition: all 0.2;
+  white-space: nowrap;
+  
+  @include mobile {
+    padding: 6px 12px;
+    background: rgba($accent-cyan, 0.1);
+    border-color: $accent-cyan;
+    font-weight: 700;
+  }
+  
+  &:hover { background: rgba($accent-cyan, 0.2); }
+}
+
 .auth-wrap { 
   position: relative; width: 32px; height: 32px; flex-shrink: 0; 
   display: flex; align-items: center; justify-content: center;

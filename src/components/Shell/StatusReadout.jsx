@@ -1,24 +1,18 @@
 import React from 'react';
-import { KFontText } from './KFontText';
 import { StatusMeta } from './StatusMeta';
 import { SystemClock } from './SystemClock';
 import { WeatherTelemetry } from './WeatherTelemetry';
-import { NetworkSignal } from './NetworkSignal';
-import { MessagingTelemetry } from './MessagingTelemetry';
 import { MEMBERS_DATA } from '../../data/members';
 import { getAppInfo } from '../../services/system/AppRegistry';
 
 const StatusGuest = ({ onAuth }) => (
-  <button className="t-group clickable neural-wave" 
-    onClick={(e) => { e.stopPropagation(); onAuth(); }} 
-    style={{ '--wave-idx': 2 }}>
+  <button className="clickable neural-wave guest-sync-btn" onClick={(e) => { e.stopPropagation(); onAuth(); }}>
     <span className="val sm scan">SYNC IN...</span>
   </button>
 );
 
-export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth, onToggleNav }) => {
+export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth }) => {
   const online = MEMBERS_DATA.filter(m => m.status === 'ONLINE').length;
-  const total = MEMBERS_DATA.length;
   const appInfo = getAppInfo(currentApp);
   const AppIcon = appInfo?.Icon;
 
@@ -27,42 +21,22 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth,
       {!isAuth ? (
         <>
           <div className="t-group group-1">
-            <span className="val sm">GUEST</span>
-            <span className="sep px-2">//</span>
-            <NetworkSignal online={online} offline={total - online} />
-            <span className="sep px-2">//</span>
-            <MessagingTelemetry unreadCount={0} />
-          </div>
-
-          <div className="t-group group-2">
             <div className="status-item-persistent" style={{ width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {AppIcon && <AppIcon scan={true} style={{ width: 14, height: 14, opacity: 0.9 }} />}
             </div>
             <span className="sep px-2">//</span>
-            <div style={{ marginRight: 6 }}>
-              <KFontText 
-                text={appInfo?.name || 'APP'} 
-                height={8} 
-                color={currentApp === 'toastmaster' ? appInfo?.themeColor : '#ffffff'} 
-                firstLetterColor={appInfo?.themeColor}
-              />
-            </div>
-            <span className="sep px-2">//</span>
             <SystemClock />
-            <span className="sep px-2">//</span>
-            <span className="val sm dim">NIGHT CITY</span>
+            <span className="sep px-1">//</span>
+            <span className="val sm dim location-text">NIGHT CITY</span>
             <span className="sep px-1">//</span>
             <WeatherTelemetry />
           </div>
+          <div className="t-group group-2 action-group">
+            <StatusGuest onAuth={onToggleAuth} />
+          </div>
         </>
       ) : (
-        <StatusMeta 
-          user={user} 
-          online={online} 
-          total={total} 
-          hovered={hovered} 
-          AppIcon={AppIcon}
-        />
+        <StatusMeta user={user} online={online} total={MEMBERS_DATA.length} hovered={hovered} AppIcon={AppIcon} />
       )}
     </div>
   );

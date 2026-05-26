@@ -21,7 +21,7 @@ export const handleUiActions = (action, val, state) => {
   if (action === "RUN_DIAG") return { subtitle: "Diagnostics complete." };
   if (action === "DUMP_LOGS") return { subtitle: "Logs dumped to clipboard." };
   if (action === "TOGGLE_DEBUG") return { subtitle: `Kernel debugger ${val ? 'active' : 'idle'}.` };
-  if (action === "ADD_MEMBER_REQUEST") return { subtitle: "Register members via Mission Control." };
+  if (action === "ADD_MEMBER_REQUEST") return { subtitle: "Register members via Identity Lab." };
   const flat = ["theme", "date", "location", "room", "registrationLink", "mapUrl", "zoomLink", "wordOfTheDay", "wordDefinition"];
   if (flat.includes(action)) return { subtitle: `${action} updated.`, newState: { [action]: val } };
   if (action.startsWith('roles.')) {

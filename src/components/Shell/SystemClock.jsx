@@ -25,9 +25,14 @@ export const SystemClock = () => {
         <Gauge p={pr(now.getSeconds(), 60)} t={`SEC: ${now.getSeconds()}`} />
         <Gauge p={pr(now.getMinutes(), 60)} t={`MIN: ${now.getMinutes()}`} />
         <Gauge p={pr(now.getHours(), 24)} t={`HR: ${now.getHours()}`} />
-        <Gauge p={pr(now.getDate(), days)} t={`DAY: ${now.getDate()}`} />
-        <Gauge p={pr(now.getMonth() + 1, 12)} t={`MO: ${now.getMonth() + 1}`} />
+        <div className="mobile-hide" style={{ display: 'flex', gap: 4 }}>
+          <Gauge p={pr(now.getDate(), days)} t={`DAY: ${now.getDate()}`} />
+          <Gauge p={pr(now.getMonth() + 1, 12)} t={`MO: ${now.getMonth() + 1}`} />
+        </div>
       </div>
+    </div>
+  );
+};
     </div>
   );
 };
