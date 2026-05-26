@@ -8,12 +8,12 @@ export const IdentityLabActions = ({ step, nameTaken, isReady, onStep, onAuth })
         onClick={() => isReady && onStep('password')}
         disabled={!isReady}
       >
-        <span>{nameTaken ? 'CONFLICT: ALIAS_TAKEN' : 'INITIATE_HANDSHAKE'}</span>
+        <span>{nameTaken ? 'CONFLICT: ID TAKEN' : 'INITIATE SYNC'}</span>
       </button>
     ) : (
       <div className='action-stack'>
         <button className='sync-trigger ready' onClick={onAuth}>
-          <span>AUTHORIZE_UPLINK</span>
+          <span>AUTHORIZE SYNC</span>
         </button>
         <button className='back-trigger' onClick={() => onStep('alias')}>
           REVISE ALIAS
