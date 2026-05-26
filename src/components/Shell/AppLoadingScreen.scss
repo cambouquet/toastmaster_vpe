@@ -21,29 +21,39 @@
     }
 
     .primary-logo-wrap {
-      width: 80px;
+      width: 120px; height: 120px;
       animation: pulse-glow 2s infinite ease-in-out;
-      div, svg { width: 80px; height: 80px; display: block; }
-    }
-
-    .app-logo-wrap {
-      width: 60px;
-      animation: pulse-glow 2s infinite ease-in-out;
-      animation-delay: -1s;
-      opacity: 0.8;
-
-      div, svg, img { 
-        width: 60px; height: 60px; 
-        display: flex; align-items: center; justify-content: center;
-        object-fit: contain;
-      }
-    }
-
-    .sigil-sep {
-      font-size: 2.2rem; font-weight: 100; opacity: 0.1;
-      font-family: monospace; transform: translateY(-2px); 
+      div, svg { width: 120px; height: 120px; display: block; }
     }
   }
+
+  .motto-wrap {
+    margin-bottom: 50px;
+    letter-spacing: 6px;
+    font-weight: 900;
+    
+    .motto-main {
+      font-size: 1.8rem;
+      color: #fff;
+      text-shadow: 0 0 10px rgba($accent-cyan, 0.4);
+      margin-bottom: 8px;
+    }
+
+    .motto-sub {
+      font-size: 0.8rem;
+      color: rgba($accent-cyan, 0.8);
+      
+      .cycle-role {
+        color: #fff;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        text-shadow: 0 0 12px #fff;
+        display: inline-block;
+        min-width: 100px;
+      }
+    }
+  }
+
   .hud-line {
     color: #fff; font-size: 0.9rem; font-weight: 900; letter-spacing: 4px; 
     margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 12px;
