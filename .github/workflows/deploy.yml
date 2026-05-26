@@ -138,7 +138,20 @@ jobs:
               sudo ufw allow 80/tcp
               sudo ufw allow 443/tcp
               sudo ufw allow 8080/tcp
+              # Fix: Enable packet forwarding for Docker and fix UFW default policy
+              sudo sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/' /etc/default/ufw
               sudo ufw --force enable
+              sudo ufw reload
+            fi
+
+            # Fix: Handle OVH Dual Gateway issue (private ens4 stealing default route)
+            NETPLAN_FILE=$(ls /etc/netplan/*.yaml 2>/dev/null | head -n 1) || true
+            if [ ! -z "$NETPLAN_FILE" ]; then
+              if grep -q "ens4:" "$NETPLAN_FILE" && ! grep -q "dhcp4-overrides" "$NETPLAN_FILE"; then
+                echo "Applying Netplan fix for ens4..."
+                sudo sed -i '/ens4:/a \      dhcp4-overrides:\n        use-routes: false' "$NETPLAN_FILE"
+                sudo netplan apply
+              fi
             fi
             
             sudo -E docker compose -f docker-compose.prod.yml down --remove-orphans || true

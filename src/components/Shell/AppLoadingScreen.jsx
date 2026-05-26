@@ -6,24 +6,22 @@ import './AppLoadingScreen.scss';
 export const AppLoadingScreen = ({ app, onFinish, isInitial = false }) => {
   const [percent, setPercent] = useState(0);
   const [complete, setComplete] = useState(false);
-  const appInfo = getAppInfo(app);
-  const AppIcon = appInfo.Icon;
+  const { Icon, name } = getAppInfo(app);
 
   useEffect(() => {
-    const duration = isInitial ? 2500 : 2000;
-    const start = Date.now();
-    const interval = setInterval(() => {
+    const duration = isInitial ? 2500 : 2000, start = Date.now();
+    const tick = setInterval(() => {
       const p = Math.min(Math.round(((Date.now() - start) / duration) * 100), 100);
       setPercent(p);
       if (p === 100) {
-        clearInterval(interval);
+        clearInterval(tick);
         if (onFinish) {
           setTimeout(() => setComplete(true), 400);
           setTimeout(onFinish, 1000);
         }
       }
     }, 30);
-    return () => clearInterval(interval);
+    return () => clearInterval(tick);
   }, [onFinish, isInitial]);
 
   return (
@@ -31,22 +29,12 @@ export const AppLoadingScreen = ({ app, onFinish, isInitial = false }) => {
       <div className="glitch-bg" />
       <div className="loading-content">
         <div className="sigil-pair">
-          <div className="primary-logo-wrap">
-            <Logo />
-          </div>
+          <div className="primary-logo-wrap"><Logo /></div>
           <div className="sigil-sep">//</div>
-          <div className="app-logo-wrap">
-            <AppIcon />
-          </div>
+          <div className="app-logo-wrap"><Icon /></div>
         </div>
-        <div className="hud-line">
-          <span className="title">{isInitial ? 'INITIALIZING' : 'INTERFACE SWITCH'}</span>
-          <span className="sep">//</span>
-          <span className="subject">{appInfo.name}</span>
-        </div>
-        <div className="load-bar-wrap">
-          <div className="load-bar" style={{ width: `${percent}%` }} />
-        </div>
+        <div className="hud-line"><span>{isInitial ? 'INITIALIZING' : 'INTERFACE SWITCH'} // {name}</span></div>
+        <div className="load-bar-wrap"><div className="load-bar" style={{ width: `${percent}%` }} /></div>
         <div className="percent-row">
           <span className="digit">{percent}% // {isInitial ? 'LOADING APP' : 'SYNCING DATA'}</span>
           <span className="mode">{!isInitial && 'ACTIVE_SESSION'}</span>
