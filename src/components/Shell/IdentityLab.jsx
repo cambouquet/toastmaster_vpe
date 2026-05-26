@@ -5,6 +5,7 @@ import { IdentityCreationForm } from './IdentityCreationForm';
 import { KFontValidator } from './KFontValidator';
 import { Logo } from './Logo';
 import { KIdBrand } from './KIdBrand';
+import { VirtualKeyboard } from './VirtualKeyboard';
 import './IdentityLab.scss';
 
 export const IdentityLab = ({ state, onAuth }) => {
@@ -23,7 +24,7 @@ export const IdentityLab = ({ state, onAuth }) => {
       onAuth('addMember', { 
         id: 'kid-' + Date.now(), 
         name: alias.toUpperCase(), 
-        password: password, // For simulation
+        password: password, 
         role: 'K-USER', 
         title: 'K-IDENTITY VERIFIED', 
         status: 'STABLE' 
@@ -77,20 +78,13 @@ export const IdentityLab = ({ state, onAuth }) => {
               <div className={`dot ${step === 'password' ? 'active' : ''}`} />
             </div>
 
-            <div className='virtual-keyboard'>
-              <div className='keyboard-grid'>
-                {"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("").map(char => (
-                  <button 
-                    key={char} 
-                    className={`key ${step === 'alias' && nameTaken ? 'taken' : ''}`}
-                    onClick={() => handleKey(char)}
-                  >
-                    {char}
-                  </button>
-                ))}
-                <button className='key action backspace' onClick={handleBackspace}>DEL</button>
-              </div>
-            </div>
+            <VirtualKeyboard 
+              onKey={handleKey} 
+              onBackspace={handleBackspace} 
+              disabled={isSyncing} 
+              nameTaken={nameTaken} 
+              step={step} 
+            />
 
             {step === 'alias' ? (
               <button 

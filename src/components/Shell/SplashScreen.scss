@@ -24,6 +24,13 @@
     align-items: center;
     gap: 60px;
     padding: 40px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 30px;
+      padding: 20px;
+      text-align: center;
+    }
   }
 
   .logo-glitch-container {
@@ -33,6 +40,10 @@
     opacity: 0;
     transition: all 0.5s ease-out;
     transform: scale(0.8);
+
+    @media (max-width: 768px) {
+      width: 120px; height: 120px;
+    }
   }
 
   .motto-container {
@@ -43,6 +54,14 @@
     padding-left: 30px;
     opacity: 0;
     transition: opacity 0.5s ease-in;
+
+    @media (max-width: 768px) {
+      border-left: none;
+      border-top: 2px solid #fcee0a;
+      padding-left: 0;
+      padding-top: 20px;
+      text-align: center;
+    }
     
     .line-1 { 
       font-size: 3.5rem; color: #fff; margin-bottom: -10px; 
@@ -52,6 +71,11 @@
       opacity: 0;
       transform: translateX(-20px);
       transition: all 0.4s ease-out;
+
+      @media (max-width: 768px) {
+        font-size: 2.2rem;
+        margin-bottom: 5px;
+      }
     }
     .line-2 { 
       font-size: 1.8rem; color: #fcee0a; margin-bottom: 20px;
@@ -60,6 +84,11 @@
       opacity: 0;
       transform: translateX(-20px);
       transition: all 0.4s ease-out 0.2s;
+
+      @media (max-width: 768px) {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+      }
       
       .highlight { 
         color: #000;
@@ -71,6 +100,11 @@
         display: inline-block;
         min-width: 140px;
         text-align: center;
+
+        @media (max-width: 768px) {
+          min-width: 100px;
+          padding: 0 4px;
+        }
       }
     }
     .line-3 { 
@@ -80,6 +114,11 @@
       opacity: 0;
       transform: translateX(-20px);
       transition: all 0.4s ease-out 0.4s;
+
+      @media (max-width: 768px) {
+        font-size: 0.5rem;
+        letter-spacing: 3px;
+      }
     }
   }
 
@@ -89,6 +128,13 @@
     opacity: 0;
     transition: all 0.8s ease-out;
     transform: translateY(20px);
+
+    @media (max-width: 768px) {
+      bottom: 20px;
+      right: 0;
+      left: 0;
+      align-items: center;
+    }
     
     .text { 
       font-size: 0.6rem; color: #fcee0a; font-weight: 900; 

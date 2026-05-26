@@ -6,12 +6,28 @@
   background: rgba(10, 12, 16, 0.9);
   border: 1px solid rgba($accent-cyan, 0.1);
   transition: all 0.4s ease;
+
+  @media (max-width: 480px) {
+    width: 95vw;
+    padding: 20px;
+    gap: 15px;
+  }
   
   .id-wordmark {
     margin-bottom: 30px;
+
+    @media (max-width: 480px) {
+      margin-bottom: 15px;
+    }
+
     .brand-svg {
       width: 100%; height: auto; max-width: 280px;
       color: $accent-cyan; filter: drop-shadow(0 0 5px rgba($accent-cyan, 0.2));
+
+      @media (max-width: 480px) {
+        max-width: 200px;
+        margin: 0 auto;
+      }
     }
   }
 
@@ -24,6 +40,10 @@
     transform: translateY(-2px);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
     .brand-svg { filter: drop-shadow(0 0 10px rgba($accent-cyan, 0.5)); }
+
+    @media (max-width: 480px) {
+      transform: none;
+    }
   }
 
   .virtual-keyboard {
@@ -32,6 +52,11 @@
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       gap: 6px;
+
+      @media (max-width: 480px) {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 4px;
+      }
       
       .key {
         background: rgba(255, 255, 255, 0.03);
@@ -43,6 +68,11 @@
         cursor: pointer;
         transition: all 0.2s;
         display: flex; align-items: center; justify-content: center;
+
+        @media (max-width: 480px) {
+          height: 44px; // Larger touch targets
+          font-size: 0.7rem;
+        }
 
         &:hover {
           background: rgba($accent-cyan, 0.1);
@@ -60,6 +90,10 @@
           background: rgba($accent-cyan, 0.05);
           font-weight: 900;
           font-size: 0.6rem;
+
+          @media (max-width: 480px) {
+            grid-column: span 2;
+          }
         }
       }
     }
@@ -69,6 +103,11 @@
     height: 50px; display: flex; flex-direction: column; justify-content: center;
     .label { font-size: 0.6rem; color: $accent-cyan; letter-spacing: 2px; opacity: 0.5; }
     .dots { font-size: 1.5rem; letter-spacing: 8px; color: #fff; font-family: monospace; }
+
+    @media (max-width: 480px) {
+      height: 40px;
+      .dots { font-size: 1.2rem; letter-spacing: 4px; }
+    }
   }
 
   .step-indicator {
