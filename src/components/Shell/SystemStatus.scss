@@ -44,7 +44,7 @@
   .status-display-area {
     width: auto;
     overflow: hidden; pointer-events: auto; height: 100%; display: flex; align-items: center;
-    flex: 1;
+    flex: 1; padding-right: 20px;
 
     @include mobile {
       width: 100%; 
@@ -52,6 +52,7 @@
       height: 100%;
       overflow: visible;
       position: relative;
+      padding-right: 12px;
     }
   }
 
@@ -63,14 +64,14 @@
     }
 
     .t-group {
-      position: absolute; right: 0; top: 0; bottom: 0;
+      position: absolute; right: 12px; top: 0; bottom: 0;
       opacity: 0;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       pointer-events: none;
       display: flex; align-items: center;
-      width: 100%; justify-content: flex-end;
+      width: auto; justify-content: flex-end;
       
-      .sep { display: none; } /* Hide separators on mobile for cleaner look */
+      .sep { display: flex; opacity: 0.6; margin: 0 8px; } 
     }
 
     &.step-0 .group-1 { opacity: 1 !important; transform: none !important; pointer-events: auto; }

@@ -1,7 +1,6 @@
 @import '../shared/Card.scss';
 @import './RoleEntry.scss';
 @import './Dropdown.scss';
-@import './Grid.scss';
 @import '../shared/AppHeader.scss';
 @import './ActionCard.scss';
 
@@ -18,11 +17,13 @@
   .workspace-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px; padding: 20px 0;
-    max-width: 1200px; margin: 0 auto;
+    gap: 20px; 
+    padding: 20px 0;
+    max-width: 1200px; 
+    margin: 0 auto;
 
     @include mobile {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr !important;
       gap: 15px;
     }
   }

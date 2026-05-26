@@ -28,17 +28,17 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth,
         <>
           <div className="t-group group-1">
             <span className="val sm">GUEST</span>
-            <span className="sep px-1">//</span>
+            <span className="sep px-2">//</span>
             <NetworkSignal online={online} offline={total - online} />
-            <span className="sep px-1">//</span>
+            <span className="sep px-2">//</span>
             <MessagingTelemetry unreadCount={0} />
           </div>
 
           <div className="t-group group-2">
-            <div className="neural-wave" style={{ '--wave-idx': 5 }}>
+            <div className="status-item-persistent" style={{ width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {AppIcon && <AppIcon scan={true} style={{ width: 14, height: 14, opacity: 0.9 }} />}
             </div>
-            <span className="sep px-1">//</span>
+            <span className="sep px-2">//</span>
             <div style={{ marginRight: 6 }}>
               <KFontText 
                 text={appInfo?.name || 'APP'} 
@@ -47,8 +47,12 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth,
                 firstLetterColor={appInfo?.themeColor}
               />
             </div>
-            <span className="sep px-1">//</span>
+            <span className="sep px-2">//</span>
             <SystemClock />
+            <span className="sep px-2">//</span>
+            <span className="val sm dim">NIGHT CITY</span>
+            <span className="sep px-1">//</span>
+            <WeatherTelemetry />
           </div>
         </>
       ) : (
