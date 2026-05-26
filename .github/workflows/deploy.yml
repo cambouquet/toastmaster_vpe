@@ -32,6 +32,9 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=main
+            type=sha,format=long
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -40,6 +43,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+             NODE_ENV=production
 
   deploy:
     needs: build-and-push
@@ -122,7 +127,10 @@ jobs:
             
             sudo -E docker compose -f docker-compose.prod.yml down --remove-orphans || true
             sudo -E docker compose -f docker-compose.prod.yml pull
-            sudo -E docker compose -f docker-compose.prod.yml up -d
+            sudo -E docker compose -f docker-compose.prod.yml up -d --force-recreate
+            
+            # Prune old images to prevent disk space issues
+            sudo docker image prune -f
             
             # Verify status
             sleep 10
