@@ -7,6 +7,7 @@ import { useNotifications } from "./useNotifications";
 import { usePersistence } from "./usePersistence";
 import { useSubtitleQueue } from "./useSubtitleQueue";
 import { useCollaborationActions } from "./useCollaborationActions";
+import { setSyncErrorHandler } from "../services/auth/KeycloakService";
 
 export const useCollaboration = (ai) => {
   const [state, setState] = useState({ 
@@ -19,6 +20,13 @@ export const useCollaboration = (ai) => {
   const { subtitle, setTimedSubtitle } = useSubtitleQueue();
   const { notifications, notify, dismiss } = useNotifications();
   const { logs, addLog, clearLogs } = useSystemLogs();
+
+  useEffect(() => {
+    setSyncErrorHandler((msg) => {
+      notify(msg, "error");
+    });
+  }, [notify]);
+
   const refs = { lastReq: useRef(0), lastIn: useRef(""), lastSent: useRef(""), lastAct: useRef(0) };
 
   const up = useCallback((ns) => {

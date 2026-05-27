@@ -31,8 +31,8 @@ export const AppLauncher = ({ currentApp, onSwitch, user }) => {
 
       <div className="launcher-footer">
         <div className="terminal-log">
-          > INITIALIZING HUB... DONE<br/>
-          > WAITING FOR USER SELECTION...
+          {">"} INITIALIZING HUB... DONE<br/>
+          {">"} WAITING FOR USER SELECTION...
         </div>
       </div>
     </div>

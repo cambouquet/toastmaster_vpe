@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "npm run dev",
+    "setup": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-env.ps1",
+    "start": "powershell -ExecutionPolicy Bypass -File ./scripts/dev-setup.ps1",
+    "start:linux": "chmod +x ./scripts/dev-setup.sh && ./scripts/dev-setup.sh",
     "start:prod": "podman-compose up -d && npm run dev",
     "stop": "podman compose down",
     "dev": "concurrently \"npm run dev:fe\" \"npm run dev:be\"",

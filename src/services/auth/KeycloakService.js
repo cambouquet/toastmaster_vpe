@@ -7,16 +7,18 @@ let keycloak = null;
 let connectionDegraded = false;
 let initStarted = false;
 let initFinished = false;
+let onSyncError = null;
 
 try {
   keycloak = !USE_MOCK ? new Keycloak({
-    url: import.meta.env.PROD ? 'https://auth.k-app.tech' : 'http://localhost:8080',
+    url: import.meta.env.PROD ? 'https://auth.k-app.tech' : 'http://localhost:8081',
     realm: 'toastmaster', clientId: 'mission-control'
   }) : null;
 } catch (e) { guestMode = true; connectionDegraded = true; }
 
 export const isGuestMode = () => guestMode;
 export const isConnectionDegraded = () => connectionDegraded;
+export const setSyncErrorHandler = (handler) => { onSyncError = handler; };
 
 export const initKeycloak = (onAuth) => {
   if (initFinished) return onAuth(true);
@@ -34,26 +36,34 @@ export const initKeycloak = (onAuth) => {
     onAuth(true);
   };
 
-  // Safety timeout: If Keycloak doesn't respond in 2.5s, fallback to guest mode
+  // Safety timeout: local Keycloak takes ~30-40s to boot on Windows/Podman.
+  // We wait longer locally to avoid falling into guest mode prematurely.
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  const timeoutMs = isLocal ? 45000 : 8000;
+
   const timer = setTimeout(() => {
-    console.warn("Keycloak init timeout [LOCAL GAP] - falling back to guest mode");
+    console.warn(`Keycloak init timeout [${timeoutMs}ms] - falling back to guest mode`);
+    if (onSyncError) onSyncError("CONNECTION TIMEOUT - RUNNING IN OFFLINE MODE");
     guestMode = true;
     connectionDegraded = true;
     safeInit();
-  }, 2500);
+  }, timeoutMs);
 
   keycloak.init({ 
     onLoad: 'check-sso', 
     pkceMethod: 'S256',
     enableLogging: true,
     silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'
-  }).then(() => {
+  }).then((authenticated) => {
     clearTimeout(timer);
-    safeInit();
-  }).catch(e => {
+    console.log(`[KEYCLOAK] Handshake successful. Auth: ${authenticated}`);
+    initFinished = true;
+    onAuth(true);
+  }).catch(err => {
     clearTimeout(timer);
-    console.warn("Keycloak connection refused - activating local standalone mode", e);
-    guestMode = true; 
+    console.error("Keycloak init error:", err);
+    if (onSyncError) onSyncError("CONNECTION REFUSED - RUNNING IN OFFLINE MODE");
+    guestMode = true;
     connectionDegraded = true;
     safeInit();
   });
