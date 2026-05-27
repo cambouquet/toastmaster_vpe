@@ -28,7 +28,24 @@
     }
     .sync-status .title { color: $out-red; }
   }
+
+  &.mode-failed {
+    $fail-red: #ff003c;
+    background: radial-gradient(circle at center, rgba(50, 0, 10, 1) 0%, rgba(0, 0, 0, 1) 100%);
+    .sync-lines { background: repeating-linear-gradient(90deg, transparent 0, transparent 49.5%, rgba($fail-red, 0.2) 50%, transparent 50.5%); opacity: 0.6; }
+    .sync-core {
+      .outer { border: 2px solid $fail-red; animation: spin-sync 0.2s linear infinite; }
+      .inner { border: 1px dotted $fail-red; animation: jitter 0.1s infinite; }
+      .pulse { background: $fail-red; filter: blur(5px); animation: signal-scan 0.3s infinite alternate; }
+    }
+    .sync-status {
+      .title { color: $fail-red; text-shadow: 0 0 10px $fail-red; animation: glitch-text 0.1s infinite; }
+      .progress { color: $fail-red; opacity: 1; font-weight: bold; }
+    }
+  }
 }
 
+@keyframes jitter { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -1px); } 100% { transform: translate(0); } }
+@keyframes glitch-text { 0% { opacity: 1; } 50% { opacity: 0.8; transform: skewX(10deg); } 100% { opacity: 1; } }
 @keyframes spin-sync { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes grid-scroll { from { background-position: 0 0; } to { background-position: 400px 0; } }

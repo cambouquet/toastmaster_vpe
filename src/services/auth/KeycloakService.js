@@ -4,34 +4,75 @@ import { getMockIdentity, mockLogin, mockLogout } from './MockAuth';
 const USE_MOCK = false;
 let guestMode = false;
 let keycloak = null;
+let connectionDegraded = false;
+let initStarted = false;
+let initFinished = false;
 
 try {
   keycloak = !USE_MOCK ? new Keycloak({
     url: import.meta.env.PROD ? 'https://auth.k-app.tech' : 'http://localhost:8080',
     realm: 'toastmaster', clientId: 'mission-control'
   }) : null;
-} catch (e) { guestMode = true; }
+} catch (e) { guestMode = true; connectionDegraded = true; }
+
+export const isGuestMode = () => guestMode;
+export const isConnectionDegraded = () => connectionDegraded;
 
 export const initKeycloak = (onAuth) => {
-  if (USE_MOCK || guestMode) return onAuth(true);
-  keycloak.init({ 
-    onLoad: 'check-sso', pkceMethod: 'S256',
-    silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'
-  }).then(() => onAuth(true)).catch(e => {
-    console.warn("Keycloak failed, guest mode active", e);
-    guestMode = true; 
+  if (initFinished) return onAuth(true);
+  if (initStarted) return; // Wait for the first one to finish
+  initStarted = true;
+
+  if (USE_MOCK || guestMode) {
+    initFinished = true;
+    return onAuth(true);
+  }
+
+  const safeInit = () => {
+    if (initFinished) return;
+    initFinished = true;
     onAuth(true);
+  };
+
+  // Safety timeout: If Keycloak doesn't respond in 2.5s, fallback to guest mode
+  const timer = setTimeout(() => {
+    console.warn("Keycloak init timeout [LOCAL GAP] - falling back to guest mode");
+    guestMode = true;
+    connectionDegraded = true;
+    safeInit();
+  }, 2500);
+
+  keycloak.init({ 
+    onLoad: 'check-sso', 
+    pkceMethod: 'S256',
+    enableLogging: true,
+    silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html'
+  }).then(() => {
+    clearTimeout(timer);
+    safeInit();
+  }).catch(e => {
+    clearTimeout(timer);
+    console.warn("Keycloak connection refused - activating local standalone mode", e);
+    guestMode = true; 
+    connectionDegraded = true;
+    safeInit();
   });
 };
 
 export const getIdentity = () => {
   if (USE_MOCK || guestMode) return getMockIdentity();
   if (!keycloak?.authenticated) return null;
-  const roles = keycloak.tokenParsed?.realm_access?.roles || [];
+  
+  const tp = keycloak.tokenParsed;
+  const roles = tp?.realm_access?.roles || [];
   const isVpe = roles.includes('VPE') || roles.includes('admin');
+  const isPresident = roles.includes('PRESIDENT');
+  
   return {
-    name: keycloak.tokenParsed?.preferred_username || "User",
+    id: tp?.sub,
+    name: tp?.name || tp?.preferred_username || "AGENT",
     role: isVpe ? "VPE" : "MEMBER",
+    title: isPresident ? "PRESIDENT" : (isVpe ? "VP EDUCATION" : "MEMBER"),
     token: keycloak.token
   };
 };

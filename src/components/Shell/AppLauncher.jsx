@@ -5,7 +5,8 @@ import './AppLauncher.scss';
 
 const DEFAULT_ORDER = ['launcher', 'toastmaster', 'identity-lab', 'font-lab', 'mission-control'];
 
-export const AppLauncher = ({ currentApp, onSwitch }) => {
+export const AppLauncher = ({ currentApp, onSwitch, user }) => {
+  const isAuth = !!user;
   return (
     <div className="app-launcher">
       <div className="launcher-header">
@@ -17,9 +18,11 @@ export const AppLauncher = ({ currentApp, onSwitch }) => {
       <div className="launcher-grid">
         {DEFAULT_ORDER.map(appId => {
           const app = APPS[appId], Icon = app.Icon, isActive = currentApp === appId;
+          const isLocked = !app.public && !isAuth;
           return (
-            <NavGridItem key={appId} id={appId} label={app.name} active={isActive}
-              status={isActive ? 'ACTIVE LINK' : 'STANDBY'} onClick={() => onSwitch(appId)}>
+            <NavGridItem key={appId} id={appId} label={app.name} active={isActive} locked={isLocked}
+              status={isLocked ? 'ENCRYPTED' : (isActive ? 'ACTIVE LINK' : 'STANDBY')} 
+              onClick={isLocked ? null : () => onSwitch(appId)}>
               <div className="app-icon-container"><Icon style={{ width: '100%', height: '100%' }} /></div>
             </NavGridItem>
           );
