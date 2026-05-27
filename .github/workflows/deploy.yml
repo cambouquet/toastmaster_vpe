@@ -9,6 +9,14 @@ on:
         description: 'Force VM infrastructure setup'
         type: boolean
         default: false
+      no_cache:
+        description: 'Disable Docker build cache'
+        type: boolean
+        default: false
+      full_restart:
+        description: 'Full restart (docker compose down && up)'
+        type: boolean
+        default: false
 
 env:
   REGISTRY: ghcr.io
@@ -48,10 +56,12 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: ${{ github.event.inputs.no_cache == 'true' && '' || 'type=gha' }}
+          cache-to: ${{ github.event.inputs.no_cache == 'true' && '' || 'type=gha,mode=max' }}
+          no-cache: ${{ github.event.inputs.no_cache == 'true' }}
           build-args: |
              NODE_ENV=production
+          provenance: false
 
   deploy:
     needs: build-and-push
@@ -88,11 +98,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
           REGISTRY_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
+          FULL_RESTART: ${{ github.event.inputs.full_restart }}
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: GITHUB_TOKEN,GITHUB_ACTOR,REGISTRY_IMAGE
+          envs: GITHUB_TOKEN,GITHUB_ACTOR,REGISTRY_IMAGE,FULL_RESTART
           script: |
             mv ~/app/.github/scripts/*.sh ~/.deploy_scripts/
             chmod +x ~/.deploy_scripts/*.sh
