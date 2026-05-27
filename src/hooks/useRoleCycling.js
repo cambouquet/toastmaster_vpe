@@ -34,7 +34,7 @@ export const useRoleCycling = (phase) => {
         scrambleTo(roles[2]);
         clearInterval(roleTimer);
       }
-    }, 700);
+    }, 1000); // 1-second steps to hit the user's timeline precisely
 
     function scrambleTo(word) {
       let its = 0;

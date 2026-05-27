@@ -26,11 +26,11 @@ export const useSplashSequence = (onFinish) => {
     });
     
     const sequence = [
-      { p: 'logo', d: 300 },
-      { p: 'motto', d: 800 },
-      { p: 'cycling', d: 1500 }, // Start cycling earlier
-      { p: 'exiting', d: 5500 }, // Finish earlier
-      { p: 'complete', d: 7000 } 
+      { p: 'logo', d: 200 },
+      { p: 'motto', d: 500 },
+      { p: 'cycling', d: 1000 }, // Start identity cycle at 1s
+      { p: 'exiting', d: 4800 },
+      { p: 'complete', d: 6000 } 
     ];
     
     const timers = sequence.map(({ p, d }) => 
