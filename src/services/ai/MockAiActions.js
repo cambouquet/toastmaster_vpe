@@ -28,9 +28,9 @@ export const handleUiActions = (action, val, state) => {
   if (action === 'addMember') return { notification: "New profile synchronized.", newState: { members: [...state.members, val] } };
   if (action === 'deleteMember') return { notification: "Profile purged.", newState: { members: state.members.filter(m => m.id !== val) } };
   if (action === 'MEETING_START') return { subtitle: "Synchronizing all HUDs. The meeting is now live.", newState: { status: 'live' } };
-  if (action === 'TIMER_START') return { subtitle: `Uplink steady. The floor is yours, ${val}. Timing now.`, newState: { [action]: val } };
-  if (action === 'TIMER_STOP') return { subtitle: `Time captured. Great job, ${val}.`, newState: { [action]: val } };
-  if (action === 'TIMER_RESET') return { subtitle: "Timer zeroed. Ready for the next speaker.", newState: { [action]: val } };
+  if (action === 'TIMER_START') return { subtitle: `Ready when you are, ${val}. Timing is active.`, newState: { [action]: val } };
+  if (action === 'TIMER_STOP') return { subtitle: `Time paused. Take your breath, ${val.name || val}. You're at ${val.time || ''}.`, newState: { [action]: val } };
+  if (action === 'TIMER_RESET') return { subtitle: "Timer cleared. Ready for the next segment.", newState: { [action]: val } };
   const silent = ['time-', 'ah-', 'gram-', 'eval-', 'wotd-'];
   if (silent.some(s => action.startsWith(s))) return { newState: { [action]: val } };
   return { notification: "Action processed.", newState: { [action]: val } };
