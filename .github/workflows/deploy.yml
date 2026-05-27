@@ -2,8 +2,13 @@ name: Deploy to OVH
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      force_setup:
+        description: 'Force VM infrastructure setup'
+        type: boolean
+        default: false
 
 env:
   REGISTRY: ghcr.io
@@ -27,14 +32,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
+      - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=raw,value=main
-            type=sha,format=long
+          tags: type=raw,value=main
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -42,8 +45,8 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          no-cache: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           build-args: |
              NODE_ENV=production
 
@@ -54,123 +57,41 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Pre-deployment cleanup
+      - name: Preparing scripts
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
           script: |
-            mkdir -p ~/app/deploy
-            # Clean up existing files that might be owned by root due to docker mounts
-            sudo rm -f ~/app/docker-compose.prod.yml ~/app/keycloak-realm.json
-            sudo rm -rf ~/app/deploy/Caddyfile
-            # Ensure the user has ownership of the target directory
-            sudo chown -R ${{ secrets.VM_USER }} ~/app
+            mkdir -p ~/app/deploy ~/.deploy_scripts
+            if [[ "${{ github.event.inputs.force_setup }}" == "true" ]]; then 
+              echo "🔄 Forcing setup reset..."
+              rm -f ~/.vm_ready
+            fi
 
-      - name: Copy docker-compose and config files
+      - name: Sync configuration and scripts
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          source: "docker-compose.prod.yml,keycloak-realm.json,deploy/Caddyfile"
+          source: "docker-compose.prod.yml,keycloak-realm.json,deploy/Caddyfile,.github/scripts/*.sh"
           target: "~/app"
 
-      - name: SSH into VM and Deploy
+      - name: Remote Deployment
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          REGISTRY_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
+          envs: GITHUB_TOKEN,GITHUB_ACTOR,REGISTRY_IMAGE
           script: |
-            set -e
-            
-            # Check if docker is installed, if not install it
-            if ! command -v docker &> /dev/null; then
-              echo "Docker not found. Installing..."
-              curl -fsSL https://get.docker.com -o get-docker.sh
-              sudo sh get-docker.sh
-              sudo usermod -aG docker $USER
-            fi
-            
-            # Force bypass local DNS stub to fix Docker resolution
-            sudo rm -f /etc/resolv.conf
-            echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
-            echo "nameserver 1.1.1.1" | sudo tee -a /etc/resolv.conf
-
-            # Fix Docker naming/discovery and DNS
-            if [ ! -f /etc/docker/daemon.json ]; then
-              echo '{"dns": ["8.8.8.8", "1.1.1.1"]}' | sudo tee /etc/docker/daemon.json
-              sudo systemctl restart docker
-            fi
-
-            # Double check networking
-            sudo fuser -k 80/tcp || true
-            sudo fuser -k 443/tcp || true
-            
-            mkdir -p ~/app
-            cd ~/app
-            
-            # Use sudo for docker commands to ensure they work immediately after installation
-            echo "${{ secrets.GITHUB_TOKEN }}" | sudo docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            
-            IMAGE_NAME=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-            export APP_IMAGE="${IMAGE_NAME}:main"
-            echo "APP_IMAGE=${APP_IMAGE}" > .env
-            
-            # Install necessary tools for port management
-            sudo apt-get update && sudo apt-get install -y psmisc
-            
-            # Clean up potential port blockers
-            sudo systemctl stop nginx || true
-            sudo systemctl disable nginx || true
-            sudo fuser -k 80/tcp || true
-            sudo fuser -k 443/tcp || true
-            sudo fuser -k 8080/tcp || true
-            
-            # Ensure Firewall allows traffic
-            if command -v ufw &> /dev/null; then
-              sudo ufw allow 22/tcp
-              sudo ufw allow 80/tcp
-              sudo ufw allow 443/tcp
-              sudo ufw allow 8080/tcp
-              # Fix: Enable packet forwarding for Docker and fix UFW default policy
-              sudo sed -i 's/DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/' /etc/default/ufw
-              sudo ufw --force enable
-              sudo ufw reload
-            fi
-
-            # Fix: Handle OVH Dual Gateway issue (private ens4 stealing default route)
-            NETPLAN_FILE=$(ls /etc/netplan/*.yaml 2>/dev/null | head -n 1) || true
-            if [ ! -z "$NETPLAN_FILE" ]; then
-              if grep -q "ens4:" "$NETPLAN_FILE" && ! grep -q "dhcp4-overrides" "$NETPLAN_FILE"; then
-                echo "Applying Netplan fix for ens4..."
-                sudo sed -i '/ens4:/a \      dhcp4-overrides:\n        use-routes: false' "$NETPLAN_FILE"
-                sudo netplan apply
-              fi
-            fi
-            
-            sudo -E docker compose -f docker-compose.prod.yml down --remove-orphans || true
-            sudo -E docker compose -f docker-compose.prod.yml pull
-            sudo -E docker compose -f docker-compose.prod.yml up -d --force-recreate
-            
-            # Prune old images to prevent disk space issues
-            sudo docker image prune -f
-            
-            # Verify status
-            sleep 10
-            sudo -E docker compose -f docker-compose.prod.yml ps
-            
-            # --- FORCE KEYCLOAK REALM UPDATE ---
-            # If we detect a realm update is needed, we can trigger a forced re-import
-            # This is a safe way to ensure the redirect URIs update without nuking all data
-            sudo docker exec $(sudo docker ps -q -f name=keycloak) /opt/keycloak/bin/kc.sh import --file /opt/keycloak/data/import/realm.json --override true || true
-            
-            # If caddy or app aren't healthy, show logs
-            sudo -E docker compose -f docker-compose.prod.yml logs --tail=50 caddy
-            sudo -E docker compose -f docker-compose.prod.yml logs --tail=50 app
-            sudo docker compose -f docker-compose.prod.yml ps
+            mv ~/app/.github/scripts/*.sh ~/.deploy_scripts/
+            chmod +x ~/.deploy_scripts/*.sh
+            ~/.deploy_scripts/setup-vm.sh
+            ~/.deploy_scripts/deploy-app.sh

@@ -1,0 +1,27 @@
+name: Cleanup VM Storage
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type CLEAN to confirm wiping Docker and State'
+        required: true
+        type: string
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.confirm == 'CLEAN'
+    steps:
+      - name: Wipe Docker and State
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "🧹 Starting deep cleanup..."
+            sudo docker system prune -a --volumes -f
+            sudo rm -f ~/.vm_ready
+            sudo rm -rf ~/app
+            echo "✨ VM is now clean and ready for a fresh setup."
