@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=JetBrains+Mono:wght@100..800&display=swap');
+
+body.identity-lab {
+    background-color: #020205 !important;
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(0, 243, 255, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(0, 243, 255, 0.05) 0px, transparent 50%) !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    color: #fff !important;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    padding-top: 80px;
+}
+
+.background-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 420px;
+    height: 420px;
+    opacity: 0.03;
+    filter: blur(2px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.background-logo svg {
+    width: 100%;
+    height: 100%;
+}
+
+.neural-link-bootstrap {
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+.synced-status {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.synced-status .label {
+    font-size: 0.6rem;
+    color: rgba(0, 186, 196, 0.5);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.k-id-brand-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.brand-svg {
+    height: 50px;
+    width: 50px;
+}
+
+.input-stack {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.input-bracket {
+    background: rgba(0, 186, 196, 0.04);
+    border-left: 2px solid rgba(0, 186, 196, 0.2);
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input-bracket label {
+    display: block;
+    font-size: 0.6rem;
+    color: rgba(0, 186, 196, 0.5);
+    margin-bottom: 10px;
+}
+
+.kfont-input-display {
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    cursor: text;
+}
+
+.step-indicator {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.step-indicator .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(0, 186, 196, 0.2);
+}
+
+.step-indicator .dot.active {
+    background: #00bac4;
+    box-shadow: 0 0 10px #00bac4;
+}
+
+.virtual-keyboard {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.keyboard-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 10px;
+}
+
+.key {
+    background: rgba(0, 186, 196, 0.1);
+    border: 1px solid rgba(0, 186, 196, 0.2);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 8px;
+    border-radius: 4px;
+    color: #00bac4;
+    overflow: hidden;
+}
+
+.key:hover {
+    background: rgba(0, 186, 196, 0.3);
+    border-color: #00bac4;
+    box-shadow: 0 0 15px rgba(0, 186, 196, 0.4);
+    transform: translateY(-2px);
+}
+
+.key svg {
+    max-height: 28px;
+    width: auto;
+    filter: drop-shadow(0 0 5px rgba(0, 186, 196, 0.3));
+    pointer-events: none;
+}
+
+.key.action {
+    grid-column: span 2;
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: #fff;
+    background: rgba(0, 186, 196, 0.25);
+    aspect-ratio: auto;
+    letter-spacing: 2px;
+}
+
+.key.action:hover {
+    background: #00bac4;
+    color: #000;
+}
+
+.identity-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sync-trigger {
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba(0, 186, 196, 0.3);
+    color: rgba(0, 186, 196, 0.3);
+    padding: 15px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.sync-trigger.ready {
+    border-color: #00bac4;
+    color: #00bac4;
+    background: rgba(0, 186, 196, 0.05);
+}
+
+.sync-trigger.ready:hover {
+    background: #00bac4;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 186, 196, 0.4);
+}
+
+.back-trigger {
+    background: transparent;
+    border: none;
+    color: rgba(0, 186, 196, 0.4);
+    font-size: 0.6rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+.guest-footer {
+    position: absolute;
+    bottom: 40px;
+    font-size: 0.6rem;
+    letter-spacing: 4px;
+    color: rgba(0, 186, 196, 0.3);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Keycloak specific overrides for alerts */
+.alert-error {
+    background: rgba(255, 0, 0, 0.1);
+    border-left: 2px solid #ff4444;
+    padding: 10px;
+    font-size: 0.7rem;
+    margin-bottom: 20px;
+    width: 100%;
+    color: #ff4444;
+}
+
+.error-text {
+    color: #ff4444;
+    font-size: 0.6rem;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Hide default keycloak elements if they leak */
+#kc-header, #kc-info { display: none; }
+

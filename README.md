@@ -1,6 +1,6 @@
-# Toastmaster VPE Mission Control
+# Mission Control - Meetings App
 
-A high-density "Cyber-Noir" command shell for managing Toastmaster club education and meetings. This application prioritizes data density, tactical in-place editing, and AI-driven collaboration.
+A high-density "Cyber-Noir" command shell for managing meetings. This application prioritizes data density, tactical in-place editing, and AI-driven collaboration.
 
 ## Core Architecture
 
@@ -10,7 +10,7 @@ The project follows a domain-driven structure to ensure separation of concerns b
 - `src/components/Shell/`: structural parent, manages high-level routing and the global Status HUD.
 - `src/components/Workspace/`: The Dashboard for meeting planning (11 distinct metadata nodes).
 - `src/components/Agent/`: AI interaction interface, including `ChatInput` with transmission pulse.
-- `src/components/Members/`: Registry for member profiles, pathways, and status tracking.
+- `src/components/Members/`: Registry for member profiles and status tracking.
 - `src/services/ai/`: Brain of the application, handling intent resolution and UI actions.
 - `src/hooks/`: Reactive state management (e.g., `useCollaboration` orchestrates AI and UI sync).
 
@@ -19,6 +19,7 @@ The project follows a domain-driven structure to ensure separation of concerns b
 ### Setup
 ```bash
 npm install
+npm run setup
 ```
 
 ### Launch Everything (Keycloak + Frontend + Mock Agent)

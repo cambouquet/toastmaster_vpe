@@ -1,8 +1,8 @@
-export const PATHWAYS = [
-  'Dynamic Leadership', 'Effective Coaching', 'Innovative Planning',
-  'Leadership Development', 'Motivational Strategies', 'Persuasive Influence',
-  'Presentation Mastery', 'Strategic Relationships', 'Team Collaboration',
-  'Visionary Communication', 'Engaging Humor'
+export const SKILL_TRACKS = [
+  'Public Speaking', 'Meeting Facilitation', 'Project Management',
+  'Team Leadership', 'Conflict Resolution', 'Technical Communication',
+  'Strategic Planning', 'Creative Problem Solving', 'Crisis Management',
+  'Interpersonal Communication', 'Negotiation Skills'
 ];
 
 export const LVL_REQS = {

@@ -1,5 +1,5 @@
 # dev-setup.ps1
-Write-Host ">>> TOASTMASTER VPE - NEURAL SYSTEM BOOT" -ForegroundColor Cyan
+Write-Host ">>> MISSION CONTROL - NEURAL SYSTEM BOOT" -ForegroundColor Cyan
 
 # 1. Start Podman Machine
 Write-Host ">>> Checking Podman VM status..."
@@ -40,6 +40,7 @@ if ($kcStatus -like "Up*") {
         -e KC_HOSTNAME=localhost `
         -e KC_HOSTNAME_PORT=8081 `
         -v ./keycloak-realm.json:/opt/keycloak/data/import/realm.json:Z `
+        -v ./keycloak/themes/k:/opt/keycloak/themes/k:Z `
         quay.io/keycloak/keycloak:24.0.0 start-dev --import-realm
     
     Write-Host ">>> Keycloak deployment dispatched." -ForegroundColor Green

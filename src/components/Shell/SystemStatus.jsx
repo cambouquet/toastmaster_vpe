@@ -12,7 +12,7 @@ export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav,
   const mobileStep = useStatusRotation();
   
   const hasAlerts = notifications?.length > 0;
-  const handleAuth = () => { setShowRoles(!showRoles); setSearch(''); }, handlePowerBtn = () => isAuth && onAuth('logout');
+  const handleAuth = () => onAuth('login'), handlePowerBtn = () => isAuth && onAuth('logout');
   const handleIdentity = (id, data) => { setShowRoles(false); onAuth(id, data); };
   return (
     <div className={`system-status-readout ${showRoles ? 'is-connected' : 'is-idle'} ${isAuth ? 'is-auth' : ''} step-${mobileStep}`}

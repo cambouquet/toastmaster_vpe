@@ -12,13 +12,18 @@ let onSyncError = null;
 try {
   keycloak = !USE_MOCK ? new Keycloak({
     url: import.meta.env.PROD ? 'https://auth.k-app.tech' : 'http://localhost:8081',
-    realm: 'toastmaster', clientId: 'mission-control'
+    realm: 'k', clientId: 'mission-control'
   }) : null;
 } catch (e) { guestMode = true; connectionDegraded = true; }
 
 export const isGuestMode = () => guestMode;
 export const isConnectionDegraded = () => connectionDegraded;
 export const setSyncErrorHandler = (handler) => { onSyncError = handler; };
+
+export const isAuthenticated = () => {
+  if (USE_MOCK || guestMode) return !!getMockIdentity();
+  return !!keycloak?.authenticated || false;
+};
 
 export const initKeycloak = (onAuth) => {
   if (initFinished) return onAuth(true);
@@ -75,19 +80,25 @@ export const getIdentity = () => {
   
   const tp = keycloak.tokenParsed;
   const roles = tp?.realm_access?.roles || [];
-  const isVpe = roles.includes('VPE') || roles.includes('admin');
-  const isPresident = roles.includes('PRESIDENT');
+  const isOrganizer = roles.includes('ORGANIZER') || roles.includes('admin');
+  const isLeader = roles.includes('LEADER');
   
   return {
     id: tp?.sub,
     name: tp?.name || tp?.preferred_username || "AGENT",
-    role: isVpe ? "VPE" : "MEMBER",
-    title: isPresident ? "PRESIDENT" : (isVpe ? "VP EDUCATION" : "MEMBER"),
+    role: isOrganizer ? "ORGANIZER" : "PARTICIPANT",
+    title: isLeader ? "LEAD HOST" : (isOrganizer ? "EDUCATION LEAD" : "PARTICIPANT"),
     token: keycloak.token
   };
 };
 
-export const login = (id, data) => (USE_MOCK || guestMode) ? mockLogin(id, data) : keycloak.login();
+export const login = (data) => {
+  if (USE_MOCK || guestMode) return mockLogin(null, data);
+  const options = {};
+  if (data && typeof data === 'string') options.loginHint = data;
+  else if (data && data.name) options.loginHint = data.name;
+  return keycloak.login(options);
+};
 export const logout = () => (USE_MOCK || guestMode) ? mockLogout() : keycloak.logout();
 
 export default keycloak;

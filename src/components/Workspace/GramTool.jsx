@@ -3,11 +3,11 @@ import './GramTool.scss';
 
 export const GramTool = ({ activeIdx, state, onAction }) => (
   <div className="tool-item full-w">
-    <div className="tool-header"><span className="tool-label">GRAMMARIAN / WOTD</span></div>
+    <div className="tool-header"><span className="tool-label">NOTES / WOTD</span></div>
     <div className="gram-tools">
-      <input className="tool-input" placeholder="Good usage..." 
+      <input className="tool-input" placeholder="Notes..." 
              value={state[`gram-${activeIdx}-g`] || ''} onChange={e => onAction(`gram-${activeIdx}-g`, e.target.value)} />
-      <input className="tool-input" placeholder="Improvements..." 
+      <input className="tool-input" placeholder="Feedback..." 
              value={state[`gram-${activeIdx}-i`] || ''} onChange={e => onAction(`gram-${activeIdx}-i`, e.target.value)} />
       <div className="wotd-tracker">
         <span className="tool-label">WOTD</span>

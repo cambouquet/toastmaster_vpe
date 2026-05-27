@@ -12,7 +12,8 @@
     padding: 2px 8px; border-radius: 2px; letter-spacing: 1px;
     &.clickable { cursor: pointer; }
     &.admin { background: #ff0055; color: #fff; box-shadow: 0 0 10px #ff0055; }
-    &.vpe { background: $accent-cyan; color: #000; }
+    &.organizer { background: $accent-cyan; color: #000; }
+    &.leader { background: #ffaa00; color: #000; }
     &.member { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); }
     &.guest { background: transparent; color: #666; border: 1px solid #333; }
   }

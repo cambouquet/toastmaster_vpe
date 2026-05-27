@@ -3,9 +3,9 @@ import { RoleEntry } from './RoleEntry';
 import './SpeakersSection.scss';
 
 export const SpeakersSection = ({ speakers, members, editing, onEdit, onAction, currentUser }) => {
-  const isVpe = currentUser?.role === 'VPE' || currentUser?.role === 'ADMIN';
-  const myMem = (m) => isVpe ? m : (currentUser?.role === 'MEMBER' ? m.filter(x => x.name === currentUser?.name) : []);
-  const canEd = (s, f) => isVpe || (currentUser?.role === 'MEMBER' && (!s[f] || s[f] === currentUser?.name));
+  const isOrganizer = currentUser?.role === 'ORGANIZER' || currentUser?.role === 'ADMIN';
+  const myMem = (m) => isOrganizer ? m : (currentUser?.role === 'PARTICIPANT' ? m.filter(x => x.name === currentUser?.name) : []);
+  const canEd = (s, f) => isOrganizer || (currentUser?.role === 'PARTICIPANT' && (!s[f] || s[f] === currentUser?.name));
 
   return (
     <div className='card speakers-card'>

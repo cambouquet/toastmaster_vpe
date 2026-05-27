@@ -19,7 +19,7 @@ export const usePersistence = (state, setState, notify, addLog, setTimedSubtitle
     }).catch(e => console.error("Load Error:", e));
     
     // Last Session Restoration
-    const lastSession = localStorage.getItem('vpe_last_session');
+    const lastSession = localStorage.getItem('meeting_last_session');
     if (lastSession) {
       try {
         const { currentApp, currentScreen } = JSON.parse(lastSession);
@@ -31,7 +31,7 @@ export const usePersistence = (state, setState, notify, addLog, setTimedSubtitle
   }, [notify, addLog, setState]);
 
   useEffect(() => {
-    localStorage.setItem('vpe_last_session', JSON.stringify({
+    localStorage.setItem('meeting_last_session', JSON.stringify({
       currentApp: state.currentApp,
       currentScreen: state.currentScreen
     }));

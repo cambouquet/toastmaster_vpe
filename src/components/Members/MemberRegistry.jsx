@@ -5,12 +5,12 @@ import './MemberRegistry.scss';
 
 export const MemberRegistry = ({ members, onAction, currentUser }) => {
   const isAdmin = currentUser?.role === 'ADMIN';
-  const isOfficer = currentUser?.role === 'VPE' || currentUser?.role === 'ADMIN' || currentUser?.title === 'PRESIDENT';
+  const isOfficer = currentUser?.role === 'ORGANIZER' || currentUser?.role === 'ADMIN' || currentUser?.title === 'LEAD HOST';
   const visible = members.filter(m => isAdmin || (m.role !== 'ADMIN' && m.role !== 'GUEST'));
 
   return (
     <div className="member-registry-screen">
-      <AppHeader title="MEMBERS" status="stable">
+      <AppHeader title="IDENTITY REGISTRY" status="stable">
         {isOfficer && (
           <button className="add-member-btn cyber-plus" onClick={() => onAction('ADD_MEMBER_REQUEST')}>
             <span className="btn-glitch" />

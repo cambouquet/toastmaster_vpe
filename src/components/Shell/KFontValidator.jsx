@@ -78,7 +78,7 @@ export const KFontValidator = () => {
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "60px", paddingBottom: "100px" }}>
           {/* Test Lines */}
           <div style={{ display: "flex", flexDirection: "column", gap: "50px", alignItems: "center" }}>
-            {["TOASTMASTER", "KEYCLOAK SYNC", "KRONO SYSTEM"].map((line, lIdx) => (
+            {["MISSION CONTROL", "KEYCLOAK SYNC", "KRONO SYSTEM"].map((line, lIdx) => (
               <div key={lIdx} style={{ display: "flex", gap: `${spacing}px`, justifyContent: "center" }}>
                 {line.split(" ").map((word, wIdx) => (
                   <div key={wIdx} style={{ display: "flex", gap: `${spacing}px` }}>

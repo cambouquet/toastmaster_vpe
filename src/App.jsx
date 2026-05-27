@@ -3,7 +3,7 @@ import { ErrorBoundary } from './components/shared/ErrorBoundary';
 import { Shell } from './components/Shell/Shell';
 import { SplashScreen } from './components/Shell/SplashScreen';
 import { SyncOverlay } from './components/Shell/SyncOverlay';
-import { initKeycloak, isConnectionDegraded } from './services/auth/KeycloakService';
+import { initKeycloak, isConnectionDegraded, isAuthenticated } from './services/auth/KeycloakService';
 import './App.scss';
 
 function App() {
@@ -13,6 +13,10 @@ function App() {
   useEffect(() => {
     initKeycloak(() => {
       setAuthReady(true);
+      // If user is already authenticated (returned from redirect), skip cinematic
+      if (isAuthenticated()) {
+        setLoading(false);
+      }
     });
   }, []);
 
@@ -25,7 +29,7 @@ function App() {
       <div className="glitch-scanline"></div>
       <ErrorBoundary>
         {!authReady || loading ? (
-          <SplashScreen onFinish={handleFinish} />
+          <SplashScreen onFinish={handleFinish} isLoggingIn={isAuthenticated()} />
         ) : (
           <Shell />
         )}

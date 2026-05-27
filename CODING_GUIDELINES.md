@@ -1,4 +1,4 @@
-# Coding Guidelines: Toastmaster VPE
+# Coding Guidelines: Mission Control
 
 ## 1. File Constraints
 - **Strict Line Limit**: No file shall exceed **42 lines** of code.
@@ -15,7 +15,7 @@
   - `Shell/`: Global layout and HUD.
   - `Workspace/`: Meeting metadata and planning nodes.
   - `Agent/`: Input, messaging, and transmission logic.
-  - `Members/`: Profile registry and pathway management.
+  - `Members/`: Profile registry and skill-track management.
 - **Service Layer**: Keep AI and external logic (e.g., WhatsApp) in dedicated service classes.
 - **Logic Separation**: Use custom hooks (e.g., `useCollaboration`) to manage state, keeping components focused on rendering.
 
@@ -34,7 +34,7 @@
 - **Visual Texture**: Interface elements should feel physical, technical, and grounded in a near-future cyberpunk reality.
 
 ## 6. Communication Pattern
-- **Collaboration Style**: The bot acts as a VPE assistant, updating a shared workspace grid.
+- **Collaboration Style**: The bot acts as a meeting assistant, updating a shared workspace grid.
 - **Subtitle Overlay**: Bot messages appear as clean, non-aggressive captions at the bottom.
 - **User Input**: Limit user messages to **180 characters** to ensure concise interactions.
 ## 7. Responsiveness: "Multisupport HUD"

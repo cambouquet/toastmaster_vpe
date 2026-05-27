@@ -1,7 +1,8 @@
 {
-  "realm": "toastmaster",
+  "realm": "k",
   "enabled": true,
   "sslRequired": "none",
+  "loginTheme": "k",
   "clients": [
     {
       "clientId": "mission-control",
@@ -13,9 +14,9 @@
   ],
   "roles": {
     "realm": [
-      { "name": "VPE" },
-      { "name": "MEMBER" },
-      { "name": "PRESIDENT" },
+      { "name": "ORGANIZER" },
+      { "name": "PARTICIPANT" },
+      { "name": "LEADER" },
       { "name": "GUEST" }
     ]
   },
@@ -25,8 +26,8 @@
       "enabled": true,
       "email": "alice@k-app.local",
       "firstName": "Alice",
-      "lastName": "VPE",
-      "realmRoles": ["VPE"],
+      "lastName": "Vanguard",
+      "realmRoles": ["ORGANIZER"],
       "credentials": [{ "type": "password", "value": "alice", "temporary": false }]
     },
     {
@@ -34,8 +35,8 @@
       "enabled": true,
       "email": "bob@k-app.local",
       "firstName": "Bob",
-      "lastName": "Member",
-      "realmRoles": ["MEMBER"],
+      "lastName": "Echo",
+      "realmRoles": ["PARTICIPANT"],
       "credentials": [{ "type": "password", "value": "bob", "temporary": false }]
     },
     {
@@ -43,27 +44,27 @@
       "enabled": true,
       "email": "kami@k-app.local",
       "firstName": "Kami",
-      "lastName": "President",
-      "realmRoles": ["PRESIDENT"],
+      "lastName": "Command",
+      "realmRoles": ["LEADER"],
       "credentials": [{ "type": "password", "value": "kami", "temporary": false }]
     },
     {
-      "username": "vpe",
+      "username": "organizer",
       "enabled": true,
-      "email": "vpe@k-app.local",
+      "email": "organizer@k-app.local",
       "firstName": "System",
-      "lastName": "VPE",
-      "realmRoles": ["VPE"],
-      "credentials": [{ "type": "password", "value": "vpe", "temporary": false }]
+      "lastName": "Organizer",
+      "realmRoles": ["ORGANIZER"],
+      "credentials": [{ "type": "password", "value": "organizer", "temporary": false }]
     },
     {
-      "username": "member",
+      "username": "participant",
       "enabled": true,
-      "email": "member@k-app.local",
+      "email": "participant@k-app.local",
       "firstName": "System",
-      "lastName": "Member",
-      "realmRoles": ["MEMBER"],
-      "credentials": [{ "type": "password", "value": "member", "temporary": false }]
+      "lastName": "Participant",
+      "realmRoles": ["PARTICIPANT"],
+      "credentials": [{ "type": "password", "value": "participant", "temporary": false }]
     }
   ]
 }

@@ -3,23 +3,23 @@ import { MemberPathways } from "./MemberPathways";
 import { MemberCardHeader } from "./MemberCardHeader";
 
 export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
-  const { id, name, enrolled = [], status = 'ONLINE', role = 'MEMBER', title = 'MEMBER' } = member;
+  const { id, name, enrolled = [], status = 'ONLINE', role = 'PARTICIPANT', title = 'PARTICIPANT' } = member;
   const [edit, setEdit] = useState(false);
-  const isVpe = currentUser?.role === 'VPE' || currentUser?.role === 'ADMIN';
-  const canEdit = isVpe || name === currentUser?.name;
+  const isOrganizer = currentUser?.role === 'ORGANIZER' || currentUser?.role === 'ADMIN';
+  const canEdit = isOrganizer || name === currentUser?.name;
   const up = (u) => onEdit({ id, updates: u });
 
   const cycleRole = (e) => {
     e.stopPropagation();
-    if (!isVpe) return;
-    const t = ['MEMBER', 'PRESIDENT', 'VP EDUCATION', 'VP MEMBERSHIP', 'VP PUBLIC RELATIONS', 'SECRETARY', 'TREASURER', 'SERGEANT AT ARMS'];
+    if (!isOrganizer) return;
+    const t = ['PARTICIPANT', 'LEAD HOST', 'EDUCATION LEAD', 'MEMBER SUCCESS', 'COMMS', 'SCRIBE', 'FINANCE', 'LOGISTICS'];
     const next = t[(t.indexOf(title) + 1) % t.length];
-    up({ title: next, role: next === 'VP EDUCATION' ? 'VPE' : 'MEMBER' });
+    up({ title: next, role: next === 'EDUCATION LEAD' ? 'ORGANIZER' : 'PARTICIPANT' });
   };
 
   return (
     <div className={`member-card ${status.toLowerCase()} ${role.toLowerCase()} ${edit ? "edit" : ""} ${canEdit ? "clickable" : ""}`} onClick={() => canEdit && setEdit(!edit)}>
-      <MemberCardHeader status={status} title={title} role={role} canEdit={canEdit} isVpe={isVpe} up={up} cycleRole={cycleRole} onDelete={onDelete} id={id} />
+      <MemberCardHeader status={status} title={title} role={role} canEdit={canEdit} isOrganizer={isOrganizer} up={up} cycleRole={cycleRole} onDelete={onDelete} id={id} />
       <div className="member-main-content">
         <div className="member-info">
           {edit ? <input autoFocus className="name-in" value={name} onClick={e => e.stopPropagation()} onKeyDown={e => e.key === 'Enter' && setEdit(false)}

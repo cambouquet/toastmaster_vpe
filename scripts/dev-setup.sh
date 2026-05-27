@@ -1,5 +1,5 @@
 #!/bin/bash
-echo ">>> TOASTMASTER VPE - NEURAL SYSTEM BOOT"
+echo ">>> MISSION CONTROL - NEURAL SYSTEM BOOT"
 
 # 1. Start Machine (if applicable)
 if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then

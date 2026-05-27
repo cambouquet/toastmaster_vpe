@@ -1,7 +1,7 @@
 import React from 'react';
 import { K_FONT_LIBRARY } from './KFontLibrary';
 
-export const KIcon = ({ char, color = '#ffffff', accentColor = '#ff0044', ...props }) => {
+export const KIcon = ({ char, color = '#ffffff', accentColor = '#ff0055', ...props }) => {
   const glyph = K_FONT_LIBRARY[char] || K_FONT_LIBRARY['0'];
   const paths = glyph.path.split(' Z').filter(p => p.trim()).map(p => p + ' Z');
   
@@ -9,7 +9,10 @@ export const KIcon = ({ char, color = '#ffffff', accentColor = '#ff0044', ...pro
     <div {...props}>
       <svg viewBox={`0 0 ${glyph.width} 80`} style={{ height: '100%', width: '100%' }}>
         {paths.map((p, i) => {
-          const isAccent = ((char === 'T' || char === 'F' || char === 'K') && (i === 1 || i === 2));
+          const isAccent = 
+            ((char === 'T' || char === 'F' || char === 'K') && (i === 1 || i === 2)) ||
+            (char === 'H' && i >= 2) ||
+            (char === 'W' && i < 2);
           return (
             <path key={i} d={p} 
               fill={isAccent ? accentColor : color} 

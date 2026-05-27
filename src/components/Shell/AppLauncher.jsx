@@ -3,7 +3,7 @@ import { NavGridItem } from './NavGridItem';
 import { APPS } from '../../services/system/AppRegistry.jsx';
 import './AppLauncher.scss';
 
-const DEFAULT_ORDER = ['launcher', 'toastmaster', 'identity-lab', 'font-lab', 'mission-control'];
+const DEFAULT_ORDER = ['launcher', 'workspace', 'identity-lab', 'font-lab', 'mission-control'];
 
 export const AppLauncher = ({ currentApp, onSwitch, user }) => {
   const isAuth = !!user;

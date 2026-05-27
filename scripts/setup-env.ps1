@@ -1,5 +1,5 @@
 # setup-env.ps1
-Write-Host ">>> TOASTMASTER VPE - INITIAL SYSTEM PROVISIONING" -ForegroundColor Cyan
+Write-Host ">>> MISSION CONTROL - INITIAL SYSTEM PROVISIONING" -ForegroundColor Cyan
 
 # 1. Start Podman Machine
 Write-Host ">>> Ensuring Podman VM is active..."
@@ -24,7 +24,7 @@ $null = podman pod rm -af 2>$null
 Write-Host ">>> Cleanup complete." -ForegroundColor Green
 
 # 3. Provision Admin & Import Realm
-Write-Host ">>> Bootstrapping Keycloak Admin & Toastmaster Realm (Port 8081)..." -ForegroundColor Cyan
+Write-Host ">>> Bootstrapping Keycloak Admin & Mission Control Realm (Port 8081)..." -ForegroundColor Cyan
 podman run --detach --name keycloak `
     -p 8081:8080 `
     -e KEYCLOAK_ADMIN=admin `
@@ -36,18 +36,19 @@ podman run --detach --name keycloak `
     -e KC_HOSTNAME=localhost `
     -e KC_HOSTNAME_PORT=8081 `
     -v ./keycloak-realm.json:/opt/keycloak/data/import/realm.json:Z `
+    -v ./keycloak/themes/k:/opt/keycloak/themes/k:Z `
     quay.io/keycloak/keycloak:24.0.0 start-dev --import-realm
 
 # 4. Verification Loop
 Write-Host ">>> Validating system heartbeat..." -ForegroundColor Yellow
 $sw = [diagnostics.stopwatch]::StartNew()
-$timeout = 90 # Generous timeout for first-time provisioning
+$timeout = 120 # Increased for theme initialization
 $ready = $false
 
 while ($sw.Elapsed.TotalSeconds -lt $timeout) {
     try {
-        # Check for the actual 'toastmaster' realm availability
-        $config = Invoke-RestMethod -Uri "http://localhost:8081/realms/toastmaster" -UseBasicParsing -ErrorAction SilentlyContinue
+        # Check for the actual 'k' realm availability
+        $config = Invoke-RestMethod -Uri "http://localhost:8081/realms/k" -UseBasicParsing -ErrorAction SilentlyContinue
         if ($config) {
             $ready = $true
             break
@@ -65,7 +66,7 @@ if ($ready) {
     
     Write-Host ">>> PROVISIONING COMPLETE. NEURAL LINK ESTABLISHED." -ForegroundColor Green
     Write-Host ">>> Admin: admin / admin"
-    Write-Host ">>> Realm: toastmaster"
+    Write-Host ">>> Realm: k"
     Write-Host ">>> URL: http://localhost:8081"
 } else {
     Write-Host "`n>>> [CRITICAL] Provisioning timed out. Check 'podman logs keycloak'." -ForegroundColor Red

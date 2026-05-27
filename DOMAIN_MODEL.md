@@ -1,11 +1,11 @@
-# Domain Model: Toastmaster VPE
+# Domain Model: Mission Control (Meetings App)
 
 ## Authentication & Identity
 The system uses **Keycloak** for real user management.
-- **Identity Provider**: Keycloak running on port 8080.
+- **Identity Provider**: Keycloak running on port 8081.
 - **Roles**:
-  - `VPE` or `admin`: Full command authority.
-  - `MEMBER`: Restricted self-assignment role.
+  - `ORGANIZER` or `ADMIN`: Full command authority.
+  - `PARTICIPANT`: Restricted self-assignment role.
   - `NONE` (Guest): Read-only access.
 - **Interaction**:
   - Typing `login` redirects to the Keycloak SSO.
@@ -22,8 +22,8 @@ The application state is managed as a flat object with nested `roles` and `membe
 
 ### 2. Roles Model (`state.roles`)
 Managed via the `roles.` action prefix.
-- `toastmaster`, `genEvaluator`, `topicsMaster`: Single member name strings.
-- `timer`, `grammarian`, `ahCounter`: Single member name strings.
+- `host` (Chair), `observer`, `speaker` (Table Topics): Lead roles.
+- `timer` (Timekeeper), `scribe`, `reviewer`: Evaluative roles.
 - `speakers`: Array of objects `{ id, name, title, evaluator }`.
   - Accessed via `roles.speaker.[field]` with an `{ id, val }` payload.
 

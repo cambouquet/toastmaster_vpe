@@ -13,7 +13,7 @@ import './Workspace.scss';
 
 export const MeetingWorkspace = ({ state, onAction }) => {
   const [editing, setEditing] = useState(null);
-  const isVpe = state.currentUser?.role === 'VPE' || state.currentUser?.role === 'ADMIN';
+  const isOrganizer = state.currentUser?.role === 'ORGANIZER' || state.currentUser?.role === 'ADMIN';
   const isGuest = !state.currentUser || state.currentUser.role === 'GUEST';
 
   useEffect(() => { 
@@ -22,9 +22,9 @@ export const MeetingWorkspace = ({ state, onAction }) => {
 
   const handleUpdate = (key, val) => {
     setEditing(null);
-    if (isVpe && val !== undefined) onAction(key, val);
+    if (isOrganizer && val !== undefined) onAction(key, val);
   };
-  const common = { state, editing, onEdit: isVpe ? setEditing : null, onUpdate: handleUpdate };
+  const common = { state, editing, onEdit: isOrganizer ? setEditing : null, onUpdate: handleUpdate };
 
   return (
     <div className='workspace-screen'>
@@ -37,7 +37,7 @@ export const MeetingWorkspace = ({ state, onAction }) => {
         <ActionSection state={state} onAction={onAction} />
         <MapPreview url={state.mapUrl} />
         <EditableCard label='Theme' value={state.theme} isEditing={editing === 'theme'}
-          onEdit={isVpe ? () => setEditing('theme') : null} onBlur={(v) => handleUpdate('theme', v)} />
+          onEdit={isOrganizer ? () => setEditing('theme') : null} onBlur={(v) => handleUpdate('theme', v)} />
         {!isGuest && (
           <>
             <RolesSection roles={state.roles} members={state.members} editing={editing}

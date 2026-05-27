@@ -13,12 +13,12 @@ export const INITIAL_STATE = {
   wordDefinition: 'The capacity to recover quickly from difficulties.',
   ahCount: 0,
   roles: { 
-    toastmaster: 'Alice Chen', 
-    genEvaluator: 'Bob Smith', 
-    topicsMaster: 'Catherine Miller',
+    host: 'Alice Chen', 
+    observer: 'Bob Smith', 
+    speaker: 'Catherine Miller',
     timer: 'David Wilson', 
-    grammarian: 'Elena Rodriguez', 
-    ahCounter: 'Frank Thompson',
+    scribe: 'Elena Rodriguez', 
+    reviewer: 'Frank Thompson',
     speakers: [
       { id: 1, name: 'Grace Lee', title: 'The AI Revolution', evaluator: 'Henry Ford' },
       { id: 2, name: 'Ivy Watson', title: 'Cybernetic Dreams', evaluator: 'Jack Reacher' },

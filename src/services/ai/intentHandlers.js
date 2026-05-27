@@ -3,7 +3,7 @@ export const handleMembers = (input, text, state) => {
     const name = text.replace(/.*add member\s+/i, '').trim();
     return name ? {
       subtitle: `Syncing "${name}" to member registry...`,
-      newState: { members: [...state.members, { id: Date.now().toString(), name, pathways: [], level: 1, status: 'ONLINE' }] }
+      newState: { members: [...state.members, { id: Date.now().toString(), name, enrolled: [], status: 'ONLINE' }] }
     } : { subtitle: "Please specify a name." };
   }
   if (input.includes('delete member') || input.includes('remove member')) {

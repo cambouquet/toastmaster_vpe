@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { PATHWAYS, LVL_REQS } from "../../constants/pathways";
+import { SKILL_TRACKS, LVL_REQS } from "../../constants/pathways";
 import { DeleteButton } from "../shared/DeleteButton";
 export const PathwayNode = ({ item, onUpdate, onRemove, isNew, available }) => {
   const [pick, setPick] = useState(false);
   if (isNew) return (
     <div className={`enrolled-item add-node ${pick ? "picking" : ""}`} onMouseEnter={() => setPick(true)} onMouseLeave={() => setPick(false)}>
-      <div className="p-header"><div className={`p-selector ${pick ? "open" : ""}`}><span className="p-name">+ PATHWAY</span>
+      <div className="p-header"><div className={`p-selector ${pick ? "open" : ""}`}><span className="p-name">+ TRACK</span>
         {pick && <div className="p-options scroll-hidden">{available.map(p => <div key={p} className="p-opt" onClick={() => { onUpdate(p); setPick(false); }}>{p}</div>)}</div>}
       </div></div>
     </div>
@@ -19,7 +19,7 @@ export const PathwayNode = ({ item, onUpdate, onRemove, isNew, available }) => {
       <div className="p-header">
         <div className={`p-selector ${pick ? "open" : ""}`}>
           <span className="p-name" onClick={() => setPick(!pick)}>{item.name}</span>
-          {pick && <div className="p-options scroll-hidden">{PATHWAYS.map(p => <div key={p} className={`p-opt ${p === item.name ? "active" : ""}`} onClick={() => { up({ name: p }); setPick(false); }}>{p}</div>)}</div>}
+          {pick && <div className="p-options scroll-hidden">{SKILL_TRACKS.map(p => <div key={p} className={`p-opt ${p === item.name ? "active" : ""}`} onClick={() => { up({ name: p }); setPick(false); }}>{p}</div>)}</div>}
         </div>
         <DeleteButton onDelete={onRemove} className="p-del-btn" />
       </div>

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Production Deployment Script for toastmaster_vpe
+# Production Deployment Script for meetings-app
 
 echo "🚀 Starting Production Deployment..."
 
@@ -8,7 +8,7 @@ echo "📦 Building frontend with npm..."
 npm run build
 
 # 2. Set environment variables
-export APP_IMAGE="toastmaster-vpe:latest"
+export APP_IMAGE="meetings-app:latest"
 
 # 3. Build the application image
 echo "🛠️ Building Docker image: $APP_IMAGE..."

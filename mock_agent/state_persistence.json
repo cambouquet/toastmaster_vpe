@@ -3,16 +3,16 @@
     {
       "id": "1",
       "name": "Alice Chen",
-      "role": "VPE",
-      "title": "VP EDUCATION",
+      "role": "ORGANIZER",
+      "title": "ORGANIZER",
       "enrolled": [
         {
-          "name": "Dynamic Leadership",
+          "name": "Public Speaking",
           "level": 5,
           "projects": 0
         },
         {
-          "name": "Persuasive Influence",
+          "name": "Internal Communication",
           "level": 3,
           "projects": 0
         }
@@ -30,8 +30,8 @@
     {
       "id": "2",
       "name": "Bob Smith",
-      "role": "MEMBER",
-      "title": "PRESIDENT",
+      "role": "LEADER",
+      "title": "LEAD",
       "enrolled": [
         {
           "name": "Strategic Relationships",
@@ -43,8 +43,8 @@
     {
       "id": "3",
       "name": "Catherine Miller",
-      "role": "MEMBER",
-      "title": "VP MEMBERSHIP",
+      "role": "PARTICIPANT",
+      "title": "MANAGER",
       "enrolled": [
         {
           "name": "Presentation Mastery",
@@ -56,8 +56,8 @@
     {
       "id": "4",
       "name": "David Wilson",
-      "role": "MEMBER",
-      "title": "SECRETARY",
+      "role": "PARTICIPANT",
+      "title": "SCRIBE",
       "enrolled": [
         {
           "name": "Innovative Planning",
@@ -69,8 +69,8 @@
     {
       "id": "5",
       "name": "Elena Rodriguez",
-      "role": "MEMBER",
-      "title": "TREASURER",
+      "role": "PARTICIPANT",
+      "title": "TREASURY",
       "enrolled": [
         {
           "name": "Leadership Development",
@@ -82,8 +82,8 @@
     {
       "id": "6",
       "name": "Frank Thompson",
-      "role": "GUEST",
-      "title": "GUEST",
+      "role": "PARTICIPANT",
+      "title": "PARTICIPANT",
       "enrolled": [
         {
           "name": "Effective Coaching",
@@ -95,8 +95,8 @@
     {
       "id": "7",
       "name": "Grace Lee",
-      "role": "MEMBER",
-      "title": "SERGEANT AT ARMS",
+      "role": "PARTICIPANT",
+      "title": "LOGISTICS",
       "enrolled": [
         {
           "name": "Team Collaboration",
