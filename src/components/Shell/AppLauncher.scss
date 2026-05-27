@@ -33,7 +33,7 @@
   .status-line {
     font-size: 10px;
     letter-spacing: 2px;
-    opacity: 0.6;
+    color: $text-secondary;
     margin-bottom: 10px;
     .val { color: $accent-cyan; }
   }
@@ -54,8 +54,7 @@
 
   .subtitle {
     font-size: 14px;
-    color: $accent-cyan;
-    opacity: 0.8;
+    color: $text-secondary;
     letter-spacing: 4px;
     text-transform: uppercase;
   }
@@ -109,7 +108,7 @@
 
   .status {
     font-size: 8px;
-    opacity: 0.4;
+    color: $text-secondary;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-top: 4px;

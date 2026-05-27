@@ -13,7 +13,7 @@
     .g-h {
       display: flex; justify-content: space-between; align-items: center;
       padding: 4px 0; background: transparent;
-      font: 900 0.6rem 'JetBrains Mono'; color: rgba($accent-cyan, 0.6);
+      font: 900 0.6rem 'JetBrains Mono'; color: $text-secondary;
       cursor: pointer; border: none; border-bottom: 1px solid rgba($accent-cyan, 0.1);
       transition: all 0.2s;
       &:hover { color: $accent-cyan; border-bottom-color: rgba($accent-cyan, 0.4); }

@@ -30,7 +30,7 @@
     .public-timer {
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
       .timer-display.large { font-size: 4rem; font-weight: 900; line-height: 1; color: #fff; text-shadow: 0 0 20px rgba($accent-cyan, 0.4); }
-      .target-notif { font: 800 0.8rem 'JetBrains Mono'; color: rgba($accent-cyan, 0.6); letter-spacing: 2px; }
+      .target-notif { font: 800 0.8rem 'JetBrains Mono'; color: $text-secondary; letter-spacing: 2px; }
     }
   }
 
