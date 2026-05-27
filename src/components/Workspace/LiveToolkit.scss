@@ -1,0 +1,36 @@
+@import '../../styles/variables';
+
+.live-toolkit {
+  grid-column: span 2;
+  border-left: 4px solid $accent-cyan;
+  background: rgba($accent-cyan, 0.05);
+  @include mobile { grid-column: span 1; }
+
+  .tool-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 15px;
+    @include mobile { grid-template-columns: 1fr; }
+  }
+
+  .tool-item { display: flex; flex-direction: column; gap: 8px; }
+  .tool-label { font-size: 0.6rem; color: rgba($accent-cyan, 0.6); letter-spacing: 2px; }
+
+  .counter-controls, .timer-btns {
+    display: flex; align-items: center; gap: 12px;
+    button {
+      background: rgba($accent-cyan, 0.1); border: 1px solid rgba($accent-cyan, 0.3);
+      color: $accent-cyan; min-width: 32px; height: 32px; padding: 0 10px;
+      cursor: pointer; font: 700 0.7rem 'JetBrains Mono', monospace;
+      &:hover { background: $accent-cyan; color: #000; }
+      &.start { border-color: #00ffaa; color: #00ffaa; &:hover { background: #00ffaa; color: #000; } }
+    }
+  }
+
+  .count-val, .timer-display {
+    font: 800 1.8rem 'JetBrains Mono', monospace;
+    color: #fff;
+  }
+}
+

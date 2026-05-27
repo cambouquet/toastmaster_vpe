@@ -10,7 +10,7 @@ export const MemberRegistry = ({ members, onAction, currentUser }) => {
 
   return (
     <div className="member-registry-screen">
-      <AppHeader app="TOASTMASTER" title="MEMBERS">
+      <AppHeader title="MEMBERS" status="stable">
         {isOfficer && (
           <button className="add-member-btn cyber-plus" onClick={() => onAction('ADD_MEMBER_REQUEST')}>
             <span className="btn-glitch" />

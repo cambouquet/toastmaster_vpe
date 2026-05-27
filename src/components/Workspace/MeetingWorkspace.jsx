@@ -4,7 +4,9 @@ import { SpeakersSection } from './SpeakersSection';
 import { BriefingSection } from './BriefingSection';
 import { ActionSection } from './ActionSection';
 import { MeetingSchedule } from './MeetingSchedule';
+import { MeetingProgram } from './MeetingProgram';
 import { MapPreview } from './MapPreview';
+import { LiveToolkit } from './LiveToolkit';
 import { EditableCard } from '../shared/EditableCard';
 import { AppHeader } from '../shared/AppHeader';
 import './Workspace.scss';
@@ -21,14 +23,16 @@ export const MeetingWorkspace = ({ state, onAction }) => {
 
   return (
     <div className='workspace-screen'>
-      <AppHeader title="NEXT MEETING" />
+      <AppHeader title={state.status === 'live' ? "LIVE SESSION" : "NEXT MEETING"} status={state.status} />
       <div className='workspace-grid'>
+        {state.status === 'live' && <LiveToolkit state={state} onAction={onAction} />}
         <MeetingSchedule {...common} />
+        <MeetingProgram state={state} />
         <MapPreview url={state.mapUrl} />
         <EditableCard label='Meeting Theme' value={state.theme} isEditing={editing === 'theme'}
           onEdit={() => isVpe && setEditing('theme')} onBlur={(v) => handleUpdate('theme', v)} />
         <BriefingSection {...common} />
-        <ActionSection state={state} />
+        <ActionSection state={state} onAction={onAction} />
         <RolesSection roles={state.roles} members={state.members} editing={editing}
           onUpdate={(role, val) => handleUpdate(`roles.${role}`, val)} />
         <SpeakersSection 

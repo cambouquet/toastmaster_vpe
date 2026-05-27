@@ -38,4 +38,17 @@
     font-family: "JetBrains Mono", monospace; 
     letter-spacing: 0.2em; display: flex; gap: 20px;
   }
+
+  &.is-live {
+    border-left-color: #ff0044;
+    h1 {
+      text-shadow: 0 0 15px rgba(255, 0, 68, 0.4);
+      animation: live-pulse 2s infinite ease-in-out;
+    }
+  }
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  50% { opacity: 0.8; filter: brightness(1.3); }
 }

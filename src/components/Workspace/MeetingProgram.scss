@@ -1,0 +1,71 @@
+@import '../../styles/variables';
+
+.meeting-program {
+  grid-column: span 1;
+  border-left: 2px solid rgba($accent-cyan, 0.3);
+  
+  .program-timeline {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    padding-left: 10px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 62px;
+      top: 5px;
+      bottom: 5px;
+      width: 1px;
+      background: rgba($accent-cyan, 0.1);
+    }
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-family: 'JetBrains Mono', monospace;
+
+    .time {
+      font-size: 0.7rem;
+      color: $accent-cyan;
+      width: 45px;
+      opacity: 0.8;
+    }
+
+    .marker {
+      width: 6px;
+      height: 6px;
+      background: rgba($accent-cyan, 0.4);
+      border-radius: 50%;
+      z-index: 1;
+      border: 1px solid $bg-void;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      
+      .label-text {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: 1px;
+      }
+      
+      .detail-text {
+        font-size: 0.65rem;
+        color: rgba($accent-cyan, 0.5);
+        text-transform: uppercase;
+      }
+    }
+
+    &:hover {
+      .marker { background: $accent-cyan; box-shadow: 0 0 8px $accent-cyan; }
+      .label-text { color: $accent-cyan; }
+    }
+  }
+}
