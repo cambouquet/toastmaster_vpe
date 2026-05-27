@@ -18,7 +18,7 @@ export class MockAiService {
     if (res) return res;
     if (input.includes("theme")) {
       const m = text.match(/theme (will be|is) (.*)/i);
-      return { subtitle: `Set theme to "${m?.[2] || "Planning"}".`, newState: { theme: m?.[2] || "Planning", status: "planning" } };
+      return { notification: `Set theme to "${m?.[2] || "Planning"}".`, newState: { theme: m?.[2] || "Planning", status: "planning" } };
     }
     const m = input.match(/(members|registry|workspace|back)/);
     if (m) {

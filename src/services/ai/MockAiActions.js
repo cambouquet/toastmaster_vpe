@@ -1,43 +1,33 @@
 import { login, logout, getIdentity } from "../auth/KeycloakService";
-
 export const handleUiActions = (action, val, state) => {
   if (action === "SWITCH_APP") return { newState: { currentApp: val } };
   if (action === "login") { 
     login(typeof val === 'object' ? val.id : val, typeof val === 'object' ? val : null); 
-    const identity = getIdentity();
-    return { 
-      subtitle: `Uplink established. Identified as ${identity.name}.`,
-      newState: { currentUser: identity } 
-    }; 
+    const id = getIdentity();
+    return { subtitle: `Uplink established. Identified as ${id.name}.`, newState: { currentUser: id } };
   }
-  if (action === "logout") { 
-    logout(); 
-    return { 
-      subtitle: "Connection terminated. Rest well, user.",
-      newState: { currentUser: getIdentity() } 
-    }; 
-  }
-  if (action === "CLEAR_LOGS") return { subtitle: "System logs cleared." };
-  if (action === "RUN_DIAG") return { subtitle: "Diagnostics complete." };
-  if (action === "DUMP_LOGS") return { subtitle: "Logs dumped to clipboard." };
-  if (action === "TOGGLE_DEBUG") return { subtitle: `Kernel debugger ${val ? 'active' : 'idle'}.` };
+  if (action === "logout") { logout(); return { subtitle: "Connection terminated.", newState: { currentUser: getIdentity() } }; }
+  const n = (m, s={}) => ({ notification: m, newState: { ...s, [action]: val } });
+  if (action === "CLEAR_LOGS") return n("System logs cleared.");
+  if (action === "RUN_DIAG") return n("Diagnostics complete.");
+  if (action === "DUMP_LOGS") return n("Logs dumped to clipboard.");
+  if (action === "TOGGLE_DEBUG") return n(`Kernel debugger ${val ? 'active' : 'idle'}.`);
   if (action === "ADD_MEMBER_REQUEST") return { subtitle: "Register members via Identity Lab." };
   const flat = ["theme", "date", "location", "room", "registrationLink", "mapUrl", "zoomLink", "wordOfTheDay", "wordDefinition"];
-  if (flat.includes(action)) return { subtitle: `${action} updated.`, newState: { [action]: val } };
+  if (flat.includes(action)) return n(`${action} updated.`);
   if (action.startsWith('roles.')) {
-    const parts = action.split('.');
-    if (parts[1] === 'speaker') {
-      const field = parts[2];
-      const next = state.roles.speakers.map(s => s.id === val.id ? { ...s, [field]: val.val } : s);
-      return { subtitle: `Speaker updated.`, newState: { roles: { speakers: next } } };
+    const p = action.split('.');
+    if (p[1] === 'speaker') {
+      const next = state.roles.speakers.map(s => s.id === val.id ? { ...s, [p[2]]: val.val } : s);
+      return { notification: `Speaker updated.`, newState: { roles: { speakers: next } } };
     }
-    return { subtitle: `${parts[1]} assigned.`, newState: { roles: { [parts[1]]: val } } };
+    return { notification: `${p[1]} assigned.`, newState: { roles: { [p[1]]: val } } };
   }
-  if (action === 'updateMember') {
-    const next = state.members.map(m => m.id === val.id ? { ...m, ...val } : m);
-    return { subtitle: "Registry updated.", newState: { members: next } };
-  }
-  if (action === "addMember") return { subtitle: "New profile synchronized.", newState: { members: [...state.members, val] } };
-  if (action === "deleteMember") return { subtitle: "Profile purged.", newState: { members: state.members.filter(m => m.id !== val) } };
-  return { subtitle: "Action processed.", newState: { [action]: val } };
+  if (action === 'updateMember') return { notification: "Registry updated.", newState: { members: state.members.map(m => m.id === val.id ? { ...m, ...val } : m) } };
+  if (action === 'addMember') return { notification: "New profile synchronized.", newState: { members: [...state.members, val] } };
+  if (action === 'deleteMember') return { notification: "Profile purged.", newState: { members: state.members.filter(m => m.id !== val) } };
+  if (action === 'TIMER_START') return { notification: 'Timer started.', subtitle: `The floor is yours, ${val}. I'm timing this session now.` };
+  const silent = ['time-', 'ah-', 'gram-', 'eval-', 'wotd-'];
+  if (silent.some(s => action.startsWith(s))) return { newState: { [action]: val } };
+  return { notification: "Action processed.", newState: { [action]: val } };
 };
