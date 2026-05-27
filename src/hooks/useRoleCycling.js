@@ -5,20 +5,47 @@ export const useRoleCycling = (phase) => {
   const roles = ['WARRIOR', 'WOMAN', 'HUMAN'];
 
   useEffect(() => {
-    if (phase !== 'cycling') return;
+    if (phase === 'booting') {
+      setDisplayRole('WARRIOR');
+      return;
+    }
+    if (phase !== 'cycling' && phase !== 'exiting') return;
+    
+    // If we've already reached HUMAN, don't restart the cycle
+    if (displayRole === 'HUMAN') return;
+
     let roleIdx = 0;
+    let womanAttempts = 0;
+
     const roleTimer = setInterval(() => {
-      if (roleIdx < roles.length - 1) {
-        const next = roles[++roleIdx];
-        let its = 0;
-        const chars = '!@#$%^&*()_+{}[]|;:,.<>?';
-        const scr = setInterval(() => {
-          setDisplayRole(next.split("").map((c, i) => i < its ? next[i] : chars[Math.floor(Math.random() * chars.length)]).join(""));
-          if (its >= next.length) clearInterval(scr);
-          its += 0.5;
-        }, 30);
-      } else clearInterval(roleTimer);
-    }, 1200);
+      // 1. If currently on WARRIOR, move to WOMAN
+      if (roleIdx === 0) {
+        roleIdx = 1; // Index of WOMAN
+        scrambleTo(roles[1]);
+      } 
+      // 2. If on WOMAN, try to glitch but stay on WOMAN once
+      else if (roleIdx === 1 && womanAttempts < 1) {
+        womanAttempts++;
+        scrambleTo(roles[1]); // "Fails" and stays on WOMAN
+      } 
+      // 3. Final attempt: Move to HUMAN
+      else if (roleIdx === 1 && womanAttempts === 1) {
+        roleIdx = 2; // Index of HUMAN
+        scrambleTo(roles[2]);
+        clearInterval(roleTimer);
+      }
+    }, 700);
+
+    function scrambleTo(word) {
+      let its = 0;
+      const chars = '!@#$%^&*()_+{}[]|;:,.<>?';
+      const scr = setInterval(() => {
+        setDisplayRole(word.split("").map((c, i) => i < its ? word[i] : chars[Math.floor(Math.random() * chars.length)]).join(""));
+        if (its >= word.length) clearInterval(scr);
+        its += 1;
+      }, 20);
+    }
+
     return () => clearInterval(roleTimer);
   }, [phase]);
 

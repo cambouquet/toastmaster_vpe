@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { login, logout, isGuestMode } from '../services/auth/KeycloakService';
+import { login, logout, isGuestMode, isConnectionDegraded } from '../services/auth/KeycloakService';
 
-export const useAuthSync = (uiAction) => {
+export const useAuthSync = (uiAction, notify) => {
   const [syncProgress, setSyncProgress] = useState(0);
   const [syncType, setSyncType] = useState('in');
 
@@ -26,6 +26,9 @@ export const useAuthSync = (uiAction) => {
         // If we are in STANDALONE guest mode, don't wait for a redirect that won't happen
         if (isGuestMode()) {
           setSyncProgress(0);
+          if (role === 'login' && isConnectionDegraded()) {
+            notify?.("CONNECTION FAILED - RUNNING IN OFFLINE MODE", "error");
+          }
         } else {
           setSyncProgress(100); 
         }
