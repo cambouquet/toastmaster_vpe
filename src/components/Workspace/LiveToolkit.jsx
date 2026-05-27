@@ -29,7 +29,7 @@ export const LiveToolkit = ({ state, onAction }) => {
   return (
     <div className={`card live-toolkit ${running ? 'pulse-border' : ''} light-${getLight()}`}>
       <div className="session-header">
-        <span className="session-label">{running ? 'LISTEN MODE ACTIVE' : 'SESSION LOG'}</span>
+        <span className="session-label">{running ? 'LISTEN MODE ACTIVE' : 'LOG'}</span>
         <span className="session-member">{current.member}</span>
       </div>
       <div className="tool-grid">
@@ -38,11 +38,9 @@ export const LiveToolkit = ({ state, onAction }) => {
         <GramTool activeIdx={activeIdx} state={state} onAction={onAction} />
       </div>
       <div className={`eval-vessel ${running ? 'locked' : 'ready'}`}>
-        <div className="tool-header eval-header">
-          <span className="tool-label">PERFORMANCE EVALUATION</span>
-        </div>
         <LiveEval activeIdx={activeIdx} state={state} onAction={onAction} />
       </div>
     </div>
   );
 };
+
