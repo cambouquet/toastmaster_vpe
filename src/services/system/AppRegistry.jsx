@@ -9,7 +9,7 @@ export const APPS = {
   'workspace': { id: 'workspace', name: 'WORKSPACE', Icon: (p) => <KIcon char="W" color={C} {...p} />, color: C, hasChat: true, public: true },
   'font-lab': { id: 'font-lab', name: 'FONT LAB', Icon: (p) => <KIcon char="F" {...p} />, color: R, hasChat: false, public: false },
   'identity-lab': { id: 'identity-lab', name: 'IDENTITY LAB', Icon: (p) => <KIcon char="I" {...p} />, color: R, hasChat: false, public: true },
-  'k-app': { id: 'k-app', name: 'K', Icon: (p) => <KIcon char="K" {...p} />, color: R, hasChat: true, public: false }
+  'k-app': { id: 'k-app', name: 'K APP', Icon: (p) => <KIcon char="K" {...p} />, color: R, hasChat: true, public: false }
 };
 
 export const getAppInfo = (appId) => APPS[appId] || APPS['launcher'];

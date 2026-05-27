@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 test('system health check', async ({ page }) => {
   await page.goto('/');
-  await expect(page).toHaveTitle(/Mission Control/);
+  await expect(page).toHaveTitle(/K App/);
   await page.click('.debug-btn', { force: true });
   await expect(page.locator('.debug-panel')).toBeVisible();
   await page.click('button:has-text("CLEAR")');
