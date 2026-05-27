@@ -1,0 +1,39 @@
+name: Install Self-Hosted Runner
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner_token:
+        description: 'GitHub Runner Token (from Repo Settings > Actions > Runners)'
+        required: true
+        type: string
+
+jobs:
+  install-runner:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install and Configure Runner via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            # Clean up existing runner if it exists
+            sudo rm -rf ~/actions-runner
+            mkdir -p ~/actions-runner && cd ~/actions-runner
+            
+            # Download the latest runner package
+            curl -o actions-runner-linux-x64-2.316.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.316.1/actions-runner-linux-x64-2.316.1.tar.gz
+            tar xzf ./actions-runner-linux-x64-2.316.1.tar.gz
+            
+            # Configure the runner
+            # We use --unattended to skip interactive prompts
+            ./config.sh --url https://github.com/${{ github.repository }} --token ${{ github.event.inputs.runner_token }} --name "ovh-vm-runner" --unattended --replace --work "_work"
+            
+            # Install as a systemd service so it starts on boot
+            sudo ./svc.sh install
+            sudo ./svc.sh start
+            
+            echo "✅ Self-hosted runner installed and started as a background service."
