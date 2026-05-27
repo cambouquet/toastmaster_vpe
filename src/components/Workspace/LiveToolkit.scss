@@ -5,14 +5,9 @@
   .session-header {
     display: flex; flex-direction: column; gap: 4px; border-bottom: 1px solid rgba($accent-cyan, 0.2); padding-bottom: 8px; margin-bottom: 12px;
     .session-nav { display: flex; justify-content: space-between; align-items: center; }
-    .session-label { font: 900 0.85rem 'JetBrains Mono'; color: $accent-cyan; letter-spacing: 2px; }
-    .next-btn { 
-      background: transparent; border: none; color: rgba($accent-cyan, 0.4); 
-      font: 800 0.7rem 'JetBrains Mono'; padding: 4px; cursor: pointer; transition: all 0.2s;
-      border-bottom: 1px solid transparent;
-      &:hover { color: $accent-cyan; border-bottom-color: $accent-cyan; }
-    }
-    .session-member { font: 600 1.25rem 'JetBrains Mono'; color: #fff; letter-spacing: -0.5px; }
+    .session-label { font: 900 0.65rem 'JetBrains Mono'; color: $accent-cyan; letter-spacing: 2px; opacity: 0.6; text-transform: uppercase; }
+    .session-status { font: 800 0.6rem 'JetBrains Mono'; color: rgba($accent-cyan, 0.4); letter-spacing: 1px; }
+    .session-member { font: 500 1.3rem 'Space Grotesk'; color: #fff; letter-spacing: -0.5px; }
   }
   .tool-grid { 
     display: grid; 
@@ -78,7 +73,15 @@
 
   .timer-row {
     display: flex; align-items: baseline; gap: 12px;
+    &.clickable { cursor: pointer; transition: opacity 0.2s; &:hover { opacity: 0.7; } }
     .timer-display { font: 700 2.4rem 'JetBrains Mono'; color: #fff; line-height: 1; letter-spacing: -1px; }
+  }
+
+  .reset-btn {
+    background: transparent; border: none; color: rgba($accent-cyan, 0.4);
+    cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    &:hover { color: #ff4444; background: rgba(#ff4444, 0.08); }
   }
 
   .counter-controls, .timer-btns {
