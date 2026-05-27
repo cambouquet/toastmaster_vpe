@@ -1,14 +1,14 @@
 import { MEMBERS_DATA } from '../../data/members';
 
 export const getMockIdentity = () => {
-  const isLoggedOut = localStorage.getItem('mock_logged_out') === 'true' || !localStorage.getItem('mock_member_id');
-  if (isLoggedOut) return { name: "AUTHORIZATION REQUIRED", role: "NONE" };
   const memberId = localStorage.getItem('mock_member_id');
-  if (!memberId) return { name: "AUTHORIZATION REQUIRED", role: "NONE" };
+  if (!memberId || localStorage.getItem('mock_logged_out') === 'true') {
+    return { name: "GUEST_USER", role: "GUEST", title: "Visitor", token: "guest" };
+  }
   const extras = JSON.parse(sessionStorage.getItem('mock_extra_members') || '[]');
   const all = [...MEMBERS_DATA, ...extras];
   const member = all.find(m => m.id === memberId);
-  if (!member) return { name: "AUTHORIZATION REQUIRED", role: "NONE" };
+  if (!member) return { name: "GUEST_USER", role: "GUEST", title: "Visitor" };
   return { name: member.name, role: member.role, title: member.title, token: "mock-token" };
 };
 

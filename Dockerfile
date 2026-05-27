@@ -17,5 +17,6 @@ COPY --from=build /app/mock_agent ./mock_agent
 COPY deploy/nginx.conf /etc/nginx/http.d/default.conf
 
 EXPOSE 80 3001
+RUN touch mock_agent/state_persistence.json && chmod 666 mock_agent/state_persistence.json
 RUN echo "#!/bin/sh\nnginx -g 'daemon on;'; node mock_agent/server.cjs" > start.sh && chmod +x start.sh
 CMD ["./start.sh"]
