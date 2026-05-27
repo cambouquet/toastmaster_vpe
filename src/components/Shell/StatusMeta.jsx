@@ -8,6 +8,7 @@ import { useMeetingSegments } from '../../hooks/useMeetingSegments';
 export const StatusMeta = ({ user, online, total, hovered, AppIcon, state, uiAction }) => {
   const pseudo = user.name.split(' ')[0], roles = state?.roles || {}, active = state?.activeSegment || 0;
   const isHost = roles.host === user.name, segments = useMeetingSegments(roles);
+  const isTMOE = user.role === 'TMOE';
   const onNext = (e) => { e.stopPropagation(); if (active < segments.length - 1) uiAction('activeSegment', active + 1); };
   return (
     <>

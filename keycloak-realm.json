@@ -5,7 +5,7 @@
   "loginTheme": "k",
   "clients": [
     {
-      "clientId": "mission-control",
+      "clientId": "k-app",
       "publicClient": true,
       "directAccessGrantsEnabled": true,
       "webOrigins": ["*"],

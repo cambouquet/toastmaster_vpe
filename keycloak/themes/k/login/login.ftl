@@ -1,5 +1,5 @@
 <#import "template.ftl" as layout>
-<@layout.registrationLayout displayInfo=social.displayInfo displayMessage=!messagesPerField.existsError('username','password'); section>
+<@layout.registrationLayout displayInfo=(social.displayInfo)!false displayMessage=!messagesPerField.existsError('username','password'); section>
     <#if section = "header">
         <div class="synced-status" id="id-wordmark-container">
             <div class="k-id-brand-container">

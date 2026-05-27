@@ -11,7 +11,7 @@ export const MainContent = ({ isWorkspace, state, uiAction, onAuth }) => {
     return <AppLauncher user={state.currentUser} currentApp={state.currentApp} onSwitch={(appId) => uiAction('SWITCH_APP', appId)} />;
   }
 
-  if (state.currentApp === 'identity-lab' || state.currentApp === 'mission-control') {
+  if (state.currentApp === 'identity-lab' || state.currentApp === 'k-app') {
     return <IdentityLab state={state} uiAction={uiAction} onAuth={onAuth} />;
   }
 

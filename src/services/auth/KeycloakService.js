@@ -12,7 +12,7 @@ let onSyncError = null;
 try {
   keycloak = !USE_MOCK ? new Keycloak({
     url: import.meta.env.PROD ? 'https://auth.k-app.tech' : 'http://localhost:8081',
-    realm: 'k', clientId: 'mission-control'
+    realm: 'k', clientId: 'k-app'
   }) : null;
 } catch (e) { guestMode = true; connectionDegraded = true; }
 
