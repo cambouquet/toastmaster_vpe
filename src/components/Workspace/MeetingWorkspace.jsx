@@ -29,8 +29,8 @@ export const MeetingWorkspace = ({ state, onAction }) => {
     <div className='workspace-screen'>
       <AppHeader title={state.status === 'live' ? "LIVE SESSION" : "NEXT MEETING"} status={state.status} />
       <div className='workspace-grid'>
-        <MeetingProgram state={state} onAction={onAction} />
         {state.status === 'live' && <LiveToolkit state={state} onAction={onAction} />}
+        <MeetingProgram state={state} onAction={onAction} />
         <MeetingSchedule {...common} />
         <MapPreview url={state.mapUrl} />
         <EditableCard label='Theme' value={state.theme} isEditing={editing === 'theme'}
