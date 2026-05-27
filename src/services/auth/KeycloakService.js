@@ -22,7 +22,7 @@ export const initKeycloak = (onAuthenticated) => {
 
 export const getIdentity = () => {
   if (USE_MOCK) return getMockIdentity();
-  if (!keycloak || !keycloak.authenticated) return { name: "AUTHORIZATION_REQUIRED", role: "NONE" };
+  if (!keycloak || !keycloak.authenticated) return { name: "AUTHORIZATION REQUIRED", role: "NONE" };
   const roles = keycloak.tokenParsed?.realm_access?.roles || [];
   const isVpe = roles.includes('VPE') || roles.includes('admin');
   return {

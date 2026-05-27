@@ -5,7 +5,7 @@ import { useStatusRotation } from '../../hooks/useStatusRotation';
 import './SystemStatus.scss';
 
 export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav, notifications = [] }) => {
-  const isAuth = user.role !== 'NONE' && user.name !== 'AUTHORIZATION REQUIRED';
+  const isAuth = user.name !== 'AUTHORIZATION REQUIRED' && user.role !== 'NONE';
   const [showRoles, setShowRoles] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [search, setSearch] = useState('');

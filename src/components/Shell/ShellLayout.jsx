@@ -21,7 +21,7 @@ export const ShellLayout = ({ state, props, handlers, flags }) => {
       <MainContent isWorkspace={state.currentScreen === 'workspace'} state={state} uiAction={handlers.uiAction} onAuth={handlers.onAuth} />
       <SystemNotification notifications={props.notifications} onDismiss={handlers.dismiss} />
       <Subtitles text={props.subtitle} />
-      {appInfo.hasChat && (
+      {appInfo.hasChat && state.currentUser.name !== 'AUTHORIZATION REQUIRED' && state.currentUser.role !== 'NONE' && props.syncProgress === 0 && (
         <div className="bottom-input-wrap">
           <ChatInput onSend={handlers.interact} onType={(t) => handlers.interact(t, true)} onToggleDebug={handlers.toggleDebug} testStatus={state.testStatus} />
         </div>

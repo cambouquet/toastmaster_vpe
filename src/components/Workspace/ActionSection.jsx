@@ -8,11 +8,5 @@ export const ActionSection = ({ state }) => (
         <div className="val">GUEST REGISTRATION [OPEN]</div>
       </div>
     )}
-    {state.mapUrl && (
-      <div className="card action-card map" onClick={() => window.open(state.mapUrl, '_blank')}>
-        <label>LOCATOR</label>
-        <div className="val">NAVIGATE TO VENUE</div>
-      </div>
-    )}
   </>
 );

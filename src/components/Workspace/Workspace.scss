@@ -41,6 +41,31 @@
     font-size: 1.5rem; font-weight: 400; color: #fff;
     line-height: 1.2; display: block; width: 100%;
     font-family: 'Space Grotesk', sans-serif;
+    overflow-wrap: break-word; // Break only when necessary, no mid-word cuts
+    word-break: normal;
+  }
+
+  .tactical-link {
+    color: $accent-cyan;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba($accent-cyan, 0.3);
+    &:hover { border-bottom-style: solid; }
+  }
+
+  .map-container {
+    grid-column: span 2;
+    @include mobile { grid-column: span 1; }
+    padding: 0;
+    overflow: hidden;
+    height: 300px;
+    background: #000;
+    
+    label { padding: 1.8rem 1.8rem 0; margin-bottom: 0.5rem; }
+    
+    .map-frame {
+      height: calc(100% - 3.5rem);
+      position: relative;
+    }
   }
 
   .val.hidden { visibility: hidden; }

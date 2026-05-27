@@ -4,6 +4,7 @@ import { SpeakersSection } from './SpeakersSection';
 import { BriefingSection } from './BriefingSection';
 import { ActionSection } from './ActionSection';
 import { MeetingSchedule } from './MeetingSchedule';
+import { MapPreview } from './MapPreview';
 import { EditableCard } from '../shared/EditableCard';
 import { AppHeader } from '../shared/AppHeader';
 import './Workspace.scss';
@@ -23,14 +24,21 @@ export const MeetingWorkspace = ({ state, onAction }) => {
       <AppHeader title="NEXT MEETING" />
       <div className='workspace-grid'>
         <MeetingSchedule {...common} />
+        <MapPreview url={state.mapUrl} />
         <EditableCard label='Meeting Theme' value={state.theme} isEditing={editing === 'theme'}
           onEdit={() => isVpe && setEditing('theme')} onBlur={(v) => handleUpdate('theme', v)} />
         <BriefingSection {...common} />
         <ActionSection state={state} />
-        <RolesSection roles={state.roles} members={state.members} editing={editing} 
-          onEdit={setEditing} onAction={onAction} currentUser={state.currentUser} />
-        <SpeakersSection speakers={state.roles.speakers} members={state.members} editing={editing} 
-          onEdit={setEditing} onAction={onAction} currentUser={state.currentUser} />
+        <RolesSection roles={state.roles} members={state.members} editing={editing}
+          onUpdate={(role, val) => handleUpdate(`roles.${role}`, val)} />
+        <SpeakersSection 
+          speakers={state.roles.speakers || []} 
+          members={state.members} 
+          editing={editing}
+          onEdit={setEditing}
+          onAction={onAction}
+          currentUser={state.currentUser}
+        />
       </div>
     </div>
   );
