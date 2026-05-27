@@ -58,7 +58,7 @@
     background: transparent; border: none; color: rgba($accent-cyan, 0.4);
     font: 800 0.7rem 'JetBrains Mono'; cursor: pointer; padding: 4px 6px;
     transition: all 0.2s; letter-spacing: 1px; text-transform: uppercase;
-    &:hover { color: $accent-cyan; background: rgba($accent-cyan, 0.08); }
+    &:hover { color: $accent-cyan; }
   }
 
   .clear-btn:hover { color: #ff4444; }

@@ -12,10 +12,11 @@
   .prog-g {
     .g-h {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 4px 10px; background: rgba($accent-cyan, 0.05);
-      font: 900 0.6rem 'JetBrains Mono'; color: $accent-cyan;
-      cursor: pointer; border-radius: 4px; border: 1px solid rgba($accent-cyan, 0.1);
-      &:hover { background: rgba($accent-cyan, 0.1); }
+      padding: 4px 0; background: transparent;
+      font: 900 0.6rem 'JetBrains Mono'; color: rgba($accent-cyan, 0.6);
+      cursor: pointer; border: none; border-bottom: 1px solid rgba($accent-cyan, 0.1);
+      transition: all 0.2s;
+      &:hover { color: $accent-cyan; border-bottom-color: rgba($accent-cyan, 0.4); }
       .g-t { font-size: 0.8rem; }
     }
     .g-c {
@@ -41,9 +42,9 @@
     border-radius: 4px;
 
     &.active {
-      background: rgba($accent-cyan, 0.1);
-      .marker { background: $accent-cyan; box-shadow: 0 0 8px $accent-cyan; }
-      .label-text { color: $accent-cyan; }
+      background: transparent;
+      .marker { background: $accent-cyan; box-shadow: 0 0 10px $accent-cyan; }
+      .label-text { color: $accent-cyan; font-weight: 800; }
     }
 
     .time {
