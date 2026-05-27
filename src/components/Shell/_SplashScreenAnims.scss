@@ -1,0 +1,18 @@
+@keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+@keyframes micro-glitch {
+  0% { opacity: 0.5; transform: translate(-2px, 1px); }
+  50% { opacity: 0; transform: translate(2px, -1px); }
+  100% { opacity: 0.5; transform: translate(-1px, 2px); }
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip: rect(20px, 9999px, 21px, 0); }
+  20% { clip: rect(40px, 9999px, 45px, 0); }
+  40% { clip: rect(10px, 9999px, 15px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip: rect(10px, 9999px, 11px, 0); }
+  20% { clip: rect(30px, 9999px, 32px, 0); }
+  40% { clip: rect(50px, 9999px, 52px, 0); }
+}

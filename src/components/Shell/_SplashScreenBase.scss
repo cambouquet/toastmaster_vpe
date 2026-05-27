@@ -1,0 +1,17 @@
+.splash-screen {
+  position: fixed; inset: 0; z-index: 50000;
+  background: #000; display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+
+  .vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+  }
+
+  .scanner-line {
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: rgba($accent-cyan, 0.3); box-shadow: 0 0 10px $accent-cyan;
+    animation: scan 4s linear infinite; z-index: 2;
+  }
+}

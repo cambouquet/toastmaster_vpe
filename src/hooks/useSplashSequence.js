@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
+import { useRoleCycling } from './useRoleCycling';
 
 export const useSplashSequence = (onFinish) => {
-  const [role, setRole] = useState('WARRIOR');
-  const [displayRole, setDisplayRole] = useState('WARRIOR');
   const [phase, setPhase] = useState('booting');
+  const [colors, setColors] = useState({ group1: '#00bac4', group2: '#fff', group3: '#fcee0a' });
+  const displayRole = useRoleCycling(phase);
 
   useEffect(() => {
+    const others = ['#00bac4', '#ff003c', '#fcee0a'];
+    const chosen = others.sort(() => 0.5 - Math.random()).slice(0, 2);
+    chosen.push('#ffffff');
+    const shuffled = chosen.sort(() => 0.5 - Math.random());
+    setColors({ group1: shuffled[0], group2: shuffled[1], group3: shuffled[2] });
+    
     const sequence = [
       { p: 'logo', d: 300 }, { p: 'motto', d: 800 },
       { p: 'cycling', d: 1500 }, { p: 'exiting', d: 5200 },
@@ -14,30 +21,7 @@ export const useSplashSequence = (onFinish) => {
     sequence.forEach(({ p, d }) => {
       setTimeout(() => p === 'complete' ? onFinish() : setPhase(p), d);
     });
-
-    const roles = ['WARRIOR', 'WOMAN', 'HUMAN'];
-    let roleIdx = 0;
-    
-    // Smooth transitions: 1s for Warrior, 1.2s for Woman, Rest for Human
-    const startCycling = setTimeout(() => {
-      const roleTimer = setInterval(() => {
-        if (roleIdx < roles.length - 1) {
-          const next = roles[++roleIdx];
-          setRole(next);
-          let its = 0;
-          const chars = '!@#$%^&*()_+{}[]|;:,.<>?';
-          const scr = setInterval(() => {
-            setDisplayRole(next.split("").map((c, i) => i < its ? next[i] : chars[Math.floor(Math.random() * chars.length)]).join(""));
-            if (its >= next.length) clearInterval(scr);
-            its += 0.5;
-          }, 30);
-        } else clearInterval(roleTimer);
-      }, 1200); // Equalized spacing for Woman
-      return () => clearInterval(roleTimer);
-    }, 1500);
-
-    return () => clearTimeout(startCycling);
   }, [onFinish]);
 
-  return { phase, displayRole };
+  return { phase, displayRole, colors };
 };

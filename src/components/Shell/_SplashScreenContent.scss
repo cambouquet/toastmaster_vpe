@@ -1,0 +1,30 @@
+.splash-screen {
+  .splash-content {
+    position: relative; display: flex; flex-direction: row; 
+    align-items: center; gap: 60px; padding: 40px;
+
+    @media (max-width: 768px) {
+      flex-direction: column; gap: 30px; padding: 20px; text-align: center;
+    }
+  }
+
+  .logo-glitch-container {
+    position: relative; width: 180px; height: 180px;
+    filter: drop-shadow(0 0 20px rgba($accent-cyan, 0.3));
+    opacity: 0; transition: all 0.5s ease-out; transform: scale(0.8);
+
+    @media (max-width: 768px) { width: 120px; height: 120px; }
+  }
+
+  .motto-container {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    text-transform: uppercase; text-align: left;
+    border-left: 4px solid #fcee0a; padding-left: 30px;
+    opacity: 0; transition: opacity 0.5s ease-in;
+
+    @media (max-width: 768px) {
+      border-left: none; border-top: 2px solid #fcee0a;
+      padding-left: 0; padding-top: 20px; text-align: center;
+    }
+  }
+}
