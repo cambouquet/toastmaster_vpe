@@ -17,7 +17,15 @@ export const ShellLayout = ({ state, props, handlers, flags }) => {
       <div className="system-glitch-overlay" />
       {props.syncProgress > 0 && <SyncOverlay progress={props.syncProgress} type={props.syncType} />}
       {state.switchingTo && <AppLoadingScreen app={state.switchingTo} />}
-      <SystemStatus user={state.currentUser} currentApp={state.currentApp} onAuth={handlers.onAuth} onToggleNav={handlers.toggleNav} notifications={props.notifications} />
+      <SystemStatus 
+        user={state.currentUser} 
+        currentApp={state.currentApp} 
+        onAuth={handlers.onAuth} 
+        onToggleNav={handlers.toggleNav} 
+        notifications={props.notifications}
+        state={state}
+        uiAction={handlers.uiAction}
+      />
       <MainContent isWorkspace={state.currentScreen === 'workspace'} state={state} uiAction={handlers.uiAction} onAuth={handlers.onAuth} />
       <SystemNotification notifications={props.notifications} onDismiss={handlers.dismiss} />
       <Subtitles text={props.subtitle} />

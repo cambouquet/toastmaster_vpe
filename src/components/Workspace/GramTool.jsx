@@ -1,4 +1,5 @@
 import React from 'react';
+import './GramTool.scss';
 
 export const GramTool = ({ activeIdx, state, onAction }) => (
   <div className="tool-item full-w">

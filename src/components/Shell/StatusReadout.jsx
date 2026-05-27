@@ -11,7 +11,7 @@ const StatusGuest = ({ onAuth }) => (
   </div>
 );
 
-export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth }) => {
+export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth, state, uiAction }) => {
   const online = MEMBERS_DATA.filter(m => m.status === 'ONLINE').length;
   const appInfo = getAppInfo(currentApp);
   const AppIcon = appInfo?.Icon;
@@ -39,7 +39,15 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth 
             </div>
           </>
         ) : (
-          <StatusMeta user={user} online={online} total={MEMBERS_DATA.length} hovered={hovered} AppIcon={AppIcon} />
+          <StatusMeta 
+            user={user} 
+            online={online} 
+            total={MEMBERS_DATA.length} 
+            hovered={hovered} 
+            AppIcon={AppIcon} 
+            state={state}
+            uiAction={uiAction}
+          />
         )}
       </div>
     </div>

@@ -1,0 +1,20 @@
+@import '../../styles/variables';
+
+.gram-tools {
+  display: flex; gap: 10px; align-items: flex-end;
+  @include mobile { flex-direction: column; align-items: stretch; gap: 16px; }
+  .tool-input { flex: 1; }
+  .wotd-tracker {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    @include mobile { align-items: flex-start; border-top: 1px solid rgba($accent-cyan, 0.05); padding-top: 8px; }
+    .counter-controls { gap: 10px; align-items: center; }
+    .count-val-sm { font: 700 0.8rem 'JetBrains Mono'; color: #fff; min-width: 15px; text-align: center; }
+  }
+}
+
+.counter-controls { display: flex; gap: 10px; align-items: center; }
+.counter-controls button {
+  background: transparent; border: none; color: rgba($accent-cyan, 0.4);
+  font: 800 0.7rem 'JetBrains Mono'; cursor: pointer; padding: 4px 6px;
+  transition: all 0.2s; &:hover { color: $accent-cyan; }
+}

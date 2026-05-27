@@ -1,0 +1,14 @@
+@import '../../styles/variables';
+
+.timer-row {
+  display: flex; justify-content: space-between; align-items: center; padding: 4px 0; gap: 8px;
+  .timer-click-zone {
+    flex: 1; display: flex; justify-content: center;
+    &.clickable { cursor: pointer; transition: opacity 0.2s; &:hover { opacity: 0.7; } }
+  }
+  .timer-display { 
+    font: 700 2.4rem 'JetBrains Mono'; color: #fff; line-height: 1; letter-spacing: -1px;
+    &.centering { text-align: center; }
+  }
+  .reset-btn { margin-left: auto; width: 24px; height: 24px; }
+}

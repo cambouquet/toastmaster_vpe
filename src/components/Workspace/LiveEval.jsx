@@ -1,4 +1,5 @@
 import React from 'react';
+import './LiveEval.scss';
 
 const EvalRow = ({ label, f, state, onUp }) => {
   const d = state[f] || {}, v = d.v || 0;

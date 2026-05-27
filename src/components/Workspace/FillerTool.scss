@@ -1,0 +1,14 @@
+@import '../../styles/variables';
+
+.filler-bank {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding-top: 4px;
+  .f-b {
+    background: rgba($accent-cyan, 0.04); border: none;
+    color: rgba(#fff, 0.7); padding: 8px 4px; cursor: pointer;
+    font: 700 0.65rem 'JetBrains Mono'; display: flex; flex-direction: column; align-items: center;
+    transition: all 0.1s;
+    &:active { background: $accent-cyan; color: #000; transform: scale(0.95); }
+    .f-v { color: $accent-cyan; font-size: 0.8rem; margin-top: 4px; font-weight: 800; }
+    &:active .f-v { color: #000; }
+  }
+}

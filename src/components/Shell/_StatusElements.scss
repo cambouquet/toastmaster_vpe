@@ -43,6 +43,13 @@
   display: flex; align-items: center; gap: 8px; flex-shrink: 0;
 }
 
+.next-section-btn {
+  background: rgba($accent-cyan, 0.1); border: 1px solid rgba($accent-cyan, 0.3); color: $accent-cyan;
+  font-size: 0.5rem; padding: 1px 6px; border-radius: 2px; cursor: pointer; letter-spacing: 0.1em;
+  font-weight: 700; transition: all 0.2s ease; height: 16px; display: flex; align-items: center; justify-content: center;
+  &:hover { background: $accent-cyan; color: #000; box-shadow: 0 0 10px $accent-cyan; }
+}
+
 .system-trigger {
   background: rgba($accent-cyan, 0.1); border: none; padding: 0 12px; cursor: pointer;
   color: inherit; display: flex; align-items: center; height: 100%;

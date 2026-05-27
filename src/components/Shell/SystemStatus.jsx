@@ -4,7 +4,7 @@ import { SystemPower } from './SystemPower';
 import { useStatusRotation } from '../../hooks/useStatusRotation';
 import './SystemStatus.scss';
 
-export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav, notifications = [] }) => {
+export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav, notifications = [], state, uiAction }) => {
   const isAuth = user.name !== 'AUTHORIZATION REQUIRED' && user.role !== 'NONE';
   const [showRoles, setShowRoles] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -23,8 +23,16 @@ export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav,
     >
       <div className="system-status-bg" />
       <div className="status-display-area">
-        <StatusReadout isAuth={isAuth} user={user} currentApp={currentApp}
-          hovered={isHovered || showRoles} onToggleAuth={handleAuth} onToggleNav={onToggleNav} />
+        <StatusReadout 
+          isAuth={isAuth} 
+          user={user} 
+          currentApp={currentApp}
+          hovered={isHovered || showRoles} 
+          onToggleAuth={handleAuth} 
+          onToggleNav={onToggleNav} 
+          state={state}
+          uiAction={uiAction}
+        />
       </div>
       <button className="system-trigger terminal-glitch neural-wave" 
         onClick={(e) => { e.stopPropagation(); onToggleNav(); }} style={{ '--wave-idx': 1 }}>
