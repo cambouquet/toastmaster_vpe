@@ -7,9 +7,9 @@ export const useSplashSequence = (onFinish) => {
 
   useEffect(() => {
     const sequence = [
-      { p: 'logo', d: 800 }, { p: 'motto', d: 1600 },
-      { p: 'cycling', d: 2400 }, { p: 'footer', d: 4200 },
-      { p: 'exiting', d: 5200 }, { p: 'complete', d: 6000 }
+      { p: 'logo', d: 800 }, { p: 'motto', d: 1800 },
+      { p: 'cycling', d: 3000 }, { p: 'footer', d: 6500 },
+      { p: 'exiting', d: 8000 }, { p: 'complete', d: 9000 }
     ];
     sequence.forEach(({ p, d }) => {
       setTimeout(() => p === 'complete' ? onFinish() : setPhase(p), d);
@@ -29,7 +29,7 @@ export const useSplashSequence = (onFinish) => {
           its += 1/3;
         }, 30);
       } else clearInterval(roleTimer);
-    }, 1000);
+    }, 1500);
     return () => clearInterval(roleTimer);
   }, [onFinish]);
 

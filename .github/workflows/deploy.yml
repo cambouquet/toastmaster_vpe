@@ -65,14 +65,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
-          REGISTRY_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
+          APP_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: GITHUB_TOKEN,GITHUB_ACTOR,REGISTRY_IMAGE
+          envs: GITHUB_TOKEN,GITHUB_ACTOR,APP_IMAGE
           script: |
             echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
-            docker pull $REGISTRY_IMAGE
-            cd ~/app && docker compose -f docker-compose.prod.yml up -d --remove-orphans
+            docker pull $APP_IMAGE
+            cd ~/app && APP_IMAGE=$APP_IMAGE docker compose -f docker-compose.prod.yml up -d --remove-orphans
             docker image prune -af --filter "until=24h"
