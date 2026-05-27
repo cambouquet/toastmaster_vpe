@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RolesSection } from './RolesSection';
 import { SpeakersSection } from './SpeakersSection';
 import { BriefingSection } from './BriefingSection';
@@ -15,6 +15,10 @@ export const MeetingWorkspace = ({ state, onAction }) => {
   const [editing, setEditing] = useState(null);
   const isVpe = state.currentUser?.role === 'VPE' || state.currentUser?.role === 'ADMIN';
 
+  useEffect(() => { 
+    if (state.status === 'live') window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [state.status]);
+
   const handleUpdate = (key, val) => {
     setEditing(null);
     if (isVpe && val !== undefined) onAction(key, val);
@@ -25,25 +29,19 @@ export const MeetingWorkspace = ({ state, onAction }) => {
     <div className='workspace-screen'>
       <AppHeader title={state.status === 'live' ? "LIVE SESSION" : "NEXT MEETING"} status={state.status} />
       <div className='workspace-grid'>
-        <MeetingProgram state={state} onAction={onAction} />
         {state.status === 'live' && <LiveToolkit state={state} onAction={onAction} />}
+        <MeetingProgram state={state} onAction={onAction} />
         <MeetingSchedule {...common} />
         <MapPreview url={state.mapUrl} />
-        <EditableCard label='Meeting Theme' value={state.theme} isEditing={editing === 'theme'}
+        <EditableCard label='Theme' value={state.theme} isEditing={editing === 'theme'}
           onEdit={() => isVpe && setEditing('theme')} onBlur={(v) => handleUpdate('theme', v)} />
-        <BriefingSection {...common} />
-        <ActionSection state={state} onAction={onAction} />
+        <BriefingSection {...common} /> <ActionSection state={state} onAction={onAction} />
         <RolesSection roles={state.roles} members={state.members} editing={editing}
           onUpdate={(role, val) => handleUpdate(`roles.${role}`, val)} />
-        <SpeakersSection 
-          speakers={state.roles.speakers || []} 
-          members={state.members} 
-          editing={editing}
-          onEdit={setEditing}
-          onAction={onAction}
-          currentUser={state.currentUser}
-        />
+        <SpeakersSection speakers={state.roles.speakers || []} members={state.members} 
+          editing={editing} onEdit={setEditing} onAction={onAction} currentUser={state.currentUser} />
       </div>
     </div>
   );
 };
+
