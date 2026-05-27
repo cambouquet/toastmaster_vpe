@@ -29,6 +29,7 @@ concurrency:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-and-deploy:
@@ -70,19 +71,7 @@ jobs:
           build-args: |
              NODE_ENV=production
           provenance: false
-
-      - name: Preparing scripts
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            mkdir -p ~/app/deploy ~/.deploy_scripts
-            if [[ "${{ github.event.inputs.force_setup }}" == "true" ]]; then 
-              echo "🔄 Forcing setup reset..."
-              rm -f ~/.vm_ready
-            fi
+          outputs: type=registry,compression=zstd,compression-level=3
 
       - name: Sync configuration and scripts
         uses: appleboy/scp-action@v0.1.7
@@ -100,13 +89,22 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
           REGISTRY_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
           FULL_RESTART: ${{ github.event.inputs.full_restart }}
+          FORCE_SETUP: ${{ github.event.inputs.force_setup }}
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: GITHUB_TOKEN,GITHUB_ACTOR,REGISTRY_IMAGE,FULL_RESTART
+          envs: GITHUB_TOKEN,GITHUB_ACTOR,REGISTRY_IMAGE,FULL_RESTART,FORCE_SETUP
           script: |
-            mv ~/app/.github/scripts/*.sh ~/.deploy_scripts/
-            chmod +x ~/.deploy_scripts/*.sh
+            mkdir -p ~/app/deploy ~/.deploy_scripts
+            if [ "$FORCE_SETUP" = "true" ]; then rm -f ~/.vm_ready; fi
+            
+            # Fast login and pull
+            echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+            docker pull $REGISTRY_IMAGE
+            
+            # Update and run scripts
+            chmod +x ~/app/.github/scripts/*.sh
+            cp ~/app/.github/scripts/*.sh ~/.deploy_scripts/ 2>/dev/null || true
             ~/.deploy_scripts/setup-vm.sh
             ~/.deploy_scripts/deploy-app.sh
