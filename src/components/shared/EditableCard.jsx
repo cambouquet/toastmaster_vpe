@@ -27,7 +27,7 @@ export const EditableCard = ({
   };
 
   return (
-    <div className={`card ${onEdit ? 'clickable' : ''} ${isEditing ? 'editing' : ''}`} onClick={onEdit}>
+    <div className={`card ${onEdit && value !== undefined ? 'clickable' : ''} ${isEditing ? 'editing' : ''}`} onClick={onEdit}>
       <label>{label}</label>
       <div className="val-stack">
         <div className={`val ${isEditing ? 'hidden' : ''}`}>

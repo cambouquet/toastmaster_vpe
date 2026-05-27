@@ -4,6 +4,7 @@ import './MeetingProgram.scss';
 export const MeetingProgram = ({ state, onAction }) => {
   const { roles } = state;
   const active = state.activeSegment || 0;
+  const isVpe = state.currentUser?.role === 'VPE' || state.currentUser?.role === 'ADMIN';
   const [collapsed, setCollapsed] = useState({});
 
   const groups = [
@@ -46,9 +47,10 @@ export const MeetingProgram = ({ state, onAction }) => {
           const groupItems = g.items.map((s) => {
             const currentIdx = globalIdx++;
             const recordedTime = state[`time-${currentIdx}`];
+            const canClick = isVpe || roles.toastmaster === state.currentUser?.name;
             return (
-              <div key={s.id} className={`timeline-item ${active === currentIdx ? 'active' : ''}`}
-                   onClick={() => onAction('activeSegment', currentIdx)}>
+              <div key={s.id} className={`timeline-item ${canClick ? 'clickable' : ''} ${active === currentIdx ? 'active' : ''}`}
+                   onClick={canClick ? () => onAction('activeSegment', currentIdx) : null}>
                 <span className="time">{recordedTime || s.time}</span>
                 <div className="marker" />
                 <div className="content">

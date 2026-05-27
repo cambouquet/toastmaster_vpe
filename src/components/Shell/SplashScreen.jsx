@@ -15,10 +15,6 @@ export const SplashScreen = ({ onFinish }) => {
           <div className="line-2">BECOME THE <span className="highlight">{displayRole}</span></div>
           <div className="line-3">YOU'RE MEANT TO BE</div>
         </div>
-        <div className="system-footer">
-          <div className="text">STREET_LEVEL // PROTOCOL_K</div>
-          <div className="sub-text">DATA_SYNC: ACTIVE // ACCESS_GRANTED</div>
-        </div>
       </div>
     </div>
   );

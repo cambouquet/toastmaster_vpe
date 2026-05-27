@@ -26,7 +26,7 @@ export const initKeycloak = (onAuth) => {
 
 export const getIdentity = () => {
   if (USE_MOCK || guestMode) return getMockIdentity();
-  if (!keycloak?.authenticated) return { name: "GUEST", role: "GUEST" };
+  if (!keycloak?.authenticated) return null;
   const roles = keycloak.tokenParsed?.realm_access?.roles || [];
   const isVpe = roles.includes('VPE') || roles.includes('admin');
   return {

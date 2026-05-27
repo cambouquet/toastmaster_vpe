@@ -32,8 +32,9 @@ export const useCollaboration = (ai) => {
   
   useEffect(() => {
     const id = getIdentity();
-    if (id.name !== state.currentUser.name) setState(s => ({ ...s, currentUser: id }));
-  }, [state.currentUser.name]);
+    const currentName = state.currentUser?.name;
+    if (id?.name !== currentName) setState(s => ({ ...s, currentUser: id }));
+  }, [state.currentUser]);
 
   useCollaborationEffects(refs.lastAct, refs.lastIn, setState, interact, addLog);
 

@@ -25,7 +25,19 @@
   }
   .reset-btn { background: transparent; border: none; color: rgba($accent-cyan, 0.4); cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; &:hover { color: #ff4444; background: rgba(#ff4444, 0.08); } svg { display: block; height: 16px; width: 16px; } }
   .tool-input { background: transparent; border: none; border-bottom: 1px solid rgba($accent-cyan, 0.1); color: rgba(#fff, 0.8); font: 500 0.9rem "Space Grotesk", sans-serif; padding: 6px 0; &:focus { outline: none; border-bottom-color: $accent-cyan; color: #fff; } &::placeholder { opacity: 0.25; font-weight: 400; font-family: "JetBrains Mono", monospace; font-size: 0.65rem; } }
-  .eval-vessel { transition: all 0.4s ease; &.locked { opacity: 0.1; pointer-events: none; filter: grayscale(1); } &.ready { opacity: 1; border-top: 1px solid rgba($accent-cyan, 0.2); margin-top: 20px; padding-top: 12px; } }
+  .guest-broadcast {
+    padding: 20px 0;
+    .public-timer {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      .timer-display.large { font-size: 4rem; font-weight: 900; line-height: 1; color: #fff; text-shadow: 0 0 20px rgba($accent-cyan, 0.4); }
+      .target-notif { font: 800 0.8rem 'JetBrains Mono'; color: rgba($accent-cyan, 0.6); letter-spacing: 2px; }
+    }
+  }
+
+  &.guest-mode {
+    .nav-btn { pointer-events: auto; opacity: 0.8 !important; cursor: pointer !important; }
+  }
+
   &.pulse-border { border-color: $accent-cyan; box-shadow: 0 0 15px rgba($accent-cyan, 0.4); animation: toolkit-pulse 2s infinite ease-in-out; }
   &.light-green { border-left-color: #00ffaa; .timer-display { color: #00ffaa; } }
   &.light-yellow { border-left-color: #ffdd00; .timer-display { color: #ffdd00; } }

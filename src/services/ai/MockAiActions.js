@@ -1,12 +1,14 @@
 import { login, logout, getIdentity } from "../auth/KeycloakService";
 export const handleUiActions = (action, val, state) => {
+  const id = getIdentity();
+  if (!id && !["SWITCH_APP", "login", "logout"].includes(action)) return { notification: "Guest: Read-only access." };
   if (action === "SWITCH_APP") return { newState: { currentApp: val } };
   if (action === "login") {
     login(typeof val === 'object' ? val.id : val, typeof val === 'object' ? val : null);
     const id = getIdentity();
-    return { subtitle: `Uplink established. Access granted to ${id.name}.`, newState: { currentUser: id } };
+    return { subtitle: `Uplink established. Access granted to ${id?.name || 'Guest'}.`, newState: { currentUser: id } };
   }
-  if (action === "logout") { logout(); return { subtitle: "Connection terminated. HUD offline.", newState: { currentUser: getIdentity() } }; }
+  if (action === "logout") { logout(); return { subtitle: "Connection terminated. HUD offline.", newState: { currentUser: null } }; }
   const n = (m, s={}) => ({ notification: m, newState: { ...s, [action]: val } });
   if (action === "CLEAR_LOGS") return n("System logs cleared.");
   if (action === "RUN_DIAG") return n("Diagnostics complete.");

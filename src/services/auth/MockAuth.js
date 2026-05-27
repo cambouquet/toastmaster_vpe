@@ -2,13 +2,11 @@ import { MEMBERS_DATA } from '../../data/members';
 
 export const getMockIdentity = () => {
   const memberId = localStorage.getItem('mock_member_id');
-  if (!memberId || localStorage.getItem('mock_logged_out') === 'true') {
-    return { name: "GUEST_USER", role: "GUEST", title: "Visitor", token: "guest" };
-  }
+  if (!memberId || localStorage.getItem('mock_logged_out') === 'true') return null;
   const extras = JSON.parse(sessionStorage.getItem('mock_extra_members') || '[]');
   const all = [...MEMBERS_DATA, ...extras];
   const member = all.find(m => m.id === memberId);
-  if (!member) return { name: "GUEST_USER", role: "GUEST", title: "Visitor" };
+  if (!member) return null;
   return { name: member.name, role: member.role, title: member.title, token: "mock-token" };
 };
 

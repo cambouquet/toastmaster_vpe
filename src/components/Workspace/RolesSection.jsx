@@ -16,7 +16,7 @@ export const RolesSection = ({ roles, members, editing, onEdit, onAction, curren
           return (
             <RoleEntry key={r} label={getLabel(r)} value={roles[r]}
               members={isVpe ? members : (currentUser?.role === 'MEMBER' ? members.filter(m => m.name === currentUser?.name) : [])}
-              isEditing={editing === r} onEdit={() => canEdit && onEdit(r)}
+              isEditing={editing === r} onEdit={canEdit ? () => onEdit(r) : null}
               onBlur={(v) => { if (canEdit || v === roles[r]) { onEdit(null); if (v !== undefined) onAction(`roles.${r}`, v); } }} />
           );
         })}</div>

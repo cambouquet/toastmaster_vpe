@@ -16,22 +16,11 @@ export const AppLauncher = ({ currentApp, onSwitch }) => {
 
       <div className="launcher-grid">
         {DEFAULT_ORDER.map(appId => {
-          const app = APPS[appId];
-          const Icon = app.Icon;
-          const isActive = currentApp === appId;
-          
+          const app = APPS[appId], Icon = app.Icon, isActive = currentApp === appId;
           return (
-            <NavGridItem 
-              key={appId}
-              id={appId} 
-              label={app.name} 
-              active={isActive}
-              status={isActive ? 'ACTIVE LINK' : 'STANDBY'}
-              onClick={() => onSwitch(appId)}
-            >
-              <div className="app-icon-container">
-                <Icon style={{ width: '100%', height: '100%' }} />
-              </div>
+            <NavGridItem key={appId} id={appId} label={app.name} active={isActive}
+              status={isActive ? 'ACTIVE LINK' : 'STANDBY'} onClick={() => onSwitch(appId)}>
+              <div className="app-icon-container"><Icon style={{ width: '100%', height: '100%' }} /></div>
             </NavGridItem>
           );
         })}

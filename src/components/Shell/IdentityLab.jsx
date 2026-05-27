@@ -10,7 +10,7 @@ export const IdentityLab = ({ state, onAuth }) => {
   const [password, setPassword] = useState('');
   const [step, setStep] = useState('alias');
   const user = state.currentUser;
-  const isSyncing = user?.role !== 'NONE' && user?.name !== 'AUTHORIZATION REQUIRED';
+  const isSyncing = !!user && user.role !== 'NONE';
   const nameTaken = (state.members || []).some(m => m.name.toUpperCase() === alias.toUpperCase());
 
   const handleAuth = () => {
@@ -19,29 +19,20 @@ export const IdentityLab = ({ state, onAuth }) => {
   };
 
   const handleKey = (char) => {
-    if (isSyncing) return;
-    if (step === 'alias' ? alias.length < 12 : password.length < 12) {
+    if (!isSyncing && (step === 'alias' ? alias.length < 12 : password.length < 12)) {
       step === 'alias' ? setAlias(a => a + char) : setPassword(p => p + char);
     }
   };
-
   const handleBS = () => step === 'alias' ? setAlias(a => a.slice(0, -1)) : setPassword(p => p.slice(0, -1));
-
   return (
     <div className={`workspace-screen identity-lab guest-mode ${isSyncing ? 'synced' : ''}`}>
-      <div className='background-logo'><Logo /></div>
-      <div className='neural-link-bootstrap'>
+      <div className='background-logo'><Logo /></div><div className='neural-link-bootstrap'>
         <IdentityLabDisplay isSyncing={isSyncing} user={user} step={step} alias={alias} password={password} nameTaken={nameTaken} />
-        {!isSyncing && (
-          <>
-            <div className='step-indicator'><div className={`dot ${step === 'alias' ? 'active' : ''}`} /><div className={`dot ${step === 'password' ? 'active' : ''}`} /></div>
-            <VirtualKeyboard onKey={handleKey} onBackspace={handleBS} disabled={isSyncing} nameTaken={nameTaken} step={step} />
-            <IdentityLabActions step={step} nameTaken={nameTaken} isReady={step === 'alias' ? (alias && !nameTaken) : (password.length >= 4)} onStep={setStep} onAuth={handleAuth} />
-          </>
-        )}
-        {isSyncing && <div className='sync-success'><div className='success-icon'>✓</div><div className='success-text'>SYNC STABLE</div><button className='sync-trigger ready' onClick={() => onAuth('logout')}><span>TERMINATE SYNC</span></button></div>}
-      </div>
-      <div className='guest-footer'>
+        {!isSyncing ? (<><div className='step-indicator'><div className={`dot ${step === 'alias' ? 'active' : ''}`} /><div className={`dot ${step === 'password' ? 'active' : ''}`} /></div>
+          <VirtualKeyboard onKey={handleKey} onBackspace={handleBS} disabled={isSyncing} nameTaken={nameTaken} step={step} />
+          <IdentityLabActions step={step} nameTaken={nameTaken} isReady={step === 'alias' ? (alias && !nameTaken) : (password.length >= 4)} onStep={setStep} onAuth={handleAuth} /></>
+        ) : <div className='sync-success'><div className='success-icon'>✓</div><div className='success-text'>SYNC STABLE</div><button className='sync-trigger ready' onClick={() => onAuth('logout')}><span>TERMINATE SYNC</span></button></div>}
+      </div><div className='guest-footer'>
         {isSyncing ? `SYNC LINK: K-APP.TECH/${user.name.toUpperCase()}` : 'K-APP.TECH/JOIN'} // NEURAL SYNC-77
       </div>
     </div>

@@ -23,7 +23,7 @@ export const MeetingWorkspace = ({ state, onAction }) => {
     setEditing(null);
     if (isVpe && val !== undefined) onAction(key, val);
   };
-  const common = { state, editing, onEdit: (k) => isVpe && setEditing(k), onUpdate: handleUpdate };
+  const common = { state, editing, onEdit: isVpe ? setEditing : null, onUpdate: handleUpdate };
 
   return (
     <div className='workspace-screen'>
@@ -34,10 +34,10 @@ export const MeetingWorkspace = ({ state, onAction }) => {
         <MeetingSchedule {...common} />
         <MapPreview url={state.mapUrl} />
         <EditableCard label='Theme' value={state.theme} isEditing={editing === 'theme'}
-          onEdit={() => isVpe && setEditing('theme')} onBlur={(v) => handleUpdate('theme', v)} />
+          onEdit={isVpe ? () => setEditing('theme') : null} onBlur={(v) => handleUpdate('theme', v)} />
         <BriefingSection {...common} /> <ActionSection state={state} onAction={onAction} />
         <RolesSection roles={state.roles} members={state.members} editing={editing}
-          onUpdate={(role, val) => handleUpdate(`roles.${role}`, val)} />
+          onEdit={setEditing} onAction={onAction} currentUser={state.currentUser} />
         <SpeakersSection speakers={state.roles.speakers || []} members={state.members} 
           editing={editing} onEdit={setEditing} onAction={onAction} currentUser={state.currentUser} />
       </div>

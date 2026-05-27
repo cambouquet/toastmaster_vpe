@@ -2,13 +2,15 @@
 .member-card {
   .card-header-left { position: absolute; top: 10px; left: 15px; display: flex; align-items: center; gap: 8px; z-index: 6; }
   .status-pill {
-    width: 8px; height: 8px; border-radius: 50%; cursor: pointer; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    &.clickable { cursor: pointer; }
     &.online { background: $accent-cyan; box-shadow: 0 0 8px $accent-cyan; border: 1px solid rgba(255,255,255,0.4); }
     &.away { background: #444; border: 1px solid #222; }
   }
   .role-badge {
     font-size: 0.55rem; font-family: "Orbitron", sans-serif; font-weight: 900; 
-    padding: 2px 8px; border-radius: 2px; letter-spacing: 1px; cursor: pointer;
+    padding: 2px 8px; border-radius: 2px; letter-spacing: 1px;
+    &.clickable { cursor: pointer; }
     &.admin { background: #ff0055; color: #fff; box-shadow: 0 0 10px #ff0055; }
     &.vpe { background: $accent-cyan; color: #000; }
     &.member { background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.2); }

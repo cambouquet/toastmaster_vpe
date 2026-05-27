@@ -15,13 +15,13 @@ export const SpeakersSection = ({ speakers, members, editing, onEdit, onAction, 
             <div className='slot-id'>SLOT {s.id}</div>
             <div className='speaker-config'>
               <RoleEntry label="Speaker" value={s.name} members={myMem(members)} isEditing={editing === `spk-${s.id}`} 
-                onEdit={() => canEd(s, 'name') && onEdit(`spk-${s.id}`)} onBlur={(v) => { onEdit(null); onAction('roles.speaker.name', { id: s.id, val: v }); }} />
+                onEdit={canEd(s, 'name') ? () => onEdit(`spk-${s.id}`) : null} onBlur={(v) => { onEdit(null); onAction('roles.speaker.name', { id: s.id, val: v }); }} />
               <div className="title-input">
                 <label className="sub-label">Speech Title</label>
                 <input defaultValue={s.title} disabled={!canEd(s, 'name')} onBlur={(e) => onAction('roles.speaker.title', { id: s.id, val: e.target.value })} />
               </div>
               <RoleEntry label="Evaluator" value={s.evaluator} members={myMem(members)} isEditing={editing === `eval-${s.id}`} 
-                onEdit={() => canEd(s, 'evaluator') && onEdit(`eval-${s.id}`)} onBlur={(v) => { onEdit(null); onAction('roles.speaker.evaluator', { id: s.id, val: v }); }} />
+                onEdit={canEd(s, 'evaluator') ? () => onEdit(`eval-${s.id}`) : null} onBlur={(v) => { onEdit(null); onAction('roles.speaker.evaluator', { id: s.id, val: v }); }} />
             </div>
           </div>
         ))}</div>

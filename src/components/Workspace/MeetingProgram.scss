@@ -36,10 +36,11 @@
     align-items: center;
     gap: 15px;
     font-family: 'JetBrains Mono', monospace;
-    cursor: pointer;
     transition: all 0.2s ease;
     padding: 4px;
     border-radius: 4px;
+    
+    &.clickable { cursor: pointer; }
 
     &.active {
       background: transparent;
