@@ -12,10 +12,6 @@
     .logo-glitch-container { animation: micro-glitch 0.2s infinite; }
   }
 
-  &.phase-footer, &.phase-exiting {
-    .system-footer { opacity: 1; transform: translateY(0); }
-  }
-
   &.phase-exiting {
     opacity: 0; transform: scale(1.05); 
     transition: all 1.5s cubic-bezier(0.7, 0, 0.3, 1);

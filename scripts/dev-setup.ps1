@@ -33,16 +33,20 @@ if ($kcStatus -like "Up*") {
         -p 8081:8080 `
         -e KEYCLOAK_ADMIN=admin `
         -e KEYCLOAK_ADMIN_PASSWORD=admin `
-        -e KC_DB=dev-file `
-        -e KC_HTTP_PORT=8080 `
+        -e KC_DB=dev-mem `
         -e KC_HOSTNAME_STRICT=false `
+        -e KC_HOSTNAME_STRICT_HTTPS=false `
         -e KC_HTTP_ENABLED=true `
+        -e KC_HOSTNAME=localhost `
+        -e KC_HOSTNAME_PORT=8081 `
         -v ./keycloak-realm.json:/opt/keycloak/data/import/realm.json:Z `
-        quay.io/keycloak/keycloak:24.0.0 start-dev --import-realm --http-relative-path / --hostname-strict-https=false
+        quay.io/keycloak/keycloak:24.0.0 start-dev --import-realm
     
     Write-Host ">>> Keycloak deployment dispatched." -ForegroundColor Green
 }
 
 # 3. Immediate Handoff
 Write-Host ">>> Launching Neural Interface (VITE) in parallel..." -ForegroundColor Green
+Write-Host ">>> [LINK] Keycloak Admin: http://localhost:8081 (admin/admin)" -ForegroundColor Gray
+Write-Host ">>> [LINK] Application: http://localhost:1777" -ForegroundColor Gray
 npm run dev

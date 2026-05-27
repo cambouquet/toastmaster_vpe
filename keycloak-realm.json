@@ -1,6 +1,7 @@
 {
   "realm": "toastmaster",
   "enabled": true,
+  "sslRequired": "none",
   "clients": [
     {
       "clientId": "mission-control",
@@ -14,19 +15,53 @@
     "realm": [
       { "name": "VPE" },
       { "name": "MEMBER" },
+      { "name": "PRESIDENT" },
       { "name": "GUEST" }
     ]
   },
   "users": [
     {
+      "username": "alice",
+      "enabled": true,
+      "email": "alice@k-app.local",
+      "firstName": "Alice",
+      "lastName": "VPE",
+      "realmRoles": ["VPE"],
+      "credentials": [{ "type": "password", "value": "alice", "temporary": false }]
+    },
+    {
+      "username": "bob",
+      "enabled": true,
+      "email": "bob@k-app.local",
+      "firstName": "Bob",
+      "lastName": "Member",
+      "realmRoles": ["MEMBER"],
+      "credentials": [{ "type": "password", "value": "bob", "temporary": false }]
+    },
+    {
+      "username": "kami",
+      "enabled": true,
+      "email": "kami@k-app.local",
+      "firstName": "Kami",
+      "lastName": "President",
+      "realmRoles": ["PRESIDENT"],
+      "credentials": [{ "type": "password", "value": "kami", "temporary": false }]
+    },
+    {
       "username": "vpe",
       "enabled": true,
+      "email": "vpe@k-app.local",
+      "firstName": "System",
+      "lastName": "VPE",
       "realmRoles": ["VPE"],
       "credentials": [{ "type": "password", "value": "vpe", "temporary": false }]
     },
     {
       "username": "member",
       "enabled": true,
+      "email": "member@k-app.local",
+      "firstName": "System",
+      "lastName": "Member",
       "realmRoles": ["MEMBER"],
       "credentials": [{ "type": "password", "value": "member", "temporary": false }]
     }

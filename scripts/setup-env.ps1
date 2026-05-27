@@ -29,12 +29,14 @@ podman run --detach --name keycloak `
     -p 8081:8080 `
     -e KEYCLOAK_ADMIN=admin `
     -e KEYCLOAK_ADMIN_PASSWORD=admin `
-    -e KC_DB=dev-file `
-    -e KC_HTTP_PORT=8080 `
+    -e KC_DB=dev-mem `
     -e KC_HOSTNAME_STRICT=false `
+    -e KC_HOSTNAME_STRICT_HTTPS=false `
     -e KC_HTTP_ENABLED=true `
+    -e KC_HOSTNAME=localhost `
+    -e KC_HOSTNAME_PORT=8081 `
     -v ./keycloak-realm.json:/opt/keycloak/data/import/realm.json:Z `
-    quay.io/keycloak/keycloak:24.0.0 start-dev --import-realm --http-relative-path / --hostname-strict-https=false
+    quay.io/keycloak/keycloak:24.0.0 start-dev --import-realm
 
 # 4. Verification Loop
 Write-Host ">>> Validating system heartbeat..." -ForegroundColor Yellow
@@ -56,7 +58,12 @@ while ($sw.Elapsed.TotalSeconds -lt $timeout) {
 }
 
 if ($ready) {
-    Write-Host "`n>>> PROVISIONING COMPLETE. NEURAL LINK ESTABLISHED." -ForegroundColor Green
+    Write-Host "`n>>> Disabling master realm SSL enforcement (Internal Override)..." -ForegroundColor Cyan
+    # This specifically addresses the "HTTPS Required" error for the master console on localhost
+    podman exec keycloak /opt/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080 --realm master --user admin --password admin
+    podman exec keycloak /opt/keycloak/bin/kcadm.sh update realms/master -s sslRequired=none
+    
+    Write-Host ">>> PROVISIONING COMPLETE. NEURAL LINK ESTABLISHED." -ForegroundColor Green
     Write-Host ">>> Admin: admin / admin"
     Write-Host ">>> Realm: toastmaster"
     Write-Host ">>> URL: http://localhost:8081"

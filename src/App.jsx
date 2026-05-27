@@ -16,9 +16,9 @@ function App() {
     });
   }, []);
 
-  const handleFinish = () => {
+  const handleFinish = React.useCallback(() => {
     setLoading(false);
-  };
+  }, []);
 
   return (
     <div className={`App ${isConnectionDegraded() ? 'mode-degraded' : ''}`}>
