@@ -1,22 +1,20 @@
 @import "../../styles/variables";
 .live-toolkit {
-  grid-column: span 2; border-left: 4px solid $accent-cyan; background: rgba($accent-cyan, 0.05);
-  @include mobile { grid-column: span 1; }
+  grid-column: span 2; border-left: 4px solid $accent-cyan; background: rgba($accent-cyan, 0.05); @include mobile { grid-column: span 1; }
   .session-header {
     display: flex; flex-direction: column; gap: 4px; border-bottom: 1px solid rgba($accent-cyan, 0.2); padding-bottom: 8px; margin-bottom: 12px;
     .session-nav { 
       display: flex; align-items: center; gap: 12px; 
       .nav-group { display: flex; gap: 4px; }
-      .nav-btn {
-        background: none; border: none; color: $accent-cyan; font: 700 1.2rem "JetBrains Mono";
-        cursor: pointer; padding: 0 4px; opacity: 0.4; transition: opacity 0.1s; line-height: 1;
-        &:hover { opacity: 1; }
-        &:active { transform: scale(0.9); }
-      }
+      .nav-btn { background: none; border: none; color: $accent-cyan; font: 700 1.2rem "JetBrains Mono"; cursor: pointer; padding: 0 4px; opacity: 0.4; transition: opacity 0.1s; line-height: 1; &:hover { opacity: 1; } &:active { transform: scale(0.9); } }
       .session-label { font: 900 0.65rem "JetBrains Mono"; color: $accent-cyan; letter-spacing: 2px; opacity: 0.6; text-transform: uppercase; }
       .session-status { font: 800 0.6rem "JetBrains Mono"; color: rgba($accent-cyan, 0.4); letter-spacing: 1px; margin-left: auto; }
     }
-    .session-member { font: 500 1.3rem "Space Grotesk"; color: #fff; letter-spacing: -0.5px; }
+    .session-member-group {
+      display: flex; align-items: baseline; gap: 8px;
+      .session-member { font: 500 1.3rem "Space Grotesk"; color: #fff; letter-spacing: -0.5px; }
+      .session-title { font: 600 0.8rem "JetBrains Mono"; color: rgba($accent-cyan, 0.8); text-transform: uppercase; letter-spacing: 0.5px; }
+    }
   }
   .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; @include mobile { grid-template-columns: 1fr; gap: 32px; } }
   .tool-item { 
@@ -25,26 +23,13 @@
     .tool-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
     .tool-label { font: 800 0.7rem "JetBrains Mono"; color: rgba($accent-cyan, 0.5); letter-spacing: 1.5px; text-transform: uppercase; }
   }
-  .reset-btn {
-    background: transparent; border: none; color: rgba($accent-cyan, 0.4);
-    cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s; height: 20px; width: 20px;
-    &:hover { color: #ff4444; background: rgba(#ff4444, 0.08); }
-    svg { display: block; }
-  }
-  .tool-input {
-    background: transparent; border: none; border-bottom: 1px solid rgba($accent-cyan, 0.1);
-    color: rgba(#fff, 0.8); font: 500 0.9rem "Space Grotesk", sans-serif; padding: 6px 0;
-    &:focus { outline: none; border-bottom-color: $accent-cyan; color: #fff; }
-    &::placeholder { opacity: 0.25; font-weight: 400; font-family: "JetBrains Mono", monospace; font-size: 0.65rem; letter-spacing: 0.5px; }
-  }
-  .eval-vessel {
-    transition: all 0.4s ease;
-    &.locked { opacity: 0.1; pointer-events: none; filter: grayscale(1); }
-    &.ready { opacity: 1; border-top: 1px solid rgba($accent-cyan, 0.2); margin-top: 20px; padding-top: 12px; }
-  }
-  &.pulse-border { border-color: #ff4444; box-shadow: 0 0 10px rgba(#ff4444, 0.2); }
+  .reset-btn { background: transparent; border: none; color: rgba($accent-cyan, 0.4); cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; &:hover { color: #ff4444; background: rgba(#ff4444, 0.08); } svg { display: block; height: 16px; width: 16px; } }
+  .tool-input { background: transparent; border: none; border-bottom: 1px solid rgba($accent-cyan, 0.1); color: rgba(#fff, 0.8); font: 500 0.9rem "Space Grotesk", sans-serif; padding: 6px 0; &:focus { outline: none; border-bottom-color: $accent-cyan; color: #fff; } &::placeholder { opacity: 0.25; font-weight: 400; font-family: "JetBrains Mono", monospace; font-size: 0.65rem; } }
+  .eval-vessel { transition: all 0.4s ease; &.locked { opacity: 0.1; pointer-events: none; filter: grayscale(1); } &.ready { opacity: 1; border-top: 1px solid rgba($accent-cyan, 0.2); margin-top: 20px; padding-top: 12px; } }
+  &.pulse-border { border-color: $accent-cyan; box-shadow: 0 0 15px rgba($accent-cyan, 0.4); animation: toolkit-pulse 2s infinite ease-in-out; }
   &.light-green { border-left-color: #00ffaa; .timer-display { color: #00ffaa; } }
   &.light-yellow { border-left-color: #ffdd00; .timer-display { color: #ffdd00; } }
   &.light-red { border-left-color: #ff4444; .timer-display { color: #ff4444; } }
 }
+@keyframes toolkit-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+

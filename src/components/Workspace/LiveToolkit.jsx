@@ -23,13 +23,12 @@ export const LiveToolkit = ({ state, onAction }) => {
   return (
     <div className={`card live-toolkit ${running && isGlobal ? 'pulse-border' : ''} light-${isGlobal ? getLight() : ''}`}>
       <div className="session-header"><div className="session-nav">
-          <div className="nav-group">
-            <button className="nav-btn" onClick={() => setLocalIdx(Math.max(0, localIdx-1))}>‹</button>
-            <button className="nav-btn" onClick={() => setLocalIdx(Math.min(segments.length-1, localIdx+1))}>›</button>
-          </div>
+          <div className="nav-group"><button className="nav-btn" onClick={() => setLocalIdx(Math.max(0, localIdx-1))}>‹</button>
+            <button className="nav-btn" onClick={() => setLocalIdx(Math.min(segments.length-1, localIdx+1))}>›</button></div>
           <span className="session-label">{current.member}</span>
-          <span className="session-status">{running && isGlobal ? 'RECORDING' : 'IDLE'}</span>
-        </div><span className="session-member">{current.label}</span></div>
+          <span className="session-status">{running && isGlobal ? 'RECORDING' : 'IDLE'}</span></div>
+        <div className="session-member-group"><span className="session-member">{current.label}</span>
+          {current.title && <span className="session-title">{current.title}</span>}</div></div>
       <div className="tool-grid">
         <FillerTool activeIdx={activeIdx} state={state} onAction={onAction} />
         <TimerTool activeIdx={activeIdx} time={isGlobal ? time : 0} setTime={setTime} running={isGlobal && running} 
@@ -39,6 +38,7 @@ export const LiveToolkit = ({ state, onAction }) => {
     </div>
   );
 };
+
 
 
 
