@@ -3,7 +3,7 @@ import React from 'react';
 export const ActionSection = ({ state, onAction }) => (
   <>
     {state.status === 'planning' && (
-      <div className="card action-card start-meeting" onClick={() => onAction('status', 'live')}>
+      <div className="card action-card start-meeting" onClick={() => onAction('MEETING_START', 'live')}>
         <label>NEURAL LINK</label>
         <div className="val">START MEETING [INITIALIZE]</div>
       </div>
