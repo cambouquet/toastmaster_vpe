@@ -29,7 +29,10 @@ export const LiveToolkit = ({ state, onAction }) => {
   return (
     <div className={`card live-toolkit ${running ? 'pulse-border' : ''} light-${getLight()}`}>
       <div className="session-header">
-        <span className="session-label">{running ? 'LISTEN MODE ACTIVE' : 'LOG'}</span>
+        <div className="session-nav">
+          <span className="session-label">{current.label}</span>
+          <span className="session-status">{running ? 'RECORDING' : 'IDLE'}</span>
+        </div>
         <span className="session-member">{current.member}</span>
       </div>
       <div className="tool-grid">
