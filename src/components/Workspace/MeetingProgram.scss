@@ -4,45 +4,61 @@
   grid-column: span 1;
   border-left: 2px solid rgba($accent-cyan, 0.3);
   
-  .program-timeline {
-    margin-top: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    position: relative;
-    padding-left: 10px;
+  .program-groups {
+    margin-top: 1rem;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
 
-    &::before {
-      content: '';
-      position: absolute;
-      left: 62px;
-      top: 5px;
-      bottom: 5px;
-      width: 1px;
-      background: rgba($accent-cyan, 0.1);
+  .prog-g {
+    .g-h {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 4px 10px; background: rgba($accent-cyan, 0.05);
+      font: 900 0.6rem 'JetBrains Mono'; color: $accent-cyan;
+      cursor: pointer; border-radius: 4px; border: 1px solid rgba($accent-cyan, 0.1);
+      &:hover { background: rgba($accent-cyan, 0.1); }
+      .g-t { font-size: 0.8rem; }
+    }
+    .g-c {
+      padding: 8px 0 8px 10px;
+      display: flex; flex-direction: column; gap: 0.6rem;
+      position: relative;
+      &::before {
+        content: ''; position: absolute; left: 52px; top: 0; bottom: 0;
+        width: 1px; background: rgba($accent-cyan, 0.1);
+      }
     }
   }
 
   .timeline-item {
+/* Lines 39-85 omitted */
     display: flex;
     align-items: center;
     gap: 15px;
     font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 4px;
+    border-radius: 4px;
+
+    &.active {
+      background: rgba($accent-cyan, 0.1);
+      .marker { background: $accent-cyan; box-shadow: 0 0 8px $accent-cyan; }
+      .label-text { color: $accent-cyan; }
+    }
 
     .time {
-      font-size: 0.7rem;
-      color: $accent-cyan;
-      width: 45px;
-      opacity: 0.8;
+      font-size: 0.55rem;
+      color: rgba(#fff, 0.4);
+      width: 35px;
     }
 
     .marker {
       width: 6px;
       height: 6px;
-      background: rgba($accent-cyan, 0.4);
       border-radius: 50%;
+      background: rgba($accent-cyan, 0.4);
+      flex-shrink: 0;
       z-index: 1;
-      border: 1px solid $bg-void;
     }
 
     .content {
@@ -50,16 +66,14 @@
       flex-direction: column;
       
       .label-text {
-        font-size: 0.85rem;
-        font-weight: 700;
+        font-size: 0.65rem;
+        font-weight: 800;
         color: #fff;
-        letter-spacing: 1px;
       }
       
       .detail-text {
-        font-size: 0.65rem;
+        font-size: 0.55rem;
         color: rgba($accent-cyan, 0.5);
-        text-transform: uppercase;
       }
     }
 

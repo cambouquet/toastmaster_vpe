@@ -1,47 +1,47 @@
 import React from 'react';
+import { LiveEval } from './LiveEval';
+import { FillerTool } from './FillerTool';
+import { TimerTool } from './TimerTool';
+import { GramTool } from './GramTool';
+import { useMeetingSegments } from '../../hooks/useMeetingSegments';
+import { useToolkitTimer } from '../../hooks/useToolkitTimer';
 import './LiveToolkit.scss';
 
 export const LiveToolkit = ({ state, onAction }) => {
-  const [time, setTime] = React.useState(0);
-  const [running, setRunning] = React.useState(false);
-  const ahCount = state.ahCount || 0;
-
-  React.useEffect(() => {
-    let interval;
-    if (running) interval = setInterval(() => setTime(t => t + 1), 1000);
-    return () => clearInterval(interval);
-  }, [running]);
-
+  const activeIdx = state.activeSegment || 0, roles = state.roles || {};
+  const segments = useMeetingSegments(roles), current = segments[activeIdx] || segments[0];
   const format = (s) => `${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;
-  const getColor = () => {
-    if (time >= 420) return '#ff4444';
-    if (time >= 360) return '#ffbb33';
-    if (time >= 300) return '#00C851';
-    return '#00bac4';
+  const { time, setTime, running, setRunning } = useToolkitTimer(activeIdx, onAction, format);
+
+  const getTarget = () => {
+    const l = current.label;
+    if (l === 'SPEECH') return '5:00 / 6:00 / 7:00';
+    if (l.startsWith('TOPIC')) return '1:00 / 1:30 / 2:00';
+    return l === 'EVAL' ? '2:00 / 2:30 / 3:00' : '-- / -- / --';
+  };
+  const getLight = () => {
+    const t = time, l = current.label;
+    if (l === 'SPEECH') return t >= 420 ? 'red' : t >= 360 ? 'yellow' : t >= 300 ? 'green' : '';
+    if (l.startsWith('TOPIC')) return t >= 120 ? 'red' : t >= 90 ? 'yellow' : t >= 60 ? 'green' : '';
+    return l === 'EVAL' ? (t >= 180 ? 'red' : t >= 150 ? 'yellow' : t >= 120 ? 'green' : '') : '';
   };
 
   return (
-    <div className="card live-toolkit">
-      <label>LIVE TOOLKIT</label>
+    <div className={`card live-toolkit ${running ? 'pulse-border' : ''} light-${getLight()}`}>
+      <div className="session-header">
+        <span className="session-label">{running ? 'LISTEN MODE ACTIVE' : 'SESSION LOG'}</span>
+        <span className="session-member">{current.member}</span>
+      </div>
       <div className="tool-grid">
-        <div className="tool-item">
-          <span className="tool-label">AH-COUNTER</span>
-          <div className="counter-controls">
-            <button onClick={() => onAction('ahCount', Math.max(0, ahCount - 1))}>-</button>
-            <span className="count-val">{ahCount}</span>
-            <button onClick={() => onAction('ahCount', ahCount + 1)}>+</button>
-          </div>
+        <FillerTool activeIdx={activeIdx} state={state} onAction={onAction} />
+        <TimerTool activeIdx={activeIdx} time={time} setTime={setTime} running={running} setRunning={setRunning} getTarget={getTarget} format={format} state={state} onAction={onAction} />
+        <GramTool activeIdx={activeIdx} state={state} onAction={onAction} />
+      </div>
+      <div className={`eval-vessel ${running ? 'locked' : 'ready'}`}>
+        <div className="tool-header eval-header">
+          <span className="tool-label">PERFORMANCE EVALUATION</span>
         </div>
-        <div className="tool-item">
-          <span className="tool-label">TIMER CONTROL</span>
-          <div className="timer-display" style={{ color: getColor() }}>{format(time)}</div>
-          <div className="timer-btns">
-            <button className={running ? 'pause' : 'start'} onClick={() => setRunning(!running)}>
-              {running ? 'PAUSE' : 'START'}
-            </button>
-            <button className="reset" onClick={() => { setTime(0); setRunning(false); }}>RESET</button>
-          </div>
-        </div>
+        <LiveEval activeIdx={activeIdx} state={state} onAction={onAction} />
       </div>
     </div>
   );
