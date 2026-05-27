@@ -14,6 +14,7 @@ import './Workspace.scss';
 export const MeetingWorkspace = ({ state, onAction }) => {
   const [editing, setEditing] = useState(null);
   const isVpe = state.currentUser?.role === 'VPE' || state.currentUser?.role === 'ADMIN';
+  const isGuest = !state.currentUser || state.currentUser.role === 'GUEST';
 
   useEffect(() => { 
     if (state.status === 'live') window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -30,16 +31,21 @@ export const MeetingWorkspace = ({ state, onAction }) => {
       <AppHeader title={state.status === 'live' ? "LIVE SESSION" : "NEXT MEETING"} status={state.status} />
       <div className='workspace-grid'>
         {state.status === 'live' && <LiveToolkit state={state} onAction={onAction} />}
-        <MeetingProgram state={state} onAction={onAction} />
+        {!isGuest && <MeetingProgram state={state} onAction={onAction} />}
         <MeetingSchedule {...common} />
+        {!isGuest && <BriefingSection {...common} />}
+        <ActionSection state={state} onAction={onAction} />
         <MapPreview url={state.mapUrl} />
         <EditableCard label='Theme' value={state.theme} isEditing={editing === 'theme'}
           onEdit={isVpe ? () => setEditing('theme') : null} onBlur={(v) => handleUpdate('theme', v)} />
-        <BriefingSection {...common} /> <ActionSection state={state} onAction={onAction} />
-        <RolesSection roles={state.roles} members={state.members} editing={editing}
-          onEdit={setEditing} onAction={onAction} currentUser={state.currentUser} />
-        <SpeakersSection speakers={state.roles.speakers || []} members={state.members} 
-          editing={editing} onEdit={setEditing} onAction={onAction} currentUser={state.currentUser} />
+        {!isGuest && (
+          <>
+            <RolesSection roles={state.roles} members={state.members} editing={editing}
+              onEdit={setEditing} onAction={onAction} currentUser={state.currentUser} />
+            <SpeakersSection speakers={state.roles.speakers || []} members={state.members} 
+              editing={editing} onEdit={setEditing} onAction={onAction} currentUser={state.currentUser} />
+          </>
+        )}
       </div>
     </div>
   );

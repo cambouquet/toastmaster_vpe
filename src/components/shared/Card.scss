@@ -7,7 +7,16 @@
   min-width: 0; 
   position: relative;
 
-  &.clickable { cursor: pointer; }
+  &.clickable { 
+    cursor: pointer; 
+    &:hover {
+      background: 
+        linear-gradient(rgba(10, 12, 16, 0.95), rgba(10, 12, 16, 0.95)) padding-box,
+        linear-gradient(135deg, #ff0055, #00ffaa, #0055ff) border-box;
+      animation: border-flow 4s linear infinite;
+      &::after { opacity: 1; }
+    }
+  }
 
   &::after {
     content: '';
@@ -19,14 +28,6 @@
     opacity: 0;
     transition: opacity 0.2s;
     pointer-events: none;
-  }
-
-  &:hover {
-    background: 
-      linear-gradient(rgba(10, 12, 16, 0.95), rgba(10, 12, 16, 0.95)) padding-box,
-      linear-gradient(135deg, #ff0055, #00ffaa, #0055ff) border-box;
-    animation: border-flow 4s linear infinite;
-    &::after { opacity: 1; }
   }
 
   &.editing {
