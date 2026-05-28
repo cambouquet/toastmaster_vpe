@@ -5,6 +5,10 @@
 | **Test Range** | `https://k-app.cloud` | High-Parity Test Server |
 | **Identity Lab** | `auth.k-app.tech` | Central Auth Hub |
 
+## Operational Guides
+- [New Environment Setup](../guide/setup.md)
+- [Backup & Recovery](../reference/backups.md)
+
 ## Deployment Pipeline
 ```mermaid
 graph TD
