@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: "MISSION CONTROL"
-  text: "NEURAL INTERFACE 77"
-  tagline: "High-density Tactical Meeting Management"
+  text: "REAL-LIFE MMO 77"
+  tagline: "Unlocking Human Potential through Gamified Evolution"
   image:
     src: /logo-k.svg
     alt: Mission Control Logo
@@ -17,14 +17,14 @@ hero:
       link: /architecture/domain-model
 
 features:
-  - title: Cyber-Noir Aesthetic
-    details: Muted tones, tactical overlays, and zero-scrollbar layout for maximum focus.
+  - title: Cyber-Noir RPG
+    details: Muted tones and tactical overlays for a focused human development experience.
     icon: 🕶️
-  - title: AI-First Registry
-    details: Automated member tracking and meeting orchestration via synchronized neural agents.
+  - title: AI Mentorship
+    details: Synchronized neural agents guiding your journey toward becoming a better human.
     icon: 🧠
   - title: Atomic Architecture
-    details: Domain-driven design with 42-line file limits for extreme modularity.
+    details: Domain-driven evolution with 42-line file limits for an ultra-modular core.
     icon: ⚛️
 ---
 

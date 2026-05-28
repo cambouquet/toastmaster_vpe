@@ -1,3 +1,7 @@
+# Mission Control - Real Life MMO
+
+A high-density "Cyber-Noir" human development platform. This is a real-life MMO designed to help people learn, grow, and become better humans through a fun, gamified experience.
+
 ## Tactical Access
 
 | Portal | URL | Description |
@@ -8,15 +12,15 @@
 
 ## Core Architecture
 
-The project follows a domain-driven structure to ensure separation of concerns between the Agent, Meeting Workspace, and Member Registry.
+The project follows a domain-driven structure to ensure separation of concerns between the AI Mentors, the Growth Workspace, and the Player Registry.
 
 ### Directory Overview
 - `src/components/Shell/`: structural parent, manages high-level routing and the global Status HUD.
-- `src/components/Workspace/`: The Dashboard for meeting planning (11 distinct metadata nodes).
-- `src/components/Agent/`: AI interaction interface, including `ChatInput` with transmission pulse.
-- `src/components/Members/`: Registry for member profiles and status tracking.
-- `src/services/ai/`: Brain of the application, handling intent resolution and UI actions.
-- `src/hooks/`: Reactive state management (e.g., `useCollaboration` orchestrates AI and UI sync).
+- `src/components/Workspace/`: The Dashboard for evolution planning (11 distinct metadata nodes).
+- `src/components/Agent/`: AI Mentor interface, including `ChatInput` with transmission pulse.
+- `src/components/Members/`: Player Registry for profiles and status tracking.
+- `src/services/ai/`: Brain of the application, handling intent resolution and growth guidance.
+- `src/hooks/`: Reactive state management (e.g., `useCollaboration` orchestrates AI and player sync).
 
 ## Development
 
