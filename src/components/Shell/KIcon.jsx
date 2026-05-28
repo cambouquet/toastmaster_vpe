@@ -1,7 +1,9 @@
 import React from 'react';
 import { K_FONT_LIBRARY } from './KFontLibrary';
 
-export const KIcon = ({ char, color = '#ffffff', accentColor = '#ff0055', ...props }) => {
+const DEFAULT_ACCENT = import.meta.env.VITE_WING_COLOR || '#ff0055';
+
+export const KIcon = ({ char, color = '#ffffff', accentColor = DEFAULT_ACCENT, ...props }) => {
   const glyph = K_FONT_LIBRARY[char] || K_FONT_LIBRARY['0'];
   const paths = glyph.path.split(' Z').filter(p => p.trim()).map(p => p + ' Z');
   
