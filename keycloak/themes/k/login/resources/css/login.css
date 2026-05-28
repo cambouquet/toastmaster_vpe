@@ -121,25 +121,25 @@ body.identity-lab {
 .keyboard-grid {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    gap: 10px;
+    gap: 8px;
 }
 
 .key {
     background: rgba(0, 186, 196, 0.1);
     border: 1px solid rgba(0, 186, 196, 0.2);
-    aspect-ratio: 1;
+    aspect-ratio: 1.2;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s;
-    padding: 8px;
+    padding: 4px;
     border-radius: 4px;
     color: #00bac4;
     position: relative;
     font-family: 'Orbitron', sans-serif;
     font-weight: 900;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
 }
 
 .key:hover {
@@ -177,6 +177,7 @@ body.identity-lab {
 
 .key.action.backspace {
     grid-column: span 2;
+    aspect-ratio: auto;
 }
 
 .key.action.backspace:hover {
@@ -188,6 +189,7 @@ body.identity-lab {
 
 .key.action.enter {
     grid-column: span 2;
+    aspect-ratio: auto;
     opacity: 0.3;
     cursor: not-allowed;
 }

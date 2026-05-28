@@ -21,6 +21,10 @@ const KFont = (function() {
     const KATANA = (x, y, s=0.8) => `M${x-8*s} ${y-8*s} L${x+3*s} ${y+3*s} L${x} ${y+6*s} L${x-11*s} ${y-5*s} Z M${x} ${y} Q${x+25*s} ${y+15*s} ${x+45*s} ${y+25*s} L${x+40*s} ${y+25*s} Q${x+20*s} ${y+15*s} ${x} ${y+4*s} Z`;
     const GLOW_RING = (x, y, r) => `M${x-r} ${y} A${r} ${r} 0 1 1 ${x+r} ${y} A${r} ${r} 0 1 1 ${x-r} ${y} Z`;
     const BRIDGE = (x1, y1, cx, cy, x2, y2) => `M${x1} ${y1} Q${cx} ${cy} ${x2} ${y2} L${x2} ${y2+10} Q${cx} ${cy+10} ${x1} ${y1+10} Z`;
+    const ROPE = (x, y, w=35, h=72, t=6) => {
+        const r = t;
+        return `M${x+w} ${y+h*0.25} Q${x+w} ${y} ${x+w/2} ${y} Q${x} ${y} ${x} ${y+h*0.25} C${x} ${y+h*0.55} ${x+w} ${y+h*0.45} ${x+w} ${y+h*0.75} Q${x+w} ${y+h} ${x+w/2} ${y+h} Q${x} ${y+h} ${x} ${y+h*0.75} L${x+r} ${y+h*0.75} Q${x+r} ${y+h-r} ${x+w/2} ${y+h-r} Q${x+w-r} ${y+h-r} ${x+w-r} ${y+h*0.75} C${x+w-r} ${y+h*0.55} ${x+r} ${y+h*0.45} ${x+r} ${y+h*0.25} Q${x+r} ${y+r} ${x+w/2} ${y+r} Q${x+w-r} ${y+r} ${x+w-r} ${y+h*0.25} Z`;
+    };
 
     const LIBRARY = {
         A: `${LANCE(8, 76, 30, 4, 6)} ${LANCE(42, 76, 20, 4, 6)} ${SW(40, 40, 10)}`,
@@ -72,8 +76,8 @@ const KFont = (function() {
         K: "#ff0055", // Red Accent
         O: "#ffcc00", // Gold Accent
         C: "#ffcc00", // Gold Accent
-        X: "#00ff99", // Green Accent
-        Z: "#9900ff", // Purple Accent
+        Q: "#ffcc00", // Gold Accent
+        I: "#00bac4", // Blue Accent
     };
 
     return {
@@ -123,10 +127,11 @@ const KFont = (function() {
             document.querySelectorAll('[data-text]').forEach(function(el) { self.render(el); });
             document.querySelectorAll('[data-kfont]').forEach(function(el) {
                 var char = el.getAttribute('data-kfont');
+                el.innerText = char; // Set innerText for character display
                 el.setAttribute('data-text', char);
                 el.setAttribute('data-height', 28);
                 el.setAttribute('data-color', "#00bac4");
-                self.render(el);
+                // self.render(el); // Disable SVG rendering inside key boxes
             });
         }
     };

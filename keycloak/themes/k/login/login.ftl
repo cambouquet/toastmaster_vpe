@@ -15,7 +15,7 @@
         <form id="kc-form-login" action="${url.loginAction}" method="post">
             <div class="input-stack">
                 <div class="input-bracket" id="username-bracket">
-                    <label for="username">MAIL ADDRESS</label>
+                    <label for="username">IDENTITY // MAIL ADDRESS</label>
                     <input id="username" name="username" value="${(login.username!'')}" type="hidden" />
                     <div id="username-display" class="kfont-input-display" onclick="setActiveField('username')"></div>
                     <#if messagesPerField.existsError('username')>
@@ -70,7 +70,7 @@
             const passwordInput = document.getElementById('password');
             const usernameDisplay = document.getElementById('username-display');
             const passwordDisplay = document.getElementById('password-display');
-            const nextButton = document.getElementById('next-button');
+            const enterKey = document.getElementById('k-enter-key');
             const submitButton = document.getElementById('submit-button');
             const backButton = document.getElementById('back-button');
             const kfontDisplay = document.getElementById('kfont-display');
@@ -95,7 +95,7 @@
             }
 
             function pressEnter() {
-                if (currentField === 'username' && !nextButton.disabled) {
+                if (currentField === 'username' && !enterKey.disabled) {
                     nextStep();
                 } else if (currentField === 'password' && !submitButton.disabled) {
                     document.getElementById('kc-form-login').submit();
@@ -105,11 +105,11 @@
             function updateUI() {
                 const enterKey = document.getElementById('k-enter-key');
                 if (currentField === 'username') {
-                    usernameDisplay.setAttribute('data-text', usernameInput.value || "MAIL ADDR");
+                    usernameDisplay.setAttribute('data-text', usernameInput.value || "MAIL_ADDRESS");
                     usernameDisplay.setAttribute('data-color', usernameInput.value ? "#fff" : "rgba(0,186,196,0.2)");
                     KFont.render(usernameDisplay);
 
-                    const isReady = usernameInput.value.length >= 5 && usernameInput.value.includes('@');
+                    const isReady = usernameInput.value.length >= 6 && usernameInput.value.includes('@k.ai');
                     enterKey.disabled = !isReady;
                     enterKey.classList.toggle('ready', isReady);
                 } else {
@@ -125,7 +125,7 @@
             }
 
             function nextStep() {
-                if (usernameInput.value.length < 5 || !usernameInput.value.includes('@')) return;
+                if (usernameInput.value.length < 6 || !usernameInput.value.includes('@k.ai')) return;
                 document.getElementById('username-bracket').style.display = 'none';
                 document.getElementById('password-bracket').style.display = 'block';
                 document.getElementById('dot-username').classList.remove('active');

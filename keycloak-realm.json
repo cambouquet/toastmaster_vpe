@@ -9,7 +9,7 @@
       "publicClient": true,
       "directAccessGrantsEnabled": true,
       "webOrigins": ["*"],
-      "redirectUris": ["http://localhost:1777/*", "https://k-app.tech/*"]
+      "redirectUris": ["http://localhost:1777/*", "http://192.168.1.52:1777/*", "https://k-app.tech/*"]
     }
   ],
   "roles": {
@@ -24,7 +24,7 @@
     {
       "username": "alice",
       "enabled": true,
-      "email": "alice@k-app.local",
+      "email": "alice@k.ai",
       "firstName": "Alice",
       "lastName": "Vanguard",
       "realmRoles": ["ORGANIZER"],
@@ -33,7 +33,7 @@
     {
       "username": "bob",
       "enabled": true,
-      "email": "bob@k-app.local",
+      "email": "bob@k.ai",
       "firstName": "Bob",
       "lastName": "Echo",
       "realmRoles": ["PARTICIPANT"],
@@ -42,7 +42,7 @@
     {
       "username": "kami",
       "enabled": true,
-      "email": "kami@k-app.local",
+      "email": "kami@k.ai",
       "firstName": "Kami",
       "lastName": "Command",
       "realmRoles": ["LEADER"],
@@ -51,7 +51,7 @@
     {
       "username": "organizer",
       "enabled": true,
-      "email": "organizer@k-app.local",
+      "email": "organizer@k.ai",
       "firstName": "System",
       "lastName": "Organizer",
       "realmRoles": ["ORGANIZER"],
@@ -60,7 +60,7 @@
     {
       "username": "participant",
       "enabled": true,
-      "email": "participant@k-app.local",
+      "email": "participant@k.ai",
       "firstName": "System",
       "lastName": "Participant",
       "realmRoles": ["PARTICIPANT"],

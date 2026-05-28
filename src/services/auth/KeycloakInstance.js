@@ -15,8 +15,11 @@ export const setFinished = (v) => { initFinished = v; };
 export const setSyncErrorHandler = (h) => { onSyncError = h; };
 
 try {
+  const currentHost = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
+  const kcUrl = import.meta.env.PROD ? 'https://auth.k-app.tech' : `http://${currentHost}:8081`;
+
   keycloak = !USE_MOCK ? new Keycloak({
-    url: import.meta.env.PROD ? 'https://auth.k-app.tech' : 'http://localhost:8081',
+    url: kcUrl,
     realm: 'k', clientId: 'k-app'
   }) : null;
 } catch (e) { guestMode = true; connectionDegraded = true; }

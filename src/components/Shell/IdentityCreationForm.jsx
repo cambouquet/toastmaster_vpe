@@ -14,6 +14,11 @@ export const IdentityCreationForm = ({ search, setSearch, onAuth }) => {
     });
   };
 
+  const placeholder = React.useMemo(() => {
+    const options = ['GHOST_PROTOCOL', 'NEURAL_LINK_ID', 'CORE_ACCESS_KEY', 'CIPHER_ALIAS', 'VOID_SIGNATURE'];
+    return options[Math.floor(Math.random() * options.length)];
+  }, []);
+
   return (
     <div className='neural-link-bootstrap rainbow-box'>
       <div className='id-wordmark'>
@@ -21,7 +26,7 @@ export const IdentityCreationForm = ({ search, setSearch, onAuth }) => {
       </div>
       <div className='input-bracket'>
         <input autoFocus spellCheck='false' value={search} 
-          onChange={(e) => setSearch(e.target.value)} placeholder='SPECIFY ALIAS' 
+          onChange={(e) => setSearch(e.target.value)} placeholder={placeholder} 
           onKeyDown={(e) => e.key === 'Enter' && handleSync()} />
       </div>
       <button className={'sync-trigger ' + (search ? 'ready' : '')} onClick={handleSync}>
