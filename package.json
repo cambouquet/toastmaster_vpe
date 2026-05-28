@@ -9,12 +9,15 @@
     "start:linux": "chmod +x ./scripts/dev-setup.sh && ./scripts/dev-setup.sh",
     "start:prod": "podman-compose up -d && npm run dev",
     "stop": "podman compose down",
-    "dev": "concurrently \"npm run dev:fe\" \"npm run dev:be\"",
-    "dev:fe": "vite",
+    "dev": "concurrently \"npm run dev:fe\" \"npm run dev:be\" \"npm run docs:dev\"",
+    "dev:fe": "vite --host",
     "dev:be": "node mock_agent/server.cjs",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "docs:dev": "vitepress dev docs --host",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
     "cors": "^2.8.6",
@@ -30,7 +33,10 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
+    "mermaid": "^11.15.0",
     "sass": "^1.77.6",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "vitepress": "^1.6.4",
+    "vitepress-plugin-mermaid": "^2.0.17"
   }
 }

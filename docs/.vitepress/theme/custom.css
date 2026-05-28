@@ -1,0 +1,70 @@
+:root {
+  --vp-c-brand: #00bac4;
+  --vp-c-brand-light: #00e0ed;
+  --vp-c-brand-lighter: #b3f7ff;
+  --vp-c-brand-dark: #008fa1;
+  --vp-c-brand-darker: #00606d;
+
+  --vp-c-bg: #0a0c10;
+  --vp-c-bg-alt: #0d0f14;
+  --vp-c-bg-soft: #14171d;
+  
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(135deg, #00bac4 0%, #ff0055 100%);
+
+  --vp-custom-block-tip-border: #00bac4;
+  --vp-custom-block-tip-bg: rgba(0, 186, 196, 0.05);
+}
+
+.VPNav {
+  background-color: rgba(10, 12, 16, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 186, 196, 0.2);
+}
+
+.VPHero.has-image .name {
+  text-shadow: 0 0 20px rgba(0, 186, 196, 0.5);
+}
+
+.VPFeature {
+  background-color: #0d0f14 !important;
+  border: 1px solid rgba(0, 186, 196, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.VPFeature:hover {
+  border-color: #00bac4 !important;
+  box-shadow: 0 0 20px rgba(0, 186, 196, 0.2);
+  transform: translateY(-2px);
+}
+
+/* 2077 Scaffolding */
+.VPDoc h1, .VPDoc h2, .VPDoc h3 {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: 'Orbitron', sans-serif;
+  color: #00bac4;
+}
+
+.VPDoc p, .VPDoc li {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+code {
+  background-color: rgba(0, 186, 196, 0.1) !important;
+  color: #00bac4 !important;
+}
+
+.VPCard {
+  clip-path: polygon(0% 0%, 90% 0%, 100% 15%, 100% 100%, 10% 100%, 0% 85%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

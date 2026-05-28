@@ -14,7 +14,7 @@ export const VirtualKeyboard = ({ onKey, onBackspace, disabled, nameTaken, step 
             onClick={() => !disabled && onKey(char)}
             disabled={disabled}
           >
-            <KFontText text={char} height={16} color="inherit" />
+            <KFontText text={char} height={20} color="currentColor" />
           </button>
         ))}
         <button 
@@ -22,7 +22,8 @@ export const VirtualKeyboard = ({ onKey, onBackspace, disabled, nameTaken, step 
           onClick={() => !disabled && onBackspace()}
           disabled={disabled}
         >
-          DEL
+          <span className="del-icon">⌫</span>
+          <span className="del-text">VOID</span>
         </button>
       </div>
     </div>
