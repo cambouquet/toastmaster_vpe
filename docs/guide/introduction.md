@@ -1,51 +1,35 @@
-# Mission Control - Real Life MMO
+# <span style="color: #fcee0a; text-shadow: 0 0 10px #fcee0a;">NEURAL_SYST3M // 2077</span>
 
-A high-density "Cyber-Noir" human development platform. This is a real-life MMO designed to help people learn, grow, and become better humans through a fun, gamified experience.
+## <span style="color: #00bac4;">TERMINAL_ACCESS: GRANTED</span>
 
-## Tactical Access
+Welcome to the future of high-stakes communication. You aren't just using a tool; you're upgrading your mental hardware.
 
+### [SYSTEM_SPECS]
+*   **LOW LATENCY**: Real-time social feedback loops.
+*   **ADAPTIVE**: Context-aware transition protocols.
+*   **DOMINANCE**: High-density data visualization.
+
+### [MISSION_OBJECTIVE]
+Master the art of speaking. Become the agent you were meant to be. Relax, evolve, and play while everyone else is still buffered.
+
+---
+> "The only limitation is the one you accept."
+> -- SYS_ADMIN
+
+## Tactical Portals (Local)
 | Portal | URL | Description |
 | :--- | :--- | :--- |
-| **Mission Control** | `http://localhost:5173` | Neural Link Interface (Login required) |
+| **Neural Link** | `http://localhost:5173` | Interface (Login required) |
 | **Identity Lab** | `http://localhost:8080` | Keycloak Auth Server |
-| **Mission Briefing** | `http://localhost:5174` | Project Documentation (VitePress) |
+| **Tech Specs** | `http://localhost:5174` | Project Documentation |
 
-## Core Architecture
+## Architecture Summary
+The system follows a domain-driven structure:
+- `Shell/`: Global HUD and routing.
+- `Workspace/`: Evolution dashboard.
+- `Agent/`: AI Mentor transmission layer.
+- `Members/`: Player registry and neural profiles.
 
-The project follows a domain-driven structure to ensure separation of concerns between the AI Mentors, the Growth Workspace, and the Player Registry.
-
-### Directory Overview
-- `src/components/Shell/`: structural parent, manages high-level routing and the global Status HUD.
-- `src/components/Workspace/`: The Dashboard for evolution planning (11 distinct metadata nodes).
-- `src/components/Agent/`: AI Mentor interface, including `ChatInput` with transmission pulse.
-- `src/components/Members/`: Player Registry for profiles and status tracking.
-- `src/services/ai/`: Brain of the application, handling intent resolution and growth guidance.
-- `src/hooks/`: Reactive state management (e.g., `useCollaboration` orchestrates AI and player sync).
-
-## Development
-
-### Setup
-```bash
-npm install
-npm run setup
-```
-
-### Launch Everything (Keycloak + Frontend + Mock Agent)
-```bash
-npm start
-```
-
-### Testing
-```bash
-npx playwright test
-```
-
-## UI Principles
-- **Tactical Editing**: No explicit save buttons. Edit items directly in-place.
-- **Cyber-Noir Aesthetic**: Muted cyan (`#00bac4`) on ultra-dark backgrounds.
-- **Max File length**: No file exceeds 42 lines.
-- **No Scrollbars**: Clean, fixed-layout interface.
-
-## Documentation
-- See [CODING_GUIDELINES.md](CODING_GUIDELINES.md) for strict architectural and design rules.
+---
+<span style="color: #666; font-size: 0.8em;">[SECURE TRANSMISSION // END]</span>
 - See `.github/copilot-instructions.md` for AI agent operational constraints.

@@ -1,78 +1,32 @@
-name: Deploy to OVH
-
+name: Double Deployment
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - '**.md'
-      - '.gitignore'
-      - 'LICENSE'
   workflow_dispatch:
-    inputs:
-      force_setup:
-        description: 'Force VM infrastructure setup'
-        type: boolean
-        default: false
-      no_cache:
-        description: 'Disable Docker build cache'
-        type: boolean
-        default: false
-      full_restart:
-        description: 'Full restart (docker compose down && up)'
-        type: boolean
-        default: false
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: self-hosted
-    permissions:
-      contents: read
-      packages: write
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-
-      - name: Log in to registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
-
-      - name: Build and push
+      - uses: actions/checkout@v4
+      - name: Build & Push
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main .
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker build -t ghcr.io/${{ github.repository }}:latest .
+          docker push ghcr.io/${{ github.repository }}:latest
 
-      - name: Sync & Deploy
-        uses: appleboy/scp-action@v1.0.0
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    strategy:
+      matrix: { target: [prod, test] }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy ${{ matrix.target }}
+        uses: ./.github/actions/deploy-env
         with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "docker-compose.prod.yml,keycloak-realm.json,deploy/Caddyfile"
-          target: "~/app"
-
-      - name: Remote Activation
-        uses: appleboy/ssh-action@v1.2.5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_ACTOR: ${{ github.actor }}
-          APP_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
-        with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: GITHUB_TOKEN,GITHUB_ACTOR,APP_IMAGE
-          script: |
-            echo $GITHUB_TOKEN | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
-            docker pull $APP_IMAGE
-            cd ~/app && APP_IMAGE=$APP_IMAGE docker compose -f docker-compose.prod.yml up -d --remove-orphans
-            docker image prune -af --filter "until=24h"
+          target: ${{ matrix.target }}
+          vm_host: ${{ secrets.VM_HOST }}
+          vm_user: ${{ secrets.VM_USER }}
+          ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          app_image: ghcr.io/${{ github.repository }}:latest

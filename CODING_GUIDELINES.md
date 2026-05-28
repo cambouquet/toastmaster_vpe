@@ -45,3 +45,9 @@
   - **Animated Transitions**: Use vertical slides or fades for data transitions to provide visual feedback of the "cycle."
 - **Vesting Spaces**: Adjust padding and font sizes (1.2rem heading max on mobile) to ensure no horizontal scrolling exists.
 - **VR/High-FOV**: Maintain high-fidelity animations on high-resolution displays using the `@include vr-headset` mixin.
+
+## 8. Development & Deployment
+- **Dual-Env Parity**: Deploy identical code to Prod (`k-app.tech`) and Test (`k-app.cloud`). Behavior is toggled via `VITE_APP_MODE` (demo vs test).
+- **No Backward Compatibility**: Breaking changes are allowed. **Persistence Guard**: Data must be backed up (e.g., Couchbase snapshots) before removing deprecated features.
+- **Feature Tracking**: Maintain a "Legacy Feature Tracking" ledger in technical documentation for all deprecated neural protocols.
+- **Auto-Heal CD**: The deployment pipeline must prioritize Speed (Fast Path) but automate Recovery (Long Path) via container cleanup on failure.

@@ -1,4 +1,25 @@
-# Domain Model: Mission Control (Meetings App)
+# Domain Model
+
+## Deployment Pipeline
+```mermaid
+graph TD
+    A[Push to Main] --> B[Job: Build & Push]
+    B --> C{Parallel Deploy}
+    C --> D[Target: Prod]
+    C --> E[Target: Test]
+    D --> F[Try Fast Path]
+    E --> G[Try Fast Path]
+    F -- Failure --> H[Heal: Clean & Restart]
+    G -- Failure --> I[Heal: Clean & Restart]
+    F -- Success --> J[Complete]
+    H -- Success --> J
+```
+
+## Legacy Feature Tracking
+| Feature | Status | Backup Strategy | Removal Date |
+| :--- | :--- | :--- | :--- |
+| File Persistence | Deprecated | `state_persistence.json` snapshot | TBD |
+| Mock Auth | Removed | N/A | 2026-05-28 |: Mission Control (Meetings App)
 
 ## Authentication & Identity
 The system uses **Keycloak** for real user management.

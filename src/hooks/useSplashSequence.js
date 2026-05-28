@@ -7,22 +7,19 @@ export const useSplashSequence = (onFinish) => {
   const displayRole = useRoleCycling(phase);
 
   useEffect(() => {
-    const palette = ['#00bac4', '#ff003c', '#fcee0a'];
-    // Shuffle and pick 2
-    const chosen = palette.sort(() => 0.5 - Math.random()).slice(0, 2);
-    chosen.push('#ffffff'); // Always include white
-    
-    const pick = () => chosen[Math.floor(Math.random() * chosen.length)];
+    const accent = import.meta.env.VITE_WING_COLOR || '#00bac4';
+    const palette = [accent, '#ff003c', '#fcee0a', '#ffffff'];
+    const pick = () => palette[Math.floor(Math.random() * palette.length)];
 
     setColors({
-      logoPrimary: pick(),
-      logoGlow: pick(),
-      border: pick(),
+      logoPrimary: '#ffffff',
+      logoGlow: accent,
+      border: accent,
       line1: pick(),
       line2: pick(),
       line3: pick(),
-      highlightBg: pick(),
-      palette: chosen
+      highlightBg: accent,
+      palette
     });
     
     const sequence = [

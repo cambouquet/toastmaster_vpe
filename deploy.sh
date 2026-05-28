@@ -1,24 +1,29 @@
 #!/bin/bash
-# Production Deployment Script for meetings-app
+# Multi-environment Deployment Script
 
-echo "🚀 Starting Production Deployment..."
+TARGET=${1:-prod}
+ENV_FILE="./deploy/${TARGET}.env"
 
-# 1. Build frontend assets locally (optional if Dockerfile does it, but good for local check)
-echo "📦 Building frontend with npm..."
+if [ ! -f "$ENV_FILE" ]; then
+  echo "❌ Environment file $ENV_FILE not found. Specify 'prod' or 'test'."
+  exit 1
+fi
+
+echo "🚀 Loading environment: $TARGET..."
+set -a; source "$ENV_FILE"; set +a
+
+# 1. Build frontend assets with environment-specific vars
+echo "📦 Building frontend..."
 npm run build
 
-# 2. Set environment variables
-export APP_IMAGE="meetings-app:latest"
-
-# 3. Build the application image
-echo "🛠️ Building Docker image: $APP_IMAGE..."
+# 2. Build and restart
+export APP_IMAGE="meetings-app:${TARGET}"
 docker build -t $APP_IMAGE .
 
-# 4. Restart the production stack
-echo "♻️ Restarting production stack..."
+echo "♻️ Restarting $TARGET stack..."
 docker compose -f docker-compose.prod.yml down --remove-orphans
 docker compose -f docker-compose.prod.yml up -d
 
-echo "✅ Deployment complete!"
-echo "📍 Application: https://k-app.tech"
-echo "🔐 Auth: https://auth.k-app.tech"
+echo "✅ $TARGET Deployment complete!"
+echo "📍 Application: https://$DOMAIN_NAME"
+echo "🔐 Auth: https://$AUTH_DOMAIN_NAME"

@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "cors": "^2.8.6",
+    "couchbase": "^4.4.3",
     "express": "^5.2.1",
     "keycloak-js": "^26.2.4",
     "react": "^18.3.1",

@@ -1,27 +1,23 @@
 version: '3.8'
-
 services:
   caddy:
     image: caddy:2-alpine
     restart: always
-    ports:
-      - "80:80"
-      - "443:443"
+    ports: ["80:80", "443:443"]
+    environment:
+      - DOMAIN_NAME=${DOMAIN_NAME:-k-app.tech}
+      - AUTH_DOMAIN_NAME=${AUTH_DOMAIN_NAME:-auth.k-app.tech}
+      - CADDY_EMAIL=${CADDY_EMAIL:-kami@k-app.tech}
     volumes:
       - ./deploy/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
-    depends_on:
-      - app
-
+    depends_on: [app]
   app:
     image: ${APP_IMAGE}
     restart: always
-    expose:
-      - "80"
-    depends_on:
-      - keycloak
-
+    expose: ["80"]
+    depends_on: [keycloak]
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.0
     command: start --import-realm
@@ -30,22 +26,22 @@ services:
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
       KC_DB: dev-file
       KC_HTTP_PORT: 8080
-      KC_HOSTNAME: auth.k-app.tech
+      KC_HOSTNAME: ${AUTH_DOMAIN_NAME:-auth.k-app.tech}
       KC_HOSTNAME_STRICT: "false"
       KC_HOSTNAME_STRICT_HTTPS: "true"
       KC_HTTP_ENABLED: "true"
       KC_PROXY: edge
-      # Add this to force re-import on every restart if needed
-      # Note: Keycloak natively picks up new IDs but won't overwrite existing ones by default
-      # Forcing overwrite is better for rapid deployment testing
       KC_DB_URL: "jdbc:h2:file:/opt/keycloak/data/h2/keycloakdb;AUTO_SERVER=TRUE"
-    ports:
-      - "8080:8080"
+    ports: ["8080:8080"]
     volumes:
       - keycloak_data:/opt/keycloak/data
       - ./keycloak-realm.json:/opt/keycloak/data/import/realm.json
-
-volumes:
-  keycloak_data:
-  caddy_data:
-  caddy_config:
+  couchbase:
+    image: couchbase:community
+    restart: always
+    environment:
+      - COUCHBASE_ADMINISTRATOR_USERNAME=admin
+      - COUCHBASE_ADMINISTRATOR_PASSWORD=password
+    ports: ["8091-8096:8091-8096", "11210-11211:11210-11211"]
+    volumes: ["couchbase_data:/opt/couchbase/var"]
+volumes: {keycloak_data: {}, caddy_data: {}, caddy_config: {}, couchbase_data: {}}

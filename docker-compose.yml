@@ -15,3 +15,9 @@ services:
       - "8081:8080"
     volumes:
       - ./keycloak-realm.json:/opt/keycloak/data/import/realm.json:Z
+  couchbase:
+    image: couchbase:community
+    environment:
+      - COUCHBASE_ADMINISTRATOR_USERNAME=admin
+      - COUCHBASE_ADMINISTRATOR_PASSWORD=password
+    ports: ["8091:8091", "11210:11210"]

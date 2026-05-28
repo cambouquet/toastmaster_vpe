@@ -1,0 +1,44 @@
+name: Deploy Env
+description: "Deploy to a specific environment (prod/test)"
+inputs:
+  target:
+    description: 'Target environment (prod or test)'
+    required: true
+  vm_host:
+    description: 'VM Host'
+    required: true
+  vm_user:
+    description: 'VM User'
+    required: true
+  ssh_key:
+    description: 'SSH Private Key'
+    required: true
+  app_image:
+    description: 'Docker image to deploy'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Fast Deploy
+      uses: appleboy/ssh-action@v1.2.5
+      with:
+        host: ${{ inputs.vm_host }}
+        username: ${{ inputs.vm_user }}
+        key: ${{ inputs.ssh_key }}
+        script: |
+          cd ~/app && APP_IMAGE=${{ inputs.app_image }} ./deploy.sh ${{ inputs.target }}
+      continue-on-error: true
+
+    - name: Long Deploy (Heal)
+      if: steps.fast-deploy.outcome == 'failure'
+      uses: appleboy/ssh-action@v1.2.5
+      with:
+        host: ${{ inputs.vm_host }}
+        username: ${{ inputs.vm_user }}
+        key: ${{ inputs.ssh_key }}
+        script: |
+          cd ~/app
+          docker compose -f docker-compose.prod.yml down
+          docker container prune -f
+          APP_IMAGE=${{ inputs.app_image }} ./deploy.sh ${{ inputs.target }}

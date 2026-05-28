@@ -1,11 +1,11 @@
 {
-    email kami@k-app.tech
+    email {$CADDY_EMAIL:kami@k-app.tech}
 }
 
-k-app.tech, www.k-app.tech {
+{$DOMAIN_NAME:k-app.tech}, www.{$DOMAIN_NAME:k-app.tech} {
     reverse_proxy app:80
 }
 
-auth.k-app.tech {
+{$AUTH_DOMAIN_NAME:auth.k-app.tech} {
     reverse_proxy keycloak:8080
 }
