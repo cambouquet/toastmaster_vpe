@@ -1,4 +1,9 @@
-# Domain Model
+| Portal | URL | Description |
+| :--- | :--- | :--- |
+| **User Vitrine** | [Introduction](../guide/introduction.md) | The 2077 immersive site (User Doc) |
+| **Neural Link** | `https://k-app.tech` | Production Demo |
+| **Test Range** | `https://k-app.cloud` | High-Parity Test Server |
+| **Identity Lab** | `auth.k-app.tech` | Central Auth Hub |
 
 ## Deployment Pipeline
 ```mermaid
