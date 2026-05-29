@@ -17,9 +17,13 @@ const ModulePlaceholder = ({ name }) => (
 export const MainContent = ({ isWorkspace, state, uiAction, onAuth }) => {
   const { currentApp } = state;
   
-  const placeholders = ['nexus', 'academy', 'arcade', 'soul-link', 'sanctuary', 'kids-verse'];
+  const placeholders = ['academy', 'nexus', 'health-lab', 'sanctuary', 'soul-link'];
   if (placeholders.includes(currentApp)) {
     return <ModulePlaceholder name={currentApp.toUpperCase().replace('-', ' ')} />;
+  }
+
+  if (currentApp === 'arcade') {
+    return <ModulePlaceholder name="GAMES ARCADE" />;
   }
 
   if (currentApp === 'launcher') {

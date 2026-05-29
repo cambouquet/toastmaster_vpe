@@ -3,7 +3,10 @@ import { NavGridItem } from './NavGridItem';
 import { APPS } from '../../services/system/AppRegistry.jsx';
 import './AppLauncher.scss';
 
-const DEFAULT_ORDER = ['launcher', 'guide', 'workspace', 'nexus', 'academy', 'arcade', 'identity-lab'];
+const DEFAULT_ORDER = [
+  'arcade', 'academy', 'nexus', 'health-lab', 
+  'sanctuary', 'soul-link', 'workspace', 'identity-lab', 'guide'
+];
 
 export const AppLauncher = ({ currentApp, onSwitch, user }) => {
   const isAuth = !!user;
