@@ -34,8 +34,8 @@ const techSidebar = [
 
 export default withMermaid(
   defineConfig({
-    title: "REAL-LIFE MMO",
-    description: "Cyber-Noir Meeting Management Documentation",
+    title: "K App // HUMAN UPGRADE",
+    description: "Multi-dimensional development platform for everyone",
     base: isProd ? '/briefing/' : '/',
     srcExclude: isProd ? [
       'guide/setup.md', 
@@ -44,22 +44,22 @@ export default withMermaid(
       'reference/**'
     ] : [],
     themeConfig: {
-      siteTitle: 'REAL-LIFE MMO',
+      siteTitle: 'K App',
       logo: '/logo-k.svg',
       nav: isProd ? [
-        { text: 'Vision', link: '/guide/introduction' },
+        { text: 'Journey', link: '/guide/introduction' },
         { text: 'Legal', link: '/guide/legal' }
       ] : [
-        { text: 'User Guide', link: '/guide/introduction' },
-        { text: 'Tech Specs', link: '/guide/setup' }
+        { text: 'Journey Guide', link: '/guide/introduction' },
+        { text: 'System Specs', link: '/guide/setup' }
       ],
       sidebar: isProd ? publicSidebar : [...publicSidebar, ...techSidebar],
       socialLinks: [
         { icon: 'github', link: 'https://github.com/toastmaster-vpe' }
       ],
       footer: {
-        message: isProd ? 'K-PROPRIETARY Vitrine' : 'INTERNAL Mission Specs',
-        copyright: 'Copyright © 2077 REAL-LIFE MMO'
+        message: isProd ? 'K-PROPRIETARY Signal' : 'INTERNAL System Specs',
+        copyright: 'Copyright © 2077 // K App'
       }
     },
     mermaid: {

@@ -12,9 +12,9 @@ export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
   const cycleRole = (e) => {
     e.stopPropagation();
     if (!isOrganizer) return;
-    const t = ['PARTICIPANT', 'LEAD HOST', 'EDUCATION LEAD', 'MEMBER SUCCESS', 'COMMS', 'SCRIBE', 'FINANCE', 'LOGISTICS'];
-    const next = t[(t.indexOf(title) + 1) % t.length];
-    up({ title: next, role: next === 'EDUCATION LEAD' ? 'ORGANIZER' : 'PARTICIPANT' });
+    const t = ['MEMBER', 'ADVISOR', 'FACILITATOR', 'COACH', 'STRATEGIST'];
+    const next = t[(t.indexOf(title) === -1 ? 0 : t.indexOf(title) + 1) % t.length];
+    up({ title: next, role: next === 'STRATEGIST' ? 'ORGANIZER' : 'PARTICIPANT' });
   };
 
   const xp = enrolled.reduce((acc, p) => acc + (p.projects || 0), 0);

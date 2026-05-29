@@ -2,8 +2,8 @@
 layout: home
 
 hero:
-  name: "REAL-LIFE MMO"
-  tagline: "Unlocking Human Potential through Gamified Evolution"
+  name: "K App: HUMAN UPGRADE"
+  tagline: "Unlocking Your Potential through Multi-Dimensional Growth"
   image:
     src: /logo-k.svg
     alt: Mission Control Logo
@@ -16,19 +16,21 @@ hero:
       link: /architecture/domain-model
 
 features:
-  - title: Cyber-Noir RPG
-    details: Muted tones and tactical overlays for a focused human development experience.
-    icon: 🕶️
-  - title: AI Mentorship
-    details: Synchronized neural agents guiding your journey toward becoming a better human.
-    icon: 🧠
-  - title: Atomic Architecture
-    details: Domain-driven evolution with 42-line file limits for an ultra-modular core.
+  - title: Multi-Dimensional Growth
+    details: Develop yourself across many paths simultaneously—leadership, communication, and strategy.
     icon: ⚛️
+  - title: AI Mentorship
+    details: Intelligent guidance to help you navigate your personal evolution in real-time.
+    icon: 🧠
+  - title: Infinite Opportunities
+    details: Gain experience through meetings, challenges, games, and learning modules.
+    icon: ✨
 ---
 
 <style>
 :root {
-  --vp-home-hero-image-filter: drop-shadow(0 0 50px rgba(0, 186, 196, 0.4));
+  --vp-home-hero-name-color: #fcee0a;
+  --header-font: 'Space Grotesk', sans-serif;
 }
+h1, .name { font-family: var(--header-font) !important; font-weight: 300 !important; letter-spacing: 2px; }
 </style>
