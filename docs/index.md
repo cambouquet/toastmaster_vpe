@@ -2,8 +2,7 @@
 layout: home
 
 hero:
-  name: "MISSION CONTROL"
-  text: "REAL-LIFE MMO 77"
+  name: "REAL-LIFE MMO"
   tagline: "Unlocking Human Potential through Gamified Evolution"
   image:
     src: /logo-k.svg

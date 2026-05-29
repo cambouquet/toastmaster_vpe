@@ -17,11 +17,18 @@ export const MemberCard = ({ member, onEdit, onDelete, currentUser }) => {
     up({ title: next, role: next === 'EDUCATION LEAD' ? 'ORGANIZER' : 'PARTICIPANT' });
   };
 
+  const xp = enrolled.reduce((acc, p) => acc + (p.projects || 0), 0);
+  const lvl = Math.floor(xp / 5) + 1;
+
   return (
     <div className={`member-card ${status.toLowerCase()} ${role.toLowerCase()} ${edit ? "edit" : ""} ${canEdit ? "clickable" : ""}`} onClick={() => canEdit && setEdit(!edit)}>
       <MemberCardHeader status={status} title={title} role={role} canEdit={canEdit} isOrganizer={isOrganizer} up={up} cycleRole={cycleRole} onDelete={onDelete} id={id} />
       <div className="member-main-content">
         <div className="member-info">
+          <div className="stats-row">
+            <span className="lvl">LVL {lvl}</span>
+            <div className="xp-bar"><div className="xp-fill" style={{ width: `${(xp % 5) * 20}%` }} /></div>
+          </div>
           {edit ? <input autoFocus className="name-in" value={name} onClick={e => e.stopPropagation()} onKeyDown={e => e.key === 'Enter' && setEdit(false)}
               onBlur={() => setEdit(false)} onChange={e => up({ name: e.target.value.toUpperCase() })} />
             : <span className="name">{name?.toUpperCase()}</span>}

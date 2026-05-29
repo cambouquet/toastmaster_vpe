@@ -49,3 +49,6 @@ npx playwright test
 ## Documentation
 - See [CODING_GUIDELINES.md](CODING_GUIDELINES.md) for strict architectural and design rules.
 - See `.github/copilot-instructions.md` for AI agent operational constraints.
+
+## Legal
+Copyright (c) 2026 Mission Control. All Rights Reserved. See [LICENSE](LICENSE) for full proprietary terms.

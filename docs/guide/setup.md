@@ -1,5 +1,8 @@
 # Neural Link Setup // 2077
 
+> [!TIP]
+> This is a **Technical Specification**. For the end-user manual and vision, see the [Mission Briefing](/guide/introduction).
+
 ## [PREREQUISITES]
 *   **Target Hardware**: Ubuntu 22.04+ VM.
 *   **Neural Address**: A Records for `k-app.cloud` and `auth.k-app.cloud`.

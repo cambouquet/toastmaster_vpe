@@ -20,6 +20,13 @@
 
   .member-main-content { display: flex; justify-content: space-between; align-items: flex-start; padding-top: 25px; }
   .member-info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+
+  .stats-row { 
+    display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; 
+    .lvl { font-size: 0.7rem; color: #fcee0a; font-weight: 800; border: 1px solid rgba(#fcee0a, 0.4); padding: 1px 4px; }
+    .xp-bar { flex: 1; height: 3px; background: rgba(255, 255, 255, 0.1); max-width: 80px; position: relative; }
+    .xp-fill { position: absolute; left: 0; top: 0; height: 100%; background: #00bac4; box-shadow: 0 0 5px #00bac4; }
+  }
   
   .profile-photo-slot {
     margin-left: 20px;

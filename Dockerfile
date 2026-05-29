@@ -11,6 +11,7 @@ FROM node:20-alpine
 WORKDIR /app
 RUN apk add --no-cache nginx
 COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/docs/.vitepress/dist /usr/share/nginx/html/briefing
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./
 COPY --from=build /app/mock_agent ./mock_agent

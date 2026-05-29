@@ -1,35 +1,29 @@
-# <span style="color: #fcee0a; text-shadow: 0 0 10px #fcee0a;">NEURAL_SYST3M // 2077</span>
+# <span style="color: #fcee0a; text-shadow: 0 0 10px #fcee0a;">REAL-LIFE MMO™ // MISSION CONTROL</span>
 
-## <span style="color: #00bac4;">TERMINAL_ACCESS: GRANTED</span>
+Welcome to the ultimate human development RPG. You aren't just using a tool; you're leveling up your social stats.
 
-Welcome to the future of high-stakes communication. You aren't just using a tool; you're upgrading your mental hardware.
+## [THE GAME LOOP]
+1.  **Select Class**: From *Education Lead* to *Neural Scout*.
+2.  **Grind XP**: Complete projects, lead meetings, and sync with the AI.
+3.  **Unlock Talents**: Progress through the "Pathways" skill trees.
+4.  **Guild Synergy**: Manage and grow your roster of agents in the Registry.
 
-### [SYSTEM_SPECS]
-*   **LOW LATENCY**: Real-time social feedback loops.
-*   **ADAPTIVE**: Context-aware transition protocols.
-*   **DOMINANCE**: High-density data visualization.
+## [CORE MECHANICS]
+*   **XP Progression**: Every meeting is a dungeon. Every speech is a boss fight.
+*   **AI Mentors**: Non-Player Characters (NPCs) that act as real-time coaches.
+*   **Global HUD**: Real-time status monitoring of all neural links in your sector.
 
-### [MISSION_OBJECTIVE]
-Master the art of speaking. Become the agent you were meant to be. Relax, evolve, and play while everyone else is still buffered.
+### [STATS & TEAMS]
+*   **VPE (Neural Lead)**: Master of the skill tree.
+*   **Logistics (Gear Head)**: Master of the physical environment.
+*   **Scribe (Data Runner)**: Master of the historical log.
 
 ---
-> "The only limitation is the one you accept."
+> "Winning is the result of focused evolution."
 > -- SYS_ADMIN
 
-## Tactical Portals (Local)
-| Portal | URL | Description |
-| :--- | :--- | :--- |
-| **Neural Link** | `http://localhost:5173` | Interface (Login required) |
-| **Identity Lab** | `http://localhost:8080` | Keycloak Auth Server |
-| **Tech Specs** | `http://localhost:5174` | Project Documentation |
-
-## Architecture Summary
-The system follows a domain-driven structure:
-- `Shell/`: Global HUD and routing.
-- `Workspace/`: Evolution dashboard.
-- `Agent/`: AI Mentor transmission layer.
-- `Members/`: Player registry and neural profiles.
+## [LEGAL & TRADEMARK]
+Mission Control™ and the Neural Link™ symbols are trademarks of the Mission Control Collective. All Rights Reserved.
 
 ---
 <span style="color: #666; font-size: 0.8em;">[SECURE TRANSMISSION // END]</span>
-- See `.github/copilot-instructions.md` for AI agent operational constraints.

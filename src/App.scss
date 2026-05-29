@@ -2,3 +2,19 @@
 @import './styles/app/debug-panel';
 @import './styles/app/animations';
 @import './styles/app/utils';
+
+h1, h2, h3, .glitch-text {
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 10px rgba($accent-cyan, 0.3);
+}
+
+.name {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+}
+
+.xp-bar, .lvl {
+  font-family: 'JetBrains Mono', monospace;
+}

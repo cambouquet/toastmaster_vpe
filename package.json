@@ -13,7 +13,7 @@
     "dev:fe": "vite --host",
     "dev:be": "node mock_agent/server.cjs",
     "dev:docs": "echo '📍 Tech Specs: http://localhost:5174' && vitepress dev docs --port 5174",
-    "build": "vite build",
+    "build": "vite build && VITE_DOCS_PROD=true vitepress build docs",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "docs:dev": "vitepress dev docs --host",
