@@ -3,10 +3,7 @@ import { NavGridItem } from './NavGridItem';
 import { APPS } from '../../services/system/AppRegistry.jsx';
 import './AppLauncher.scss';
 
-const DEFAULT_ORDER = [
-  'arcade', 'academy', 'nexus', 'health-lab', 
-  'sanctuary', 'soul-link', 'workspace', 'identity-lab', 'guide'
-];
+const DEFAULT_ORDER = Object.values(APPS).sort((a, b) => a.char.localeCompare(b.char)).map(a => a.id);
 
 export const AppLauncher = ({ currentApp, onSwitch, user }) => {
   const isAuth = !!user;

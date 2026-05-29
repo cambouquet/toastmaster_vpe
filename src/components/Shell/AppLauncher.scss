@@ -62,15 +62,15 @@
 
 .launcher-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px; // Increased gap to clear ambiguity
+  grid-template-columns: repeat(4, 1fr); // 4 columns on desktop
+  gap: 20px;
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   margin-bottom: 60px;
 
   @include mobile {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr); // 2 columns on mobile
+    gap: 15px;
     margin-bottom: 40px;
   }
 }
@@ -78,15 +78,48 @@
 .grid-item {
   aspect-ratio: 1;
   border: 1px solid rgba($accent-cyan, 0.1);
-  background: rgba($accent-cyan, 0.02); // Slightly more visible
+  background: rgba($accent-cyan, 0.02);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0;
+  padding: 10px; // Added padding
   position: relative;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .status {
+    font-size: 8px;
+    letter-spacing: 1px;
+    color: rgba($text-secondary, 0.5);
+    margin-top: 4px;
+  }
+
+  &.locked {
+    opacity: 0.6;
+    filter: grayscale(0.5);
+    &:hover {
+      background: rgba($accent-cyan, 0.05);
+      border-color: rgba($accent-cyan, 0.2);
+    }
+  }
+
+  &:hover:not(.locked) {
+    background: rgba($accent-cyan, 0.05);
+    border-color: $accent-cyan;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .app-icon-container {
+    width: 60%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+}
 
   &:hover {
     background: rgba($accent-cyan, 0.08);

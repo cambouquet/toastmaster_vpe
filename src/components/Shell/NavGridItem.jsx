@@ -13,7 +13,7 @@ export const NavGridItem = ({ id, label, status, active, locked, beta, children,
       {beta && <div className="beta-tag">BETA</div>}
       {children}
       <div className="label-wrap" style={{ marginBottom: 4 }}>
-        <KFontText text={label} height={12} color={color} firstLetterColor="#ff0044" />
+        <KFontText text={label} height={16} color={color} firstLetterColor="#ff0044" />
       </div>
       <span className="status">{status}</span>
     </div>

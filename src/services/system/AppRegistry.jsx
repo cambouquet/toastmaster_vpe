@@ -1,23 +1,28 @@
 import React from 'react';
 import { KIcon } from '../../components/Shell/KIcon';
 
-const C = '#00bac4';
-const R = '#ff0055';
+const C = '#00bac4', R = '#ff0055', Y = '#fcee0a', G = '#00ffaa', B = '#0088ff', P = '#bd00ff', O = '#ffaa00';
+const a = (id, name, char, color, chat = false, isPublic = false) => ({ 
+  id, name, char, Icon: (p) => <KIcon char={char} color={color} {...p} />, color, hasChat: chat, public: isPublic 
+});
 
 export const APPS = {
-  'launcher': { id: 'launcher', name: 'SYSTEM HUB', Icon: (p) => <KIcon char="H" color={C} {...p} />, color: C, hasChat: false, public: true },
-  'arcade': { id: 'arcade', name: 'GAMES', Icon: (p) => <KIcon char="G" color="#ffaa00" {...p} />, color: '#ffaa00', hasChat: false, public: true },
-  'academy': { id: 'academy', name: 'ACADEMY', Icon: (p) => <KIcon char="A" color="#fcee0a" {...p} />, color: '#fcee0a', hasChat: false, public: true },
-  'nexus': { id: 'nexus', name: 'NEXUS TREE', Icon: (p) => <KIcon char="N" color="#00ffaa" {...p} />, color: '#00ffaa', hasChat: true, public: true },
-  'health-lab': { id: 'health-lab', name: 'HEALTH', Icon: (p) => <KIcon char="V" color="#ff0044" {...p} />, color: '#ff0044', hasChat: false, public: true },
-  'sanctuary': { id: 'sanctuary', name: 'SANCTUARY', Icon: (p) => <KIcon char="S" color="#bd00ff" {...p} />, color: '#bd00ff', hasChat: false, public: true },
-  'soul-link': { id: 'soul-link', name: 'SOUL LINK', Icon: (p) => <KIcon char="L" color="#0088ff" {...p} />, color: '#0088ff', hasChat: false, public: true },
-  'workspace': { id: 'workspace', name: 'MEETINGS', Icon: (p) => <KIcon char="M" color="#ffffff" {...p} />, color: '#ffffff', hasChat: true, public: true },
-  'identity-lab': { id: 'identity-lab', name: 'IDENTITY', Icon: (p) => <KIcon char="I" color={R} {...p} />, color: R, hasChat: false, public: true },
-  'guide': { id: 'guide', name: 'ZENITH', Icon: (p) => <KIcon char="Z" color="#00ffaa" {...p} />, color: '#00ffaa', hasChat: false, public: true }
+  'academy': a('academy', 'ACADEMY', 'A', Y), 'bazaar': a('bazaar', 'BAZAAR', 'B', O),
+  'citadel': a('citadel', 'CITADEL', 'C', C), 'dojo': a('dojo', 'DOJO', 'D', R),
+  'echo': a('echo', 'ECHO', 'E', B, true), 'flux': a('flux', 'FLUX', 'F', G),
+  'arcade': a('arcade', 'GAMES', 'G', O, false, true), 'launcher': a('launcher', 'HUB', 'H', C, false, true),
+  'identity': a('identity', 'IDENTITY', 'I', R, false, true), 'jukebox': a('jukebox', 'JUKEBOX', 'J', P),
+  'koin': a('koin', 'KOIN', 'K', Y), 'soul-link': a('soul-link', 'LINK', 'L', B),
+  'workspace': a('workspace', 'MEETINGS', 'M', '#fff', true, true), 'nexus': a('nexus', 'NEXUS', 'N', G, true),
+  'oracle': a('oracle', 'ORACLE', 'O', Y), 'pulse': a('pulse', 'PULSE', 'P', R),
+  'quest': a('quest', 'QUEST', 'Q', O), 'relay': a('relay', 'RELAY', 'R', B, true),
+  'sanctuary': a('sanctuary', 'SANCTUARY', 'S', P), 'terminal': a('terminal', 'TERMINAL', 'T', '#fff'),
+  'uplink': a('uplink', 'UPLINK', 'U', C), 'health': a('health', 'VITALITY', 'V', R),
+  'wild': a('wild', 'WILD', 'W', G), 'xray': a('xray', 'X-RAY', 'X', C),
+  'yield': a('yield', 'YIELD', 'Y', Y), 'guide': a('guide', 'ZENITH', 'Z', G, false, true)
 };
 
-export const getAppInfo = (appId) => APPS[appId] || APPS['launcher'];
+export const getAppInfo = (i) => APPS[i] || APPS['launcher'];
 
 
 
