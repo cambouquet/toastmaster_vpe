@@ -26,6 +26,18 @@ export const MainContent = ({ isWorkspace, state, uiAction, onAuth }) => {
     return <AppLauncher user={state.currentUser} currentApp={currentApp} onSwitch={(appId) => uiAction('SWITCH_APP', appId)} />;
   }
 
+  if (currentApp === 'guide') {
+    return (
+      <div className="guide-iframe-wrap" style={{ width: '100%', height: 'calc(100vh - 80px)', background: 'transparent' }}>
+        <iframe 
+          src="/briefing/" 
+          title="K Guide" 
+          style={{ width: '100%', height: '100%', border: 'none', borderRadius: '8px' }}
+        />
+      </div>
+    );
+  }
+
   if (currentApp === 'identity-lab' || currentApp === 'k-app') {
     return <IdentityLab state={state} uiAction={uiAction} onAuth={onAuth} />;
   }
