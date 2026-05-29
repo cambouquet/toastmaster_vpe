@@ -16,15 +16,15 @@ hero:
       link: /architecture/domain-model
 
 features:
-  - title: Multi-Dimensional Growth
-    details: Develop yourself across many paths simultaneously—leadership, communication, and strategy.
+  - title: Omni-Channel Evolution
+    details: From Sudoku to VR workouts, every action earns you XP across a unified global skill tree.
     icon: ⚛️
-  - title: AI Mentorship
-    details: Intelligent guidance to help you navigate your personal evolution in real-time.
-    icon: 🧠
-  - title: Infinite Opportunities
-    details: Gain experience through meetings, challenges, games, and learning modules.
-    icon: ✨
+  - title: The Care Loop
+    details: Collect pets, manage your virtual home, and unlock rare loot through consistent daily growth.
+    icon: 🐾
+  - title: Universal Wisdom
+    details: Integrated astrology, language learning, and professional coaching to guide your path.
+    icon: 🧘
 ---
 
 <style>

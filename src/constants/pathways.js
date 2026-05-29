@@ -1,8 +1,8 @@
 export const SKILL_TRACKS = [
-  'Public Speaking', 'Meeting Facilitation', 'Project Management',
-  'Team Leadership', 'Conflict Resolution', 'Technical Communication',
-  'Strategic Planning', 'Creative Problem Solving', 'Crisis Management',
-  'Interpersonal Communication', 'Negotiation Skills'
+  'Language (Japanese)', 'Music (Piano)', 'Arcade (Strategy)',
+  'Astrology (Soul)', 'Sport (Coaching)', 'Creative (Art)',
+  'Economics', 'VR Exploration', 'Pet Care',
+  'Leadership', 'Communication'
 ];
 
 export const LVL_REQS = {
