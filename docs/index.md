@@ -2,35 +2,35 @@
 layout: home
 
 hero:
-  name: "K App: HUMAN UPGRADE"
-  tagline: "Unlocking Your Potential through Multi-Dimensional Growth"
+  name: "K App: UNLOCK YOUR POTENTIAL"
+  tagline: "A magical space to grow, play, and learn—all in one place."
   image:
     src: /logo-k.svg
-    alt: Mission Control Logo
+    alt: App Logo
   actions:
     - theme: brand
-      text: INITIATE LINK
+      text: START YOUR JOURNEY
       link: /guide/introduction
     - theme: alt
-      text: DOMAIN MODEL
+      text: SEE THE MAP
       link: /architecture/domain-model
 
 features:
-  - title: Omni-Channel Evolution
-    details: From Sudoku to VR workouts, every action earns you XP across a unified global skill tree.
-    icon: ⚛️
-  - title: The Care Loop
-    details: Collect pets, manage your virtual home, and unlock rare loot through consistent daily growth.
-    icon: 🐾
-  - title: Universal Wisdom
-    details: Integrated astrology, language learning, and professional coaching to guide your path.
-    icon: 🧘
+  - title: A World of Possibilities
+    details: From brain teasers to creative arts, every small step opens new doors in your personal story.
+    icon: ✨
+  - title: Caring for Your Space
+    details: Grow your own garden, collect unique pets, and make your digital home truly yours.
+    icon: 🌿
+  - title: Guided by Wisdom
+    details: Let the stars and experts help you find your way with simple, friendly advice for your daily life.
+    icon: 🌙
 ---
 
 <style>
 :root {
   --vp-home-hero-name-color: #fcee0a;
-  --header-font: 'Space Grotesk', sans-serif;
+  --header-font: 'JetBrains Mono', sans-serif;
 }
-h1, .name { font-family: var(--header-font) !important; font-weight: 300 !important; letter-spacing: 2px; }
+h1, .name { font-family: var(--header-font) !important; font-weight: 400 !important; letter-spacing: 1px; }
 </style>

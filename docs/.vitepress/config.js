@@ -34,8 +34,8 @@ const techSidebar = [
 
 export default withMermaid(
   defineConfig({
-    title: "K App // HUMAN UPGRADE",
-    description: "Multi-dimensional development platform for everyone",
+    title: "K App // UNLOCK YOUR POTENTIAL",
+    description: "A fun and simple way to grow, learn, and play",
     base: isProd ? '/briefing/' : '/',
     srcExclude: isProd ? [
       'guide/setup.md', 
@@ -47,7 +47,7 @@ export default withMermaid(
       siteTitle: 'K App',
       logo: '/logo-k.svg',
       nav: isProd ? [
-        { text: 'Journey', link: '/guide/introduction' },
+        { text: 'The Journey', link: '/guide/introduction' },
         { text: 'Legal', link: '/guide/legal' }
       ] : [
         { text: 'Journey Guide', link: '/guide/introduction' },
