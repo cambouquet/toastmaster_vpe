@@ -36,7 +36,7 @@ export default withMermaid(
   defineConfig({
     title: "K App // UNLOCK YOUR POTENTIAL",
     description: "A fun and simple way to grow, learn, and play",
-    base: isProd ? '/briefing/' : '/',
+    base: '/briefing/',
     srcExclude: isProd ? [
       'guide/setup.md', 
       'guide/coding-standards.md',
