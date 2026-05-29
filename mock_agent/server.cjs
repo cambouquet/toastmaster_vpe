@@ -1,9 +1,14 @@
-const couchbase = require('couchbase');
-const express = require('express');
-const cors = require('cors');
-const app = express(), PORT = 3001;
-let col;
+const couchbase = require('couchbase'), express = require('express'), cors = require('cors');
+const app = express(), PORT = 3001; let col;
 async function initCB() {
+  const auth = Buffer.from('admin:password').toString('base64');
+  try {
+    await fetch('http://couchbase:8091/pools/default/buckets', {
+      method: 'POST',
+      headers: { 'Authorization': `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'name=k-app&ramQuota=256'
+    });
+  } catch (e) {}
   const cluster = await couchbase.connect(process.env.CB_URL || 'couchbase://127.0.0.1', {
     username: process.env.CB_USER || 'admin', password: process.env.CB_PASSWORD || 'password',
   });
@@ -21,12 +26,9 @@ app.post('/api/waitlist', async (req, res) => {
   list.push({ email: req.body.email, timestamp: new Date().toISOString() });
   await col.upsert('waitlist', list); res.json({ status: 'success' });
 });
-
-const ARTIFACT = { type: 'meeting_update', data: { theme: 'Neon Horizons' } };
 app.post('/chat', async (req, res) => {
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  const msgs = ["Initializing neural uplink...", `ARTIFACT_JSON:${JSON.stringify(ARTIFACT)}`];
+  res.setHeader('Content-Type', 'text/event-stream'); res.setHeader('Cache-Control', 'no-cache');
+  const msgs = ["Initializing neural uplink...", `ARTIFACT_JSON:{"type":"meeting_update"}`];
   for (const msg of msgs) {
     res.write(`data: ${msg}\n\n`); await new Promise(r => setTimeout(r, 800));
   }
