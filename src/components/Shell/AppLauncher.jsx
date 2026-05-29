@@ -3,7 +3,7 @@ import { NavGridItem } from './NavGridItem';
 import { APPS } from '../../services/system/AppRegistry.jsx';
 import './AppLauncher.scss';
 
-const DEFAULT_ORDER = ['launcher', 'workspace', 'identity-lab', 'font-lab', 'k-app'];
+const DEFAULT_ORDER = ['launcher', 'workspace', 'nexus', 'academy', 'arcade', 'identity-lab'];
 
 export const AppLauncher = ({ currentApp, onSwitch, user }) => {
   const isAuth = !!user;
@@ -11,13 +11,15 @@ export const AppLauncher = ({ currentApp, onSwitch, user }) => {
     <div className="app-launcher">
       <div className="launcher-header">
         <div className="status-line">SYSTEM STATUS: <span className="val hi">OPTIMIZED</span></div>
-        <div className="glitch-title" data-text="ESTABLISH SYNC">ESTABLISH SYNC</div>
-        <div className="subtitle">AVAILABLE NEURAL INTERFACES</div>
+        <div className="glitch-title" data-text="SYSTEM HUB">SYSTEM HUB</div>
+        <div className="subtitle">UNLOCK YOUR POTENTIAL</div>
       </div>
 
       <div className="launcher-grid">
         {DEFAULT_ORDER.map(appId => {
-          const app = APPS[appId], Icon = app.Icon, isActive = currentApp === appId;
+          const app = APPS[appId] || APPS['launcher'];
+          const Icon = app.Icon;
+          const isActive = currentApp === appId;
           const isLocked = !app.public && !isAuth;
           return (
             <NavGridItem key={appId} id={appId} label={app.name} active={isActive} locked={isLocked}

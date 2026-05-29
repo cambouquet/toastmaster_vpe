@@ -6,6 +6,7 @@ const R = '#ff0055';
 
 export const APPS = {
   'launcher': { id: 'launcher', name: 'SYSTEM HUB', Icon: (p) => <KIcon char="H" color={C} {...p} />, color: C, hasChat: false, public: true },
+  'workspace': { id: 'workspace', name: 'MEETINGS', Icon: (p) => <KIcon char="M" color="#ffffff" {...p} />, color: '#ffffff', hasChat: true, public: true },
   'nexus': { id: 'nexus', name: 'NEXUS TREE', Icon: (p) => <KIcon char="N" color="#fcee0a" {...p} />, color: '#fcee0a', hasChat: true, public: true },
   'academy': { id: 'academy', name: 'ACADEMY', Icon: (p) => <KIcon char="A" {...p} />, color: C, hasChat: false, public: true },
   'arcade': { id: 'arcade', name: 'ARCADE', Icon: (p) => <KIcon char="G" {...p} />, color: C, hasChat: false, public: true },

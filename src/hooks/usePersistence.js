@@ -22,8 +22,8 @@ export const usePersistence = (state, setState, notify, addLog, setTimedSubtitle
     const lastSession = localStorage.getItem('meeting_last_session');
     if (lastSession) {
       try {
-        const { currentApp, currentScreen } = JSON.parse(lastSession);
-        setState(s => ({ ...s, currentApp, currentScreen }));
+        const { members } = JSON.parse(lastSession);
+        if (members) setState(s => ({ ...s, members }));
       } catch (e) {
         console.error("Session Restore Error:", e);
       }
