@@ -1,7 +1,7 @@
-# Neural Link Setup // 2077
+# System Setup // K App
 
 > [!TIP]
-> This is a **Technical Specification**. For the end-user manual and vision, see the [Mission Briefing](/guide/introduction).
+> This is a **Technical Specification**. For the end-user manual and the latest vision, see the [Live Journey Guide](https://k-app.tech/briefing/guide/introduction).
 
 ## [PREREQUISITES]
 *   **Target Hardware**: Ubuntu 22.04+ VM.

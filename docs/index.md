@@ -16,15 +16,15 @@ hero:
       link: /architecture/domain-model
 
 features:
-  - title: A World of Possibilities
-    details: From brain teasers to creative arts, every small step opens new doors in your personal story.
+  - title: A World of Adventure
+    details: From logic puzzles to action games on any device, every victory shapes your unique story.
+    icon: 🎮
+  - title: A Magical Home
+    details: Grow a beautiful garden, care for unique pets, and collect treasures in your personal sanctuary.
+    icon: 🏡
+  - title: Guided Growth
+    details: Learn music, languages, or sports, and find balance with friendly advice inspired by the stars.
     icon: ✨
-  - title: Caring for Your Space
-    details: Grow your own garden, collect unique pets, and make your digital home truly yours.
-    icon: 🌿
-  - title: Guided by Wisdom
-    details: Let the stars and experts help you find your way with simple, friendly advice for your daily life.
-    icon: 🌙
 ---
 
 <style>
