@@ -20,18 +20,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Fast Deploy
-      uses: appleboy/ssh-action@v1.2.5
-      with:
-        host: ${{ inputs.vm_host }}
-        username: ${{ inputs.vm_user }}
-        key: ${{ inputs.ssh_key }}
-        script: |
-          cd ~/app && APP_IMAGE=${{ inputs.app_image }} ./deploy.sh ${{ inputs.target }}
-      continue-on-error: true
-
-    - name: Long Deploy (Heal)
-      if: steps.fast-deploy.outcome == 'failure'
+    - name: Neural Deployment Sequence
       uses: appleboy/ssh-action@v1.2.5
       with:
         host: ${{ inputs.vm_host }}
@@ -39,6 +28,5 @@ runs:
         key: ${{ inputs.ssh_key }}
         script: |
           cd ~/app
-          docker compose -f docker-compose.prod.yml down
-          docker container prune -f
-          APP_IMAGE=${{ inputs.app_image }} ./deploy.sh ${{ inputs.target }}
+          git pull origin main
+          node deploy.mjs ${{ inputs.target }}
