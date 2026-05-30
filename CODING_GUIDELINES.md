@@ -9,6 +9,7 @@
   - **🚀 DEPLOY**: Main application delivery (Production & Test).
   - **🛰️ PROVISION**: Initial VM setup and runner registration.
   - **🛠️ MAINTENANCE**: Infrastructure health, cleanup, and resets.
+- **Universal SOLID**: Clean code and SOLID principles apply to the entire stack, including CI/CD pipelines, YAML configurations, and shell scripts. Logic must be decoupled (e.g., separate infra library scripts) and naming must be explicit and intent-driven.
 - **Satellite Provisioning**: Zero manual intervention. Provisioning new VMs MUST be handled exclusively via the "PROVISION" workflow.
 - **Vite Bundling**: Use `manualChunks` to keep main assets under 2000kB. Increase `chunkSizeWarningLimit` for large dependency-heavy documentation.
 - **Feature Toggles**: Never hardcode environment-specific logic. Use `VITE_` prefixed variables. Every new toggle MUST be documented in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) with a "Why" and "Version".

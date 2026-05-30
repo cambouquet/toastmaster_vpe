@@ -13,7 +13,7 @@ jobs:
   execute:
     runs-on: ['self-hosted', '${{ inputs.target }}']
     steps:
-      - name: Fetch Library
+      - name: "🛰️ Synchronize: Infrastructure Library"
         run: curl -sSL https://raw.githubusercontent.com/${{github.repository}}/main/scripts/lib-infra.sh -o lib-infra.sh
-      - name: Run Command
+      - name: "🛠️ Execute: ${{ inputs.action }}"
         run: bash lib-infra.sh "${{ inputs.action }}" "${{ inputs.arg }}"
