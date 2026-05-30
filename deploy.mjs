@@ -63,6 +63,9 @@ spawnSync("docker", [
   }
 });
 
+console.log("🧹 Pruning dangling system artifacts...");
+spawnSync("docker", ["image", "prune", "-f"], { stdio: "inherit" });
+
 console.log(`✅ ${target} Deployment complete!`);
 console.log(`📍 Application: https://${process.env.DOMAIN_NAME}`);
 console.log(`🔐 Auth: https://${process.env.AUTH_DOMAIN_NAME}`);

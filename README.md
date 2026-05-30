@@ -40,6 +40,11 @@ npm start
 npx playwright test
 ```
 
+## Security & Access
+- **Authorization**: No passwords. All access is via SSH key.
+- **Bootstrapping**: To add a new workstation, use the `Infra - Authorize Neural Link` GitHub Action.
+- **Reference**: Detailed protocols in [docs/architecture/security-access.md](docs/architecture/security-access.md).
+
 ## UI Principles
 - **Tactical Editing**: No explicit save buttons. Edit items directly in-place.
 - **Cyber-Noir Aesthetic**: Muted cyan (`#00bac4`) on ultra-dark backgrounds.
