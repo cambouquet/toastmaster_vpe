@@ -23,7 +23,7 @@
                     </#if>
                 </div>
                 <div class="input-bracket" id="password-bracket" style="display: none;">
-                    <label for="password">NEURAL KEY</label>
+                    <label for="password">UPLINK KEY</label>
                     <input id="password" name="password" type="password" 
                            style="position: absolute; opacity: 0; pointer-events: none; height: 1px; width: 1px;" autocomplete="off" />
                     <div id="password-display" class="kfont-input-display" onclick="setActiveField('password')"></div>

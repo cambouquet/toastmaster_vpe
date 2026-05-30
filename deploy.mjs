@@ -2,6 +2,11 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
+if (!process.version.startsWith('v24.')) {
+  console.error(`❌ Node 24 is required. Current version: ${process.version}`);
+  process.exit(1);
+}
+
 const target = process.argv[2] || "prod";
 const envFile = `./deploy/${target}.env`;
 
@@ -40,7 +45,10 @@ const commonEnv = {
   HTTPS_PORT: target === "prod" ? "443" : "8444",
   KEYCLOAK_PORT: target === "prod" ? "8080" : "8083",
   COUCHBASE_PORT: target === "prod" ? "8091" : "8097",
-  COUCHBASE_EXT_PORT: target === "prod" ? "8092" : "8098"
+  COUCHBASE_EXT_PORT: target === "prod" ? "8092" : "8098",
+  COUCHBASE_QUERY_PORT: target === "prod" ? "8093" : "8099",
+  COUCHBASE_SEARCH_PORT: target === "prod" ? "8094" : "8100",
+  COUCHBASE_MEM_PORT: target === "prod" ? "11210" : "11212"
 };
 
 function run(cmd, args, options = {}) {

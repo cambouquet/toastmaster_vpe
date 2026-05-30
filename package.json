@@ -2,7 +2,7 @@
   "name": "meetings-app",
   "private": true,
   "version": "1.1.0",
-  "system_version": "2026.05.30-C1",
+  "system_version": "2026.05.30-C2",
   "type": "module",
   "engines": {
     "node": ">=24.0.0"

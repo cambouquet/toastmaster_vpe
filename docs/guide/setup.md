@@ -5,7 +5,7 @@
 
 ## [PREREQUISITES]
 *   **Target Hardware**: Ubuntu 22.04+ VM.
-*   **Neural Address**: A Records for `k-app.cloud` and `auth.k-app.cloud`.
+*   **Uplink Address**: A Records for `k-app.cloud` and `auth.k-app.cloud`.
 *   **Open Ports**: 80, 443 (Web), 8080 (Auth), 8091-8096 (Data Hub).
 
 ## [VM INITIALIZATION]
@@ -29,7 +29,7 @@ The system requires the following files in `~/app/` before deployment:
 
 ## [TROUBLESHOOTING]
 *   **SSL Loop**: Check A Records and Caddy logs: `docker compose logs caddy`.
-*   **Neural Link Failure**: Verify the `k-app` bucket exists in Couchbase.
+*   **Uplink Link Failure**: Verify the `k-app` bucket exists in Couchbase.
 *   **Port Collision**: Ensure no other service is binding to 80 or 443.
 
 ---

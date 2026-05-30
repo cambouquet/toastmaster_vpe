@@ -11,7 +11,7 @@ standard copyright laws.
 - **Brand**: "Mission Control" and related 
   visual assets are trademarked.
 - **Trade Secrets**: Intent resolution logic 
-  and the "Neural Link" interaction models are 
+  and the "Uplink Link" interaction models are 
   considered proprietary trade secrets.
 
 ## License Agreement (EULA)

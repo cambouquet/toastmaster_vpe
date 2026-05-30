@@ -6,7 +6,7 @@ export const ActionSection = ({ state, onAction }) => {
     <>
       {state.status === 'planning' && isOrganizer && (
         <div className="card action-card start-meeting clickable" onClick={() => onAction('MEETING_START', 'live')}>
-          <label>NEURAL LINK</label>
+          <label>UPLINK LINK</label>
           <div className="val">START MEETING [INITIALIZE]</div>
         </div>
       )}

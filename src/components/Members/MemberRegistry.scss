@@ -5,7 +5,7 @@
 @import "../shared/AppHeader.scss";
 
 .member-registry-screen {
-  padding: 0 40px; padding-bottom: 200px; height: 100vh; overflow-y: auto; background: transparent; color: $accent-cyan; font-family: "Space Grotesk", sans-serif; -ms-overflow-style: none; scrollbar-width: none; &::-webkit-scrollbar { display: none; }
+  padding: 0 40px; padding-bottom: 200px; height: 100vh; overflow-y: auto; background: transparent; color: $accent-cyan; font-family: "Sora", sans-serif; -ms-overflow-style: none; scrollbar-width: none; &::-webkit-scrollbar { display: none; }
   
   @include mobile {
     padding: 0 15px 150px;
