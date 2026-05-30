@@ -1,13 +1,11 @@
-name: Infra - Authorize Neural Link
+name: Infra - Authorize Uplink
 on:
   workflow_dispatch:
     inputs:
       public_key:
-        description: 'Neural Link Public Key (PASTE CONTENT OF id_ed25519.pub)'
+        description: 'Uplink Public Key (PASTE CONTENT OF id_ed25519.pub)'
         required: true
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   authorize:
@@ -25,4 +23,4 @@ jobs:
             echo "${{ github.event.inputs.public_key }}" >> ~/.ssh/authorized_keys
             sort -u ~/.ssh/authorized_keys -o ~/.ssh/authorized_keys
             chmod 600 ~/.ssh/authorized_keys
-            echo ">>> NEURAL LINK ESTABLISHED. Workstation authorized."
+            echo ">>> UPLINK ESTABLISHED. Workstation authorized."

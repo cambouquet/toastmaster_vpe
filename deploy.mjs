@@ -23,8 +23,7 @@ const envVars = Object.fromEntries(
 process.env = { ...process.env, ...envVars };
 
 console.log("📦 Building frontend...");
-spawnSync("npm", ["run", "build"], { 
-  stdio: "inherit",
+run("npm", ["run", "build"], { 
   env: { ...process.env, ...envVars } 
 });
 
@@ -34,7 +33,7 @@ const buildArgs = Object.entries(envVars)
   .filter(([key]) => key.startsWith("VITE_"))
   .flatMap(([key, val]) => ["--build-arg", `${key}=${val}`]);
 
-spawnSync("docker", ["build", ...buildArgs, "-t", appImage, "."], { stdio: "inherit" });
+run("docker", ["build", ...buildArgs, "-t", appImage, "."]);
 
 console.log(`♻️ Restarting ${target} stack...`);
 const projectName = `k-app-${target}`;

@@ -6,21 +6,21 @@ export const IdentityCreationForm = ({ search, setSearch, onAuth }) => {
   const handleSync = () => {
     if (!search.trim()) return;
     onAuth('addMember', { 
-      id: 'kid-' + Date.now(), 
+      id: 'k-' + Date.now(), 
       name: search.trim(), 
-      role: 'K-USER', 
-      title: 'K-IDENTITY VERIFIED', 
+      role: 'UPLINK_USER', 
+      title: 'UPLINK VERIFIED', 
       status: 'STABLE' 
     });
   };
 
   const placeholder = React.useMemo(() => {
-    const options = ['GHOST_PROTOCOL', 'NEURAL_LINK_ID', 'CORE_ACCESS_KEY', 'CIPHER_ALIAS', 'VOID_SIGNATURE'];
+    const options = ['GHOST_PROTOCOL', 'UPLINK_ID', 'LOGIN_KEY', 'USER_HANDLE', 'IDENTITY_SIGNATURE'];
     return options[Math.floor(Math.random() * options.length)];
   }, []);
 
   return (
-    <div className='neural-link-bootstrap rainbow-box'>
+    <div className='uplink-bootstrap rainbow-box'>
       <div className='id-wordmark'>
         <KIdBrand className='brand-svg' />
       </div>

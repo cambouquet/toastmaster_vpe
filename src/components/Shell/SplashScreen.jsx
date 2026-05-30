@@ -16,7 +16,7 @@ export const SplashScreen = ({ onFinish, isLoggingIn = false }) => {
           <div className="line-1" style={{ color: colors.line1 }}>THE LIFE GAME</div>
           <div className="line-2" style={{ color: colors.line2 }}>
             {isLoggingIn ? (
-              <span className="sync-text">NEURAL LINK ESTABLISHED</span>
+              <span className="sync-text">UPLINK ESTABLISHED</span>
             ) : (
               <>BECOME THE <span className="highlight" style={{ 
                 background: colors.highlightBg, 
@@ -25,7 +25,7 @@ export const SplashScreen = ({ onFinish, isLoggingIn = false }) => {
             )}
           </div>
           <div className="line-3" style={{ color: colors.line3 }}>
-            {isLoggingIn ? "DOWNLOADING AGENT PROFILE..." : "YOU'RE MEANT TO BE"}
+            {isLoggingIn ? "DOWNLOADING AGENT PROFILE..." : "BE THE HERO OF YOUR OWN LIFE"}
           </div>
         </div>
       </div>

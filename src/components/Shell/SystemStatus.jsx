@@ -27,7 +27,7 @@ export const SystemStatus = ({ user, currentApp, nodeCount, onAuth, onToggleNav,
       <div className="system-status-bg" /><div className="status-display-area">
         <StatusReadout isAuth={isAuth} user={user} currentApp={currentApp} hovered={isHovered || showRoles} 
           onToggleAuth={handleAuth} onToggleNav={onToggleNav} state={state} uiAction={uiAction} />
-      </div><button className="system-trigger terminal-glitch neural-wave" onClick={(e) => { e.stopPropagation(); onToggleNav(); }} style={{ '--wave-idx': 1 }}>
+      </div><button className="system-trigger terminal-glitch uplink-wave" onClick={(e) => { e.stopPropagation(); onToggleNav(); }} style={{ '--wave-idx': 1 }}>
         <div className="scanline" /><div className={`status-dot ${hasAlerts ? 'is-alert' : 'is-idle'}`} />
       </button>
       <SystemPower isAuth={isAuth} showRoles={showRoles} onPower={handlePowerBtn} onIdentity={handleIdentity} onClose={() => setShowRoles(false)} search={search} setSearch={setSearch} />

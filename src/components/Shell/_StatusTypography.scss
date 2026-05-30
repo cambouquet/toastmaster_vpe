@@ -7,7 +7,7 @@
   &.ok { color: #00ffaa; text-shadow: 0 0 8px rgba(0, 255, 170, 0.4); }
   &.dim { opacity: 0.4; font-weight: 300; }
   &.sm { font-size: 0.55rem; letter-spacing: 0; }
-  &.scan { animation: neural-pulse 3s infinite ease-in-out both; }
+  &.scan { animation: uplink-pulse 3s infinite ease-in-out both; }
   &.location-text { 
     font-size: 0.55rem;
     @include mobile { font-size: 0.45rem; opacity: 0.3; } 

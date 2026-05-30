@@ -12,8 +12,6 @@ on:
           - full-setup
           - prune-system
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   maintenance:
@@ -28,9 +26,11 @@ jobs:
               docker version && node -v && npm -v
               ;;
             "full-setup")
-              echo "🚀 Starting Full System Setup..."
+              echo "🚀 Starting Full System Setup (Node 24)..."
               sudo apt-get update
-              sudo apt-get install -y docker.io nodejs npm
+              sudo apt-get install -y docker.io
+              curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
+              sudo apt-get install -y nodejs
               sudo usermod -aG docker $USER
               echo "✅ Full Setup Complete."
               ;;

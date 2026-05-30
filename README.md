@@ -6,7 +6,7 @@ A high-density "Cyber-Noir" human development platform. This is a real-life MMO 
 
 | Portal | URL | Description |
 | :--- | :--- | :--- |
-| **Mission Control** | `http://localhost:1777` | Neural Link Interface (Login required) |
+| **Mission Control** | `http://localhost:1777` | Uplink Interface (Login required) |
 | **Identity Lab** | `http://localhost:8081` | Keycloak Auth Server |
 | **Mission Briefing** | `http://localhost:5174` | Project Documentation (VitePress) |
 
@@ -42,7 +42,7 @@ npx playwright test
 
 ## Security & Access
 - **Authorization**: No passwords. All access is via SSH key.
-- **Bootstrapping**: To add a new workstation, use the `Infra - Authorize Neural Link` GitHub Action.
+- **Bootstrapping**: To add a new workstation, use the `Infra - Authorize Uplink` GitHub Action.
 - **Reference**: Detailed protocols in [docs/architecture/security-access.md](docs/architecture/security-access.md).
 
 ## UI Principles

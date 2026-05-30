@@ -8,8 +8,6 @@ on:
         required: true
         type: string
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   install-runner:
@@ -27,9 +25,9 @@ jobs:
             sudo rm -rf ~/actions-runner
             mkdir -p ~/actions-runner && cd ~/actions-runner
             
-            # Download the latest runner package
-            curl -o actions-runner-linux-x64-2.316.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.316.1/actions-runner-linux-x64-2.316.1.tar.gz
-            tar xzf ./actions-runner-linux-x64-2.316.1.tar.gz
+            # Download the latest runner package (v2.334.0 supports Node 24)
+            curl -o actions-runner-linux-x64-2.334.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.334.0/actions-runner-linux-x64-2.334.0.tar.gz
+            tar xzf ./actions-runner-linux-x64-2.334.0.tar.gz
             
             # Configure the runner
             # We use --unattended to skip interactive prompts

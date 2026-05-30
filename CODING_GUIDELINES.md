@@ -58,5 +58,5 @@
 ## 8. Development & Deployment
 - **Dual-Env Parity**: Deploy identical code to Prod (`k-app.tech`) and Test (`k-app.cloud`). Behavior is toggled via `VITE_APP_MODE` (demo vs test).
 - **No Backward Compatibility**: Breaking changes are allowed. **Persistence Guard**: Data must be backed up (e.g., Couchbase snapshots) before removing deprecated features.
-- **Feature Tracking**: Maintain a "Legacy Feature Tracking" ledger in technical documentation for all deprecated neural protocols.
+- **Feature Tracking**: Maintain a "Legacy Feature Tracking" ledger in technical documentation for all deprecated system protocols.
 - **Auto-Heal CD**: The deployment pipeline must prioritize Speed (Fast Path) but automate Recovery (Long Path) via container cleanup on failure.

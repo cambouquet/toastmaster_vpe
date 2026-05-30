@@ -30,7 +30,7 @@
         </svg>
     </div>
 
-    <div class="neural-link-bootstrap">
+    <div class="uplink-bootstrap">
         <#nested "header">
         
         <div id="kc-content">
@@ -51,7 +51,7 @@
     </div>
 
     <div class="guest-footer">
-        K-APP.TECH/SECURE // NEURAL SYNC-77
+        K-APP.TECH/SECURE // SYSTEM SYNC-24
     </div>
 
     <script src="${url.resourcesPath}/js/kfont.js"></script>

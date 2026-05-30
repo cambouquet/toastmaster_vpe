@@ -23,7 +23,7 @@ export const AppLauncher = ({ currentApp, onSwitch, user }) => {
           const isLocked = !app.public && !isAuth;
           return (
             <NavGridItem key={appId} id={appId} label={app.name} active={isActive} locked={isLocked}
-              status={isLocked ? 'ENCRYPTED' : (isActive ? 'ACTIVE LINK' : 'STANDBY')} 
+              status={isLocked ? 'ENCRYPTED' : (isActive ? 'ACTIVE UPLINK' : 'STANDBY')} 
               onClick={isLocked ? null : () => onSwitch(appId)}>
               <div className="app-icon-container"><Icon style={{ width: '100%', height: '100%' }} /></div>
             </NavGridItem>

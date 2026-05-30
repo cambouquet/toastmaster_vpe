@@ -29,6 +29,7 @@ runs:
         script: |
           # RAPID FIRE: Assume environment is warm
           FUNCTION_RAPID_FIRE() {
+            set -e
             cd $HOME/app && \
             git fetch origin main && \
             git reset --hard origin/main && \
@@ -37,6 +38,7 @@ runs:
 
           # DEEP RECOVERY: Fix system if Rapid Fire fails
           FUNCTION_DEEP_RECOVERY() {
+            set -e
             echo "⚠️ RAPID FIRE FAILED. Initiating Deep Recovery..."
             
             # 1. Recover Git Workspace
@@ -49,7 +51,7 @@ runs:
             # 2. Recover Node.js
             if ! command -v node &> /dev/null; then
               echo "Fixing Node..."
-              curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+              curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
               sudo apt-get install -y nodejs
             fi
 

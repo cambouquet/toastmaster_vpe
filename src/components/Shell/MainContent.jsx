@@ -10,8 +10,8 @@ import { getAppInfo } from '../../services/system/AppRegistry.jsx';
 const ModulePlaceholder = ({ name, id }) => (
   <div className="module-boot-sequence">
     <div className="glitch-text" data-text={`INITIALIZING ${name}...`}>INITIALIZING {name}...</div>
-    <div className="neural-progress"><div className="scanline" /></div>
-    <p className="sm-info">Neural link established with {id.toUpperCase()} node.</p>
+    <div className="uplink-progress"><div className="scanline" /></div>
+    <p className="sm-info">Uplink established with {id.toUpperCase()} node.</p>
     <p className="sm-info muted">Module logic loading from cloud-edge...</p>
   </div>
 );

@@ -12,7 +12,7 @@ export const IdentityLab = ({ state }) => {
 
   return (
     <div className='workspace-screen identity-lab guest-mode'>
-      <div className='neural-link-bootstrap'>
+      <div className='uplink-bootstrap'>
         <div className='sync-success'>
           <div className='success-text'>REDIRECTING TO SECURE AUTH...</div>
           <div className='loading-spinner-placeholder' />

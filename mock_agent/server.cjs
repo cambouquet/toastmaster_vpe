@@ -28,7 +28,7 @@ app.post('/api/waitlist', async (req, res) => {
 });
 app.post('/chat', async (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream'); res.setHeader('Cache-Control', 'no-cache');
-  const msgs = ["Initializing neural uplink...", `ARTIFACT_JSON:{"type":"meeting_update"}`];
+  const msgs = ["Initializing system uplink...", `ARTIFACT_JSON:{"type":"meeting_update"}`];
   for (const msg of msgs) {
     res.write(`data: ${msg}\n\n`); await new Promise(r => setTimeout(r, 800));
   }
