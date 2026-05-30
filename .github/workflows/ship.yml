@@ -1,4 +1,4 @@
-name: 🚀 DEPLOY | Production & Test
+name: 🚀 System: Ship
 on:
   push:
     branches: [main]

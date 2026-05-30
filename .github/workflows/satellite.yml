@@ -1,5 +1,4 @@
-name: 🛰️ System: Authorize Self-Hosted Node
-
+name: 🛰️ System: Satellite
 on:
   workflow_dispatch:
     inputs:

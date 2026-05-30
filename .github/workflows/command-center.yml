@@ -1,0 +1,18 @@
+name: 🛠️ System: Command Center
+on:
+  workflow_dispatch:
+    inputs:
+      target: { required: true, type: choice, options: [prod, test] }
+      action:
+        required: true
+        type: choice
+        options: [pulse, authorize, prune, nuclear, rescue]
+      arg: { description: 'Payload (e.g. SSH Key for authorize)', required: false }
+jobs:
+  execute:
+    runs-on: ['self-hosted', '${{ inputs.target }}']
+    steps:
+      - name: Fetch Library
+        run: curl -sSL https://raw.githubusercontent.com/${{github.repository}}/main/scripts/lib-infra.sh -o lib-infra.sh
+      - name: Run Command
+        run: bash lib-infra.sh "${{ inputs.action }}" "${{ inputs.arg }}"
