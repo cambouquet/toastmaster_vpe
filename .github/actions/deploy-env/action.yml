@@ -28,7 +28,17 @@ runs:
         key: ${{ inputs.ssh_key }}
         script: |
           set -e
-          # Robust workspace initialization
+          # 1. Automate Docker install if missing
+          if ! command -v docker &> /dev/null; then
+            echo "Docker missing. Initializing engine..."
+            sudo apt-get update
+            sudo apt-get install -y docker.io
+            sudo usermod -aG docker $USER
+            # Apply group change to current session
+            sg docker -c "docker version"
+          fi
+
+          # 2. Robust workspace initialization
           if [ ! -d "$HOME/app/.git" ]; then
             echo "Target directory is not a git repo or doesn't exist. Cleaning and cloning..."
             rm -rf "$HOME/app"
