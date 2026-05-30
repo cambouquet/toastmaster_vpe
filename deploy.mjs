@@ -38,6 +38,16 @@ spawnSync("docker", ["build", ...buildArgs, "-t", appImage, "."], { stdio: "inhe
 
 console.log(`♻️ Restarting ${target} stack...`);
 const projectName = `k-app-${target}`;
+const commonEnv = { 
+  ...process.env, 
+  ...envVars, 
+  APP_IMAGE: appImage,
+  HTTP_PORT: target === "prod" ? "80" : "8082",
+  HTTPS_PORT: target === "prod" ? "443" : "8444",
+  KEYCLOAK_PORT: target === "prod" ? "8080" : "8083",
+  COUCHBASE_PORT: target === "prod" ? "8091" : "8097",
+  COUCHBASE_EXT_PORT: target === "prod" ? "8092" : "8098"
+};
 
 function run(cmd, args, options = {}) {
   const result = spawnSync(cmd, args, { stdio: "inherit", ...options });
@@ -53,25 +63,14 @@ run("docker", [
   "-p", projectName,
   "-f", "docker-compose.prod.yml", 
   "down", "--remove-orphans"
-]);
+], { env: commonEnv });
 
 run("docker", [
   "compose", 
   "-p", projectName,
   "-f", "docker-compose.prod.yml", 
   "up", "-d"
-], { 
-  env: { 
-    ...process.env, 
-    ...envVars, 
-    APP_IMAGE: appImage,
-    HTTP_PORT: target === "prod" ? "80" : "8082",
-    HTTPS_PORT: target === "prod" ? "443" : "8444",
-    KEYCLOAK_PORT: target === "prod" ? "8080" : "8083",
-    COUCHBASE_PORT: target === "prod" ? "8091" : "8097",
-    COUCHBASE_EXT_PORT: target === "prod" ? "8092" : "8098"
-  }
-});
+], { env: commonEnv });
 
 console.log("🧹 Pruning dangling system artifacts...");
 spawnSync("docker", ["image", "prune", "-f"], { stdio: "inherit" });
