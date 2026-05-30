@@ -1,13 +1,13 @@
 name: "🛰️ PROVISION: New VM Setup"
-run-name: "🛰️ Setup Runner on ${{ inputs.target }} VM @ ${{ inputs.host }}"
 on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Target Environment'
+        description: 'Target Server (prod/test)'
         required: true
         type: choice
         options: [prod, test]
+        default: 'prod'
       host:
         description: 'New VM IP Address'
         required: true
@@ -20,32 +20,30 @@ jobs:
       actions: write
       contents: read
     steps:
-      - name: Fetch Token
+      - name: "🛰️ Fetch Action Token"
         id: tok
-        env: { GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }} }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: |
           T=$(gh api -X POST repos/${{github.repository}}/actions/runners/registration-token -q .token)
           echo "t=$T" >> $GITHUB_OUTPUT
-      - name: "🛰️ Native Setup"
+      - name: "🚢 Native Setup: Execute Provisioning"
         uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ inputs.host }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Use heredoc to avoid shell expansion/length issues with long tokens
             cat << 'EOF' > ~/setup_params.sh
             export TOKEN="${{ steps.tok.outputs.t }}"
             export TARGET="${{ inputs.target }}"
             export REPO="${{ github.repository }}"
             EOF
-            
-            # Fetch scripts using GITHUB_TOKEN for private repo support
             curl -H "Authorization: token ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" \
                  -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/setup_vm.sh" | bash
-            
             source ~/setup_params.sh
             curl -H "Authorization: token ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" \
                  -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/setup-runner.sh" | bash -s -- "$TOKEN" "$TARGET" "$REPO"
+            rm ~/setup_params.sh
             
             rm ~/setup_params.sh

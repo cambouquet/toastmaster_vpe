@@ -6,9 +6,9 @@
 - **CI/CD Excellence**: Native SSH only. Do not use legacy JavaScript actions (like `checkout` or `setup-node` on self-hosted runners) to avoid Node 20 deprecation noise and slow binary downloads.
 - **Parallel Deployment**: Always use local self-hosted runners labeled by environment (`prod`, `test`).
 - **Pipeline Architecture**: Consistently use the three primary workflows:
-  - **🚀 DEPLOY**: Main application delivery (Production & Test).
-  - **🛰️ PROVISION**: Initial VM setup and runner registration.
-  - **🛠️ MAINTENANCE**: Infrastructure health, cleanup, and resets.
+  - **🚀 DEPLOY**: Main application delivery (`deploy.yml`).
+  - **🛰️ PROVISION**: Initial VM setup and runner registration (`setup.yml`).
+  - **🛠️ MAINTENANCE**: Infrastructure health, cleanup, and resets (`maintenance.yml`).
 - **Universal SOLID**: Clean code and SOLID principles apply to the entire stack, including CI/CD pipelines, YAML configurations, and shell scripts. Logic must be decoupled (e.g., separate infra library scripts) and naming must be explicit and intent-driven.
 - **Satellite Provisioning**: Zero manual intervention. Provisioning new VMs MUST be handled exclusively via the "PROVISION" workflow.
 - **Vite Bundling**: Use `manualChunks` to keep main assets under 2000kB. Increase `chunkSizeWarningLimit` for large dependency-heavy documentation.
