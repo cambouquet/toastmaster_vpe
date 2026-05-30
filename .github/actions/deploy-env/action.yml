@@ -27,6 +27,25 @@ runs:
         username: ${{ inputs.vm_user }}
         key: ${{ inputs.ssh_key }}
         script: |
-          cd ~/app
-          git pull origin main
+          # Ensure workspace exists
+          mkdir -p $HOME/app
+          if [ ! -d "$HOME/app/.git" ]; then
+            git clone https://github.com/k-app-tech/k-app.git $HOME/app
+          fi
+          
+          cd $HOME/app
+          git fetch origin main
+          git reset --hard origin/main
+          
+          # Force Node into PATH (NVM and standard paths)
+          export PATH=$PATH:/usr/local/bin:/usr/bin:/bin
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          
+          # Final check - if node still missing, try which
+          if ! command -v node &> /dev/null; then
+            echo "Node not found in PATH. Attempting to locate..."
+            export PATH=$PATH:$(dirname $(which node 2>/dev/null || echo ""))
+          fi
+
           node deploy.mjs ${{ inputs.target }}

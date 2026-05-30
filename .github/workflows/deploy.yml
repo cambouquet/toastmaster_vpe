@@ -26,6 +26,7 @@ jobs:
     needs: build
     runs-on: self-hosted
     strategy:
+      fail-fast: false
       matrix: { target: [prod, test] }
     steps:
       - uses: actions/checkout@v6
