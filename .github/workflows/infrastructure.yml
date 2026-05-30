@@ -23,7 +23,8 @@ jobs:
           
           case "${{ github.event.inputs.action }}" in
             "verify")
-              docker version && node -v && npm -v
+              node -v | grep "v24" || (echo "Node 24 required" && exit 1)
+              docker version && npm -v
               ;;
             "full-setup")
               echo "🚀 Starting Full System Setup (Node 24)..."

@@ -1,5 +1,5 @@
 # Build stage
-FROM node:20-alpine AS build
+FROM node:24-alpine AS build
 WORKDIR /app
 COPY package*.json ./
 RUN --mount=type=cache,target=/root/.npm npm install
@@ -16,7 +16,7 @@ ENV VITE_APP_MODE=$VITE_APP_MODE
 RUN npm run build && npm prune --production
 
 # Final stage
-FROM node:20-alpine
+FROM node:24-alpine
 WORKDIR /app
 RUN apk add --no-cache nginx
 COPY --from=build /app/dist /usr/share/nginx/html

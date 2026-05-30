@@ -4,6 +4,9 @@
   "version": "1.1.0",
   "system_version": "2026.05.30-C1",
   "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "scripts": {
     "setup": "node ./scripts/setup-env.mjs",
     "start": "node ./scripts/dev-setup.mjs",

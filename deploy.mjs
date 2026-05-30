@@ -22,11 +22,6 @@ const envVars = Object.fromEntries(
 
 process.env = { ...process.env, ...envVars };
 
-console.log("📦 Building frontend...");
-run("npm", ["run", "build"], { 
-  env: { ...process.env, ...envVars } 
-});
-
 const appImage = `meetings-app:${target}`;
 console.log(`🔨 Building image ${appImage}...`);
 const buildArgs = Object.entries(envVars)

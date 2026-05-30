@@ -1,6 +1,6 @@
 import { exec, ensureMachine, out, run } from "./podman-common.mjs";
 
-console.log(">>> MISSION CONTROL - NEURAL SYSTEM BOOT");
+console.log(">>> MISSION CONTROL - SYSTEM BOOT");
 ensureMachine();
 
 const up = out(["ps", "--filter", "name=keycloak", "--format", "{{.Status}}"]).startsWith("Up");

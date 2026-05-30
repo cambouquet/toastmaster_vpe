@@ -21,53 +21,52 @@ runs:
   using: "composite"
   steps:
     - name: "🛰️ Sequence: Rapid Fire -> Deep Recovery"
-      uses: appleboy/ssh-action@v1.2.5
-      with:
-        host: ${{ inputs.vm_host }}
-        username: ${{ inputs.vm_user }}
-        key: ${{ inputs.ssh_key }}
-        script: |
-          # RAPID FIRE: Assume environment is warm
+      shell: bash
+      env:
+        SSH_KEY: ${{ inputs.ssh_key }}
+        VM_HOST: ${{ inputs.vm_host }}
+        VM_USER: ${{ inputs.vm_user }}
+        TARGET: ${{ inputs.target }}
+      run: |
+        # Mainstream Native SSH (No binary downloads, 0s latency)
+        # Avoids appleboy/ssh-action download overhead
+        
+        ID_FILE=$(mktemp)
+        echo "$SSH_KEY" > "$ID_FILE"
+        chmod 600 "$ID_FILE"
+
+        ssh -i "$ID_FILE" -o StrictHostKeyChecking=no -o ConnectTimeout=10 "$VM_USER@$VM_HOST" "bash -s" << EOF
+          set -e
+          
+          # RAPID FIRE
           FUNCTION_RAPID_FIRE() {
-            set -e
-            cd $HOME/app && \
+            cd \$HOME/app && \
             git fetch origin main && \
             git reset --hard origin/main && \
-            node deploy.mjs ${{ inputs.target }}
+            node deploy.mjs $TARGET
           }
 
-          # DEEP RECOVERY: Fix system if Rapid Fire fails
+          # DEEP RECOVERY
           FUNCTION_DEEP_RECOVERY() {
-            set -e
             echo "⚠️ RAPID FIRE FAILED. Initiating Deep Recovery..."
-            
-            # 1. Recover Git Workspace
-            if [ ! -d "$HOME/app/.git" ]; then
-              rm -rf "$HOME/app"
-              git clone https://github.com/k-app-tech/k-app.git "$HOME/app"
-              cd $HOME/app
+            if [ ! -d "\$HOME/app/.git" ]; then
+              rm -rf "\$HOME/app"
+              git clone https://github.com/k-app-tech/k-app.git "\$HOME/app"
             fi
-
-            # 2. Recover Node.js
+            
+            cd \$HOME/app
             if ! command -v node &> /dev/null; then
-              echo "Fixing Node..."
               curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
               sudo apt-get install -y nodejs
             fi
-
-            # 3. Recover Docker
-            if ! command -v docker &> /dev/null; then
-              echo "Fixing Docker..."
-              sudo apt-get update && sudo apt-get install -y docker.io
-              sudo usermod -aG docker $USER
-            fi
-
-            # 4. Final Attempt
-            cd $HOME/app
+            
             git fetch origin main
             git reset --hard origin/main
-            sg docker -c "node deploy.mjs ${{ inputs.target }}"
+            # Use 'sg' only if necessary, here we assume standard docker group
+            node deploy.mjs $TARGET
           }
 
-          # Execution logic
           FUNCTION_RAPID_FIRE || FUNCTION_DEEP_RECOVERY
+        EOF
+        
+        rm -f "$ID_FILE"
