@@ -6,6 +6,8 @@ on:
         description: 'Type "RESET" to confirm hard reset'
         required: true
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   hard-reset:

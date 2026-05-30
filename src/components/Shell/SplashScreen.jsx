@@ -25,7 +25,7 @@ export const SplashScreen = ({ onFinish, isLoggingIn = false }) => {
             )}
           </div>
           <div className="line-3" style={{ color: colors.line3 }}>
-            {isLoggingIn ? "DOWNLOADING AGENT PROFILE..." : "BE THE HERO OF YOUR OWN LIFE"}
+            {isLoggingIn ? "DOWNLOADING UPLINK PROFILE..." : "BE THE HERO OF YOUR OWN LIFE"}
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ export const HomeLogo = ({ className = '', style = {} }) => (
         <path d="M50 15 L85 45 L85 85 L15 85 L15 45 Z" strokeWidth="3" opacity="0.4" />
         <path d="M10 50 L50 15 L90 50" strokeWidth="6" strokeLinecap="square" />
         
-        {/* Core Entryway - Neural Gate */}
+        {/* Core Entryway - Uplink Gate */}
         <path d="M40 85 L40 55 L60 55 L60 85" strokeWidth="4" />
         
         {/* HUD Targeting Elements */}

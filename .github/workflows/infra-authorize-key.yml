@@ -6,6 +6,8 @@ on:
         description: 'Uplink Public Key (PASTE CONTENT OF id_ed25519.pub)'
         required: true
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   authorize:

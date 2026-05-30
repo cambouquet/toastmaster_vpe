@@ -2,6 +2,9 @@
 
 ## 1. File Constraints
 - **Strict Line Limit**: No file shall exceed **42 lines** of code.
+- **Node.js Standards**: Use **Node 24 (Alpine)** for all environments.
+- **CI/CD Excellence**: Native SSH only. Do not use legacy JavaScript actions (like `checkout` or `setup-node` on self-hosted runners) to avoid Node 20 deprecation noise and slow binary downloads.
+- **Vite Bundling**: Use `manualChunks` to keep main assets under 2000kB. Increase `chunkSizeWarningLimit` for large dependency-heavy documentation.
 - **Feature Toggles**: Never hardcode environment-specific logic. Use `VITE_` prefixed variables. Every new toggle MUST be documented in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) with a "Why" and "Version".
 - **Version Tracking**: Manual version increments in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) are required. Use Semantic Versioning for features.
 - **Single Responsibility**: If a file grows too large, extract logic into hooks or smaller sub-components.
