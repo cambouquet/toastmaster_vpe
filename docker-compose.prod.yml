@@ -44,6 +44,10 @@ services:
     environment:
       - COUCHBASE_ADMINISTRATOR_USERNAME=admin
       - COUCHBASE_ADMINISTRATOR_PASSWORD=password
-    ports: ["${COUCHBASE_PORT:-8091}:8091", "8092-8096:8092-8096", "11210-11211:11210-11211"]
+    ports: 
+      - "${COUCHBASE_PORT:-8091}:8091"
+      - "${COUCHBASE_EXT_PORT:-8092}:8092"
+      - "8093-8096:8093-8096"
+      - "11210-11211:11210-11211"
     volumes: ["couchbase_data:/opt/couchbase/var"]
 volumes: {keycloak_data: {}, caddy_data: {}, caddy_config: {}, couchbase_data: {}}

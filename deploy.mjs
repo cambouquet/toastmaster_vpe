@@ -38,20 +38,29 @@ spawnSync("docker", ["build", ...buildArgs, "-t", appImage, "."], { stdio: "inhe
 
 console.log(`♻️ Restarting ${target} stack...`);
 const projectName = `k-app-${target}`;
-spawnSync("docker", [
+
+function run(cmd, args, options = {}) {
+  const result = spawnSync(cmd, args, { stdio: "inherit", ...options });
+  if (result.status !== 0) {
+    console.error(`❌ Command failed: ${cmd} ${args.join(" ")}`);
+    process.exit(result.status || 1);
+  }
+  return result;
+}
+
+run("docker", [
   "compose", 
   "-p", projectName,
   "-f", "docker-compose.prod.yml", 
   "down", "--remove-orphans"
-], { stdio: "inherit" });
+]);
 
-spawnSync("docker", [
+run("docker", [
   "compose", 
   "-p", projectName,
   "-f", "docker-compose.prod.yml", 
   "up", "-d"
 ], { 
-  stdio: "inherit",
   env: { 
     ...process.env, 
     ...envVars, 
@@ -59,7 +68,8 @@ spawnSync("docker", [
     HTTP_PORT: target === "prod" ? "80" : "8082",
     HTTPS_PORT: target === "prod" ? "443" : "8444",
     KEYCLOAK_PORT: target === "prod" ? "8080" : "8083",
-    COUCHBASE_PORT: target === "prod" ? "8091" : "8097"
+    COUCHBASE_PORT: target === "prod" ? "8091" : "8097",
+    COUCHBASE_EXT_PORT: target === "prod" ? "8092" : "8098"
   }
 });
 

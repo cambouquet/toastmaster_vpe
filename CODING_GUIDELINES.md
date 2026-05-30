@@ -18,6 +18,12 @@
   - `Workspace/`: Meeting metadata and planning nodes.
   - `Agent/`: Input, messaging, and transmission logic.
   - `Members/`: Profile registry and skill-track management.
+
+## 4. Operational Integrity (Anti-Fragile)
+- **Deployment Success**: A deployment script MUST fail loudly if any sub-command fails. Never use `spawnSync` without checking the `status` or `error` properties.
+- **Port Isolation**: Multi-environment deployments (Test vs Prod) must never share ports. Map internal ports to environment-specific host ports via build-time variables.
+- **Self-Healing Deployment**: Infrastructure scripts should be idempotent and handle "cold starts" (missing Node, missing Docker, missing Workspace) automatically.
+- **Hard Truths over Green Builds**: It is forbidden to suppress errors or return a success exit code if a service fails to start or a network port is blocked.
 - **Service Layer**: Keep AI and external logic (e.g., WhatsApp) in dedicated service classes.
 - **Logic Separation**: Use custom hooks (e.g., `useCollaboration`) to manage state, keeping components focused on rendering.
 
