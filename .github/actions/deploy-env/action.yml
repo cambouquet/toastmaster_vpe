@@ -20,7 +20,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: 🛰️ Sequence: Rapid Fire -> Deep Recovery
+    - name: "🛰️ Sequence: Rapid Fire -> Deep Recovery"
       uses: appleboy/ssh-action@v1.2.5
       with:
         host: ${{ inputs.vm_host }}
