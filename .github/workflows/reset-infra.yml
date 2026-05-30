@@ -8,6 +8,9 @@ on:
         required: true
         default: 'NO'
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   reset:
     if: github.event.inputs.confirm == 'RESET'

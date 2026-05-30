@@ -6,6 +6,9 @@ on:
         description: 'Neural Link Public Key (PASTE CONTENT OF id_ed25519.pub)'
         required: true
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   authorize:
     runs-on: self-hosted

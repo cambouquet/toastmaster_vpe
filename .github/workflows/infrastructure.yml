@@ -12,6 +12,9 @@ on:
           - full-setup
           - prune-system
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   maintenance:
     runs-on: self-hosted
