@@ -1,4 +1,5 @@
-name: 🛰️ System: Satellite
+name: "🛰️ System: Satellite"
+run-name: "🛰️ Provisioning ${{ inputs.target }} Node @ ${{ inputs.host }}"
 on:
   workflow_dispatch:
     inputs:

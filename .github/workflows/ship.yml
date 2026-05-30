@@ -1,4 +1,5 @@
-name: 🚀 System: Ship
+name: "🚀 System: Ship"
+run-name: "🚀 Shipping to ${{ inputs.target || 'main' }}"
 on:
   push:
     branches: [main]
