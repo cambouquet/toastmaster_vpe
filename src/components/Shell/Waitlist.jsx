@@ -28,12 +28,12 @@ export const Waitlist = () => {
         <div className="motto" style={{ color: accent, textShadow: `0 0 10px ${accent}88` }}>COMING SOON</div>
         <div className="description">Be the hero of your own life</div>
         {submitted ? (
-          <div className="success-msg" style={{ color: accent }}>ESTABLISHED. WE'LL REACH OUT.</div>
+          <div className="success-msg" style={{ color: accent }}>YOU'RE IN. WE'LL REACH OUT.</div>
         ) : (
           <form onSubmit={handleSubmit} className="waitlist-form">
-            <input type="email" placeholder="NEURAL_ID@DOMAIN.COM" value={email}
+            <input type="email" placeholder="YOU@DOMAIN.COM" value={email}
               onChange={(e) => setEmail(e.target.value)} required />
-            <button type="submit" style={{ background: accent }}>JOIN TRANSMISSION</button>
+            <button type="submit" style={{ background: accent }}>JOIN NOW</button>
           </form>
         )}
       </div>
