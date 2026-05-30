@@ -7,21 +7,22 @@ ssh -i "$ID_FILE" -o StrictHostKeyChecking=no -o ConnectTimeout=10 "$VM_USER@$VM
   
   FUNCTION_RAPID_FIRE() {
     cd \$HOME/app && \
-    git fetch origin main && \
-    git reset --hard origin/main && \
+    git fetch --depth 1 origin main && \
+    git reset --hard FETCH_HEAD && \
     node deploy.mjs $TARGET
   }
 
   FUNCTION_DEEP_RECOVERY() {
     echo "⚠️ RAPID FIRE FAILED. System state inconsistent. Initiating Deep Recovery..."
-    if [ ! -d "\$HOME/app/.git" ]; then
-      rm -rf "\$HOME/app"
-      git clone https://github.com/$GITHUB_REPOSITORY.git "\$HOME/app"
-    fi
+    mkdir -p \$HOME/app && cd \$HOME/app
     
-    cd \$HOME/app
-    git fetch origin main
-    git reset --hard origin/main
+    # Gold Standard initialization
+    git init
+    git remote add origin https://github.com/$GITHUB_REPOSITORY.git 2>/dev/null || \
+    git remote set-url origin https://github.com/$GITHUB_REPOSITORY.git
+    git fetch --depth 1 origin main
+    git reset --hard FETCH_HEAD
+    git clean -fd
     
     CURRENT_NODE_VER=\$(node -v 2>/dev/null || echo "v0")
     if [[ ! "\$CURRENT_NODE_VER" =~ ^v24\. ]]; then

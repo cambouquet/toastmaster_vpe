@@ -13,8 +13,17 @@ jobs:
     steps:
       - name: "🛰️ Native Setup"
         run: |
-          rm -rf .github scripts deploy.mjs # clean old state
-          git clone --depth 1 https://github.com/${{ github.repository }}.git .
+          # RAPID FIRE (Assume warm runner)
+          (git fetch --depth 1 origin main && git reset --hard FETCH_HEAD && git clean -fd) || (
+            # DEEP RECOVERY (Cold start / Corrupted)
+            echo "⚠️ RAPID FIRE Setup failed. Initiating Deep Recovery..."
+            git init
+            git remote add origin https://github.com/${{ github.repository }}.git 2>/dev/null || \
+            git remote set-url origin https://github.com/${{ github.repository }}.git
+            git fetch --depth 1 origin main
+            git reset --hard FETCH_HEAD
+            git clean -fd
+          )
       - name: "🚢 Native SSH Deployment"
         env:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
