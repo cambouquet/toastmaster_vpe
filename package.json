@@ -1,12 +1,13 @@
 {
   "name": "meetings-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.1.0",
+  "system_version": "2026.05.30-C1",
   "type": "module",
   "scripts": {
     "setup": "node ./scripts/setup-env.mjs",
     "start": "node ./scripts/dev-setup.mjs",
-    "start:dual": "concurrently \"VITE_PORT=1777 npm run dev\" \"VITE_PORT=1778 VITE_APP_MODE=demo VITE_APP_ICON=/logo-yellow.svg VITE_WING_COLOR=#e3b341 npm run dev\"",
+    "start:dual": "concurrently \"VITE_PORT=1777 VITE_APP_MODE=test VITE_APP_ICON=/logo-cyan.svg VITE_WING_COLOR=#00bac4 npm run dev\" \"VITE_PORT=1778 VITE_APP_MODE=demo VITE_APP_ICON=/logo-yellow.svg VITE_WING_COLOR=#e3b341 npm run dev\"",
     "start:linux": "node ./scripts/dev-setup.mjs",
     "start:prod": "podman-compose up -d && npm run dev",
     "stop": "podman compose down",

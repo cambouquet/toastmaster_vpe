@@ -55,7 +55,7 @@ export default withMermaid(
       ],
       sidebar: isProd ? publicSidebar : [...publicSidebar, ...techSidebar],
       socialLinks: [
-        { icon: 'github', link: 'https://github.com/toastmaster-vpe' }
+        { icon: 'github', link: 'https://github.com/k-app-neural' }
       ],
       footer: {
         message: isProd ? 'K-PROPRIETARY Signal' : 'INTERNAL System Specs',

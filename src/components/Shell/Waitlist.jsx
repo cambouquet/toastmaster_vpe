@@ -26,7 +26,7 @@ export const Waitlist = () => {
       <div className="waitlist-content">
         <Logo primaryColor="#ffffff" glowColor={accent} />
         <div className="motto" style={{ color: accent, textShadow: `0 0 10px ${accent}88` }}>COMING SOON</div>
-        <div className="description">A new way to master the art of speaking.</div>
+        <div className="description">A high-density human development platform.</div>
         {submitted ? (
           <div className="success-msg" style={{ color: accent }}>ESTABLISHED. WE'LL REACH OUT.</div>
         ) : (

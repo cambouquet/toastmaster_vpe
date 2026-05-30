@@ -22,7 +22,7 @@ if (!up) {
 }
 
 console.log(">>> [LINK] Keycloak Admin: http://localhost:8081 (admin/admin)");
-console.log(">>> [LINK] Primary (1777) [CYAN]:  http://localhost:1777");
-console.log(">>> [LINK] Sandbox (1778) [YELLOW]: http://localhost:1778");
+console.log(">>> [LINK] Real System (1777) [CYAN]:   http://localhost:1777 (Latest Code)");
+console.log(">>> [LINK] Demo System (1778) [YELLOW]: http://localhost:1778 (Demo Site)");
 const child = exec("npm", ["run", "start:dual"], true);
 process.exit(child.status ?? 1);

@@ -2,6 +2,8 @@
 
 ## 1. File Constraints
 - **Strict Line Limit**: No file shall exceed **42 lines** of code.
+- **Feature Toggles**: Never hardcode environment-specific logic. Use `VITE_` prefixed variables. Every new toggle MUST be documented in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) with a "Why" and "Version".
+- **Version Tracking**: Manual version increments in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) are required. Use Semantic Versioning for features.
 - **Single Responsibility**: If a file grows too large, extract logic into hooks or smaller sub-components.
 
 ## 2. Technical Stack
