@@ -1,5 +1,5 @@
-name: "🛠️ System: Command Center"
-run-name: "🛠️ [${{ inputs.target }}] Command: ${{ inputs.action }}"
+name: "🛠️ MAINTENANCE: Infrastructure Control"
+run-name: "🛠️ [${{ inputs.target }}] Action: ${{ inputs.action }}"
 on:
   workflow_dispatch:
     inputs:

@@ -1,5 +1,5 @@
-name: "🚀 System: Ship"
-run-name: "🚀 Shipping to ${{ inputs.target || 'main' }}"
+name: "🚀 DEPLOY: Production & Test"
+run-name: "🚀 Deploying to ${{ inputs.target || 'main' }}"
 on:
   push:
     branches: [main]

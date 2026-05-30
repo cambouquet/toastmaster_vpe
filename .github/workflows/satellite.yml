@@ -1,5 +1,5 @@
-name: "🛰️ System: Satellite"
-run-name: "🛰️ Provisioning ${{ inputs.target }} Node @ ${{ inputs.host }}"
+name: "🛰️ PROVISION: New VM Setup"
+run-name: "🛰️ Setup Runner on ${{ inputs.target }} VM @ ${{ inputs.host }}"
 on:
   workflow_dispatch:
     inputs:

@@ -5,11 +5,11 @@
 - **Node.js Standards**: Use **Node 24 (Alpine)** for all environments.
 - **CI/CD Excellence**: Native SSH only. Do not use legacy JavaScript actions (like `checkout` or `setup-node` on self-hosted runners) to avoid Node 20 deprecation noise and slow binary downloads.
 - **Parallel Deployment**: Always use local self-hosted runners labeled by environment (`prod`, `test`).
-- **Pipeline Architecture**: Consistently use the Three Holy Pillars:
-  - **🚀 Ship**: Main deployment pipeline (automated on push).
-  - **🛰️ Satellite**: Zero-intervention node provisioning and authorization.
-  - **🛠️ Command**: Centralized maintenance, health checks, and hard resets.
-- **Satellite Provisioning**: Zero manual intervention. Provisioning new VMs MUST be handled exclusively via the "Satellite" workflow. Manual SSH commands for setup or runner registration are strictly forbidden. The system must self-authorize using automated token handshakes.
+- **Pipeline Architecture**: Consistently use the three primary workflows:
+  - **🚀 DEPLOY**: Main application delivery (Production & Test).
+  - **🛰️ PROVISION**: Initial VM setup and runner registration.
+  - **🛠️ MAINTENANCE**: Infrastructure health, cleanup, and resets.
+- **Satellite Provisioning**: Zero manual intervention. Provisioning new VMs MUST be handled exclusively via the "PROVISION" workflow.
 - **Vite Bundling**: Use `manualChunks` to keep main assets under 2000kB. Increase `chunkSizeWarningLimit` for large dependency-heavy documentation.
 - **Feature Toggles**: Never hardcode environment-specific logic. Use `VITE_` prefixed variables. Every new toggle MUST be documented in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) with a "Why" and "Version".
 - **Version Tracking**: Manual version increments in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) are required. Use Semantic Versioning for features.
