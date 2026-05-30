@@ -17,10 +17,7 @@ export default withMermaid(
     mermaid: {},
     vite: {
       build: {
-        chunkSizeWarningLimit: 2000,
-        rollupOptions: {
-          output: { manualChunks: { 'mermaid-vendor': ['mermaid'] } }
-        }
+        chunkSizeWarningLimit: 2000
       }
     }
   })
