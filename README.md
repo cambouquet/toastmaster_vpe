@@ -6,8 +6,8 @@ A high-density "Cyber-Noir" human development platform. This is a real-life MMO 
 
 | Portal | URL | Description |
 | :--- | :--- | :--- |
-| **Mission Control** | `http://localhost:5173` | Neural Link Interface (Login required) |
-| **Identity Lab** | `http://localhost:8080` | Keycloak Auth Server |
+| **Mission Control** | `http://localhost:1777` | Neural Link Interface (Login required) |
+| **Identity Lab** | `http://localhost:8081` | Keycloak Auth Server |
 | **Mission Briefing** | `http://localhost:5174` | Project Documentation (VitePress) |
 
 ## Core Architecture

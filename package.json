@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "setup": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-env.ps1",
-    "start": "powershell -ExecutionPolicy Bypass -File ./scripts/dev-setup.ps1",
-    "start:linux": "chmod +x ./scripts/dev-setup.sh && ./scripts/dev-setup.sh",
+    "setup": "node ./scripts/setup-env.mjs",
+    "start": "node ./scripts/dev-setup.mjs",
+    "start:dual": "concurrently \"VITE_PORT=1777 npm run dev\" \"VITE_PORT=1778 VITE_APP_MODE=demo VITE_APP_ICON=/logo-yellow.svg VITE_WING_COLOR=#e3b341 npm run dev\"",
+    "start:linux": "node ./scripts/dev-setup.mjs",
     "start:prod": "podman-compose up -d && npm run dev",
     "stop": "podman compose down",
     "dev": "concurrently \"npm run dev:fe\" \"npm run dev:be\" \"npm run docs:dev\"",

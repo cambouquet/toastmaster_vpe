@@ -13,11 +13,11 @@ export default defineConfig({
     },
   },
   server: {
-    port: 1777,
+    port: process.env.VITE_PORT ? parseInt(process.env.VITE_PORT) : 1777,
     strictPort: true,
   },
   preview: {
-    port: 1777,
+    port: process.env.VITE_PORT ? parseInt(process.env.VITE_PORT) : 1777,
     strictPort: true,
   },
 })

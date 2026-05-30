@@ -4,6 +4,15 @@ WORKDIR /app
 COPY package*.json ./
 RUN --mount=type=cache,target=/root/.npm npm install
 COPY . .
+
+# Pass build args to env for Vite
+ARG VITE_APP_ICON
+ARG VITE_WING_COLOR
+ARG VITE_APP_MODE
+ENV VITE_APP_ICON=$VITE_APP_ICON
+ENV VITE_WING_COLOR=$VITE_WING_COLOR
+ENV VITE_APP_MODE=$VITE_APP_MODE
+
 RUN npm run build && npm prune --production
 
 # Final stage

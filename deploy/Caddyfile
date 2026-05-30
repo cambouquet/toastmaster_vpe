@@ -3,6 +3,7 @@
 }
 
 {$DOMAIN_NAME:k-app.tech}, www.{$DOMAIN_NAME:k-app.tech} {
+    encode gzip
     reverse_proxy app:80
 }
 
