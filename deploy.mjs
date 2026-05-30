@@ -53,12 +53,27 @@ const commonEnv = {
 
 function run(cmd, args, options = {}) {
   const result = spawnSync(cmd, args, { stdio: "inherit", ...options });
-  if (result.status !== 0) {
+  if (result.status !== 0 && !options.allowFail) {
     console.error(`❌ Command failed: ${cmd} ${args.join(" ")}`);
     process.exit(result.status || 1);
   }
   return result;
 }
+
+// Port conflict mitigation: stop any k-app container using our specific ports
+[
+  commonEnv.HTTP_PORT, commonEnv.HTTPS_PORT, commonEnv.KEYCLOAK_PORT, 
+  commonEnv.COUCHBASE_PORT, commonEnv.COUCHBASE_EXT_PORT,
+  commonEnv.COUCHBASE_QUERY_PORT, commonEnv.COUCHBASE_SEARCH_PORT,
+  commonEnv.COUCHBASE_MEM_PORT
+].forEach(port => {
+  const check = spawnSync("docker", ["ps", "-q", "--filter", `publish=${port}`]);
+  const id = check.stdout?.toString().trim();
+  if (id) {
+    console.log(`⚠️ Port ${port} occupied by ${id}. Forced release...`);
+    spawnSync("docker", ["stop", id]);
+  }
+});
 
 run("docker", [
   "compose", 
