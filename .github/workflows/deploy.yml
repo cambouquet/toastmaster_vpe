@@ -13,10 +13,10 @@ jobs:
     steps:
       - name: "🛰️ Native Setup"
         run: |
-          # RAPID FIRE (Assume warm runner)
+          # RAPID FIRE
           (git fetch --depth 1 origin main && git reset --hard FETCH_HEAD && git clean -fd) || (
-            # DEEP RECOVERY (Cold start / Corrupted)
-            echo "⚠️ RAPID FIRE Setup failed. Initiating Deep Recovery..."
+            # DEEP RECOVERY
+            echo "⚠️ RAPID FIRE Setup failed. Running Recovery..."
             git init
             git remote add origin https://github.com/${{ github.repository }}.git 2>/dev/null || \
             git remote set-url origin https://github.com/${{ github.repository }}.git

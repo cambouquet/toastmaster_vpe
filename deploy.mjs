@@ -26,16 +26,17 @@ const commonEnv = {
   COUCHBASE_MEM_PORT: target === "prod" ? "11210" : "11212"
 };
 
-console.log(\`♻️  Rapid Fire: \${target}...\`);
+console.log("♻️ Rapid Fire: " + target + "...");
+const pName = "k-app-" + target;
 const res = spawnSync("docker", [
-  "compose", "-p", \`k-app-\${target}\`, "-f", "docker-compose.prod.yml", "up", "-d"
+  "compose", "-p", pName, "-f", "docker-compose.prod.yml", "up", "-d"
 ], { env: commonEnv, stdio: "inherit" });
 
 if (res.status !== 0) {
   console.log("⚠️ Recovery Mode...");
   recoverPorts(commonEnv);
   run("docker", [
-    "compose", "-p", \`k-app-\${target}\`, "-f", "docker-compose.prod.yml", "up", "-d", "--force-recreate"
+    "compose", "-p", pName, "-f", "docker-compose.prod.yml", "up", "-d", "--force-recreate"
   ], { env: commonEnv });
 }
-console.log(\`✅ \${target} Active: \${process.env.DOMAIN_NAME}\`);
+console.log("✅ " + target + " Active: " + process.env.DOMAIN_NAME);
