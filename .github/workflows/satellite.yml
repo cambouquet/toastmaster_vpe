@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions: { actions: write }
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Fetch Token
         id: tok
         env: { GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }} }
@@ -24,10 +26,19 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # Use heredoc to avoid shell expansion/length issues with long tokens
+            cat << 'EOF' > ~/setup_params.sh
             export TOKEN="${{ steps.tok.outputs.t }}"
             export TARGET="${{ inputs.target }}"
             export REPO="${{ github.repository }}"
-            # Install Docker & Node standard
-            curl -sSL https://raw.githubusercontent.com/$REPO/main/setup_vm.sh | bash
-            # Install Runner
-            curl -sSL https://raw.githubusercontent.com/$REPO/main/scripts/setup-runner.sh | bash -s -- "$TOKEN" "$TARGET" "$REPO"
+            EOF
+            
+            # Fetch scripts using GITHUB_TOKEN for private repo support
+            curl -H "Authorization: token ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" \
+                 -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/setup_vm.sh" | bash
+            
+            source ~/setup_params.sh
+            curl -H "Authorization: token ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" \
+                 -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/setup-runner.sh" | bash -s -- "$TOKEN" "$TARGET" "$REPO"
+            
+            rm ~/setup_params.sh
