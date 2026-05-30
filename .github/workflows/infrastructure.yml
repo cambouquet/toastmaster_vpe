@@ -1,4 +1,4 @@
-name: Infrastructure Setup
+name: 🛠️ INFRASTRUCTURE | Maintenance & Setup
 on:
   workflow_dispatch:
     inputs:
@@ -9,15 +9,14 @@ on:
         type: choice
         options:
           - verify
-          - setup-docker
-          - install-node
+          - full-setup
           - prune-system
 
 jobs:
   maintenance:
     runs-on: self-hosted
     steps:
-      - name: System Pulse
+      - name: ⚡ Pulse Execution
         run: |
           echo "Executing: ${{ github.event.inputs.action }}"
           
@@ -25,14 +24,12 @@ jobs:
             "verify")
               docker version && node -v && npm -v
               ;;
-            "setup-docker")
+            "full-setup")
+              echo "🚀 Starting Full System Setup..."
               sudo apt-get update
-              sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+              sudo apt-get install -y docker.io nodejs npm
               sudo usermod -aG docker $USER
-              ;;
-            "install-node")
-              curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-              sudo apt-get install -y nodejs
+              echo "✅ Full Setup Complete."
               ;;
             "prune-system")
               docker system prune -af --volumes

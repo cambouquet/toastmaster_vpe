@@ -20,50 +20,52 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Neural Deployment Sequence
+    - name: 🛰️ Sequence: Rapid Fire -> Deep Recovery
       uses: appleboy/ssh-action@v1.2.5
       with:
         host: ${{ inputs.vm_host }}
         username: ${{ inputs.vm_user }}
         key: ${{ inputs.ssh_key }}
         script: |
-          set -e
-          # 1. Automate Docker install if missing
-          if ! command -v docker &> /dev/null; then
-            echo "Docker missing. Initializing engine..."
-            sudo apt-get update
-            sudo apt-get install -y docker.io
-            sudo usermod -aG docker $USER
-            # Apply group change to current session
-            sg docker -c "docker version"
-          fi
+          # RAPID FIRE: Assume environment is warm
+          FUNCTION_RAPID_FIRE() {
+            cd $HOME/app && \
+            git fetch origin main && \
+            git reset --hard origin/main && \
+            node deploy.mjs ${{ inputs.target }}
+          }
 
-          # 2. Robust workspace initialization
-          if [ ! -d "$HOME/app/.git" ]; then
-            echo "Target directory is not a git repo or doesn't exist. Cleaning and cloning..."
-            rm -rf "$HOME/app"
-            git clone https://github.com/k-app-tech/k-app.git "$HOME/app"
-          fi
-          
-          cd "$HOME/app"
-          git fetch origin main
-          git reset --hard origin/main
-          
-          # Force load shell environment for node
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          [ -f "$HOME/.profile" ] && \. "$HOME/.profile"
-          [ -f "$HOME/.bashrc" ] && \. "$HOME/.bashrc"
+          # DEEP RECOVERY: Fix system if Rapid Fire fails
+          FUNCTION_DEEP_RECOVERY() {
+            echo "⚠️ RAPID FIRE FAILED. Initiating Deep Recovery..."
+            
+            # 1. Recover Git Workspace
+            if [ ! -d "$HOME/app/.git" ]; then
+              rm -rf "$HOME/app"
+              git clone https://github.com/k-app-tech/k-app.git "$HOME/app"
+              cd $HOME/app
+            fi
 
-          # Ensure common paths are present
-          export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/snap/bin"
-          
-          # Self-healing Node.js installation if missing
-          if ! command -v node &> /dev/null; then
-             echo "Node.js not found. Installing Node.js LTS..."
-             curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-             sudo apt-get install -y nodejs
-          fi
+            # 2. Recover Node.js
+            if ! command -v node &> /dev/null; then
+              echo "Fixing Node..."
+              curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+              sudo apt-get install -y nodejs
+            fi
 
-          echo "Using Node: $(node -v)"
-          node deploy.mjs ${{ inputs.target }}
+            # 3. Recover Docker
+            if ! command -v docker &> /dev/null; then
+              echo "Fixing Docker..."
+              sudo apt-get update && sudo apt-get install -y docker.io
+              sudo usermod -aG docker $USER
+            fi
+
+            # 4. Final Attempt
+            cd $HOME/app
+            git fetch origin main
+            git reset --hard origin/main
+            sg docker -c "node deploy.mjs ${{ inputs.target }}"
+          }
+
+          # Execution logic
+          FUNCTION_RAPID_FIRE || FUNCTION_DEEP_RECOVERY

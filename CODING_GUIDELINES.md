@@ -21,6 +21,7 @@
 
 ## 4. Operational Integrity (Anti-Fragile)
 - **Deployment Success**: A deployment script MUST fail loudly if any sub-command fails. Never use `spawnSync` without checking the `status` or `error` properties.
+- **Rapid Fire / Deep Recovery Pattern**: Tools must assume a "Warm Environment" and execute immediately. Only on failure should the system trigger "Deep Recovery" (installing dependencies, cloning repos). This keeps 99% of runs ultra-fast.
 - **Port Isolation**: Multi-environment deployments (Test vs Prod) must never share ports. Map internal ports to environment-specific host ports via build-time variables.
 - **Self-Healing Deployment**: Infrastructure scripts should be idempotent and handle "cold starts" (missing Node, missing Docker, missing Workspace) automatically.
 - **Hard Truths over Green Builds**: It is forbidden to suppress errors or return a success exit code if a service fails to start or a network port is blocked.

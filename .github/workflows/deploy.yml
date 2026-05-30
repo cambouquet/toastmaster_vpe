@@ -1,4 +1,4 @@
-name: Double Deployment
+name: 🚀 DEPLOY | Production & Test
 on:
   push:
     branches: [main]
