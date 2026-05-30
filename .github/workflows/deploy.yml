@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: [self-hosted, "${{ matrix.target }}"]
     strategy:
       fail-fast: false
       matrix: { target: [prod, test] }
@@ -27,7 +27,7 @@ jobs:
       - name: "🚢 Native SSH Deployment"
         env:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          VM_HOST: ${{ secrets.VM_HOST }}
+          VM_HOST: "127.0.0.1" # Parallel loopback (Local runner on VM)
           VM_USER: ${{ secrets.VM_USER }}
           TARGET: ${{ matrix.target }}
         run: |

@@ -4,6 +4,7 @@
 - **Strict Line Limit**: No file shall exceed **42 lines** of code.
 - **Node.js Standards**: Use **Node 24 (Alpine)** for all environments.
 - **CI/CD Excellence**: Native SSH only. Do not use legacy JavaScript actions (like `checkout` or `setup-node` on self-hosted runners) to avoid Node 20 deprecation noise and slow binary downloads.
+- **Parallel Deployment**: Always use local self-hosted runners labeled by environment (`prod`, `test`). Infra setup MUST be automated via the "Satellite" workflow to avoid manual SSH commands.
 - **Vite Bundling**: Use `manualChunks` to keep main assets under 2000kB. Increase `chunkSizeWarningLimit` for large dependency-heavy documentation.
 - **Feature Toggles**: Never hardcode environment-specific logic. Use `VITE_` prefixed variables. Every new toggle MUST be documented in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) with a "Why" and "Version".
 - **Version Tracking**: Manual version increments in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) are required. Use Semantic Versioning for features.
