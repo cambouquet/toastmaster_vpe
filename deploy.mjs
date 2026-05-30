@@ -79,14 +79,7 @@ run("docker", [
   "compose", 
   "-p", projectName,
   "-f", "docker-compose.prod.yml", 
-  "down", "--remove-orphans"
-], { env: commonEnv });
-
-run("docker", [
-  "compose", 
-  "-p", projectName,
-  "-f", "docker-compose.prod.yml", 
-  "up", "-d"
+  "up", "-d", "--remove-orphans"
 ], { env: commonEnv });
 
 console.log("🧹 Pruning dangling system artifacts...");

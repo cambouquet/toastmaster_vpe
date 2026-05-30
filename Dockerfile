@@ -1,4 +1,4 @@
-# Build stage
+# build stage
 FROM node:24-alpine AS build
 WORKDIR /app
 COPY package*.json ./
@@ -13,15 +13,22 @@ ENV VITE_APP_ICON=$VITE_APP_ICON
 ENV VITE_WING_COLOR=$VITE_WING_COLOR
 ENV VITE_APP_MODE=$VITE_APP_MODE
 
-RUN npm run build && npm prune --production
+# CI Optimization: Build frontend once
+RUN npm run build
 
-# Final stage
+# Stage 2: Production dependencies (Isolated from build artifacts)
+FROM node:24-alpine AS deps
+WORKDIR /app
+COPY package*.json ./
+RUN --mount=type=cache,target=/root/.npm npm install --omit=dev
+
+# stage 3: final production image
 FROM node:24-alpine
 WORKDIR /app
 RUN apk add --no-cache nginx
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY --from=build /app/docs/.vitepress/dist /usr/share/nginx/html/briefing
-COPY --from=build /app/node_modules ./node_modules
+COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./
 COPY --from=build /app/mock_agent ./mock_agent
 COPY deploy/nginx.conf /etc/nginx/http.d/default.conf
