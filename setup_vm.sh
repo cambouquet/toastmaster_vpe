@@ -19,7 +19,13 @@ echo \
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+# Install Node 24
+curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
 # Add current user to docker group
 sudo usermod -aG docker $USER
 
 echo "Setup complete. Please log out and log back in for docker group changes to take effect."
+node -v
+npm -v

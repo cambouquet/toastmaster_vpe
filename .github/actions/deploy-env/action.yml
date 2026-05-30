@@ -55,7 +55,11 @@ runs:
             fi
             
             cd \$HOME/app
-            if ! command -v node &> /dev/null; then
+            
+            # Upgrade Node if not v24
+            CURRENT_NODE_VER=\$(node -v 2>/dev/null || echo "v0")
+            if [[ ! "\$CURRENT_NODE_VER" =~ ^v24\. ]]; then
+              echo "📍 Upgrading Node from \$CURRENT_NODE_VER to v24..."
               curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
               sudo apt-get install -y nodejs
             fi
