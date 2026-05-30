@@ -3,12 +3,19 @@ run-name: "🛠️ [${{ inputs.target }}] Action: ${{ inputs.action }}"
 on:
   workflow_dispatch:
     inputs:
-      target: { required: true, type: choice, options: [prod, test] }
+      target:
+        description: 'Target Server'
+        required: true
+        type: choice
+        options: [prod, test]
       action:
+        description: 'Maintenance Task'
         required: true
         type: choice
         options: [pulse, authorize, prune, nuclear, rescue]
-      arg: { description: 'Payload (e.g. SSH Key for authorize)', required: false }
+      arg:
+        description: 'Optional Input (e.g., SSH Public Key)'
+        required: false
 jobs:
   execute:
     runs-on: ['self-hosted', '${{ inputs.target }}']

@@ -3,8 +3,15 @@ run-name: "🛰️ Setup Runner on ${{ inputs.target }} VM @ ${{ inputs.host }}"
 on:
   workflow_dispatch:
     inputs:
-      target: { required: true, type: choice, options: [prod, test] }
-      host: { required: true, type: string }
+      target:
+        description: 'Target Environment'
+        required: true
+        type: choice
+        options: [prod, test]
+      host:
+        description: 'New VM IP Address'
+        required: true
+        type: string
 
 jobs:
   bootstrap:
