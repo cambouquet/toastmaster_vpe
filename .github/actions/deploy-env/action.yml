@@ -27,25 +27,33 @@ runs:
         username: ${{ inputs.vm_user }}
         key: ${{ inputs.ssh_key }}
         script: |
-          # Ensure workspace exists
-          mkdir -p $HOME/app
+          set -e
+          # Robust workspace initialization
           if [ ! -d "$HOME/app/.git" ]; then
-            git clone https://github.com/k-app-tech/k-app.git $HOME/app
+            echo "Target directory is not a git repo or doesn't exist. Cleaning and cloning..."
+            rm -rf "$HOME/app"
+            git clone https://github.com/k-app-tech/k-app.git "$HOME/app"
           fi
           
-          cd $HOME/app
+          cd "$HOME/app"
           git fetch origin main
           git reset --hard origin/main
           
-          # Force Node into PATH (NVM and standard paths)
-          export PATH=$PATH:/usr/local/bin:/usr/bin:/bin
+          # Force load shell environment for node
           export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          if [ -s "$NVM_DIR/nvm.sh" ]; then
+            . "$NVM_DIR/nvm.sh"
+          elif [ -f "$HOME/.profile" ]; then
+            . "$HOME/.profile"
+          fi
+
+          # Ensure common paths are present
+          export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/snap/bin"
           
-          # Final check - if node still missing, try which
           if ! command -v node &> /dev/null; then
-            echo "Node not found in PATH. Attempting to locate..."
-            export PATH=$PATH:$(dirname $(which node 2>/dev/null || echo ""))
+             echo "ERROR: node not found in PATH"
+             echo "PATH is: $PATH"
+             exit 1
           fi
 
           node deploy.mjs ${{ inputs.target }}
