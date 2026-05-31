@@ -40,8 +40,6 @@ jobs:
     permissions:
       actions: write
       contents: read
-      administration: write
-      secrets: write
     strategy:
       fail-fast: false
       matrix:
