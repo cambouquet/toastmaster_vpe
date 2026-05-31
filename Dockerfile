@@ -23,12 +23,10 @@ COPY package*.json ./
 RUN --mount=type=cache,target=/root/.npm npm install --omit=dev
 
 # stage 3: final production image
-FROM node:24-alpine
+FROM nginx:alpine
 WORKDIR /app
-# On some hosts, the final stage has no network access to mirrors due to MTU or DNS.
-# Since we just need nginx, we'll try to add it, but fallback if it fails.
-RUN sed -i 's/https/http/' /etc/apk/repositories && \
-    (apk add --no-cache --update nginx || true)
+# Install Node.js in the final stage (needed for mock_agent)
+RUN apk add --no-cache nodejs
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY --from=build /app/docs/.vitepress/dist /usr/share/nginx/html/briefing
 COPY --from=deps /app/node_modules ./node_modules
@@ -38,5 +36,5 @@ COPY deploy/nginx.conf /etc/nginx/http.d/default.conf
 
 EXPOSE 80 3001
 RUN touch mock_agent/state_persistence.json && chmod 666 mock_agent/state_persistence.json
-RUN printf "#!/bin/sh\nnginx -g 'daemon on;'\nnode mock_agent/server.cjs\n" > /app/start.sh && chmod +x /app/start.sh
+RUN printf "#!/bin/sh\nnginx -g 'daemon on;'\n/usr/bin/node mock_agent/server.cjs\n" > /app/start.sh && chmod +x /app/start.sh
 CMD ["/app/start.sh"]
