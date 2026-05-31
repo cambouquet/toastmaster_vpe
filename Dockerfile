@@ -2,7 +2,11 @@
 FROM node:24-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-RUN --mount=type=cache,target=/root/.npm npm install
+# Increase network resilience for build stage as well
+RUN npm config set fetch-retries 5 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm install
 COPY . .
 
 # Pass build args to env for Vite
@@ -20,7 +24,11 @@ RUN npm run build
 FROM node:24-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
-RUN --mount=type=cache,target=/root/.npm npm install --omit=dev
+# Disable cache mount and increase network resilience
+RUN npm config set fetch-retries 5 && \
+    npm config set fetch-retry-mintimeout 20000 && \
+    npm config set fetch-retry-maxtimeout 120000 && \
+    npm install --omit=dev
 
 # stage 3: final production image
 FROM node:24-alpine
