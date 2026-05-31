@@ -2,10 +2,14 @@
 set -e
 
 # 0. Nuclear cleanup of conflicting repos/keys
-sudo rm -f /etc/apt/sources.list.d/nodesource.list* /usr/share/keyrings/nodesource.gpg /etc/apt/keyrings/nodesource.gpg
+sudo rm -f /etc/apt/sources.list.d/nodesource.list*
+sudo rm -f /usr/share/keyrings/nodesource.gpg /etc/apt/keyrings/nodesource.gpg 
+# Also clean up potential legacy entries in main sources.list or other files
+sudo sed -i '/nodesource/d' /etc/apt/sources.list /etc/apt/sources.list.d/*.list || true
 
-# 1. Update system
-sudo apt-get update && sudo apt-get upgrade -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+# 1. Update system (ignoring failures on sources that we are about to fix in the next steps)
+sudo apt-get update || true
+sudo apt-get upgrade -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
 # 2. Install Docker
 sudo apt-get install -y ca-certificates curl gnupg
