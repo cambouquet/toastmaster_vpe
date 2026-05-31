@@ -1,0 +1,91 @@
+name: "🛠️ INFRASTRUCTURE: Server Control"
+run-name: "🛠️ [${{ inputs.target }}] Action: ${{ inputs.action }}"
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Server Target'
+        required: true
+        type: choice
+        options: [prod, test, all]
+        default: 'all'
+      action:
+        description: 'Action to Perform'
+        required: true
+        type: choice
+        options: [telemetry, cleanup, patch-os, provision, hard-reset, cancel-queued]
+      host:
+        description: 'New VM IP (Only for provision)'
+        required: false
+        type: string
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          if [ "${{ github.event.inputs.target }}" = "all" ]; then
+            echo 'matrix=["prod", "test"]' >> $GITHUB_OUTPUT
+          else
+            echo 'matrix=["${{ github.event.inputs.target }}"]' >> $GITHUB_OUTPUT
+          fi
+
+  execute:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: { target: ${{ fromJson(needs.prepare.outputs.matrix) }} }
+    permissions: { actions: write, contents: read }
+    steps:
+      - name: "🛰️ Fetch Action Token"
+        id: tok
+        env: { GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} }
+        run: |
+          T=$(gh api -X POST repos/${{github.repository}}/actions/runners/registration-token -q .token)
+          echo "t=$T" >> $GITHUB_OUTPUT
+
+      - name: "💾 Persist Host Secret"
+        if: github.event.inputs.host != ''
+        env: { GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} }
+        run: |
+          S_NAME="VM_HOST$( [ "${{ matrix.target }}" = "test" ] && echo "_TEST" || echo "" )"
+          gh secret set "$S_NAME" --body "${{ github.event.inputs.host }}" -R "${{ github.repository }}"
+
+      - name: "⚡ Execute: ${{ inputs.action }}"
+        uses: appleboy/ssh-action@v1.2.5
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REG_TOKEN: ${{ steps.tok.outputs.t }}
+        with:
+          host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: GH_TOKEN,REG_TOKEN
+          script: |
+            set -e
+            URL="https://raw.githubusercontent.com/${{ github.repository }}/main"
+            TS="?t=$(date +%s)"
+            export TOKEN="$REG_TOKEN" TARGET="${{ matrix.target }}" REPO="${{ github.repository }}" GH_TOKEN="$GH_TOKEN"
+            
+            # HELPER: Provisioning Sequence
+            run_provision() {
+              echo "🛰️ PROVISIONING: Initializing Node..."
+              curl -sSL "$URL/setup_vm.sh$TS" | bash
+              curl -sSL "$URL/scripts/setup-runner.sh$TS" | bash -s -- "$TOKEN" "$TARGET" "$REPO"
+            }
+
+            if [ "${{ inputs.action }}" = "provision" ]; then
+              run_provision
+            else
+              curl -sSL "$URL/scripts/lib-infra.sh$TS" -o ~/lib-infra.sh
+              if ! bash ~/lib-infra.sh "${{ inputs.action }}"; then
+                echo "🤖 ZERO-INTERVENTION: Failure detected. Repairing..."
+                run_provision
+                echo "🚀 RE-EXECUTING TASK..."
+                bash ~/lib-infra.sh "${{ inputs.action }}"
+              fi
+            fi
