@@ -13,7 +13,7 @@ on:
         description: 'Action to Perform'
         required: true
         type: choice
-        options: [telemetry, cleanup, patch-os, hard-reset, restart-runner, debug-runner-issue]
+        options: [telemetry, cleanup, patch-os, hard-reset, restart-runner, debug-runner-issue, cancel-queued]
       host:
         description: 'Manual IP'
         required: false
@@ -54,22 +54,17 @@ jobs:
             curl -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/lib-infra.sh" -o ~/lib-infra.sh
             export GH_TOKEN="$GH_TOKEN"
             
-            # 🛡️ ZERO-INTERVENTION SELF-HEALING
-            # Check if runner is dead (unless doing a hard-reset)
+            # 🛡️ GLOBAL SELF-HEALING (Enabled for all jobs)
             if [[ "${{ inputs.action }}" != "hard-reset" ]]; then
               if ! systemctl is-active --quiet "actions.runner.*"; then
                  echo "╔══════════════════════════════════════════════════════════════╗"
-                 echo "║ 🩹 AUTO-REPAIR DETECTED: Runner was down. Executing fix...   ║"
+                 echo "║ 🩹 AUTO-REPAIR DETECTED: Service restored via pre-flight.    ║"
                  echo "╚══════════════════════════════════════════════════════════════╝"
-                 
                  cd /home/${{ secrets.VM_USER }}/actions-runner || exit 1
                  sudo ./svc.sh install > /dev/null 2>&1 || true
                  sudo setsid bash -c "sleep 5; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start" > /dev/null 2>&1 &
-                 
-                 # Brief pause to verify the dispatch succeeded
                  sleep 2
               fi
             fi
 
-            # Execute the requested action (Telemetry will now show the repair result in the dashboard)
             bash ~/lib-infra.sh "${{ inputs.action }}"
