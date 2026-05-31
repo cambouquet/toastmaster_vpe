@@ -4,6 +4,7 @@ import './CyberGrid.scss';
 export const CyberGrid = () => (
   <div className="cyber-grid-container">
     <div className="v-world">
+      <div className="grass-field" />
       <div className="f-grid" />
       <div className="city-scape">
         {[...Array(15)].map((_, i) => (

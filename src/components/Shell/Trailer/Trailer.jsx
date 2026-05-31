@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { TRAILER_SCENES } from "./TrailerScenes";
+import { TRAILER_SCENES } from "./TRAILER_SCENES";
 import { TextFrame } from "./TextFrame";
 import { DiscFrame } from "./DiscFrame";
 import { CycleFrame } from "./CycleFrame";
@@ -52,7 +52,7 @@ export const Trailer = ({ onComplete }) => {
         {s.type === "text" && <TextFrame scene={scene} content={s.content} color={s.color} effect={s.effect} />}
         {(s.type === "disc" || s.type === "grab") && <DiscFrame type={s.type} paused={paused} />}
         {scene === 1 && <DiscFrame type="disc" paused={paused} extraClass="fondu-out" />}
-        {s.type === "cycle" && <><CyberGrid /><CycleFrame paused={paused} /></>}
+        {s.type === "cycle" && <><CyberGrid /><CycleFrame paused={paused} /><DiscFrame type="disc" paused={paused} extraClass="sky-mode" /></>}
       </div>
       <div 
         className="controls-hitbox"
