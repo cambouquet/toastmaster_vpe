@@ -25,8 +25,12 @@ RUN --mount=type=cache,target=/root/.npm npm install --omit=dev
 # stage 3: final production image
 FROM nginx:alpine
 WORKDIR /app
-# Install Node.js in the final stage (needed for mock_agent)
-RUN apk add --no-cache nodejs
+# COPY nodejs binaries and libraries directly from the build stage 
+# to bypass the production runner's network/TLS issues.
+COPY --from=deps /usr/bin/node /usr/bin/node
+COPY --from=deps /usr/lib/libgcc_s.so.1 /usr/lib/
+COPY --from=deps /usr/lib/libstdc++.so.6 /usr/lib/
+
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY --from=build /app/docs/.vitepress/dist /usr/share/nginx/html/briefing
 COPY --from=deps /app/node_modules ./node_modules
