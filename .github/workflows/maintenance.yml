@@ -13,7 +13,7 @@ on:
         description: 'Maintenance Task'
         required: true
         type: choice
-        options: [telemetry, cleanup, patch-os, hard-reset, restart-agent]
+        options: [telemetry, cleanup, patch-os, hard-reset, restart-agent, debug-offline]
       host:
         description: 'Manual IP (if not in secrets)'
         required: false
@@ -38,35 +38,48 @@ jobs:
 
   rescue-operation:
     needs: prepare
-    if: github.event.inputs.action == 'restart-agent'
+    if: github.event.inputs.action == 'restart-agent' || github.event.inputs.action == 'debug-offline'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         target: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
-      - name: "⛑️ Restart Handshake: ${{ matrix.target }}"
+      - name: "⛑️ Remote Operation: ${{ matrix.target }}"
         uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            if [ "${{ github.event.inputs.action }}" = "debug-offline" ]; then
+              echo "--- 🔍 OFFLINE DEBUG: ${{ matrix.target }} ---"
+              echo "📍 Service Status:"
+              sudo systemctl list-units "actions.runner.*" --all
+              echo "📍 Process Check:"
+              ps aux | grep -v grep | grep "Runner" || echo "No Runner processes found."
+              echo "📍 Recent Logs (last 20 lines):"
+              sudo journalctl -u "actions.runner.*" -n 20 --no-pager || echo "No logs found."
+              exit 0
+            fi
+
             echo "--- ⛑️ AGENT RESTART: ${{ matrix.target }} ---"
-            # Use systemd-run to create a transient background service. 
-            # This is the most robust way to survive an SSH session termination.
-            sudo systemd-run --unit=runner-restart-${{ matrix.target }} --remain-after-exit bash -c "
-              echo '🛑 Stopping runner processes...'
+            # Use a more reliable restart sequence with absolute paths and sudo
+            sudo systemd-run --unit=runner-fix-${{ matrix.target }} --remain-after-exit bash -c "
+              echo '🛑 Killing existing processes...'
               systemctl stop actions.runner.* || true
               pkill -9 -f 'Runner.Worker' || true
               pkill -9 -f 'Runner.Listener' || true
               sleep 2
-              echo '🏁 Restarting runner...'
-              cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start
+              echo '🏁 Starting via svc.sh...'
+              if [ -d /home/${{ secrets.VM_USER }}/actions-runner ]; then
+                cd /home/${{ secrets.VM_USER }}/actions-runner && sudo ./svc.sh start
+              else
+                echo '❌ Runner directory not found!'
+              fi
             "
-            
-            echo "✅ Restart transient service created and started."
-            echo "Check status later with: systemctl status runner-restart-${{ matrix.target }}"
+            echo "✅ Restart command handed to Systemd."
+            echo "Run 'debug-offline' in a few seconds to verify."
 
   standard-operation:
     needs: prepare
