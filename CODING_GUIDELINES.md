@@ -1,80 +1,31 @@
 # Coding Guidelines: Mission Control
 
 ## 1. File Constraints
-- **Strict Line Limit**: No file shall exceed **42 lines** of code.
+- **Strict Line Limit**: No file shall exceed **42 lines**.
 - **Node.js Standards**: Use **Node 24 (Alpine)** for all environments.
-- **CI/CD Excellence**: Native SSH only. Do not use legacy JavaScript actions (like `checkout` or `setup-node` on self-hosted runners) to avoid Node 20 deprecation noise and slow binary downloads.
-- **Parallel Deployment**: Always use local self-hosted runners labeled by environment (`prod`, `test`).
-- **Pipeline Architecture**: Consistently use the three primary workflows:
-  - **🚀 DEPLOY**: Main application delivery (`deploy.yml`).
-  - **🛰️ PROVISION**: Initial VM setup and runner registration (`setup.yml`).
-  - **🛠️ MAINTENANCE**: Infrastructure health, cleanup, and resets (`maintenance.yml`).
-- **Universal SOLID**: Clean code and SOLID principles apply to the entire stack.
-  - **Single Responsibility**: Multi-target pipelines must use matrix strategies.
-  - **Rescue Autonomy**: `rescue` operations must run on GitHub-managed runners to bypass stuck self-hosted agents.
-  - **Intent-driven Naming**: Every action name must explicitly describe its technical outcome.
-- **Satellite Provisioning**: Zero manual intervention.
-- **Vite Bundling**: Use `manualChunks` to keep main assets under 2000kB. Increase `chunkSizeWarningLimit` for large dependency-heavy documentation.
-- **Feature Toggles**: Never hardcode environment-specific logic. Use `VITE_` prefixed variables. Every new toggle MUST be documented in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) with a "Why" and "Version".
-- **Version Tracking**: Manual version increments in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) are required. Use Semantic Versioning for features.
-- **Single Responsibility**: If a file grows too large, extract logic into hooks or smaller sub-components.
+- **CI/CD Excellence**: Native SSH only. Avoid legacy JS actions on self-hosted runners.
+- **Universal SOLID**: Every automated task must describe its technical outcome precisely.
 
-## 2. Technical Stack
-- **React + Vite**: Fast, modern frontend framework running on port 1777.
-- **Pure JavaScript (JSX)**: No TypeScript. Keep the code lean, readable, and free of type boilerplate.
-- **Sass (SCSS)**: Style with variables and mixins. Use scoped styles per component.
-- **Testing**: Playwright for E2E smoke tests and UI interaction validation.
+## 2. Infrastructure Terminology
+- **Runner vs Agent**: Always use the term **Runner** when referring to the GitHub Actions execution worker. "Agent" is too generic.
+- **Action Naming**: Use high-clarity professional verbs:
+  - `telemetry`: Health check (Disk/Docker/Nodes).
+  - `cleanup`: Disk space recovery.
+  - `patch-os`: Security updates.
+  - `hard-reset`: Factory wipe.
+  - `restart-runner`: Detached service restart.
 
-## 3. Architecture (SOLID & Domain-Driven)
-- **Folder Structure**: Organised by high-level domain:
-  - `Shell/`: Global layout and HUD.
-  - `Workspace/`: Meeting metadata and planning nodes.
-  - `Agent/`: Input, messaging, and transmission logic.
-  - `Members/`: Profile registry and skill-track management.
+## 3. Workflow UX (Mandatory)
+- **The Next Steps Protocol**: Every job, script, or library operation MUST conclude with a clear `--- ⏭️ NEXT ACTIONS ---` block.
+- **Logic**: This block must guide the user on what to do next based on the success or failure of the current operation.
+- **Example**: If a runner is offline, the next action should suggest `restart-runner` or `PROVISION`.
 
-## 4. Operational Integrity (Anti-Fragile)
-- **Deployment Success**: A deployment script MUST fail loudly if any sub-command fails. Never use `spawnSync` without checking the `status` or `error` properties.
-- **Rapid Fire / Deep Recovery Pattern**: Tools must assume a "Warm Environment" and execute immediately. Only on failure should the system trigger "Deep Recovery" (installing dependencies, cloning repos). This keeps 99% of runs ultra-fast.
-- **Port Isolation**: Multi-environment deployments (Test vs Prod) must never share ports. Map internal ports to environment-specific host ports via build-time variables.
-- **Self-Healing Deployment**: Infrastructure scripts should be idempotent and handle "cold starts" (missing Node, missing Docker, missing Workspace) automatically.
-- **Hard Truths over Green Builds**: It is forbidden to suppress errors or return a success exit code if a service fails to start or a network port is blocked.
-- **Service Layer**: Keep AI and external logic (e.g., WhatsApp) in dedicated service classes.
-- **Logic Separation**: Use custom hooks (e.g., `useCollaboration`) to manage state, keeping components focused on rendering.
+## 4. Operational Safety
+- **Anti-Fragility**: Tools must handle "cold starts" automatically.
+- **Detached Operations**: Core service restarts (like Runners) must use `systemd-run` to survive SSH disconnects.
+- **Rapid Fire / Deep Recovery**: Optimise for speed (assume warm environment) but fallback to full installs on failure.
 
-## 5. Workflow UX & Lifecycle
-- **Next Steps Mandate**: Every job/script must output a "--- ⏭️ NEXT ACTIONS ---" block if human intervention or sequential tasks are required.
-- **Detached Operations**: Any infrastructure command that restarts core services (e.g., Runner Agent) must use `systemd-run` or `nohup` to prevent session self-termination.
-- **Descriptive Naming**: Infrastructure actions must use professional verbs (`telemetry`, `cleanup`, `patch-os`) instead of metaphors.
-
-## 4. Design & UX: "Cyber-Noir Command Shell"
-- **Typography**: Primary font is **Sora**. Secondary font for technical data is **JetBrains Mono**.
-- **Color Palette**: Dark background (`#020205`) with Muted Cyan accents (`$accent-cyan: #00bac4`).
-- **Interaction**:
-  - **Tactical In-place Editing**: Clicking an element turns it into a borderless input/dropdown; submission occurs on Blur or Enter. No explicit "Edit" icons.
-  - **Transmission Pulse**: Chat input indicates data transfer via a vibrating top border animated wave.
-  - **Global HUD**: Critical system status (Node, Node Count, Mode) fixed in top-right.
-- **K-Font Requirement**: All proper names, titles, and system identifiers MUST be rendered using the **K-Font**. No exceptions.
-- **Minimalism**: No scrollbars. Use `-ms-overflow-style: none`, `scrollbar-width: none`, and `::-webkit-scrollbar { display: none }`.
-
-## 5. Aesthetics: "2077 Mainstream"
-- **Narrative Depth**: Avoid raw technical keys like `SYSTEM_FONT_FORGE`. Use natural, immersive language that feels like part of a lived-in 2077 world (e.g. "K-Font Construction Deck").
-- **Visual Texture**: Interface elements should feel physical, technical, and grounded in a near-future cyberpunk reality.
-
-## 6. Communication Pattern
-- **Collaboration Style**: The bot acts as a meeting assistant, updating a shared workspace grid.
-- **Subtitle Overlay**: Bot messages appear as clean, non-aggressive captions at the bottom.
-- **User Input**: Limit user messages to **180 characters** to ensure concise interactions.
-## 7. Responsiveness: "Multisupport HUD"
-- **Mobile-First Layout**: On screens below 768px, navigation grids must transition to 1-column layouts to preserve tap targets and readability. Grid items should switch to horizontal layouts (`flex-direction: row`) to optimize vertical space.
-- **Adaptive Status**: The Global HUD must remain functional on touch devices.
-  - **Auto-Rotation**: On mobile, telemetry groups must automatically cycle every 5 seconds (e.g., App Info → Weather → Network) without requiring user interaction.
-  - **Fixed Width HUD**: The HUD container must maintain a consistent width on mobile during rotation to prevent layout shifts.
-  - **Animated Transitions**: Use vertical slides or fades for data transitions to provide visual feedback of the "cycle."
-- **Vesting Spaces**: Adjust padding and font sizes (1.2rem heading max on mobile) to ensure no horizontal scrolling exists.
-- **VR/High-FOV**: Maintain high-fidelity animations on high-resolution displays using the `@include vr-headset` mixin.
-
-## 8. Development & Deployment
-- **Dual-Env Parity**: Deploy identical code to Prod (`k-app.tech`) and Test (`k-app.cloud`). Behavior is toggled via `VITE_APP_MODE` (demo vs test).
-- **No Backward Compatibility**: Breaking changes are allowed. **Persistence Guard**: Data must be backed up (e.g., Couchbase snapshots) before removing deprecated features.
-- **Feature Tracking**: Maintain a "Legacy Feature Tracking" ledger in technical documentation for all deprecated system protocols.
-- **Auto-Heal CD**: The deployment pipeline must prioritize Speed (Fast Path) but automate Recovery (Long Path) via container cleanup on failure.
+## 5. Technical Stack
+- **React + Vite**: Frontend on port 1777. No TypeScript.
+- **Sass (SCSS)**: Scoped styles with variables.
+- **Testing**: Playwright for E2E validation.
