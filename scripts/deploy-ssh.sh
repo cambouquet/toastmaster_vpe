@@ -18,7 +18,7 @@ ssh -i "$ID_FILE" -o StrictHostKeyChecking=no -o ConnectTimeout=10 "$VM_USER@$VM
     echo "⚠️ RAPID FIRE FAILED. Performing Nuclear Workspace Reset..."
     sudo rm -rf $HOME/app && mkdir -p $HOME/app && cd $HOME/app
     git clone https://github.com/$GITHUB_REPOSITORY.git .
-    node deploy.mjs $TARGET
+    node deploy.mjs $TARGET --no-cache
   }
 
   FUNCTION_RAPID_FIRE || FUNCTION_DEEP_RECOVERY

@@ -5,12 +5,15 @@ import { recoverPorts } from "./scripts/lib-recovery.mjs";
 if (!process.version.startsWith('v24.')) process.exit(1);
 
 const target = process.argv[2] || "prod";
+const forceNoCache = process.argv.includes("--no-cache");
 const envVars = loadEnv(target);
 process.env = { ...process.env, ...envVars };
 
 const appImage = `meetings-app:${target}`;
 const buildArgs = Object.entries(envVars)
   .filter(([k]) => k.startsWith("VITE_")).flatMap(([k, v]) => ["--build-arg", `${k}=${v}`]);
+
+if (forceNoCache) buildArgs.push("--no-cache");
 
 run("docker", ["build", ...buildArgs, "-t", appImage, "."]);
 
