@@ -1,21 +1,21 @@
-name: "🛠️ FLEET MANAGEMENT: Maintenance & Repair"
+name: "🛠️ MAINTENANCE: Server Infrastructure"
 run-name: "🛠️ [${{ inputs.target }}] Task: ${{ inputs.action }}"
 on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Target Server'
+        description: 'Server Target'
         required: true
         type: choice
         options: [prod, test, all]
         default: 'all'
       action:
-        description: 'Maintenance Task'
+        description: 'Action to Perform'
         required: true
         type: choice
         options: [telemetry, cleanup, patch-os, hard-reset, restart-runner, debug-runner-issue]
       host:
-        description: 'Manual IP (if not in secrets)'
+        description: 'Manual IP'
         required: false
         type: string
 
@@ -33,7 +33,7 @@ jobs:
             echo 'matrix=["${{ github.event.inputs.target }}"]' >> $GITHUB_OUTPUT
           fi
 
-  fleet-control:
+  maintenance:
     needs: prepare
     runs-on: ubuntu-latest
     strategy:
@@ -41,45 +41,31 @@ jobs:
       matrix:
         target: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
-      - name: "⚡ DIRECT SSH COMMAND EXECUTION (Out-of-Band)"
+      - name: "SSH Maintenance Task: ${{ inputs.action }}"
         uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # 1. Fetch library
             curl -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/lib-infra.sh" -o ~/lib-infra.sh
             
-            # 2. Automated Service Repair Countdown
             repair_runner() {
               echo "╔══════════════════════════════════════════════════════════════╗"
-              echo "║ ⛑️  AUTO-REPAIR INITIATED: Restarting in 5 seconds...         ║"
+              echo "║ ⛑️  RUNNER RESTART: Beginning in 5s...                        ║"
               echo "╚══════════════════════════════════════════════════════════════╝"
               sudo setsid bash -c "(sleep 5; systemctl stop actions.runner.* || true; pkill -9 -f Runner || true; sleep 2; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start) > /dev/null 2>&1 &"
             }
 
-            # 3. Dedicated Flows
-            case "${{ inputs.action }}" in
-              "restart-runner")
-                repair_runner
-                echo "✅ Service restart dispatched. SSH session terminating."
-                exit 0
-                ;;
-              "debug-runner-issue")
-                echo "🔎 DIAGNOSTICS: ${{ matrix.target }}"
-                sudo systemctl list-units "actions.runner.*" --all
-                sudo journalctl -u "actions.runner.*" -n 20 --no-pager
-                exit 0
-                ;;
-            esac
+            if [[ "${{ inputs.action }}" == "restart-runner" ]]; then
+              repair_runner
+              exit 0
+            fi
 
-            # 4. Intelligence-based Auto-Repair
             if [[ "${{ inputs.action }}" != "hard-reset" ]]; then
               if ! systemctl is-active --quiet "actions.runner.*"; then
                 repair_runner
               fi
             fi
 
-            # 5. Execute Command Library
             bash ~/lib-infra.sh "${{ inputs.action }}"
