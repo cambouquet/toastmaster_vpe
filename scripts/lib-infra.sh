@@ -3,25 +3,25 @@
 set -e
 ACTION=\$1; ARG=\$2
 
-case "\$ACTION" in
-  "pulse")
-    echo "--- 🛰️ SYSTEM PULSE ---"
+case "$ACTION" in
+  "telemetry")
+    echo "--- 🛰️ SYSTEM TELEMETRY ---"
     df -h | grep '^/'
     node -v && docker version --format 'Docker: {{.Client.Version}}'
     docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
     ;;
-  "prune")
-    echo "--- 🧹 DEEP CLEAN ---"
+  "cleanup")
+    echo "--- 🧹 DISK CLEANUP ---"
     docker system prune -af --volumes
     ;;
-  "upgrade")
-    echo "--- 🚀 OS UPGRADE ---"
+  "patch-os")
+    echo "--- 🚀 OS SECURITY PATCH ---"
     sudo apt-get update && sudo apt-get upgrade -y
     ;;
-  "burn")
-    echo "--- ☢️ NUCLEAR RESET ---"
+  "hard-reset")
+    echo "--- ☢️ HARD FACTORY RESET ---"
     docker compose down --remove-orphans || true
-    docker stop \$(docker ps -aq) || true && docker rm \$(docker ps -aq) || true
+    docker stop $(docker ps -aq) || true && docker rm $(docker ps -aq) || true
     docker system prune -af --volumes
     sudo rm -rf ~/app && rm -f ~/.vm_ready
     ;;

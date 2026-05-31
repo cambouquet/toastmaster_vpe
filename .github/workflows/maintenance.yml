@@ -13,7 +13,7 @@ on:
         description: 'Maintenance Task'
         required: true
         type: choice
-        options: [pulse, prune, upgrade, burn, rescue]
+        options: [telemetry, cleanup, patch-os, hard-reset, restart-agent]
       host:
         description: 'Manual IP (if not in secrets)'
         required: false
@@ -38,24 +38,24 @@ jobs:
 
   rescue-operation:
     needs: prepare
-    if: github.event.inputs.action == 'rescue'
+    if: github.event.inputs.action == 'restart-agent'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         target: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
-      - name: "⛑️ Rescue Handshake: ${{ matrix.target }}"
+      - name: "⛑️ Restart Handshake: ${{ matrix.target }}"
         uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo "--- ⛑️ EMERGENCY RESCUE: ${{ matrix.target }} ---"
+            echo "--- ⛑️ AGENT RESTART: ${{ matrix.target }} ---"
             # Use systemd-run to create a transient background service. 
             # This is the most robust way to survive an SSH session termination.
-            sudo systemd-run --unit=runner-rescue-${{ matrix.target }} --remain-after-exit bash -c "
+            sudo systemd-run --unit=runner-restart-${{ matrix.target }} --remain-after-exit bash -c "
               echo '🛑 Stopping runner processes...'
               systemctl stop actions.runner.* || true
               pkill -9 -f 'Runner.Worker' || true
@@ -65,12 +65,12 @@ jobs:
               cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start
             "
             
-            echo "✅ Rescue transient service created and started."
-            echo "Check status later with: systemctl status runner-rescue-${{ matrix.target }}"
+            echo "✅ Restart transient service created and started."
+            echo "Check status later with: systemctl status runner-restart-${{ matrix.target }}"
 
   standard-operation:
     needs: prepare
-    if: github.event.inputs.action != 'rescue'
+    if: github.event.inputs.action != 'restart-agent'
     runs-on: ['self-hosted', '${{ matrix.target }}']
     strategy:
       fail-fast: false
