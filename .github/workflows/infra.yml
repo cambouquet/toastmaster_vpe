@@ -40,6 +40,8 @@ jobs:
     permissions:
       actions: write
       contents: read
+      administration: write
+      secrets: write
     strategy:
       fail-fast: false
       matrix:
@@ -48,7 +50,7 @@ jobs:
       - name: "🛰️ Fetch Action Token"
         id: tok
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           T=$(gh api -X POST repos/${{github.repository}}/actions/runners/registration-token -q .token)
           echo "t=$T" >> $GITHUB_OUTPUT
@@ -56,7 +58,7 @@ jobs:
       - name: "💾 Persist Host Secret"
         if: github.event.inputs.host != ''
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           S_NAME="VM_HOST$( [ "${{ matrix.target }}" = "test" ] && echo "_TEST" || echo "" )"
           gh secret set "$S_NAME" --body "${{ github.event.inputs.host }}" -R "${{ github.repository }}"
