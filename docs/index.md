@@ -27,6 +27,8 @@ features:
     icon: ✨
 ---
 
+<SplashIntro />
+
 <style>
 :root {
   --vp-home-hero-name-color: #fcee0a;

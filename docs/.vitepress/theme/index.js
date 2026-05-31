@@ -1,9 +1,10 @@
 import DefaultTheme from 'vitepress/theme'
+import SplashIntro from './SplashIntro.js'
 import './custom.css'
 
 export default {
   ...DefaultTheme,
   enhanceApp({ app, router, siteData }) {
-    // Custom logic if needed
+    app.component('SplashIntro', SplashIntro)
   }
 }
