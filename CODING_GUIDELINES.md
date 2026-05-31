@@ -1,18 +1,16 @@
-# Coding Guidelines: Maintenance & Reliability
+# Coding Guidelines: ZERO-FAILURE MISSION
 
-## 1. Operational Visibility
-- **No Silent Failures**: If a command or task fails (e.g., missing CLI, permission error), it MUST exit with a non-zero code. Green builds on failed infrastructure tasks are forbidden.
-- **Fail-Fast Dashboards**: If a task fails, the "REQUIRED MAINTENANCE ACTIONS" block MUST highlight the specific failure in the header.
-- **ASCII Art Welcome**: All primary maintenance scripts MUST begin with a "lighthearted" ASCII greeting.
-- **Fixed-Width Dashboard**: End every job with the explicit "REQUIRED MAINTENANCE ACTIONS" block.
-- **Border Alignment**: Maintain strict right-border alignment (64-character width) for all dashboard rows.
+## 1. Operational Integrity
+- **No Silent Failures**: Every script MUST propagate failure. Green builds on failed infra tasks are a CRITICAL breach.
+- **Set -e Everywhere**: All bash scripts and GHA script blocks MUST start with `set -e`.
+- **Fail-Fast Dashboard**: If a task fails, the "REQUIRED MAINTENANCE ACTIONS" block MUST reflect the failure in its header with a `❌`.
 
 ## 2. Infrastructure Standards
-- **SSH Maintenance**: Execute repairs via direct SSH to recover stalled/offline Runners.
-- **Self-Healing**: Automated status checks must trigger detached `setsid` restarts.
-- **Clean Registry**: Periodic "cleanup" tasks must trigger "telemetry" for validation.
+- **Out-of-Band Priority**: Maintenance MUST run via direct SSH to recover stalled Runners.
+- **Self-Healing**: Trigger detached `setsid` repairs automatically on health check failure.
+- **Fixed-Width Logs**: Use a 64-character width for all ASCII dashboards.
 
-## 3. Engineering Rules
-- **File Length**: Max **42 lines** per file.
-- **SOLID Shell**: Scripts must use explicit exit codes and avoid silent `|| true` on business-critical logic.
+## 3. Engineering Constraints
+- **File Length**: Strictly max **42 lines** per file.
 - **Node.js**: Standardize on **Node 24**.
+- **Solid Shell**: Use explicit exit codes (e.g., `exit 1`) for all error paths.

@@ -10,8 +10,8 @@ case "$A" in
     systemctl list-units "actions.runner.*" --all || true
     [ -z "$GH_TOKEN" ] || gh run list --status queued --limit 5 || true ;;
   "cancel-queued")
-    if ! command -v gh &>/dev/null || [ -z "$GH_TOKEN" ]; then echo "❌ Tool Error"; EX=1; else
-    gh run list --status queued --json databaseId -q '.[].databaseId' | xargs -I{} gh run cancel {} || true; fi ;;
+    if ! command -v gh &>/dev/null || [ -z "$GH_TOKEN" ]; then echo "❌ Tool Error: gh or token missing"; EX=1; else
+    gh run list --status queued --json databaseId -q '.[].databaseId' | xargs -r -I{} gh run cancel {} || true; fi ;;
   "cleanup") docker system prune -af --volumes ;;
   "patch-os") sudo apt-get update && sudo apt-get upgrade -y ;;
   "hard-reset") docker compose down --remove-orphans || true; sudo rm -rf ~/app && rm -f ~/.vm_ready ;;

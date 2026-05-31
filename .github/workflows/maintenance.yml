@@ -14,10 +14,6 @@ on:
         required: true
         type: choice
         options: [telemetry, cleanup, patch-os, hard-reset, restart-runner, debug-runner-issue, cancel-queued]
-      host:
-        description: 'Manual IP'
-        required: false
-        type: string
 
 jobs:
   prepare:
@@ -46,15 +42,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
+          host: ${{ matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           envs: GH_TOKEN
           script: |
-            curl -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/lib-infra.sh" -o ~/lib-infra.sh
+            set -e
+            # Use cache-busting timestamp for the library fetch
+            curl -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/lib-infra.sh?t=$(date +%s)" -o ~/lib-infra.sh
             export GH_TOKEN="$GH_TOKEN"
             
-            # 🛡️ GLOBAL SELF-HEALING (Enabled for all jobs)
             if [[ "${{ inputs.action }}" != "hard-reset" ]]; then
               if ! systemctl is-active --quiet "actions.runner.*"; then
                  echo "╔══════════════════════════════════════════════════════════════╗"
