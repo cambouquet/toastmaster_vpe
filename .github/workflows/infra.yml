@@ -36,10 +36,13 @@ jobs:
   execute:
     needs: prepare
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
     strategy:
       fail-fast: false
-      matrix: { target: ${{ fromJson(needs.prepare.outputs.matrix) }} }
-    permissions: { actions: write, contents: read }
+      matrix:
+        target: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
       - name: "🛰️ Fetch Action Token"
         id: tok
@@ -71,7 +74,6 @@ jobs:
             TS="?t=$(date +%s)"
             export TOKEN="$REG_TOKEN" TARGET="${{ matrix.target }}" REPO="${{ github.repository }}" GH_TOKEN="$GH_TOKEN"
             
-            # HELPER: Provisioning Sequence
             run_provision() {
               echo "🛰️ PROVISIONING: Initializing Node..."
               curl -sSL "$URL/setup_vm.sh$TS" | bash
