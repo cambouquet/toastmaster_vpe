@@ -22,12 +22,11 @@ WORKDIR /app
 COPY package*.json ./
 RUN --mount=type=cache,target=/root/.npm npm install --omit=dev
 
-# stage 3: final production image
-FROM node:24-alpine
+# stage 3: final production image (Switching to Debian Slim for network stability)
+FROM node:24-slim
+# CACHE_BUST: 2024-05-21-v2
 WORKDIR /app
-# Fix for TLS: unspecified error on some network environments (Alpine SSL issue)
-RUN sed -i 's/https/http/' /etc/apk/repositories && \
-    apk add --no-cache --update nginx || (sleep 5 && apk add --no-cache nginx)
+RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY --from=build /app/docs/.vitepress/dist /usr/share/nginx/html/briefing
 COPY --from=deps /app/node_modules ./node_modules

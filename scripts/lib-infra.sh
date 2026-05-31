@@ -32,7 +32,8 @@ case "$A" in
     fi; fi ;;
   "cleanup") 
     echo "🧹 DISK CLEANUP INITIATED..."
-    docker system prune -af --volumes ;;
+    docker system prune -af --volumes
+    docker buildx prune -af ;;
   "patch-os") sudo apt-get update && sudo apt-get upgrade -y ;;
   "hard-reset") docker compose down --remove-orphans || true; sudo rm -rf ~/app && rm -f ~/.vm_ready ;;
 esac

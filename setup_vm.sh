@@ -3,21 +3,16 @@ set -e
 
 # 0. NUCLEAR CLEANUP - No mercy for conflicting keys or sources
 echo "💣 Initiating Absolute Nuclear Purge of APT sources..."
-# Delete all files mentioning nodesource in sources.list.d OR anywhere else in /etc/apt/
-# except the main sources.list which we process with sed
-sudo find /etc/apt/sources.list.d/ -type f -exec grep -l "nodesource" {} + | xargs sudo rm -f || true
-sudo rm -rf /etc/apt/keyrings/nodesource*
-sudo rm -rf /usr/share/keyrings/nodesource*
-sudo rm -rf /etc/apt/sources.list.d/github-cli.list*
-sudo rm -rf /etc/apt/keyrings/githubcli*
-
-# Clean up any inline references in the main sources.list
-sudo sed -i '/nodesource/d' /etc/apt/sources.list || true
-sudo sed -i '/github/d' /etc/apt/sources.list || true
-
 # Kill any apt locks that might be hanging
 sudo fuser -kk /var/lib/dpkg/lock-frontend /var/lib/apt/lists/lock 2>/dev/null || true
 
+# Force system clock sync (TLS errors are often caused by clock drift)
+echo "🕒 Synchronizing system clock..."
+sudo timedatectl set-ntp true || true
+sudo systemctl restart systemd-timesyncd || true
+
+# Delete all files mentioning nodesource in sources.list.d
+sudo find /etc/apt/sources.list.d/ -type f -exec grep -l "nodesource" {} + | xargs sudo rm -f || true
 # Debug: Show remaining files to ensure they are gone
 echo "🔍 Checking APT sources state..."
 ls -R /etc/apt/sources.list.d/
