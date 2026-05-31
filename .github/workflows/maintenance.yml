@@ -49,16 +49,12 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             # 1. Fetch latest infra library
-            curl -sSL https://raw.githubusercontent.com/${{github.repository}}/main/scripts/lib-infra.sh -o ~/lib-infra.sh
+            curl -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/lib-infra.sh" -o ~/lib-infra.sh
             
-            # 2. Identify target runner service precisely
-            R_NAME="actions.runner.${{ github.repository | replace('/', '-') }}.runner-${{ matrix.target }}.service"
-            R_NAME=$(echo "$R_NAME" | sed 's/\./\\\./g') # Escape for glob context if needed, but we will use exact
-
-            # 3. Absolute Detached Repair Function
-            # We use 'at' if available, or systemd-run with --no-block
+            # 2. Precise Repair Command (Absolute Detachment)
+            # Use shell logic for string manipulation instead of liquid filters
             repair_runner() {
-              echo "⛑️ Triggering detached repair for $R_NAME..."
+              echo "⛑️ Triggering detached repair..."
               sudo systemd-run --unit="repair-$(date +%s)" --no-block bash -c "
                 systemctl stop actions.runner.* || true
                 pkill -9 -f Runner || true
@@ -67,7 +63,7 @@ jobs:
               "
             }
 
-            # 4. Routing
+            # 3. Routing
             case "${{ inputs.action }}" in
               "restart-runner")
                 repair_runner
@@ -75,20 +71,28 @@ jobs:
                 exit 0
                 ;;
               "debug-runner-issue")
+                echo "🔍 Service Status:"
                 sudo systemctl list-units "actions.runner.*" --all
+                echo "🔍 Logs:"
                 sudo journalctl -u "actions.runner.*" -n 20 --no-pager
                 exit 0
                 ;;
             esac
 
-            # 5. Auto-Repair Logic (Non-blocking)
+            # 4. Auto-Repair Logic
             if [[ "${{ inputs.action }}" != "hard-reset" ]]; then
               if ! systemctl is-active --quiet "actions.runner.*"; then
-                echo "⚠️ Runner is OFFLINE. Triggering auto-repair..."
+                echo "⚠️ Runner is OFFLINE. Triggering auto-repair (no-block)..."
                 repair_runner
-                sleep 1 # Tiny breath for systemd-run to register
+                sleep 1
               fi
             fi
 
-            # 6. Execute Library
+            # 5. Execute Library
             bash ~/lib-infra.sh "${{ inputs.action }}"
+
+            # 6. Auto-Chaining
+            if [ "${{ inputs.action }}" == "cleanup" ]; then
+              echo "⏭️ Chaining telemetry..."
+              bash ~/lib-infra.sh "telemetry"
+            fi
