@@ -14,6 +14,10 @@ on:
         required: true
         type: choice
         options: [pulse, prune, upgrade, burn, rescue]
+      host:
+        description: 'Manual IP (if not in secrets)'
+        required: false
+        type: string
       arg:
         description: 'Optional Input'
         required: false
@@ -44,7 +48,7 @@ jobs:
       - name: "⛑️ Rescue Handshake: ${{ matrix.target }}"
         uses: appleboy/ssh-action@v1.2.5
         with:
-          host: ${{ matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST }}
+          host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
