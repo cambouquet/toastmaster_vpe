@@ -1,31 +1,22 @@
 # Coding Guidelines: Mission Control
 
-## 1. File Constraints
-- **Strict Line Limit**: No file shall exceed **42 lines**.
-- **Node.js Standards**: Use **Node 24 (Alpine)** for all environments.
-- **CI/CD Excellence**: Native SSH only. Avoid legacy JS actions on self-hosted runners.
-- **Universal SOLID**: Every automated task must describe its technical outcome precisely.
+## 1. Operational Infrastructure
+- **Out-of-Band Maintenance**: All maintenance tasks (`telemetry`, `cleanup`, etc.) MUST run on GitHub-managed runners via Native SSH. This ensures maintenance can proceed even if the local Runner is dead.
+- **Self-Healing & Chaining**: Infrastructure scripts MUST automatically chain related tasks (e.g., `cleanup` -> `telemetry`) and attempt auto-repair if they detect a downed Runner.
+- **The Next Steps Protocol**: Every script or workflow MUST conclude with a clear `--- ⏭️ NEXT ACTIONS ---` block to guide human operators.
 
 ## 2. Infrastructure Terminology
-- **Runner vs Agent**: Always use the term **Runner** when referring to the GitHub Actions execution worker. "Agent" is too generic.
-- **Action Naming**: Use high-clarity professional verbs:
-  - `telemetry`: Health check (Disk/Docker/Nodes).
-  - `cleanup`: Disk space recovery.
-  - `patch-os`: Security updates.
-  - `hard-reset`: Factory wipe.
-  - `restart-runner`: Detached service restart.
+- **Runner**: Always use the term "Runner". "Agent" is forbidden as it is too ambiguous.
+- **Workflow UX**: Use professional, descriptive names (`patch-os`, `hard-reset`, `telemetry`, `restart-runner`).
 
-## 3. Workflow UX (Mandatory)
-- **The Next Steps Protocol**: Every job, script, or library operation MUST conclude with a clear `--- ⏭️ NEXT ACTIONS ---` block.
-- **Logic**: This block must guide the user on what to do next based on the success or failure of the current operation.
-- **Example**: If a runner is offline, the next action should suggest `restart-runner` or `PROVISION`.
+## 3. Engineering Constraints
+- **Strict Line Limit**: No file shall exceed **42 lines**.
+- **Node.js**: Mandatory **Node 24** across all layers.
+- **Port Isolation**: Local deployments must never share or conflict on host ports.
+- **SOLID Code**: Principles apply to shell scripts as strictly as to application code.
+- **Vite Bundling**: Maintain large documentation assets via `chunkSizeWarningLimit` and `manualChunks`.
 
-## 4. Operational Safety
-- **Anti-Fragility**: Tools must handle "cold starts" automatically.
-- **Detached Operations**: Core service restarts (like Runners) must use `systemd-run` to survive SSH disconnects.
-- **Rapid Fire / Deep Recovery**: Optimise for speed (assume warm environment) but fallback to full installs on failure.
-
-## 5. Technical Stack
-- **React + Vite**: Frontend on port 1777. No TypeScript.
-- **Sass (SCSS)**: Scoped styles with variables.
+## 4. Technical Stack
+- **Frontend**: React + Vite (Port 1777). Pure JSX (No TypeScript).
+- **Styling**: Scoped Sass (SCSS) with mandatory variable usage.
 - **Testing**: Playwright for E2E validation.

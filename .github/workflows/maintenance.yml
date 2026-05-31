@@ -18,9 +18,6 @@ on:
         description: 'Manual IP (if not in secrets)'
         required: false
         type: string
-      arg:
-        description: 'Optional Input'
-        required: false
 
 jobs:
   prepare:
@@ -36,66 +33,43 @@ jobs:
             echo 'matrix=["${{ github.event.inputs.target }}"]' >> $GITHUB_OUTPUT
           fi
 
-  rescue-operation:
+  infrastructure-control:
     needs: prepare
-    if: github.event.inputs.action == 'restart-runner' || github.event.inputs.action == 'debug-runner-issue'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         target: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
-      - name: "⛑️ Remote Operation: ${{ matrix.target }}"
+      - name: "🛰️ Out-of-Band Action: ${{ inputs.action }}"
         uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            if [ "${{ github.event.inputs.action }}" = "debug-runner-issue" ]; then
-              echo "--- 🔍 RUNNER DEBUG: ${{ matrix.target }} ---"
-              echo "📍 Service Status:"
-              sudo systemctl list-units "actions.runner.*" --all
-              echo "📍 Process Check:"
-              ps aux | grep -v grep | grep "Runner" || echo "No Runner processes found."
-              echo "📍 Recent Logs (last 20 lines):"
-              sudo journalctl -u "actions.runner.*" -n 20 --no-pager || echo "No logs found."
-              echo "--- ⏭️ NEXT ACTIONS ---"
-              echo "1. If status is 'inactive dead', run 'restart-runner'."
-              echo "2. If multiple runner services exist, consider 'hard-reset' followed by 'PROVISION'."
-              exit 0
+            # 1. Fetch latest infra library
+            curl -sSL https://raw.githubusercontent.com/${{github.repository}}/main/scripts/lib-infra.sh -o ~/lib-infra.sh
+            
+            # 2. Smart Chaining & Auto-Repair Logic
+            ACTION="${{ inputs.action }}"
+            
+            # Auto-Repair: ensure runner is alive before standard maintenance
+            if [[ "$ACTION" != "hard-reset" && "$ACTION" != "restart-runner" && "$ACTION" != "debug-runner-issue" ]]; then
+              if ! systemctl is-active --quiet "actions.runner.*"; then
+                echo "⚠️ Runner is OFFLINE. Triggering auto-repair..."
+                sudo systemctl stop actions.runner.* || true
+                sudo pkill -9 -f "Runner" || true
+                cd ~/actions-runner && sudo ./svc.sh start || true
+                sleep 5
+              fi
             fi
 
-            echo "--- ⛑️ RUNNER RESTART: ${{ matrix.target }} ---"
-            sudo systemd-run --unit=runner-fix-${{ matrix.target }} --remain-after-exit bash -c "
-              echo '🛑 Killing existing processes...'
-              systemctl stop actions.runner.* || true
-              pkill -9 -f 'Runner.Worker' || true
-              pkill -9 -f 'Runner.Listener' || true
-              sleep 2
-              echo '🏁 Starting via svc.sh...'
-              if [ -d /home/${{ secrets.VM_USER }}/actions-runner ]; then
-                cd /home/${{ secrets.VM_USER }}/actions-runner && sudo ./svc.sh start
-              else
-                echo '❌ Runner directory not found!'
-              fi
-            "
-            echo "✅ Restart command handed to Systemd."
-            echo "--- ⏭️ NEXT ACTIONS ---"
-            echo "1. Wait 30s for GitHub handshake."
-            echo "2. Run MAINTENANCE -> 'telemetry' to verify status."
-            echo "3. If still offline, run PROVISION workflow to re-register."
-
-  standard-operation:
-    needs: prepare
-    if: github.event.inputs.action != 'restart-runner' && github.event.inputs.action != 'debug-runner-issue'
-    runs-on: ['self-hosted', '${{ matrix.target }}']
-    strategy:
-      fail-fast: false
-      matrix:
-        target: ${{ fromJson(needs.prepare.outputs.matrix) }}
-    steps:
-      - name: "🛰️ Synchronize: infra-lib"
-        run: curl -sSL https://raw.githubusercontent.com/${{github.repository}}/main/scripts/lib-infra.sh -o lib-infra.sh
-      - name: "🛠️ Execute: ${{ inputs.action }}"
-        run: bash lib-infra.sh "${{ inputs.action }}" "${{ inputs.arg }}"
+            # 3. Execute primary action
+            bash ~/lib-infra.sh "$ACTION"
+            
+            # 4. Chain dependent actions
+            if [ "$ACTION" == "cleanup" ]; then
+              echo "⏭️ Auto-Chaining: telemetry..."
+              bash ~/lib-infra.sh "telemetry"
+            fi
