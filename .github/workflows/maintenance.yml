@@ -47,6 +47,9 @@ jobs:
           host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          envs: GITHUB_TOKEN
+        secrets: [GITHUB_TOKEN]
+        with:
           script: |
             curl -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/lib-infra.sh" -o ~/lib-infra.sh
             
@@ -68,4 +71,5 @@ jobs:
               fi
             fi
 
+            export GH_TOKEN="${{ secrets.GITHUB_TOKEN }}"
             bash ~/lib-infra.sh "${{ inputs.action }}"

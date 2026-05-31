@@ -19,6 +19,8 @@ case "$ACTION" in
     docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
     echo "--- [2] RUNNER SERVICE STATUS ---"
     systemctl list-units --type=service "actions.runner.*" --all || true
+    echo "--- [3] QUEUED GITHUB ACTIONS (Workflow Runs) ---"
+    gh run list --status queued --limit 5 || echo "No queued jobs."
     ;;
   "cleanup")
     echo "--- 🧹 CLEANING DISK & DOCKER IMAGES ---"
@@ -46,6 +48,7 @@ if [ "$ACTION" == "telemetry" ]; then
     echo "║ 🛠️  DISK FULL?            ──▶  Run 'cleanup'                ║"
     echo "║ 📦 DOCKER SERVICES DOWN? ──▶  Run 'DEPLOY'                 ║"
     echo "║ 🤖 RUNNER OFFLINE?       ──▶  Run 'restart-runner'         ║"
+    echo "║ ⏳ JOBS QUEUED?          ──▶  Check Runner Connectivity    ║"
 elif [ "$ACTION" == "cleanup" ]; then
     echo "║ ✅ CLEANUP COMPLETE      ──▶  Run 'telemetry' to verify    ║"
 elif [ "$ACTION" == "hard-reset" ]; then
