@@ -9,7 +9,7 @@ on:
         options: [prod, test, all]
         default: 'all'
       host:
-        description: 'New VM IP (Blank to use secrets)'
+        description: 'New VM IP (MANDATORY if not in secrets)'
         required: false
         type: string
 
@@ -52,14 +52,25 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # 1. Capture the IP of the VM we are currently logged into
+            REMOTE_IP=$(curl -s https://ifconfig.me || hostname -I | awk '{print $1}')
+            echo "📍 Infrastructure Node identified at: $REMOTE_IP"
+
+            # 2. Store remoting params
             cat << 'INNER_EOF' > ~/setup_params.sh
             export TOKEN="${{ steps.tok.outputs.t }}"
             export TARGET="${{ matrix.target }}"
             export REPO="${{ github.repository }}"
+            export IP="$REMOTE_IP"
             INNER_EOF
+            
+            # 3. Standard Layer Provisioning
             curl -H "Authorization: token ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" \
                  -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/setup_vm.sh" | bash
+            
+            # 4. Runner Registration
             source ~/setup_params.sh
             curl -H "Authorization: token ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" \
                  -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/setup-runner.sh" | bash -s -- "$TOKEN" "$TARGET" "$REPO"
+            
             rm ~/setup_params.sh
