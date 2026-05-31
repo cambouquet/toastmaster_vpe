@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ErrorBoundary } from './components/shared/ErrorBoundary';
 import { AppContent } from './components/App/AppContent';
+import { SplashScreen } from './components/Shell/SplashScreen';
 import { initKeycloak, isConnectionDegraded, isAuthenticated } from './services/auth/KeycloakService';
 import './App.scss';
 
@@ -22,7 +23,7 @@ function App() {
 
   useEffect(() => {
     if (APP_MODE === 'demo') {
-      setLoading(false);
+      setAuthReady(true);
       return;
     }
     initKeycloak(() => {
@@ -33,17 +34,24 @@ function App() {
 
   const handleFinish = React.useCallback(() => setLoading(false), []);
 
-  if (APP_MODE === 'demo') return <DemoWrapper />;
-
   return (
-    <div className={`App ${isConnectionDegraded() ? 'mode-degraded' : ''}`}>
+    <div className={`App ${isConnectionDegraded() ? 'mode-degraded' : ''} ${APP_MODE === 'demo' ? 'mode-demo' : ''}`}>
       <div className="glitch-scanline" />
       <ErrorBoundary>
-        <AppContent 
-          authReady={authReady} 
-          loading={loading} 
-          handleFinish={handleFinish} 
-        />
+        {!authReady || loading ? (
+          <SplashScreen 
+            onFinish={handleFinish} 
+            isLoggingIn={isAuthenticated()} 
+          />
+        ) : APP_MODE === 'demo' ? (
+          <Waitlist />
+        ) : (
+          <AppContent 
+            authReady={authReady} 
+            loading={loading} 
+            handleFinish={handleFinish} 
+          />
+        )}
       </ErrorBoundary>
     </div>
   );
