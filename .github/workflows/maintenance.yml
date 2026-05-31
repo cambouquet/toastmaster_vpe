@@ -53,16 +53,23 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "--- ⛑️ EMERGENCY RESCUE: ${{ matrix.target }} ---"
-            # 1. Gracefully stop current runner processes to avoid 137 SIGKILL on the SSH session
-            sudo systemctl stop actions.runner.* || true
-            sudo pkill -f "Runner.Listener" || true
+            # Dispatch to background and disown to prevent signal 143/137 from killing the SSH session
+            # We use a subshell to ensure the sequence completes even if SSH disconnects
+            nohup bash -c "
+              echo '🛑 Stopping runner...'
+              sudo systemctl stop actions.runner.* || true
+              sudo pkill -9 -f 'Runner.Worker' || true
+              sudo pkill -9 -f 'Runner.Listener' || true
+              
+              echo '🏁 Starting runner...'
+              cd ~/actions-runner && sudo ./svc.sh start
+              echo '✅ Runner restarted.'
+            " > /dev/null 2>&1 &
             
-            # 2. Aggressively clean up zombie workers
-            sudo pkill -9 -f "Runner.Worker" || true
-            
-            # 3. Clean start
-            cd ~/actions-runner && sudo ./svc.sh start || true
-            echo "✅ Rescue execution detached and completed."
+            # Give it a tiny bit of time to start the nohup process
+            sleep 2
+            echo "✅ Rescue command dispatched and detached."
+            exit 0
 
   standard-operation:
     needs: prepare
