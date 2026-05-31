@@ -25,8 +25,9 @@ RUN --mount=type=cache,target=/root/.npm npm install --omit=dev
 # stage 3: final production image
 FROM node:24-alpine
 WORKDIR /app
-# Use --update and retries for network-sensitive apk environments
-RUN apk add --no-cache --update nginx || (sleep 5 && apk add --no-cache nginx)
+# Fix for TLS: unspecified error on some network environments (Alpine SSL issue)
+RUN sed -i 's/https/http/' /etc/apk/repositories && \
+    apk add --no-cache --update nginx || (sleep 5 && apk add --no-cache nginx)
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY --from=build /app/docs/.vitepress/dist /usr/share/nginx/html/briefing
 COPY --from=deps /app/node_modules ./node_modules
