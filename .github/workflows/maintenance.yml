@@ -79,7 +79,10 @@ jobs:
               fi
             "
             echo "✅ Restart command handed to Systemd."
-            echo "Run 'debug-offline' in a few seconds to verify."
+            echo "--- ⏭️ NEXT ACTIONS ---"
+            echo "1. Wait 30s for GitHub handshake."
+            echo "2. Run MAINTENANCE -> 'telemetry' to verify status."
+            echo "3. If still offline, run PROVISION workflow to re-register."
 
   standard-operation:
     needs: prepare

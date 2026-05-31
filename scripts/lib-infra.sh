@@ -28,4 +28,14 @@ case "$ACTION" in
     sudo rm -rf ~/app && rm -f ~/.vm_ready
     ;;
 esac
-echo "✅ Protocol \$ACTION: Finished."
+echo "✅ Protocol $ACTION: Finished."
+echo "--- ⏭️ NEXT ACTIONS ---"
+if [ "$ACTION" == "telemetry" ]; then
+  echo "- If disk > 90%, run 'cleanup'."
+  echo "- If Docker containers are missing, run 'DEPLOY'."
+elif [ "$ACTION" == "cleanup" ]; then
+  echo "- Run 'telemetry' to verify disk space recovery."
+elif [ "$ACTION" == "hard-reset" ]; then
+  echo "- ☢️ CAUTION: Node is now empty."
+  echo "- Run 'PROVISION' to restore infrastructure."
+fi

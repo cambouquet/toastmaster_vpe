@@ -41,6 +41,11 @@
 - **Service Layer**: Keep AI and external logic (e.g., WhatsApp) in dedicated service classes.
 - **Logic Separation**: Use custom hooks (e.g., `useCollaboration`) to manage state, keeping components focused on rendering.
 
+## 5. Workflow UX & Lifecycle
+- **Next Steps Mandate**: Every job/script must output a "--- ⏭️ NEXT ACTIONS ---" block if human intervention or sequential tasks are required.
+- **Detached Operations**: Any infrastructure command that restarts core services (e.g., Runner Agent) must use `systemd-run` or `nohup` to prevent session self-termination.
+- **Descriptive Naming**: Infrastructure actions must use professional verbs (`telemetry`, `cleanup`, `patch-os`) instead of metaphors.
+
 ## 4. Design & UX: "Cyber-Noir Command Shell"
 - **Typography**: Primary font is **Sora**. Secondary font for technical data is **JetBrains Mono**.
 - **Color Palette**: Dark background (`#020205`) with Muted Cyan accents (`$accent-cyan: #00bac4`).
