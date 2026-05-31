@@ -9,6 +9,8 @@ case "$ACTION" in
     df -h | grep '^/'
     node -v && docker version --format 'Docker: {{.Client.Version}}'
     docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+    echo "--- 🤖 RUNNER STATUS ---"
+    systemctl list-units --type=service "actions.runner.*" --all || true
     ;;
   "cleanup")
     echo "--- 🧹 DISK CLEANUP ---"
