@@ -42,9 +42,9 @@ export default {
       <div v-if="isVisible" class="splash-overlay">
         <div class="splash-content">
           <div class="motto-container">
-            <div class="line-1">THE LIFE GAME</div>
+            <div class="line-1">THE GAME LIFE</div>
             <div class="line-2">BECOME THE <span class="highlight">{{ displayRole }}</span></div>
-            <div class="line-3">BE THE HERO OF YOUR OWN LIFE</div>
+            <div class="line-3">YOU'RE MEANT TO BE</div>
           </div>
         </div>
       </div>
