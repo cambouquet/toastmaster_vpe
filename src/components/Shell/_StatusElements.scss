@@ -2,6 +2,12 @@
 @import "./StatusAnims";
 @import "./StatusTypography";
 
+.status-item-persistent {
+  display: flex !important;
+  align-items: center !important;
+  height: 100% !important;
+}
+
 .logo-wrap {
   display: flex; align-items: center; justify-content: center;
   width: 14px; height: 14px; color: $accent-cyan; flex-shrink: 0;

@@ -16,8 +16,9 @@ export const StatusReadout = ({ isAuth, user, currentApp, hovered, onToggleAuth,
         {!isAuth ? (
           <>
             <div className="t-group group-1">
-              <div className="status-item-persistent" style={{ width: 20, height: 20 }}>
+              <div className="status-item-persistent" style={{ width: 'auto', height: 20, display: 'flex', alignItems: 'center', gap: 6 }}>
                 {AppIcon && <AppIcon scan={true} style={{ width: 14, height: 14, opacity: 0.9 }} />}
+                <span className="val sm app-name-label" style={{ fontWeight: 800, letter-spacing: '1px', opacity: 0.9 }}>{appInfo?.name?.toUpperCase()}</span>
               </div>
               <span className="sep px-2">//</span><SystemClock /><span className="sep px-1">//</span>
               <span className="val sm location-text">ANTIBES</span><span className="sep px-1">//</span><WeatherTelemetry />
