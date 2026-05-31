@@ -8,7 +8,8 @@ export const useSplashSequence = (onFinish) => {
 
   useEffect(() => {
     const accent = import.meta.env.VITE_WING_COLOR || '#00bac4';
-    const palette = [accent, '#ff003c', '#fcee0a', '#ffffff'];
+    // Use exactly 3 colors: accent, white (#ffffff), and a dark variant or secondary
+    const palette = [accent, '#ffffff', '#0a0c10'];
     const pick = () => palette[Math.floor(Math.random() * palette.length)];
 
     setColors({

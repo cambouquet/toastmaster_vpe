@@ -13,7 +13,7 @@ export const SplashScreen = ({ onFinish, isLoggingIn = false }) => {
           <Logo primaryColor={colors.logoPrimary} glowColor={colors.logoGlow} />
         </div>
         <div className="motto-container" style={{ borderLeftColor: colors.border }}>
-          <div className="line-1" style={{ color: colors.line1 }}>THE GAME LIFE</div>
+          <div className="line-1" style={{ color: colors.line1 }}>THE LIFE GAME</div>
           <div className="line-2" style={{ color: colors.line2 }}>
             {isLoggingIn ? (
               <span className="sync-text">UPLINK ESTABLISHED</span>
