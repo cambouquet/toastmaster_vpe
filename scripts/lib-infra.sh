@@ -17,7 +17,10 @@ case "$A" in
     COUNT=$(echo "$IDS" | grep -c . || echo 0)
     echo "🗑️ Found $COUNT queued jobs in $REPO. Cancelling..."
     if [ "$COUNT" -gt 0 ]; then
-      echo "$IDS" | xargs -r -I{} -P 5 gh run cancel {} -R "$REPO" || EX=1
+      # GitHub API might return 500/Concurrency errors if hammered too hard or if runs are already terminating
+      echo "$IDS" | xargs -r -I{} -P 3 gh run cancel {} -R "$REPO" || true
+      echo "⏳ Cooling down for API propagation..."
+      sleep 5
     fi; fi ;;
   "cleanup") docker system prune -af --volumes ;;
   "patch-os") sudo apt-get update && sudo apt-get upgrade -y ;;
