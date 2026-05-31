@@ -43,7 +43,7 @@ export const Trailer = ({ onComplete }) => {
   
   return (
     <div 
-      className={`trailer-container ${paused ? 'is-paused' : ''} ${showUI ? 'show-ui' : ''}`}
+      className={`trailer-container scene-${scene} ${paused ? 'is-paused' : ''} ${showUI ? 'show-ui' : ''}`}
       onMouseMove={resetUITimer}
       onMouseLeave={() => { if (!paused) setShowUI(false); }}
     >
@@ -51,8 +51,8 @@ export const Trailer = ({ onComplete }) => {
       <div className="trailer-content" onClick={() => setPaused(!paused)}>
         {s.type === "text" && <TextFrame scene={scene} content={s.content} color={s.color} effect={s.effect} />}
         {(s.type === "disc" || s.type === "grab") && <DiscFrame type={s.type} paused={paused} />}
-        {s.type === "cycle" && <CycleFrame paused={paused} />}
-        <CyberGrid />
+        {scene === 1 && <DiscFrame type="disc" paused={paused} extraClass="fondu-out" />}
+        {s.type === "cycle" && <><CyberGrid /><CycleFrame paused={paused} /></>}
       </div>
       <div 
         className="controls-hitbox"
@@ -60,7 +60,7 @@ export const Trailer = ({ onComplete }) => {
         onMouseLeave={() => { isHoveringControls.current = false; resetUITimer(); }}
       >
         <TrailerControls 
-          current={scene} onJump={setScene} 
+          current={scene} onJump={(i) => { setScene(i); if (paused) setPaused(false); }} 
           paused={paused} onTogglePause={(e) => { e.stopPropagation(); setPaused(!paused); }}
           repeat={repeat} onToggleRepeat={(e) => { e.stopPropagation(); setRepeat(!repeat); }}
         />
