@@ -1,5 +1,5 @@
 name: "🛠️ MAINTENANCE: Infrastructure Control"
-run-name: "🛠️ [${{ inputs.target }}] Action: ${{ inputs.action }}"
+run-name: "🛠️ [${{ inputs.target }}] Task: ${{ inputs.action }}"
 on:
   workflow_dispatch:
     inputs:
@@ -7,20 +7,66 @@ on:
         description: 'Target Server'
         required: true
         type: choice
-        options: [prod, test]
+        options: [prod, test, all]
+        default: 'all'
       action:
         description: 'Maintenance Task'
         required: true
         type: choice
-        options: [pulse, authorize, prune, nuclear, rescue]
+        options: [pulse, prune, upgrade, burn, rescue]
       arg:
-        description: 'Optional Input (e.g., SSH Public Key)'
+        description: 'Optional Input'
         required: false
+
 jobs:
-  execute:
-    runs-on: ['self-hosted', '${{ inputs.target }}']
+  # Logic for 'all' vs specific target
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - name: "🛰️ Synchronize: Infrastructure Library"
+      - id: set-matrix
+        run: |
+          if [ "${{ github.event.inputs.target }}" = "all" ]; then
+            echo 'matrix=["prod", "test"]' >> $GITHUB_OUTPUT
+          else
+            echo 'matrix=["${{ github.event.inputs.target }}"]' >> $GITHUB_OUTPUT
+          fi
+
+  # RESCUE PATHWAY (Runs on GitHub-managed runners because it needs to rescue stuck agents)
+  rescue-operation:
+    needs: prepare
+    if: github.event.inputs.action == 'rescue'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ${{ fromJson(needs.prepare.outputs.matrix) }}
+    steps:
+      - name: "⛑️ Rescue Handshake: ${{ matrix.target }}"
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host: ${{ matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "--- ⛑️ EMERGENCY RESCUE: ${{ matrix.target }} ---"
+            sudo pkill -9 -f "Runner.Worker" || true
+            sudo systemctl restart actions.runner.* || true
+            cd ~/actions-runner && sudo ./svc.sh stop || true && sudo ./svc.sh start
+            echo "✅ Rescue operation complete."
+
+  # STANDARD PATHWAY (Runs on the local self-hosted agent itself)
+  standard-operation:
+    needs: prepare
+    if: github.event.inputs.action != 'rescue'
+    runs-on: ['self-hosted', '${{ matrix.target }}']
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ${{ fromJson(needs.prepare.outputs.matrix) }}
+    steps:
+      - name: "🛰️ Synchronize: infra-lib"
         run: curl -sSL https://raw.githubusercontent.com/${{github.repository}}/main/scripts/lib-infra.sh -o lib-infra.sh
       - name: "🛠️ Execute: ${{ inputs.action }}"
         run: bash lib-infra.sh "${{ inputs.action }}" "${{ inputs.arg }}"

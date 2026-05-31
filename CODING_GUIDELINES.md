@@ -9,8 +9,11 @@
   - **🚀 DEPLOY**: Main application delivery (`deploy.yml`).
   - **🛰️ PROVISION**: Initial VM setup and runner registration (`setup.yml`).
   - **🛠️ MAINTENANCE**: Infrastructure health, cleanup, and resets (`maintenance.yml`).
-- **Universal SOLID**: Clean code and SOLID principles apply to the entire stack, including CI/CD pipelines, YAML configurations, and shell scripts. Logic must be decoupled (e.g., separate infra library scripts) and naming must be explicit and intent-driven.
-- **Satellite Provisioning**: Zero manual intervention. Provisioning new VMs MUST be handled exclusively via the "PROVISION" workflow.
+- **Universal SOLID**: Clean code and SOLID principles apply to the entire stack.
+  - **Single Responsibility**: Multi-target pipelines must use matrix strategies.
+  - **Rescue Autonomy**: `rescue` operations must run on GitHub-managed runners to bypass stuck self-hosted agents.
+  - **Intent-driven Naming**: Every action name must explicitly describe its technical outcome.
+- **Satellite Provisioning**: Zero manual intervention.
 - **Vite Bundling**: Use `manualChunks` to keep main assets under 2000kB. Increase `chunkSizeWarningLimit` for large dependency-heavy documentation.
 - **Feature Toggles**: Never hardcode environment-specific logic. Use `VITE_` prefixed variables. Every new toggle MUST be documented in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) with a "Why" and "Version".
 - **Version Tracking**: Manual version increments in [docs/architecture/feature-nexus.md](docs/architecture/feature-nexus.md) are required. Use Semantic Versioning for features.

@@ -1,27 +1,29 @@
 #!/bin/bash
-# 🛠️ System: Infra Library
+# 🛠️ UPLINK INFRASTRUCTURE LIBRARY
 set -e
-ACTION=$1; ARG=$2
+ACTION=\$1; ARG=\$2
 
-case "$ACTION" in
+case "\$ACTION" in
   "pulse")
-    df -h | grep '^/' && node -v && docker ps -a --format "table {{.Names}}\t{{.Status}}"
-    ;;
-  "authorize")
-    mkdir -p ~/.ssh && echo "$ARG" >> ~/.ssh/authorized_keys
-    sort -u ~/.ssh/authorized_keys -o ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
+    echo "--- 🛰️ SYSTEM PULSE ---"
+    df -h | grep '^/'
+    node -v && docker version --format 'Docker: {{.Client.Version}}'
+    docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
     ;;
   "prune")
+    echo "--- 🧹 DEEP CLEAN ---"
     docker system prune -af --volumes
     ;;
-  "nuclear")
-    docker compose down --remove-orphans || true
-    docker stop $(docker ps -aq) || true && docker rm $(docker ps -aq) || true
-    docker system prune -af --volumes && sudo rm -rf ~/app && rm -f ~/.vm_ready
+  "upgrade")
+    echo "--- 🚀 OS UPGRADE ---"
+    sudo apt-get update && sudo apt-get upgrade -y
     ;;
-  "rescue")
-    sudo systemctl restart actions.runner.* || true
-    cd ~/actions-runner && sudo ./svc.sh stop && sudo ./svc.sh start
+  "burn")
+    echo "--- ☢️ NUCLEAR RESET ---"
+    docker compose down --remove-orphans || true
+    docker stop \$(docker ps -aq) || true && docker rm \$(docker ps -aq) || true
+    docker system prune -af --volumes
+    sudo rm -rf ~/app && rm -f ~/.vm_ready
     ;;
 esac
-echo "✅ $ACTION: Complete."
+echo "✅ Protocol \$ACTION: Finished."
