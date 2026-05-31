@@ -46,14 +46,16 @@ jobs:
     steps:
       - name: "🛰️ Fetch Action Token"
         id: tok
-        env: { GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           T=$(gh api -X POST repos/${{github.repository}}/actions/runners/registration-token -q .token)
           echo "t=$T" >> $GITHUB_OUTPUT
 
       - name: "💾 Persist Host Secret"
         if: github.event.inputs.host != ''
-        env: { GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} }
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           S_NAME="VM_HOST$( [ "${{ matrix.target }}" = "test" ] && echo "_TEST" || echo "" )"
           gh secret set "$S_NAME" --body "${{ github.event.inputs.host }}" -R "${{ github.repository }}"
