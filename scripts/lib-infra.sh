@@ -13,14 +13,24 @@ echo "--- THE MACHINES ARE LISTENING ---"
 
 case "$ACTION" in
   "telemetry")
+    echo ""
     echo "--- [1] SERVER HEALTH & DIAGNOSTICS ---"
     df -h | grep '^/'
-    node -v && docker version --format 'Docker: {{.Client.Version}}'
+    echo "Node: $(node -v)"
+    echo "Docker: $(docker version --format '{{.Client.Version}}')"
+    echo ""
+    echo "--- [2] DOCKER CONTAINER STATUS ---"
     docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
-    echo "--- [2] RUNNER SERVICE STATUS ---"
+    echo ""
+    echo "--- [3] RUNNER SERVICE STATUS ---"
     systemctl list-units --type=service "actions.runner.*" --all || true
-    echo "--- [3] QUEUED GITHUB ACTIONS (Workflow Runs) ---"
-    gh run list --status queued --limit 5 || echo "No queued jobs."
+    echo ""
+    echo "--- [4] QUEUED GITHUB ACTIONS (Workflow Runs) ---"
+    if command -v gh &> /dev/null; then
+        gh run list --status queued --limit 5 || echo "No queued jobs."
+    else
+        echo "⚠️  'gh' CLI not found. Checking remote queue via local runner context..."
+    fi
     ;;
   "cleanup")
     echo "--- 🧹 CLEANING DISK & DOCKER IMAGES ---"
@@ -45,15 +55,15 @@ echo "║ ⏭️  REQUIRED MAINTENANCE ACTIONS                              ║"
 echo "╠══════════════════════════════════════════════════════════════╣"
 
 if [ "$ACTION" == "telemetry" ]; then
-    echo "║ 🛠️  DISK FULL?            ──▶  Run 'cleanup'                ║"
-    echo "║ 📦 DOCKER SERVICES DOWN? ──▶  Run 'DEPLOY'                 ║"
-    echo "║ 🤖 RUNNER OFFLINE?       ──▶  Run 'restart-runner'         ║"
-    echo "║ ⏳ JOBS QUEUED?          ──▶  Check Runner Connectivity    ║"
+    echo "║ 🛠️  DISK FULL (>90%)?      ──▶  Run 'cleanup'                ║"
+    echo "║ 📦 DOCKER SERVICES DOWN?   ──▶  Run 'DEPLOY'                 ║"
+    echo "║ 🤖 RUNNER SERVICE DEAD?    ──▶  Run 'restart-runner'         ║"
+    echo "║ ⏳ JOBS STUCK IN QUEUE?    ──▶  Run 'restart-runner'         ║"
 elif [ "$ACTION" == "cleanup" ]; then
-    echo "║ ✅ CLEANUP COMPLETE      ──▶  Run 'telemetry' to verify    ║"
+    echo "║ ✅ CLEANUP COMPLETE        ──▶  Run 'telemetry' to verify    ║"
 elif [ "$ACTION" == "hard-reset" ]; then
-    echo "║ ☢️  SYSTEM WIPED          ──▶  Run 'PROVISION' to restore   ║"
+    echo "║ ☢️  SYSTEM WIPED            ──▶  Run 'PROVISION' to restore   ║"
 elif [ "$ACTION" == "patch-os" ]; then
-    echo "║ 🚀 UPDATES COMPLETE      ──▶  Run 'telemetry'              ║"
+    echo "║ 🚀 UPDATES COMPLETE        ──▶  Run 'telemetry'              ║"
 fi
 echo "╚══════════════════════════════════════════════════════════════╝"
