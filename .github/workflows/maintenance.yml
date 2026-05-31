@@ -1,4 +1,4 @@
-name: "🛠️ MAINTENANCE: Infrastructure Control"
+name: "🛠️ FLEET MANAGEMENT: Maintenance & Repair"
 run-name: "🛠️ [${{ inputs.target }}] Task: ${{ inputs.action }}"
 on:
   workflow_dispatch:
@@ -33,7 +33,7 @@ jobs:
             echo 'matrix=["${{ github.event.inputs.target }}"]' >> $GITHUB_OUTPUT
           fi
 
-  infrastructure-control:
+  fleet-control:
     needs: prepare
     runs-on: ubuntu-latest
     strategy:
@@ -41,7 +41,7 @@ jobs:
       matrix:
         target: ${{ fromJson(needs.prepare.outputs.matrix) }}
     steps:
-      - name: "🛰️ Out-of-Band Action: ${{ inputs.action }}"
+      - name: "⚡ DIRECT SSH COMMAND EXECUTION (Out-of-Band)"
         uses: appleboy/ssh-action@v1.2.5
         with:
           host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
@@ -51,10 +51,10 @@ jobs:
             # 1. Fetch library
             curl -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/lib-infra.sh" -o ~/lib-infra.sh
             
-            # 2. Delayed Repair Mechanism
+            # 2. Automated Service Repair Countdown
             repair_runner() {
               echo "╔══════════════════════════════════════════════════════════════╗"
-              echo "║ ⛑️  AUTO-REPAIR TRIGGERED: Service will restart in 5s        ║"
+              echo "║ ⛑️  AUTO-REPAIR INITIATED: Restarting in 5 seconds...         ║"
               echo "╚══════════════════════════════════════════════════════════════╝"
               sudo setsid bash -c "(sleep 5; systemctl stop actions.runner.* || true; pkill -9 -f Runner || true; sleep 2; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start) > /dev/null 2>&1 &"
             }
@@ -63,7 +63,7 @@ jobs:
             case "${{ inputs.action }}" in
               "restart-runner")
                 repair_runner
-                echo "✅ Dispatch complete. Terminal closing to allow remote restart."
+                echo "✅ Service restart dispatched. SSH session terminating."
                 exit 0
                 ;;
               "debug-runner-issue")
@@ -74,12 +74,12 @@ jobs:
                 ;;
             esac
 
-            # 4. Auto-Repair Logic
+            # 4. Intelligence-based Auto-Repair
             if [[ "${{ inputs.action }}" != "hard-reset" ]]; then
               if ! systemctl is-active --quiet "actions.runner.*"; then
                 repair_runner
               fi
             fi
 
-            # 5. Library Execution & Dashboard
+            # 5. Execute Command Library
             bash ~/lib-infra.sh "${{ inputs.action }}"

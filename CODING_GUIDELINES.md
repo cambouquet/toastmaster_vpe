@@ -1,7 +1,7 @@
 # Coding Guidelines: Mission Control
 
 ## 1. Operational UI/UX
-- **Next Steps Dashboard**: Every automated job or script MUST conclude with a high-visibility ASCII "Mission Control" block.
+- **Fleet Status Dashboard**: Every automated job or script MUST conclude with a high-visibility ASCII "Mission Control" block.
 - **Visual Standard**: Use box-drawing characters (`╔═╗`, `║`, `╚═╝`) to frame next actions.
 - **Clarity**: Next actions must be conditional (e.g., "If X fails -> Do Y").
 

@@ -1,27 +1,27 @@
 #!/bin/bash
-# 🛠️ UPLINK INFRASTRUCTURE LIBRARY
+# 🛠️ FLEET MANAGEMENT COMMAND LIBRARY
 set -e
 ACTION=$1; ARG=$2
 
 case "$ACTION" in
   "telemetry")
-    echo "--- 🛰️ SYSTEM TELEMETRY ---"
+    echo "--- 🛰️  DETAILED HARDWARE & SERVICE DIAGNOSTICS ---"
     df -h | grep '^/'
     node -v && docker version --format 'Docker: {{.Client.Version}}'
     docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
-    echo "--- 🤖 RUNNER STATUS ---"
+    echo "--- 🤖 RUNNER SERVICE HEALTH ---"
     systemctl list-units --type=service "actions.runner.*" --all || true
     ;;
   "cleanup")
-    echo "--- 🧹 DISK CLEANUP ---"
+    echo "--- 🧹 DISK & DOCKER GARBAGE COLLECTION ---"
     docker system prune -af --volumes
     ;;
   "patch-os")
-    echo "--- 🚀 OS SECURITY PATCH ---"
+    echo "--- 🚀 OPERATING SYSTEM SECURITY UPDATES ---"
     sudo apt-get update && sudo apt-get upgrade -y
     ;;
   "hard-reset")
-    echo "--- ☢️ HARD FACTORY RESET ---"
+    echo "--- ☢️  CRITICAL: FULL INFRASTRUCTURE PURGE ---"
     docker compose down --remove-orphans || true
     docker stop $(docker ps -aq) || true && docker rm $(docker ps -aq) || true
     docker system prune -af --volumes
@@ -31,19 +31,18 @@ esac
 
 echo ""
 echo "╔══════════════════════════════════════════════════════════════╗"
-echo "║ ⏭️  UPLINK MISSION CONTROL: NEXT STEPS                        ║"
+echo "║ ⏭️  FLEET STATUS: REQUIRED OPERATOR ACTIONS                   ║"
 echo "╠══════════════════════════════════════════════════════════════╣"
 
 if [ "$ACTION" == "telemetry" ]; then
-    echo "║ 🛠️  DISK FULL (>90%)?      ──▶  Run 'cleanup'                ║"
-    echo "║ 📦 DOCKER MISSING?       ──▶  Run 'DEPLOY'                 ║"
-    echo "║ 🤖 RUNNER DEAD/OFFLINE?  ──▶  Run 'restart-runner'         ║"
+    echo "║ 🛠️  DISK EXHAUSTED?       ──▶  Run 'cleanup'                ║"
+    echo "║ 📦 DOCKER SERVICES DOWN? ──▶  Run 'DEPLOY'                 ║"
+    echo "║ 🤖 RUNNER OFFLINE?       ──▶  Run 'restart-runner'         ║"
 elif [ "$ACTION" == "cleanup" ]; then
-    echo "║ ✅ DISK PURGE COMPLETE    ──▶  Run 'telemetry' to verify    ║"
+    echo "║ ✅ PURGE FINISHED        ──▶  Run 'telemetry' to verify    ║"
 elif [ "$ACTION" == "hard-reset" ]; then
-    echo "║ ☢️  NODE IS VACUUMED       ──▶  Run 'PROVISION' to restore   ║"
+    echo "║ ☢️  SYSTEM WIPED          ──▶  Run 'PROVISION' to restore   ║"
 elif [ "$ACTION" == "patch-os" ]; then
-    echo "║ 🚀 OS PATCHED             ──▶  Run 'telemetry'              ║"
+    echo "║ 🚀 PATCHING COMPLETE     ──▶  Run 'telemetry'              ║"
 fi
-
 echo "╚══════════════════════════════════════════════════════════════╝"
