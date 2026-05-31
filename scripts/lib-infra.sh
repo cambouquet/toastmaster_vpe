@@ -1,7 +1,7 @@
 #!/bin/bash
 # 🛠️ UPLINK INFRASTRUCTURE LIBRARY
 set -e
-ACTION=\$1; ARG=\$2
+ACTION=$1; ARG=$2
 
 case "$ACTION" in
   "telemetry")
@@ -28,14 +28,15 @@ case "$ACTION" in
     sudo rm -rf ~/app && rm -f ~/.vm_ready
     ;;
 esac
+
 echo "✅ Protocol $ACTION: Finished."
 echo "--- ⏭️ NEXT ACTIONS ---"
 if [ "$ACTION" == "telemetry" ]; then
   echo "- If disk > 90%, run 'cleanup'."
-  echo "- If Docker containers are missing, run 'DEPLOY'."
+  echo "- If Docker containers missing, run 'DEPLOY'."
 elif [ "$ACTION" == "cleanup" ]; then
   echo "- Run 'telemetry' to verify disk space recovery."
 elif [ "$ACTION" == "hard-reset" ]; then
-  echo "- ☢️ CAUTION: Node is now empty."
+  echo "- ☢️ CAUTION: Node is empty."
   echo "- Run 'PROVISION' to restore infrastructure."
 fi
