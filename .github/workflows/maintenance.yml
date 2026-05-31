@@ -19,7 +19,6 @@ on:
         required: false
 
 jobs:
-  # Logic for 'all' vs specific target
   prepare:
     runs-on: ubuntu-latest
     outputs:
@@ -33,7 +32,6 @@ jobs:
             echo 'matrix=["${{ github.event.inputs.target }}"]' >> $GITHUB_OUTPUT
           fi
 
-  # RESCUE PATHWAY (Runs on GitHub-managed runners because it needs to rescue stuck agents)
   rescue-operation:
     needs: prepare
     if: github.event.inputs.action == 'rescue'
@@ -51,12 +49,17 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "--- ⛑️ EMERGENCY RESCUE: ${{ matrix.target }} ---"
+            # 1. Gracefully stop current runner processes to avoid 137 SIGKILL on the SSH session
+            sudo systemctl stop actions.runner.* || true
+            sudo pkill -f "Runner.Listener" || true
+            
+            # 2. Aggressively clean up zombie workers
             sudo pkill -9 -f "Runner.Worker" || true
-            sudo systemctl restart actions.runner.* || true
-            cd ~/actions-runner && sudo ./svc.sh stop || true && sudo ./svc.sh start
-            echo "✅ Rescue operation complete."
+            
+            # 3. Clean start
+            cd ~/actions-runner && sudo ./svc.sh start || true
+            echo "✅ Rescue execution detached and completed."
 
-  # STANDARD PATHWAY (Runs on the local self-hosted agent itself)
   standard-operation:
     needs: prepare
     if: github.event.inputs.action != 'rescue'
