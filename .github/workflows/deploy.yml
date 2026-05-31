@@ -26,6 +26,7 @@ jobs:
         env:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           VM_USER: ${{ secrets.VM_USER }}
+          VM_HOST: ${{ matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST }}
           TARGET: ${{ matrix.target }}
         run: |
           export ID_FILE=$(mktemp)

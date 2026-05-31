@@ -24,7 +24,7 @@ export const Waitlist = () => {
     <div className="waitlist-container">
       <div className="vignette" />
       <div className="waitlist-content">
-        <Logo primaryColor="#ffffff" glowColor={accent} />
+        <Logo primaryColor="#ffffff" glowColor={accent} style={{ width: 320, height: 320, overflow: 'visible' }} />
         <div className="motto" style={{ color: accent, textShadow: `0 0 10px ${accent}88` }}>COMING SOON</div>
         <div className="description">Be the hero of your own life</div>
         {submitted ? (

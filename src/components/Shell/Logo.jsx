@@ -1,11 +1,11 @@
 import React from 'react';
 
 export const Logo = ({ className = '', style = {}, primaryColor = '#ffffff', glowColor = '#ff0044' }) => (
-  <div className={`logo-kanji-wrap ${className}`} style={style}>
-    <svg viewBox='0 0 100 100' style={{ width: '100%', height: '100%' }}>
+  <div className={`logo-kanji-wrap ${className}`} style={{ overflow: 'visible', ...style }}>
+    <svg viewBox='0 0 100 100' style={{ width: '100%', height: '100%', overflow: 'visible' }}>
       <defs>
-        <filter id="logo-accent-glow">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur" />
+        <filter id="logo-accent-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
           <feFlood floodColor={glowColor} result="color" />
           <feComposite in="color" in2="blur" operator="in" result="glow" />
           <feMerge>
