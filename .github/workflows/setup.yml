@@ -44,8 +44,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: |
           S_NAME="VM_HOST$( [ "${{ matrix.target }}" = "test" ] && echo "_TEST" || echo "" )"
-          echo "Updating $S_NAME..."
-          gh secret set "$S_NAME" --body "${{ github.event.inputs.host }}"
+          echo "Updating $S_NAME in ${{ github.repository }}..."
+          gh secret set "$S_NAME" --body "${{ github.event.inputs.host }}" -R "${{ github.repository }}"
 
       - name: "🛰️ Fetch Action Token"
         id: tok
