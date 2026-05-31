@@ -29,14 +29,21 @@ case "$ACTION" in
     ;;
 esac
 
-echo "✅ Protocol $ACTION: Finished."
-echo "--- ⏭️ NEXT ACTIONS ---"
+echo ""
+echo "╔══════════════════════════════════════════════════════════════╗"
+echo "║ ⏭️  UPLINK MISSION CONTROL: NEXT STEPS                        ║"
+echo "╠══════════════════════════════════════════════════════════════╣"
+
 if [ "$ACTION" == "telemetry" ]; then
-  echo "- If disk > 90%, run 'cleanup'."
-  echo "- If Docker containers missing, run 'DEPLOY'."
+    echo "║ 🛠️  DISK FULL (>90%)?      ──▶  Run 'cleanup'                ║"
+    echo "║ 📦 DOCKER MISSING?       ──▶  Run 'DEPLOY'                 ║"
+    echo "║ 🤖 RUNNER DEAD/OFFLINE?  ──▶  Run 'restart-runner'         ║"
 elif [ "$ACTION" == "cleanup" ]; then
-  echo "- Run 'telemetry' to verify disk space recovery."
+    echo "║ ✅ DISK PURGE COMPLETE    ──▶  Run 'telemetry' to verify    ║"
 elif [ "$ACTION" == "hard-reset" ]; then
-  echo "- ☢️ CAUTION: Node is empty."
-  echo "- Run 'PROVISION' to restore infrastructure."
+    echo "║ ☢️  NODE IS VACUUMED       ──▶  Run 'PROVISION' to restore   ║"
+elif [ "$ACTION" == "patch-os" ]; then
+    echo "║ 🚀 OS PATCHED             ──▶  Run 'telemetry'              ║"
 fi
+
+echo "╚══════════════════════════════════════════════════════════════╝"
