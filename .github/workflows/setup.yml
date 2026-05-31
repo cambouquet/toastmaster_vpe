@@ -6,16 +6,33 @@ on:
         description: 'Target Server'
         required: true
         type: choice
-        options: [prod, test]
-        default: 'prod'
+        options: [prod, test, all]
+        default: 'all'
       host:
-        description: 'VM IP (Leave blank to use existing secrets)'
+        description: 'New VM IP (Blank to use secrets)'
         required: false
         type: string
 
 jobs:
-  bootstrap:
+  prepare:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          if [ "${{ github.event.inputs.target }}" = "all" ]; then
+            echo 'matrix=["prod", "test"]' >> $GITHUB_OUTPUT
+          else
+            echo 'matrix=["${{ github.event.inputs.target }}"]' >> $GITHUB_OUTPUT
+          fi
+
+  bootstrap:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: ${{ fromJson(needs.prepare.outputs.matrix) }}
     permissions:
       actions: write
       contents: read
@@ -27,23 +44,22 @@ jobs:
         run: |
           T=$(gh api -X POST repos/${{github.repository}}/actions/runners/registration-token -q .token)
           echo "t=$T" >> $GITHUB_OUTPUT
-      - name: "🚢 Native Setup: Execute Provisioning"
+
+      - name: "🚢 Native Setup: ${{ matrix.target }}"
         uses: appleboy/ssh-action@v1.2.5
         with:
-          host: ${{ github.event.inputs.host || secrets.VM_HOST }}
+          host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cat << 'EOF' > ~/setup_params.sh
+            cat << 'INNER_EOF' > ~/setup_params.sh
             export TOKEN="${{ steps.tok.outputs.t }}"
-            export TARGET="${{ inputs.target }}"
+            export TARGET="${{ matrix.target }}"
             export REPO="${{ github.repository }}"
-            EOF
+            INNER_EOF
             curl -H "Authorization: token ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" \
                  -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/setup_vm.sh" | bash
             source ~/setup_params.sh
             curl -H "Authorization: token ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}" \
                  -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/setup-runner.sh" | bash -s -- "$TOKEN" "$TARGET" "$REPO"
-            rm ~/setup_params.sh
-            
             rm ~/setup_params.sh
