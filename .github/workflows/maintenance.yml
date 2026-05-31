@@ -51,40 +51,44 @@ jobs:
             # 1. Fetch latest infra library
             curl -sSL https://raw.githubusercontent.com/${{github.repository}}/main/scripts/lib-infra.sh -o ~/lib-infra.sh
             
-            # 2. Define Detached Repair Command
-            RESTART_CMD="sudo systemd-run --unit=runner-fix-$(date +%s) --remain-after-exit bash -c 'systemctl stop actions.runner.* || true; pkill -9 -f Runner || true; sleep 2; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start'"
+            # 2. Identify target runner service precisely
+            R_NAME="actions.runner.${{ github.repository | replace('/', '-') }}.runner-${{ matrix.target }}.service"
+            R_NAME=$(echo "$R_NAME" | sed 's/\./\\\./g') # Escape for glob context if needed, but we will use exact
 
-            # 3. Special Case: Restart Runner
-            if [ "${{ inputs.action }}" == "restart-runner" ]; then
-              echo "⛑️ Restarting Runner (Detached)..."
-              eval "$RESTART_CMD"
-              echo "--- ⏭️ NEXT ACTIONS ---"
-              echo "1. Wait 30s. 2. Run telemetry."
-              exit 0
-            fi
-
-            # 4. Special Case: Debug
-            if [ "${{ inputs.action }}" == "debug-runner-issue" ]; then
-              echo "🔍 Debugging Runner Issue..."
-              sudo systemctl list-units "actions.runner.*" --all
-              sudo journalctl -u "actions.runner.*" -n 20 --no-pager
-              exit 0
-            fi
-
-            # 5. Auto-Repair (Ensures we fix while we maintain)
-            if [ "${{ inputs.action }}" != "hard-reset" ]; then
-              if ! systemctl is-active --quiet "actions.runner.*"; then
-                echo "⚠️ Runner is OFFLINE. Triggering auto-repair (detached)..."
-                eval "$RESTART_CMD"
+            # 3. Absolute Detached Repair Function
+            # We use 'at' if available, or systemd-run with --no-block
+            repair_runner() {
+              echo "⛑️ Triggering detached repair for $R_NAME..."
+              sudo systemd-run --unit="repair-$(date +%s)" --no-block bash -c "
+                systemctl stop actions.runner.* || true
+                pkill -9 -f Runner || true
                 sleep 2
+                cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start
+              "
+            }
+
+            # 4. Routing
+            case "${{ inputs.action }}" in
+              "restart-runner")
+                repair_runner
+                echo "✅ Restart command dispatched. Wait 30s."
+                exit 0
+                ;;
+              "debug-runner-issue")
+                sudo systemctl list-units "actions.runner.*" --all
+                sudo journalctl -u "actions.runner.*" -n 20 --no-pager
+                exit 0
+                ;;
+            esac
+
+            # 5. Auto-Repair Logic (Non-blocking)
+            if [[ "${{ inputs.action }}" != "hard-reset" ]]; then
+              if ! systemctl is-active --quiet "actions.runner.*"; then
+                echo "⚠️ Runner is OFFLINE. Triggering auto-repair..."
+                repair_runner
+                sleep 1 # Tiny breath for systemd-run to register
               fi
             fi
 
-            # 6. Primary Library Execution
+            # 6. Execute Library
             bash ~/lib-infra.sh "${{ inputs.action }}"
-
-            # 7. Auto-Chaining
-            if [ "${{ inputs.action }}" == "cleanup" ]; then
-              echo "⏭️ Chaining telemetry..."
-              bash ~/lib-infra.sh "telemetry"
-            fi
