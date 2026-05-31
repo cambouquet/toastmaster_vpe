@@ -1,8 +1,7 @@
-name: "🚀 DEPLOY: Production & Test"
-run-name: "🚀 Deploying to ${{ inputs.target || 'main' }}"
+name: "🚀 DEPLOY: Application Release"
+run-name: "🚀 [${{ inputs.target || 'main' }}] Release"
 on:
-  push:
-    branches: [main]
+  push: { branches: [main] }
   workflow_dispatch:
 
 jobs:
@@ -14,10 +13,8 @@ jobs:
     steps:
       - name: "🛰️ Native Setup"
         run: |
-          # RAPID FIRE
           (git fetch --depth 1 origin main && git reset --hard FETCH_HEAD && git clean -fd) || (
-            # DEEP RECOVERY
-            echo "⚠️ RAPID FIRE Setup failed. Running Recovery..."
+            echo "⚠️ RAPID FIRE Setup failed. Running Deep Recovery..."
             git init
             git remote add origin https://github.com/${{ github.repository }}.git 2>/dev/null || \
             git remote set-url origin https://github.com/${{ github.repository }}.git
@@ -28,7 +25,6 @@ jobs:
       - name: "🚢 Native SSH Deployment"
         env:
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          VM_HOST: "127.0.0.1" # Parallel loopback (Local runner on VM)
           VM_USER: ${{ secrets.VM_USER }}
           TARGET: ${{ matrix.target }}
         run: |
