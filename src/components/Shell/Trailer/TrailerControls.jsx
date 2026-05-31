@@ -1,23 +1,27 @@
 import React from 'react';
 import { TRAILER_SCENES } from './TrailerScenes';
 
-export const TrailerControls = ({ current, onJump, paused, onTogglePause, repeat, onToggleRepeat }) => (
+export const TrailerControls = ({ current, onJump, repeat, onToggleRepeat, paused, onTogglePause }) => (
   <div className="trailer-controls">
-    <div className="track-row">
+    <div className="track-row" onClick={(e) => e.stopPropagation()}>
+      <button onClick={onTogglePause} className="ctrl-btn play-btn">
+        {paused ? '▶' : '||'}
+      </button>
       <div className="track">
-        {TRAILER_SCENES.map((s, i) => (
+        {TRAILER_SCENES.map((_, i) => (
           <div 
             key={i} 
-            className={`step ${i === current ? 'active' : ''} type-${s.type}`}
-            onClick={() => onJump(i)}
+            className={`step ${i === current ? 'active' : ''}`}
+            onClick={(e) => { e.stopPropagation(); onJump(i); }}
           />
         ))}
       </div>
-      <button onClick={onToggleRepeat} className={`ctrl-btn loop-btn ${repeat ? 'active' : ''}`}>∞</button>
+      <button 
+        onClick={onToggleRepeat} 
+        className={`ctrl-btn loop-btn ${repeat ? 'active' : ''}`}
+      >
+        ∞
+      </button>
     </div>
-    <input 
-      type="range" min="0" max={TRAILER_SCENES.length - 1} 
-      value={current} onChange={(e) => onJump(parseInt(e.target.value))}
-    />
   </div>
 );

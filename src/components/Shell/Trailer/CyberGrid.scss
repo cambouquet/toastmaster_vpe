@@ -1,0 +1,40 @@
+@import "../../../styles/variables";
+
+.cyber-grid-container {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  .v-world {
+    position: absolute; inset: 0; perspective: 1200px; transform-style: preserve-3d;
+  }
+  .f-grid {
+    position: absolute; width: 400vw; height: 400vh; top: 0; left: -150vw;
+    background: linear-gradient(to bottom, #001a00, #000);
+    background-image: linear-gradient($accent-cyan 1px, transparent 1px),
+                      linear-gradient(90deg, $accent-cyan 1px, transparent 1px);
+    background-size: 100px 100px; transform: rotateX(80deg); opacity: 0.3;
+  }
+  .city-scape {
+    position: absolute; inset: 0; transform-style: preserve-3d;
+    display: flex; justify-content: center; align-items: flex-end; padding-bottom: 30vh;
+  }
+  .cube-building {
+    position: absolute; width: 80px; height: calc(150px + var(--mod-i, 0) * 100px);
+    transform-style: preserve-3d; left: 45%; bottom: 20vh;
+    transform: translateX(var(--x)) translateZ(var(--z));
+    animation: riseCube 6s forwards cubic-bezier(0.19, 1, 0.22, 1);
+    animation-delay: calc(var(--i) * 0.15s); opacity: 0;
+    .face {
+      position: absolute; inset: 0; border: 2px solid $accent-cyan;
+      background: rgba(0, 186, 196, 0.05); box-shadow: inset 0 0 20px $accent-cyan, 0 0 30px rgba(0, 186, 196, 0.2);
+      &.f { transform: translateZ(40px); }
+      &.r { transform: rotateY(90deg) translateZ(40px); }
+      &.b { transform: rotateY(180deg) translateZ(40px); }
+      &.l { transform: rotateY(-90deg) translateZ(40px); }
+      &.t { bottom: auto; height: 80px; transform: rotateX(90deg) translateZ(40px); background: rgba(0, 186, 196, 0.4); }
+    }
+  }
+}
+
+@keyframes riseCube {
+  0% { transform: translateX(var(--x)) translateZ(calc(var(--z) - 1500px)) translateY(800px) scaleY(0); opacity: 0; }
+  100% { transform: translateX(var(--x)) translateZ(var(--z)) translateY(0) scaleY(1); opacity: 1; }
+}

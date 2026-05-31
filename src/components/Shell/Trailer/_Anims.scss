@@ -3,7 +3,11 @@
   2%, 8% { transform: translate(-5px, 2px) skewX(10deg); filter: hue-rotate(90deg); clip-path: inset(10% 0 30% 0); }
   10%, 15% { transform: translate(5px, -2px) skewX(-10deg); filter: brightness(2); clip-path: inset(40% 0 10% 0); }
 }
-@keyframes cyberScanline { 0% { top: -100%; } 100% { top: 200%; } }
+@keyframes sunRadiate {
+  0%, 100% { transform: scale(1); filter: brightness(1) blur(0px); }
+  50% { transform: scale(1.05); filter: brightness(1.8) blur(10px); }
+}
+@keyframes rotateRainbow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes luxuriousText {
   0% { opacity: 0; filter: blur(50px) brightness(2); transform: scale(0.9); }
   15%, 85% { opacity: 1; filter: blur(0); transform: scale(1); }
@@ -11,9 +15,5 @@
 }
 @keyframes panOutText { 0% { opacity: 0; transform: scale(1.5); } 20%, 80% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.8); } }
 @keyframes glowBeat { 0%, 100% { filter: blur(0px) brightness(1); transform: scale(1); } 25% { filter: blur(2px) brightness(3); transform: scale(1.05); } }
+@keyframes futureGlow { from { text-shadow: 0 0 10px #00bac4; opacity: 0.8; } to { text-shadow: 0 0 30px #00bac4, 0 0 10px #fff; opacity: 1; } }
 @keyframes corePulse { from { opacity: 0.5; filter: blur(2px); } to { opacity: 1; filter: blur(4px); } }
-@keyframes birthEntity {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-  15% { transform: translate(-50%, -50%) scale(2) rotate(var(--rot)); opacity: 1; }
-  100% { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1) rotate(var(--rot)); opacity: 0; }
-}
