@@ -88,11 +88,11 @@ jobs:
               local TASK=$1
               echo "⚙️ RUNNING TASK: $TASK"
               curl -sSL "$URL/scripts/lib-infra.sh$TS" -o ~/lib-infra.sh
-              if ! GH_TOKEN="$GH_TOKEN" bash ~/lib-infra.sh "$TASK"; then
+              if ! REPO="$REPO" GH_TOKEN="$GH_TOKEN" bash ~/lib-infra.sh "$TASK"; then
                 echo "🤖 ZERO-INTERVENTION: Task [$TASK] failed. Triggering HEAL..."
                 run_provision
                 echo "🚀 RETRYING TASK: $TASK"
-                GH_TOKEN="$GH_TOKEN" bash ~/lib-infra.sh "$TASK"
+                REPO="$REPO" GH_TOKEN="$GH_TOKEN" bash ~/lib-infra.sh "$TASK"
               fi
             }
 
