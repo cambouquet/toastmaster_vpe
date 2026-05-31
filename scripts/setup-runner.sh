@@ -10,6 +10,14 @@ if [ -z "$TOKEN" ] || [ -z "$TARGET" ]; then
   echo "Usage: ./setup-runner.sh [TOKEN] [TARGET] [REPO]"; exit 1
 fi
 
+# Pre-cleanup: Stop and uninstall existing service if it exists to avoid "service already exists" or "file in use" errors
+if [ -d ~/actions-runner ]; then
+  cd ~/actions-runner
+  sudo ./svc.sh stop || true
+  sudo ./svc.sh uninstall || true
+  cd ~
+fi
+
 sudo rm -rf ~/actions-runner && mkdir -p ~/actions-runner && cd ~/actions-runner
 curl -o runner.tar.gz -L https://github.com/actions/runner/releases/download/v${RUNNER_VER}/actions-runner-linux-x64-${RUNNER_VER}.tar.gz
 tar xzf ./runner.tar.gz

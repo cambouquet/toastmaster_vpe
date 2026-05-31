@@ -8,6 +8,10 @@ echo "💠 TASK: [ $A ]"
 case "$A" in
   "telemetry")
     df -h | grep '^/'; node -v; docker version --format '{{.Client.Version}}' 2>/dev/null || true
+    if systemctl list-units "actions.runner.*" --all | grep -q "failed"; then
+      echo "❌ CRITICAL: Runner service(s) in FAILED state. Triggering repair..."
+      EX=1
+    fi
     systemctl list-units "actions.runner.*" --all || true
     [ -z "$GH_TOKEN" ] || gh run list -R "$REPO" --status queued --limit 5 || true ;;
   "cancel-queued")
