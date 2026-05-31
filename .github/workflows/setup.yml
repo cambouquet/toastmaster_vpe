@@ -36,7 +36,17 @@ jobs:
     permissions:
       actions: write
       contents: read
+      id-token: write
     steps:
+      - name: "💾 Persist Infrastructure Secret"
+        if: github.event.inputs.host != ''
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+        run: |
+          S_NAME="VM_HOST$( [ "${{ matrix.target }}" = "test" ] && echo "_TEST" || echo "" )"
+          echo "Updating $S_NAME..."
+          gh secret set "$S_NAME" --body "${{ github.event.inputs.host }}"
+
       - name: "🛰️ Fetch Action Token"
         id: tok
         env:
