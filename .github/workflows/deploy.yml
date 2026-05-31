@@ -1,11 +1,12 @@
 name: "🚀 DEPLOY: Application Release"
-run-name: "🚀 [${{ inputs.target || 'main' }}] Release"
+run-name: "🚀 [${{ github.ref_name }}] ${{ github.event.head_commit.message || github.actor }} - Deployed"
 on:
   push: { branches: [main] }
   workflow_dispatch:
 
 jobs:
   deploy:
+    name: "🚀 Deploy [${{ matrix.target }}]"
     runs-on: [self-hosted, "${{ matrix.target }}"]
     strategy:
       fail-fast: false

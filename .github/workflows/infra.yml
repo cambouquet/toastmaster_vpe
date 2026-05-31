@@ -35,6 +35,7 @@ jobs:
           fi
 
   execute:
+    name: "🛠️ ${{ matrix.target }} [${{ github.event.inputs.action }}]"
     needs: prepare
     runs-on: ubuntu-latest
     permissions:
