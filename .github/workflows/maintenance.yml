@@ -43,13 +43,13 @@ jobs:
     steps:
       - name: "SSH Maintenance Task: ${{ inputs.action }}"
         uses: appleboy/ssh-action@v1.2.5
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: GITHUB_TOKEN
-        secrets: [GITHUB_TOKEN]
-        with:
+          envs: GH_TOKEN
           script: |
             curl -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/lib-infra.sh" -o ~/lib-infra.sh
             
@@ -71,5 +71,6 @@ jobs:
               fi
             fi
 
-            export GH_TOKEN="${{ secrets.GITHUB_TOKEN }}"
+            # Export the token for gh cli
+            export GH_TOKEN="$GH_TOKEN"
             bash ~/lib-infra.sh "${{ inputs.action }}"
