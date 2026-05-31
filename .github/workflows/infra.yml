@@ -64,18 +64,19 @@ jobs:
       - name: "⚡ Execute: ${{ inputs.action }}"
         uses: appleboy/ssh-action@v1.2.5
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
           REG_TOKEN: ${{ steps.tok.outputs.t }}
+          DEBIAN_FRONTEND: noninteractive
         with:
           host: ${{ github.event.inputs.host || (matrix.target == 'prod' && secrets.VM_HOST || secrets.VM_HOST_TEST) }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          envs: GH_TOKEN,REG_TOKEN
+          envs: GH_TOKEN,REG_TOKEN,DEBIAN_FRONTEND
           script: |
             set -e
             URL="https://raw.githubusercontent.com/${{ github.repository }}/main"
             TS="?t=$(date +%s)"
-            export TOKEN="$REG_TOKEN" TARGET="${{ matrix.target }}" REPO="${{ github.repository }}" GH_TOKEN="$GH_TOKEN"
+            export TOKEN="$REG_TOKEN" TARGET="${{ matrix.target }}" REPO="${{ github.repository }}" GH_TOKEN="$GH_TOKEN" DEBIAN_FRONTEND="$DEBIAN_FRONTEND"
             
             run_provision() {
               echo "🛰️ PROVISIONING: Repairing Node..."
