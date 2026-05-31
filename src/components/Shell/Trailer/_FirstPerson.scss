@@ -1,16 +1,18 @@
 .disc-frame {
   width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
   perspective: 1000px;
+  .giant-witness { position: absolute; inset: 0; opacity: 0.3; filter: blur(20px); scale: 1.2; z-index: 1; }
   .light-disc {
     width: 120px; height: 120px; background: white; border-radius: 50%;
     box-shadow: 0 0 80px white, 0 0 160px rgba(255,255,255,0.4);
     animation: organicBreath 4s ease-in-out infinite alternate; z-index: 5;
   }
-  .grabbing-hand-container {
-    position: absolute; bottom: -30%; left: 10%; width: 600px; height: 800px;
-    z-index: 10; transform-origin: bottom left;
+  .giant-grab-container {
+    position: absolute; inset: 0; z-index: 10;
     animation: firstPersonGrasp 6s cubic-bezier(0.3, 0, 0.2, 1) forwards;
-    .ethereal-hand { filter: blur(1px) drop-shadow(0 0 20px white); opacity: 0.98; }
-    .finger { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: fingerCurl 6s ease-in-out forwards; }
+    .reaching-extremity { 
+      width: 100%; height: 100%; opacity: 0.8;
+      filter: blur(2px) drop-shadow(0 0 40px rgba(255,255,255,0.5)); 
+    }
   }
 }

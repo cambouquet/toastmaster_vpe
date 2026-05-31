@@ -5,8 +5,8 @@ const Entity = ({ cls, path, core, delay, dx, dy, rot }) => (
     {core}
   </g>
 );
-export const CycleFrame = () => (
-  <div className="cycle-frame">
+export const CycleFrame = ({ paused }) => (
+  <div className={`cycle-frame ${paused ? 'is-paused' : ''}`}>
     <div className="giant-being">
       <div className="being-aura" /><div className="being-inner-light" /><div className="held-light" />
       <div className="life-spawn-point">

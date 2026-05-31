@@ -1,10 +1,21 @@
 .text-frame {
-  animation: luxuriousText 3.5s cubic-bezier(0.2, 1, 0.3, 1) forwards;
   width: 100%; display: flex; justify-content: center;
+  &.effect-luxurious { animation: luxuriousText 3.5s forwards; }
+  &.effect-pan-out { animation: panOutText 2.5s forwards; }
+  &.effect-glow-beat .cinematic-text { animation: glowBeat 1s infinite alternate; }
+  &.effect-cyber {
+    background: #fcee0a; padding: 20px 80px; position: relative; overflow: hidden;
+    &::before { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent, rgba(255,255,255,0.4), transparent); height: 10px; animation: cyberScanline 1.5s infinite linear; }
+    .cinematic-text {
+      animation: cyberGlitch 1.5s infinite; font-family: monospace; color: #000;
+      letter-spacing: 0.2rem; font-weight: 900; position: relative;
+      &::after { content: "THE FUTURE IS HERE"; position: absolute; left: 2px; top: 0; color: #ff003c; z-index: -1; animation: cyberGlitch 2s infinite reverse; opacity: 0.7; }
+    }
+  }
   .cinematic-text {
-    font-family: 'KFont', sans-serif; font-size: clamp(2rem, 8vw, 4rem);
+    font-family: 'KFont', sans-serif; font-size: clamp(1.5rem, 6vw, 3.5rem);
     letter-spacing: 1.2rem; font-weight: 800; text-transform: uppercase;
-    text-align: center; padding: 0 5vw; line-height: 1.1; color: #fff;
+    text-align: center; line-height: 1.1; color: #fff;
     &.color-accent { color: #00bac4; text-shadow: 0 0 20px rgba(0,186,196,0.4); }
     &.color-bright { color: #fff; text-shadow: 0 0 40px rgba(255,255,255,0.6); }
   }

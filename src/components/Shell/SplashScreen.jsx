@@ -20,7 +20,7 @@ export const SplashScreen = ({ onFinish, isLoggingIn = false }) => {
             ) : (
               <>BECOME THE <span className="highlight" style={{ 
                 background: colors.highlightBg, 
-                color: colors.highlightBg === '#ffffff' || colors.highlightBg === '#fcee0a' ? '#000' : '#fff' 
+                color: colors.highlightBg === '#00bac4' || colors.highlightBg === '#ffffff' || colors.highlightBg === '#fcee0a' ? '#000' : '#fff' 
               }}>{displayRole}</span></>
             )}
           </div>

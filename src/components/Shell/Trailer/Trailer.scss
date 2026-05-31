@@ -1,17 +1,36 @@
-@import "Anims";
-@import "Typo";
-@import "FirstPerson";
-@import "Giant";
-
+@import "Anims"; @import "Typo"; @import "FirstPerson"; @import "Giant";
 .trailer-container {
-  position: fixed; inset: 0; background: black; z-index: 10000;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden; user-select: none;
+  position: fixed; inset: 0; background: #000; z-index: 10000; overflow: hidden;
+  &.is-paused * { animation-play-state: paused !important; }
   .vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.8) 100%); z-index: 2; pointer-events: none; }
-  .trailer-content { position: relative; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-  .star-field {
-    position: absolute; inset: -50%; opacity: 0.5;
-    background-image: radial-gradient(1px 1px at 20px 30px, white, transparent), radial-gradient(1px 1px at 40px 70px, white, transparent);
-    background-size: 300px 300px;
+  .trailer-content { 
+    position: absolute; inset: 0; z-index: 1; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    & > * { pointer-events: none; }
+    .center-play-hint {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-size: 80px; color: #00bac4; opacity: 0; filter: drop-shadow(0 0 20px #00bac4); z-index: 10; transition: 0.3s;
+    }
+  }
+  &.is-paused .center-play-hint { opacity: 0.6; }
+  .trailer-controls {
+    position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); width: 85%; z-index: 1001; opacity: 0.4; transition: 0.3s; pointer-events: auto;
+    &:hover { opacity: 0.9; }
+    .track-row {
+      display: flex; align-items: center; gap: 15px;
+      .track {
+        flex: 1; display: flex; gap: 4px; height: 12px; align-items: center;
+        .step { 
+          flex: 1; background: rgba(255,255,255,0.2); cursor: pointer; height: 4px; transition: 0.2s;
+          &.active { background: #00bac4; box-shadow: 0 0 10px #00bac4; height: 6px; }
+          &:hover { background: rgba(255,255,255,0.6); height: 8px; }
+        }
+      }
+      .ctrl-btn {
+        background: none; border: 1px solid rgba(255,255,255,.3); color: #fff; width: 24px; height: 24px; border-radius: 50%; cursor: pointer;
+        &:hover { border-color: #00bac4; color: #00bac4; }
+        &.active { background: #00bac4; border-color: #00bac4; color: #000; }
+      }
+    }
+    input[type=range] { width: calc(100% - 40px); opacity: 0; position: absolute; left: 0; top: 0; bottom: 0; cursor: pointer; z-index: 5; }
   }
 }
