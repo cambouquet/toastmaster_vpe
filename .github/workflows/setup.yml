@@ -3,14 +3,14 @@ on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Target Server (prod/test)'
+        description: 'Target Server'
         required: true
         type: choice
         options: [prod, test]
         default: 'prod'
       host:
-        description: 'New VM IP Address'
-        required: true
+        description: 'VM IP (Leave blank to use existing secrets)'
+        required: false
         type: string
 
 jobs:
@@ -30,7 +30,7 @@ jobs:
       - name: "🚢 Native Setup: Execute Provisioning"
         uses: appleboy/ssh-action@v1.2.5
         with:
-          host: ${{ inputs.host }}
+          host: ${{ github.event.inputs.host || secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
