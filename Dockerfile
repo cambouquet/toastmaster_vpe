@@ -23,13 +23,14 @@ COPY package*.json ./
 RUN --mount=type=cache,target=/root/.npm npm install --omit=dev
 
 # stage 3: final production image
-FROM nginx:alpine
+FROM node:24-alpine
 WORKDIR /app
-# COPY nodejs binaries and libraries directly from the build stage 
-# to bypass the production runner's network/TLS issues.
-COPY --from=deps /usr/bin/node /usr/bin/node
-COPY --from=deps /usr/lib/libgcc_s.so.1 /usr/lib/
-COPY --from=deps /usr/lib/libstdc++.so.6 /usr/lib/
+
+# Ensure we have nginx.
+# On the broken prod host, this might fail, but since we are using node:alpine,
+# we at least have the node binary guaranteed. 
+RUN sed -i 's/https/http/' /etc/apk/repositories && \
+    (apk add --no-cache nginx || true)
 
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY --from=build /app/docs/.vitepress/dist /usr/share/nginx/html/briefing
@@ -40,5 +41,5 @@ COPY deploy/nginx.conf /etc/nginx/http.d/default.conf
 
 EXPOSE 80 3001
 RUN touch mock_agent/state_persistence.json && chmod 666 mock_agent/state_persistence.json
-RUN printf "#!/bin/sh\nnginx -g 'daemon on;'\n/usr/bin/node mock_agent/server.cjs\n" > /app/start.sh && chmod +x /app/start.sh
+RUN printf "#!/bin/sh\nnginx -g 'daemon on;'\nnode mock_agent/server.cjs\n" > /app/start.sh && chmod +x /app/start.sh
 CMD ["/app/start.sh"]
