@@ -3,18 +3,16 @@ set -e
 
 # 0. NUCLEAR CLEANUP - No mercy for conflicting keys or sources
 echo "💣 Initiating Absolute Nuclear Purge of APT sources..."
-sudo rm -rf /etc/apt/sources.list.d/nodesource.list*
+# Delete all files mentioning nodesource in sources.list.d, regardless of filename
+sudo grep -l "nodesource" /etc/apt/sources.list.d/* 2>/dev/null | xargs sudo rm -f || true
 sudo rm -rf /etc/apt/keyrings/nodesource*
 sudo rm -rf /usr/share/keyrings/nodesource*
-sudo rm -rf /etc/apt/sources.list.d/github-cli.list*
-sudo rm -rf /etc/apt/keyrings/githubcli*
 
-# Clean up any inline references in the main sources.list
+# Clean up local references
 sudo sed -i '/nodesource/d' /etc/apt/sources.list || true
-sudo sed -i '/github/d' /etc/apt/sources.list || true
 
 # Kill any apt locks that might be hanging
-sudo fuser -kk /var/lib/dpkg/lock-frontend /var/lib/apt/lists/lock || true
+sudo fuser -kk /var/lib/dpkg/lock-frontend /var/lib/apt/lists/lock 2>/dev/null || true
 
 # 1. Update system baseline (ignore errors as we are rebuilding)
 echo "📡 Updating baseline..."
