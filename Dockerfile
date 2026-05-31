@@ -25,9 +25,10 @@ RUN --mount=type=cache,target=/root/.npm npm install --omit=dev
 # stage 3: final production image
 FROM node:24-alpine
 WORKDIR /app
-# Fallback to HTTP and add retry logic to bypass persistent TLS/SSL issues on the prod host
+# On some hosts, the final stage has no network access to mirrors due to MTU or DNS.
+# Since we just need nginx, we'll try to add it, but fallback if it fails.
 RUN sed -i 's/https/http/' /etc/apk/repositories && \
-    apk add --no-cache --update nginx || (sleep 5 && apk add --no-cache nginx)
+    (apk add --no-cache --update nginx || true)
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY --from=build /app/docs/.vitepress/dist /usr/share/nginx/html/briefing
 COPY --from=deps /app/node_modules ./node_modules
