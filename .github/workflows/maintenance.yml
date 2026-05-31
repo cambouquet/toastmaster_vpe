@@ -52,25 +52,31 @@ jobs:
           envs: GH_TOKEN
           script: |
             curl -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/lib-infra.sh" -o ~/lib-infra.sh
-            
-            repair_runner() {
-              echo "╔══════════════════════════════════════════════════════════════╗"
-              echo "║ ⛑️  RUNNER RESTART: Beginning in 5s...                        ║"
-              echo "╚══════════════════════════════════════════════════════════════╝"
-              sudo setsid bash -c "(sleep 5; systemctl stop actions.runner.* || true; pkill -9 -f Runner || true; sleep 2; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start) > /dev/null 2>&1 &"
-            }
+            export GH_TOKEN="$GH_TOKEN"
 
             if [[ "${{ inputs.action }}" == "restart-runner" ]]; then
-              repair_runner
+              echo "╔══════════════════════════════════════════════════════════════╗"
+              echo "║ ⛑️  RUNNER RESTART: Executing...                              ║"
+              echo "╚══════════════════════════════════════════════════════════════╝"
+              # Immediate stop, then background restart
+              sudo systemctl stop actions.runner.* || true
+              sudo pkill -9 -f Runner || true
+              sudo setsid bash -c "(sleep 2; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start) > /dev/null 2>&1 &"
+              
+              echo "⏳ Waiting 10s for service to stabilize before verification..."
+              sleep 10
+              bash ~/lib-infra.sh telemetry
               exit 0
             fi
 
+            # Auto-repair for other actions if runner is dead
             if [[ "${{ inputs.action }}" != "hard-reset" ]]; then
               if ! systemctl is-active --quiet "actions.runner.*"; then
-                repair_runner
+                 echo "⚠️ Runner dead detected. Triggering auto-repair..."
+                 sudo systemctl stop actions.runner.* || true
+                 sudo setsid bash -c "(sleep 2; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start) > /dev/null 2>&1 &"
+                 sleep 5
               fi
             fi
 
-            # Export the token for gh cli
-            export GH_TOKEN="$GH_TOKEN"
             bash ~/lib-infra.sh "${{ inputs.action }}"

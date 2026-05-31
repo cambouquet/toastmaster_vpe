@@ -16,20 +16,23 @@ case "$ACTION" in
     echo ""
     echo "--- [1] SERVER HEALTH & DIAGNOSTICS ---"
     df -h | grep '^/'
-    echo "Node: $(node -v)"
-    echo "Docker: $(docker version --format '{{.Client.Version}}')"
+    echo "Node: $(node -v) | Docker: $(docker version --format '{{.Client.Version}}' 2>/dev/null || echo 'Offline')"
+    
     echo ""
-    echo "--- [2] DOCKER CONTAINER STATUS ---"
-    docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
-    echo ""
-    echo "--- [3] RUNNER SERVICE STATUS ---"
+    echo "--- [2] RUNNER SERVICE STATUS ---"
     systemctl list-units --type=service "actions.runner.*" --all || true
+    
     echo ""
-    echo "--- [4] QUEUED GITHUB ACTIONS (Workflow Runs) ---"
-    if command -v gh &> /dev/null; then
+    echo "--- [3] RUNNER LOGS (Listening Check) ---"
+    journalctl -u "actions.runner.*" -n 20 --no-pager | grep -E "Listening for Jobs|Running job|Finished job" || echo "No recent activity logs found."
+
+    echo ""
+    echo "--- [4] QUEUED GITHUB ACTIONS (Repository View) ---"
+    if command -v gh &> /dev/null && [ -n "$GH_TOKEN" ]; then
+        export GH_TOKEN="$GH_TOKEN"
         gh run list --status queued --limit 5 || echo "No queued jobs."
     else
-        echo "⚠️  'gh' CLI not found. Checking remote queue via local runner context..."
+        echo "⚠️  'gh' CLI not found or GH_TOKEN missing. Install 'gh' using provision."
     fi
     ;;
   "cleanup")
