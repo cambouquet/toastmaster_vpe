@@ -13,7 +13,7 @@ on:
         description: 'Maintenance Task'
         required: true
         type: choice
-        options: [telemetry, cleanup, patch-os, hard-reset, restart-agent, debug-offline]
+        options: [telemetry, cleanup, patch-os, hard-reset, restart-agent, debug-runner-issue]
       host:
         description: 'Manual IP (if not in secrets)'
         required: false
@@ -38,7 +38,7 @@ jobs:
 
   rescue-operation:
     needs: prepare
-    if: github.event.inputs.action == 'restart-agent' || github.event.inputs.action == 'debug-offline'
+    if: github.event.inputs.action == 'restart-agent' || github.event.inputs.action == 'debug-runner-issue'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -52,19 +52,21 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            if [ "${{ github.event.inputs.action }}" = "debug-offline" ]; then
-              echo "--- 🔍 OFFLINE DEBUG: ${{ matrix.target }} ---"
+            if [ "${{ github.event.inputs.action }}" = "debug-runner-issue" ]; then
+              echo "--- 🔍 RUNNER DEBUG: ${{ matrix.target }} ---"
               echo "📍 Service Status:"
               sudo systemctl list-units "actions.runner.*" --all
               echo "📍 Process Check:"
               ps aux | grep -v grep | grep "Runner" || echo "No Runner processes found."
               echo "📍 Recent Logs (last 20 lines):"
               sudo journalctl -u "actions.runner.*" -n 20 --no-pager || echo "No logs found."
+              echo "--- ⏭️ NEXT ACTIONS ---"
+              echo "1. If status is 'inactive dead', run 'restart-agent'."
+              echo "2. If multiple runner services exist, consider 'hard-reset' followed by 'PROVISION'."
               exit 0
             fi
 
             echo "--- ⛑️ AGENT RESTART: ${{ matrix.target }} ---"
-            # Use a more reliable restart sequence with absolute paths and sudo
             sudo systemd-run --unit=runner-fix-${{ matrix.target }} --remain-after-exit bash -c "
               echo '🛑 Killing existing processes...'
               systemctl stop actions.runner.* || true
@@ -86,7 +88,7 @@ jobs:
 
   standard-operation:
     needs: prepare
-    if: github.event.inputs.action != 'restart-agent'
+    if: github.event.inputs.action != 'restart-agent' && github.event.inputs.action != 'debug-runner-issue'
     runs-on: ['self-hosted', '${{ matrix.target }}']
     strategy:
       fail-fast: false
