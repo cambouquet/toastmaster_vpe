@@ -3,6 +3,14 @@
 set -e
 ACTION=$1; ARG=$2
 
+# 🎨 Welcome Greeting
+echo "    _    ____ _____ _   _ _____ "
+echo "   / \  / ___| ____| \ | |_   _|"
+echo "  / _ \| |  _|  _| |  \| | | |  "
+echo " / ___ \ |_| | |___| |\  | | |  "
+echo "/_/   \_\____|_____|_| \_| |_|  "
+echo "--- THE MACHINES ARE LISTENING ---"
+
 case "$ACTION" in
   "telemetry")
     echo "--- [1] SERVER HEALTH & DIAGNOSTICS ---"

@@ -1,16 +1,17 @@
 # Coding Guidelines: Maintenance & Reliability
 
 ## 1. Operational Visibility
-- **Next Steps Logs**: Every maintenance job MUST end with a high-visibility block titled "REQUIRED MAINTENANCE ACTIONS".
-- **Visuals**: Use box-drawing characters (`╔═╗`, `║`, `╚═╝`) to frame next actions.
-- **Direct Language**: Avoid obscure names (e.g. "Fleet", "Uplink"). Use literal terms like "Runner", "Maintenance", "Setup", "Cleanup".
+- **ASCII Art Welcome**: All primary maintenance scripts MUST begin with a "lighthearted" ASCII greeting.
+- **Fixed-Width Dashboard**: End every job with the explicit "REQUIRED MAINTENANCE ACTIONS" block.
+- **Border Alignment**: Maintain strict right-border alignment (64-character width) for all dashboard rows.
+- **Direct Language**: Use literal terms: "Runner", "Maintenance", "Setup", "Cleanup".
 
 ## 2. Infrastructure Standards
-- **SSH Maintenance**: All repair tasks MUST run via direct SSH to allow recovery of stalled runners.
-- **Self-Healing**: Scripts must check Runner status and trigger detached `setsid` restarts if offline.
-- **Node.js**: Mandatory standard is **Node 24**.
+- **SSH Maintenance**: Execute repairs via direct SSH to recover stalled/offline Runners.
+- **Self-Healing**: Automated status checks must trigger detached `setsid` restarts.
+- **Node.js**: Standardize on **Node 24**.
 
 ## 3. Engineering Rules
-- **File Length**: Maximum **42 lines** per file.
-- **Solid Logic**: Infrastructure scripts must be modular and descriptive.
-- **Ports**: Frontend runs on 1777 (Vite).
+- **File Length**: Max **42 lines** per file.
+- **Solid Logic**: Keep scripts modular and descriptive.
+- **Ports**: Frontend dev on 1777.
