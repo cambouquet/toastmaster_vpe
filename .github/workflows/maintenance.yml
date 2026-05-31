@@ -53,23 +53,20 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo "--- ⛑️ EMERGENCY RESCUE: ${{ matrix.target }} ---"
-            # Dispatch to background and disown to prevent signal 143/137 from killing the SSH session
-            # We use a subshell to ensure the sequence completes even if SSH disconnects
-            nohup bash -c "
-              echo '🛑 Stopping runner...'
-              sudo systemctl stop actions.runner.* || true
-              sudo pkill -9 -f 'Runner.Worker' || true
-              sudo pkill -9 -f 'Runner.Listener' || true
-              
-              echo '🏁 Starting runner...'
-              cd ~/actions-runner && sudo ./svc.sh start
-              echo '✅ Runner restarted.'
-            " > /dev/null 2>&1 &
+            # Use systemd-run to create a transient background service. 
+            # This is the most robust way to survive an SSH session termination.
+            sudo systemd-run --unit=runner-rescue-${{ matrix.target }} --remain-after-exit bash -c "
+              echo '🛑 Stopping runner processes...'
+              systemctl stop actions.runner.* || true
+              pkill -9 -f 'Runner.Worker' || true
+              pkill -9 -f 'Runner.Listener' || true
+              sleep 2
+              echo '🏁 Restarting runner...'
+              cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start
+            "
             
-            # Give it a tiny bit of time to start the nohup process
-            sleep 2
-            echo "✅ Rescue command dispatched and detached."
-            exit 0
+            echo "✅ Rescue transient service created and started."
+            echo "Check status later with: systemctl status runner-rescue-${{ matrix.target }}"
 
   standard-operation:
     needs: prepare
