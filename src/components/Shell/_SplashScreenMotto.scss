@@ -28,6 +28,7 @@
 
   .line-3 {
     font-size: 1.2rem; letter-spacing: 4px; font-weight: 300;
+    text-align: right; display: block;
     transform: translateX(-20px); transition: all 0.4s ease-out 0.2s;
     @media (max-width: 768px) { font-size: 0.9rem; letter-spacing: 2px; }
   }

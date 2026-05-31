@@ -83,7 +83,7 @@ code {
 
 .line-1 { font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 0.5rem; }
 .line-2 { font-size: 2.5rem; font-weight: bold; color: #fff; margin-bottom: 0.5rem; }
-.line-3 { font-size: 0.8rem; color: #00bac4; opacity: 0.8; }
+.line-3 { font-size: 0.8rem; color: #00bac4; opacity: 0.8; text-align: right; display: block; }
 
 .highlight {
   background: #00bac4;
