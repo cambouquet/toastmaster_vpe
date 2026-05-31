@@ -1,0 +1,27 @@
+@keyframes luxuriousText {
+  0% { opacity: 0; filter: blur(50px) brightness(2); transform: scale(0.9); letter-spacing: 2rem; }
+  15% { opacity: 1; filter: blur(0); transform: scale(1); letter-spacing: 1.2rem; }
+  85% { opacity: 1; filter: blur(0); transform: scale(1.15); letter-spacing: 1.4rem; }
+  100% { opacity: 0; filter: blur(80px) brightness(5); transform: scale(1.4); letter-spacing: 5rem; }
+}
+@keyframes firstPersonGrasp {
+  0% { transform: translateY(100%) translateX(-20%) rotate(-10deg) scale(0.8); opacity: 0; }
+  35% { transform: translateY(10%) translateX(20%) rotate(5deg) scale(1.1); opacity: 1; }
+  50% { transform: translateY(0%) translateX(25%) rotate(15deg) scale(1.2); opacity: 1; }
+  100% { transform: translateY(-100%) translateX(50%) rotate(30deg) scale(1); opacity: 0; }
+}
+@keyframes wingFlap {
+  0%, 100% { d: path("M0,0 Q15,-15 30,0 T60,0"); }
+  50% { d: path("M0,0 Q15,15 30,0 T60,0"); }
+}
+@keyframes corePulse {
+  from { opacity: 0.5; filter: blur(2px) brightness(1); }
+  to { opacity: 1; filter: blur(4px) brightness(2); }
+}
+@keyframes fingerCurl { 0%, 45% { stroke-dashoffset: 1000; } 60%, 100% { stroke-dashoffset: 0; } }
+@keyframes organicBreath { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+@keyframes birthEntity {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  15% { transform: translate(-50%, -50%) scale(2) rotate(var(--rot)); opacity: 1; }
+  100% { transform: translate(calc(-50%+var(--dx)), calc(-50%+var(--dy))) scale(1) rotate(var(--rot)); opacity: 0; }
+}

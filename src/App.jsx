@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { ErrorBoundary } from './components/shared/ErrorBoundary';
 import { AppContent } from './components/App/AppContent';
 import { SplashScreen } from './components/Shell/SplashScreen';
+import { Trailer } from './components/Shell/Trailer/Trailer';
+import { BodyModelPlayground } from './components/Shell/BodyModel/BodyModelPlayground';
 import { initKeycloak, isConnectionDegraded, isAuthenticated } from './services/auth/KeycloakService';
 import './App.scss';
 
@@ -18,6 +20,7 @@ const DemoWrapper = () => (
 );
 
 function App() {
+  const [showTrailer, setShowTrailer] = useState(true);
   const [loading, setLoading] = useState(true);
   const [authReady, setAuthReady] = useState(false);
 
@@ -33,6 +36,10 @@ function App() {
   }, []);
 
   const handleFinish = React.useCallback(() => setLoading(false), []);
+
+  if (showTrailer) {
+    return <Trailer onComplete={() => setShowTrailer(false)} />;
+  }
 
   return (
     <div className={`App ${isConnectionDegraded() ? 'mode-degraded' : ''} ${APP_MODE === 'demo' ? 'mode-demo' : ''}`}>

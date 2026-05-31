@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SyncOverlay } from './SyncOverlay';
 import { AppLoadingScreen } from './AppLoadingScreen';
 import { SystemStatus } from './SystemStatus';
@@ -12,6 +12,7 @@ import { getAppInfo } from '../../services/system/AppRegistry.jsx';
 
 export const ShellLayout = ({ state, props, handlers, flags }) => {
   const appInfo = getAppInfo(state.currentApp);
+  
   return (
     <div className={`app-shell ${props.syncProgress > 0 ? 'is-transitioning' : ''}`}>
       <div className="system-glitch-overlay" />

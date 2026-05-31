@@ -7,19 +7,23 @@ export const useSplashSequence = (onFinish) => {
   const displayRole = useRoleCycling(phase);
 
   useEffect(() => {
-    const accent = import.meta.env.VITE_WING_COLOR || '#00bac4';
-    // Use exactly 3 colors: accent, white (#ffffff), and a dark variant or secondary
-    const palette = [accent, '#ffffff', '#0a0c10'];
+    const cyan = '#00bac4';
+    const gold = '#fcee0a';
+    const red = '#ff003c';
+    const white = '#ffffff';
+    
+    // Explicit 4 colors: white, gold, cyan, red
+    const palette = [white, gold, cyan, red];
     const pick = () => palette[Math.floor(Math.random() * palette.length)];
 
     setColors({
-      logoPrimary: '#ffffff',
-      logoGlow: accent,
-      border: accent,
-      line1: pick(),
-      line2: pick(),
-      line3: pick(),
-      highlightBg: accent,
+      logoPrimary: white,
+      logoGlow: cyan,
+      border: cyan,
+      line1: white,
+      line2: white,
+      line3: white,
+      highlightBg: pick(),
       palette
     });
     

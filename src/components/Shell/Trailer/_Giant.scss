@@ -1,0 +1,18 @@
+.cycle-frame {
+  width: 100%; height: 100%;
+  .giant-being {
+    position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+    width: 100vw; height: 100vh; display: flex; justify-content: center;
+    .being-aura { position: absolute; width: 800px; height: 1200px; filter: blur(60px); opacity: 0.4; background: radial-gradient(white, transparent); }
+    .held-light { position: absolute; left: 50%; top: 55%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: white; border-radius: 50%; box-shadow: 0 0 80px white; z-index: 20; animation: organicBreath 2s infinite alternate; }
+    .life-entities-svg {
+      width: 100%; height: 100%; overflow: visible;
+      .life-entity {
+        opacity: 0; animation: birthEntity 6s cubic-bezier(0.1, 0.8, 0.2, 1) forwards;
+        .wing-anim { animation: wingFlap 0.8s ease-in-out infinite; }
+        .wing-anim-delayed { animation: wingFlap 1.2s ease-in-out infinite 0.3s; }
+        .entity-core-glow { animation: corePulse 1s infinite alternate; }
+      }
+    }
+  }
+}

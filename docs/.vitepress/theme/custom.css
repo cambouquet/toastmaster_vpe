@@ -81,12 +81,12 @@ code {
   letter-spacing: 2px;
 }
 
-.line-1 { font-size: 0.9rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 0.5rem; }
-.line-2 { font-size: 2.5rem; font-weight: bold; color: #fff; margin-bottom: 0.5rem; }
-.line-3 { font-size: 0.8rem; color: #00bac4; opacity: 0.8; text-align: right; display: block; }
+.line-1 { font-size: 1.2rem; color: #ffffff; margin-bottom: 0.5rem; letter-spacing: 4px; font-weight: 800; }
+.line-2 { font-size: 2.8rem; font-weight: bold; color: #ffffff; margin-bottom: 0.5rem; }
+.line-3 { font-size: 1rem; color: #00bac4; opacity: 1; text-align: right; display: block; font-weight: 400; }
 
 .highlight {
-  background: #00bac4;
+  background: #fcee0a; /* Default to gold for docs */
   color: #000;
   padding: 0 10px;
 }

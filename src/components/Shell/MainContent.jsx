@@ -5,6 +5,7 @@ import { IdentityLab } from './IdentityLab';
 import { KFontValidator } from './KFontValidator';
 import { FontLab } from './FontLab';
 import { AppLauncher } from './AppLauncher';
+import { BodyModelPlayground } from './BodyModel/BodyModelPlayground';
 import { getAppInfo } from '../../services/system/AppRegistry.jsx';
 
 const ModulePlaceholder = ({ name, id }) => (
@@ -38,6 +39,10 @@ export const MainContent = ({ isWorkspace, state, uiAction, onAuth }) => {
 
   if (currentApp === 'workspace') {
     return <MeetingWorkspace state={state} onAction={uiAction} />;
+  }
+
+  if (currentApp === 'health') {
+    return <BodyModelPlayground />;
   }
 
   return <ModulePlaceholder name={appInfo.name} id={appInfo.char} />;

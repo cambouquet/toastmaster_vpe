@@ -17,7 +17,7 @@ export const APPS = {
   'oracle': a('oracle', 'ORACLE', 'O', Y), 'pulse': a('pulse', 'PULSE', 'P', R),
   'quest': a('quest', 'QUEST', 'Q', O), 'relay': a('relay', 'RELAY', 'R', B, true),
   'sanctuary': a('sanctuary', 'SANCTUARY', 'S', P), 'terminal': a('terminal', 'TERMINAL', 'T', '#fff'),
-  'uplink': a('uplink', 'UPLINK', 'U', C), 'health': a('health', 'VITALITY', 'V', R),
+  'uplink': a('uplink', 'UPLINK', 'U', C), 'health': a('health', 'VITALITY', 'V', R, false, true),
   'wild': a('wild', 'WILD', 'W', G), 'xray': a('xray', 'X-RAY', 'X', C),
   'yield': a('yield', 'YIELD', 'Y', Y), 'guide': a('guide', 'ZENITH', 'Z', G, false, true)
 };
