@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# 0. Nuclear cleanup of conflicting repos/keys
+sudo rm -f /etc/apt/sources.list.d/nodesource.list* /usr/share/keyrings/nodesource.gpg /etc/apt/keyrings/nodesource.gpg
+
 # 1. Update system
 sudo apt-get update && sudo apt-get upgrade -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
 
@@ -19,7 +22,6 @@ sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
 # 4. Install Node 24
-sudo rm -f /usr/share/keyrings/nodesource.gpg /etc/apt/sources.list.d/nodesource.list
 curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor --batch --yes --no-tty -o /etc/apt/keyrings/nodesource.gpg
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_24.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list > /dev/null
 
