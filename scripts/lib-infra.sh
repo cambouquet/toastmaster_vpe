@@ -24,15 +24,28 @@ case "$ACTION" in
     
     echo ""
     echo "--- [3] RUNNER LOGS (Listening Check) ---"
-    journalctl -u "actions.runner.*" -n 20 --no-pager | grep -E "Listening for Jobs|Running job|Finished job" || echo "No recent activity logs found."
+    journalctl -u "actions.runner.*" -n 20 --no-pager | grep -E "Listening for Jobs|Running job|Finished job|Error|failed" || echo "No recent activity logs found."
 
     echo ""
     echo "--- [4] QUEUED GITHUB ACTIONS (Repository View) ---"
     if command -v gh &> /dev/null && [ -n "$GH_TOKEN" ]; then
-        export GH_TOKEN="$GH_TOKEN"
         gh run list --status queued --limit 5 || echo "No queued jobs."
     else
-        echo "⚠️  'gh' CLI not found or GH_TOKEN missing. Install 'gh' using provision."
+        echo "⚠️  'gh' CLI not found or GH_TOKEN missing."
+    fi
+    ;;
+  "restart-runner")
+    echo "--- 🔄 FORCED RESTART OF RUNNER SERVICE ---"
+    sudo systemctl stop actions.runner.* || true
+    sudo pkill -9 -f Runner || true
+    # Run setup again if needed or just start service
+    RUNNER_DIR="$HOME/actions-runner"
+    if [ -d "$RUNNER_DIR" ]; then
+      cd "$RUNNER_DIR"
+      sudo ./svc.sh start || (sudo ./svc.sh install && sudo ./svc.sh start)
+    else
+      echo "❌ Error: Runner directory not found at $RUNNER_DIR"
+      exit 1
     fi
     ;;
   "cleanup")
@@ -62,11 +75,7 @@ if [ "$ACTION" == "telemetry" ]; then
     echo "║ 📦 DOCKER SERVICES DOWN?   ──▶  Run 'DEPLOY'                 ║"
     echo "║ 🤖 RUNNER SERVICE DEAD?    ──▶  Run 'restart-runner'         ║"
     echo "║ ⏳ JOBS STUCK IN QUEUE?    ──▶  Run 'restart-runner'         ║"
-elif [ "$ACTION" == "cleanup" ]; then
-    echo "║ ✅ CLEANUP COMPLETE        ──▶  Run 'telemetry' to verify    ║"
-elif [ "$ACTION" == "hard-reset" ]; then
-    echo "║ ☢️  SYSTEM WIPED            ──▶  Run 'PROVISION' to restore   ║"
-elif [ "$ACTION" == "patch-os" ]; then
-    echo "║ 🚀 UPDATES COMPLETE        ──▶  Run 'telemetry'              ║"
+else
+    echo "║ ✅ ACTION COMPLETE         ──▶  Run 'telemetry' to verify    ║"
 fi
 echo "╚══════════════════════════════════════════════════════════════╝"

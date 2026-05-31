@@ -58,13 +58,18 @@ jobs:
               echo "╔══════════════════════════════════════════════════════════════╗"
               echo "║ ⛑️  RUNNER RESTART: Executing...                              ║"
               echo "╚══════════════════════════════════════════════════════════════╝"
-              # Immediate stop, then background restart
+              
+              # Stop existing service
               sudo systemctl stop actions.runner.* || true
               sudo pkill -9 -f Runner || true
-              sudo setsid bash -c "(sleep 2; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start) > /dev/null 2>&1 &"
               
-              echo "⏳ Waiting 10s for service to stabilize before verification..."
-              sleep 10
+              # Reach into the directory and attempt re-install/start
+              cd /home/${{ secrets.VM_USER }}/actions-runner || (echo "FAILED: Runner dir missing" && exit 1)
+              sudo ./svc.sh install || true
+              sudo ./svc.sh start
+              
+              echo "⏳ Waiting 15s for service to stabilize before verification..."
+              sleep 15
               bash ~/lib-infra.sh telemetry
               exit 0
             fi
@@ -72,10 +77,9 @@ jobs:
             # Auto-repair for other actions if runner is dead
             if [[ "${{ inputs.action }}" != "hard-reset" ]]; then
               if ! systemctl is-active --quiet "actions.runner.*"; then
-                 echo "⚠️ Runner dead detected. Triggering auto-repair..."
-                 sudo systemctl stop actions.runner.* || true
-                 sudo setsid bash -c "(sleep 2; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start) > /dev/null 2>&1 &"
-                 sleep 5
+                 echo "⚠️ Runner dead detected. Triggering repair cycle..."
+                 cd /home/${{ secrets.VM_USER }}/actions-runner && sudo ./svc.sh start || sudo ./svc.sh install && sudo ./svc.sh start
+                 sleep 10
               fi
             fi
 
