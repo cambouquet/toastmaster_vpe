@@ -53,35 +53,23 @@ jobs:
           script: |
             curl -sSL "https://raw.githubusercontent.com/${{ github.repository }}/main/scripts/lib-infra.sh" -o ~/lib-infra.sh
             export GH_TOKEN="$GH_TOKEN"
-
-            if [[ "${{ inputs.action }}" == "restart-runner" ]]; then
-              echo "╔══════════════════════════════════════════════════════════════╗"
-              echo "║ ⛑️  RUNNER REPAIR INITIATED                                   ║"
-              echo "╠══════════════════════════════════════════════════════════════╣"
-              echo "║ 1. Stopping hanging services...                              ║"
-              sudo systemctl stop actions.runner.* || true
-              
-              echo "║ 2. Verifying installation...                                 ║"
-              cd /home/${{ secrets.VM_USER }}/actions-runner || (echo "║ FAILED: Runner dir missing                           ║" && exit 1)
-              sudo ./svc.sh install > /dev/null 2>&1 || true
-              
-              echo "║ 3. Detaching restart process...                              ║"
-              sudo setsid bash -c "sleep 5; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start" > /dev/null 2>&1 &
-              
-              echo "╠══════════════════════════════════════════════════════════════╣"
-              echo "║ ✅ REPAIR DISPATCHED. SSH session closing to allow restart.  ║"
-              echo "║ ⏳ Please wait 20 seconds and then run 'telemetry'.          ║"
-              echo "╚══════════════════════════════════════════════════════════════╝"
-              exit 0
-            fi
-
-            # Auto-repair for other actions if runner is dead
+            
+            # 🛡️ ZERO-INTERVENTION SELF-HEALING
+            # Check if runner is dead (unless doing a hard-reset)
             if [[ "${{ inputs.action }}" != "hard-reset" ]]; then
               if ! systemctl is-active --quiet "actions.runner.*"; then
-                 echo "⚠️ Runner dead. Triggering background repair..."
-                 sudo setsid bash -c "sleep 2; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start" > /dev/null 2>&1 &
-                 sleep 3
+                 echo "╔══════════════════════════════════════════════════════════════╗"
+                 echo "║ 🩹 AUTO-REPAIR DETECTED: Runner was down. Executing fix...   ║"
+                 echo "╚══════════════════════════════════════════════════════════════╝"
+                 
+                 cd /home/${{ secrets.VM_USER }}/actions-runner || exit 1
+                 sudo ./svc.sh install > /dev/null 2>&1 || true
+                 sudo setsid bash -c "sleep 5; cd /home/${{ secrets.VM_USER }}/actions-runner && ./svc.sh start" > /dev/null 2>&1 &
+                 
+                 # Brief pause to verify the dispatch succeeded
+                 sleep 2
               fi
             fi
 
+            # Execute the requested action (Telemetry will now show the repair result in the dashboard)
             bash ~/lib-infra.sh "${{ inputs.action }}"

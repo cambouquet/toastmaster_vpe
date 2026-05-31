@@ -1,5 +1,5 @@
 #!/bin/bash
-# 🛠️ MAINTENANCE COMMAND LIBRARY
+# 🛠️ MAINTENANCE COMMAND LIBRARY (Self-Healing Edition)
 set -e
 ACTION=$1; ARG=$2
 
@@ -30,22 +30,6 @@ case "$ACTION" in
     echo "--- [4] QUEUED GITHUB ACTIONS (Repository View) ---"
     if command -v gh &> /dev/null && [ -n "$GH_TOKEN" ]; then
         gh run list --status queued --limit 5 || echo "No queued jobs."
-    else
-        echo "⚠️  'gh' CLI not found or GH_TOKEN missing."
-    fi
-    ;;
-  "restart-runner")
-    echo "--- 🔄 FORCED RESTART OF RUNNER SERVICE ---"
-    sudo systemctl stop actions.runner.* || true
-    sudo pkill -9 -f Runner || true
-    # Run setup again if needed or just start service
-    RUNNER_DIR="$HOME/actions-runner"
-    if [ -d "$RUNNER_DIR" ]; then
-      cd "$RUNNER_DIR"
-      sudo ./svc.sh start || (sudo ./svc.sh install && sudo ./svc.sh start)
-    else
-      echo "❌ Error: Runner directory not found at $RUNNER_DIR"
-      exit 1
     fi
     ;;
   "cleanup")
@@ -70,12 +54,14 @@ echo "╔═══════════════════════�
 echo "║ ⏭️  REQUIRED MAINTENANCE ACTIONS                              ║"
 echo "╠══════════════════════════════════════════════════════════════╣"
 
+RUNNER_ACTIVE=$(systemctl is-active "actions.runner.*" || echo "inactive")
+
 if [ "$ACTION" == "telemetry" ]; then
-    echo "║ 🛠️  DISK FULL (>90%)?      ──▶  Run 'cleanup'                ║"
+    [ $(df / --output=pcent | tail -1 | tr -dc '0-9') -gt 90 ] && echo "║ 🛠️  DISK FULL (>90%)?      ──▶  Run 'cleanup'                ║"
+    [ "$RUNNER_ACTIVE" != "active" ] && echo "║ ✅ RUNNER RECOVERED        ──▶  Wait 20s for connectivity    ║"
+    [ "$RUNNER_ACTIVE" == "active" ] && echo "║ ✨ RUNNER STATUS: OK       ──▶  No action required           ║"
     echo "║ 📦 DOCKER SERVICES DOWN?   ──▶  Run 'DEPLOY'                 ║"
-    echo "║ 🤖 RUNNER SERVICE DEAD?    ──▶  Run 'restart-runner'         ║"
-    echo "║ ⏳ JOBS STUCK IN QUEUE?    ──▶  Run 'restart-runner'         ║"
 else
-    echo "║ ✅ ACTION COMPLETE         ──▶  Run 'telemetry' to verify    ║"
+    echo "║ ✅ TASK COMPLETE           ──▶  Run 'telemetry' to verify    ║"
 fi
 echo "╚══════════════════════════════════════════════════════════════╝"
