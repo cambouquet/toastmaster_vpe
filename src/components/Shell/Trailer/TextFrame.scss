@@ -1,0 +1,52 @@
+@import "../../../styles/variables";
+
+.text-frame {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 0 10vw; text-align: center;
+  pointer-events: none;
+
+  .main-text {
+    /* Reduced font size as requested */
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 200;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1.25; /* Improved for multi-line */
+    filter: drop-shadow(0 0 15px rgba(0,0,0,0.4));
+    animation: textEnter 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  }
+
+  &.impact-center {
+    position: absolute; inset: 0;
+    background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, transparent 75%);
+    z-index: 1000;
+
+    .main-text {
+      /* Reduced from previous massive size */
+      font-size: clamp(3.5rem, 9vw, 6.5rem);
+      font-weight: 100;
+      letter-spacing: 0.08em;
+      filter: drop-shadow(0 0 30px rgba(0,0,0,0.7));
+    }
+
+    .hero-highlight {
+      color: #fcee0a;
+      font-weight: 300;
+      text-shadow: 0 0 25px rgba(252, 238, 10, 0.4);
+      position: relative;
+      display: inline-block;
+      transform: none; /* Removed skew/italic as requested */
+    }
+  }
+
+  &.eclipse .main-text {
+    color: $accent-cyan !important;
+    text-shadow: 0 0 25px rgba(0, 186, 196, 0.5);
+  }
+}
+
+@keyframes textEnter {
+  0% { opacity: 0; transform: scale(1.02) translateY(5px); filter: blur(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}

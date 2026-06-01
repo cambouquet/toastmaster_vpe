@@ -1,7 +1,20 @@
 export const TRAILER_SCENES = [
-  { type: "disc", next: 1500 }, // Scene 0: Initial Sun (extended to 1.5s to admire)
-  { type: "text", content: "WHAT IF", next: 3000, color: "#fff" }, // Scene 1
-  { type: "text", content: "WE COULD CAPTURE IT", next: 3000, color: "#fff" }, // Scene 2
-  { type: "grab", content: "AUGUST 12", next: 4000, color: "#00bac4", effect: "eclipse" }, // Scene 3
-  { type: "cycle", next: 6000 } // Scene 4: Zenith Metropolis
+  { type: "disc", next: 2000 },
+  { type: "text", content: "WHAT IF", next: 3000, color: "#fff" },
+  { type: "text", content: "WE COULD CAPTURE IT", next: 3000, color: "#fff" },
+  { type: "grab", content: "AUGUST 12", next: 4000, color: "#00bac4", effect: "eclipse" },
+  { type: "text", content: "THE MAP?\nTHE REAL WORLD", next: 4000, color: "#fff" },
+  { type: "text", content: "THE PLAYER?\nYOU", next: 4000, color: "#fff" },
+  { type: "text", content: "EXPLORE", next: 1000, color: "#00bac4" },
+  { type: "text", content: "BUILD", next: 1000, color: "#00bac4" },
+  { type: "text", content: "FIGHT", next: 1000, color: "#00bac4" },
+  { type: "text", content: "TOGETHER", next: 1000, color: "#fff" },
+  { type: "text", content: "BE THE HERO OF YOUR OWN LIFE", next: 5000, color: "#fff", effect: "impact-center" },
+  { type: "cycle", next: 8000 },
+  { type: "text", content: "K", next: 1000, color: "#00bac4" },
+  { type: "text", content: "K-", next: 1000, color: "#00bac4" },
+  { type: "text", content: "K-A", next: 1000, color: "#00bac4" },
+  { type: "text", content: "K-AP", next: 1000, color: "#00bac4" },
+  { type: "text", content: "K-APP", next: 3000, color: "#00bac4" },
+  { type: "splash", next: 10000 }
 ];

@@ -18,14 +18,22 @@
 
   .rainbow-halo {
     position: absolute; width: 130px; height: 130px; border-radius: 50%;
-    border: 2.5px solid transparent;
+    border: 3.5px solid transparent;
     background: linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000) border-box;
     -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
     opacity: 0;
-    animation: vibrateHalo 0.4s linear infinite;
     z-index: 6;
+    mix-blend-mode: screen;
+  }
+
+  /* Ray Effect - Light "leaking" out from the sun */
+  .solar-rays {
+    position: absolute; width: 200%; height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform: rotate(var(--deg));
+    opacity: 0;
   }
 
   .atmospheric-glow {
@@ -48,29 +56,48 @@
 
   &.grab {
     &::after {
-      content: ''; position: absolute; inset: -120px;
-      background: radial-gradient(circle at center, transparent 20%, rgba(0, 186, 196, 0.1) 40%, transparent 60%);
-      filter: blur(40px); animation: mirageEmit 5s infinite linear; z-index: 0;
+      content: ''; position: absolute; inset: -200px;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.15) 0%, rgba(0, 186, 196, 0.1) 30%, transparent 65%);
+      filter: blur(60px); animation: solarBreathe 8s infinite ease-in-out; z-index: 0;
     }
+    
     .sun-core { 
-      background: #000; box-shadow: 0 0 20px rgba(255, 255, 255, 0.15); 
+      background: #000; box-shadow: 0 0 40px rgba(0, 186, 196, 0.3); 
       animation: eclipsePulse 8s infinite ease-in-out;
       &::after {
-        background: radial-gradient(circle, $accent-cyan 20%, transparent 65%);
-        opacity: 0.4; filter: blur(15px); animation: coronaflicker 2s infinite ease-in-out;
+        background: radial-gradient(circle, -cyan 20%, transparent 65%);
+        opacity: 0.8; filter: blur(25px); animation: coronaflicker 3s infinite ease-in-out;
       }
     }
+
     .rainbow-halo {
-      opacity: 1; width: 138px; height: 138px;
-      filter: drop-shadow(0 0 15px #fff) drop-shadow(0 0 30px $accent-cyan);
-      &::before {
-        content: ''; position: absolute; inset: -25px; border-radius: 50%;
-        border: 1px solid rgba(0, 186, 196, 0.2); animation: radiationWaves 3.5s infinite;
-      }
+      opacity: 0.9; width: 140px; height: 140px;
+      filter: blur(1px) drop-shadow(0 0 20px #fff) drop-shadow(0 0 40px -cyan);
+      animation: vibrateHalo 0.5s linear infinite, glowPulse 4s infinite ease-in-out;
+    }
+
+    .solar-rays {
+      opacity: 0.15;
+      animation: raySpin 60s infinite linear;
     }
   }
 
   &.paused * { animation-play-state: paused !important; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { filter: blur(1px) drop-shadow(0 0 20px #fff) drop-shadow(0 0 40px -cyan); transform: scale(1); }
+  50% { filter: blur(1.5px) drop-shadow(0 0 30px #fff) drop-shadow(0 0 60px #fff); transform: scale(1.02); }
+}
+
+@keyframes solarBreathe {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+}
+
+@keyframes raySpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes solarPulse {
@@ -79,13 +106,13 @@
 }
 
 @keyframes eclipsePulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
-  50% { transform: scale(1.02); box-shadow: 0 0 35px rgba(255, 255, 255, 0.25); }
+  0%, 100% { transform: scale(1); box-shadow: 0 0 30px rgba(0, 186, 196, 0.2); }
+  50% { transform: scale(1.02); box-shadow: 0 0 50px rgba(255, 255, 255, 0.2); }
 }
 
 @keyframes coronaflicker {
-  0%, 100% { opacity: 0.5; transform: scale(1.05) rotate(0deg); }
-  50% { opacity: 0.8; transform: scale(1.12) rotate(3deg); }
+  0%, 100% { opacity: 0.7; transform: scale(1.05) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.15) rotate(5deg); }
 }
 
 @keyframes fadeProgressive {
@@ -95,17 +122,20 @@
 
 @keyframes vibrateHalo {
   0%, 100% { transform: translate(0, 0); }
-  33% { transform: translate(-1px, 0.5px); }
-  66% { transform: translate(1px, -1.0px); }
+  33% { transform: translate(-1.5px, 1px); }
+  66% { transform: translate(1.5px, -1.5px); }
 }
 
-@keyframes mirageEmit {
-  0% { transform: scale(0.9); opacity: 0; }
-  50% { opacity: 0.4; }
-  100% { transform: scale(1.6); opacity: 0; }
-}
+  .light-leak-bloom {
+    position: absolute; inset: -300px;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 0%, rgba(0, 186, 196, 0.1) 20%, transparent 50%);
+    filter: blur(80px); mix-blend-mode: overlay;
+    animation: bloomPulse 4s infinite ease-in-out;
+    pointer-events: none;
+    z-index: 100;
+  }
 
-@keyframes radiationWaves {
-  0% { transform: scale(1); opacity: 0.4; }
-  100% { transform: scale(1.8); opacity: 0; }
+@keyframes bloomPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
 }

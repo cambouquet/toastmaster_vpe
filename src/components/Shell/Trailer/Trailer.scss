@@ -1,52 +1,42 @@
 @import "../../../styles/variables";
-@import "Anims"; @import "Typo"; @import "FirstPerson"; @import "Giant";
 
 .trailer-container {
-  position: fixed; inset: 0; background: #000; z-index: 10000; overflow: hidden;
-  
-  .vignette { position: absolute; inset: 0; background: radial-gradient(circle, transparent 30%, rgba(0,0,0,0.9)); z-index: 5; pointer-events: none; }
-  .trailer-content { 
-    position: absolute; inset: 0; z-index: 2; cursor: pointer;
-    .text-frame { position: absolute!important; inset:0!important; display:flex!important; align-items:center!important; justify-content:center!important; z-index: 2000; }
+  position: fixed; inset: 0; background: #000; z-index: 9999;
+  display: flex; flex-direction: column; overflow: hidden;
+  user-select: none; color: #fff;
+
+  &::before { /* Film Grain */
+    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 10000;
+    opacity: 0.05; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .vignette {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.85) 100%);
+    z-index: 50;
+  }
+
+  .trailer-content {
+    flex: 1; position: relative; cursor: pointer;
+    display: flex; flex-direction: column;
+  }
+
+  /* Typography Layering */
+  .text-frame {
+    position: absolute; inset: 0; z-index: 2000;
+    display: flex; align-items: center; justify-content: center;
+    
+    /* Default spacing for smaller text scenes */
+    &:not(.impact-center) {
+      align-items: flex-end;
+      padding-bottom: 10vh;
+    }
   }
 
   .controls-hitbox {
-    position: fixed; bottom: 0; left: 0; right: 0; height: 120px;
-    display: flex; align-items: flex-end; justify-content: center;
-    padding-bottom: 40px; z-index: 20001; pointer-events: none;
-  }
-
-  .trailer-controls {
-    opacity: 0; transform: translateY(20px); transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    width: 80%; pointer-events: none;
-  }
-
-  &.show-ui, &.is-paused {
-    .controls-hitbox { pointer-events: auto; }
-    .trailer-controls {
-      opacity: 1; transform: translateY(0); pointer-events: auto;
-    }
+    position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
+    z-index: 10000; display: flex; align-items: flex-end; padding: 20px;
   }
 }
 
-.trailer-controls {
-  input[type="range"] { display: none !important; }
-  .track-row { 
-    display: flex; align-items: center; gap: 20px; background: rgba(0,0,0,0.85); padding: 12px 24px; border-radius: 2px; border: 1px solid $border-cyan;
-    backdrop-filter: blur(10px);
-    .track { 
-      flex: 1; display: flex; gap: 8px; height: 20px; align-items: center; 
-      .step { 
-        flex: 1; height: 6px; background: rgba(0,186,196,0.1); border: 1px solid rgba(0,186,196,0.2); cursor: pointer; transition: 0.3s;
-        &.active { background: $accent-cyan; box-shadow: 0 0 20px $accent-cyan; height: 10px; border-color: $accent-cyan; }
-        &:hover { background: rgba(0,186,196,0.6); height: 12px; }
-      }
-    }
-    .ctrl-btn { 
-      background: transparent; border: 1px solid $accent-cyan; color: $accent-cyan; font-family: 'Zenith', sans-serif;
-      width: 44px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.2s;
-      &:hover { background: $accent-cyan; color: #000; box-shadow: 0 0 20px $accent-cyan; }
-      &.active { background: rgba(0, 186, 196, 0.3); border-color: $accent-cyan; }
-    }
-  }
-}
+body { overflow: hidden !important; }
